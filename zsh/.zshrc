@@ -1,6 +1,7 @@
 # PS1 Configs # ---------------------------------------------------------------
 # autoload -U promptinit && promptinit
 # autoload -U colors && colors
+
 setprompt()
 {
     local baseCLR="white"
@@ -50,7 +51,6 @@ alias j='vim $(date +%Y-%m-%d%n).md'
 alias q='exit'
 alias t='todo.sh'
 alias :q='q'
-# alias vim='nvim'
 alias 'c++11'='c++ --std=c++11'
 alias 'c++14'='c++ --std=c++14'
 alias 'c++17'='c++ --std=c++17'
@@ -60,10 +60,6 @@ alias youtube-mp3="youtube-dl -x -f bestaudio --audio-quality 0 --audio-format m
 
 
 alias ls="ls -G "
-alias cls="clear && ls -l"
-alias vconnect="ssh mitt2309@cs-475.cs.uidaho.edu"
-
-# -----------------------------------------------------------------------------
 alias su="sudo $SHELL"
 
 # Preferred editor for local and remote sessions # ----------------------------
@@ -80,32 +76,4 @@ function zle-line-init zle-keymap-select {
     zle reset-prompt
 }
 
-# export PAGER="vim -u ~/.vim/vmorerc -"
-# export PAGER="/usr/bin/vimpager -u ~/.vim/pager.vimrc"
-# export PAGER=" /usr/local/bin/vimpager -u ~/.vim/pager.vimrc"
-
-exec_conda()
-{
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/usr/local/Caskroom/miniconda/4.6.14/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/usr/local/Caskroom/miniconda/4.6.14/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/usr/local/Caskroom/miniconda/4.6.14/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/usr/local/Caskroom/miniconda/4.6.14/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-}
-
-export PATH="/usr/local/opt/ncurses/bin:$PATH"
-export PATH="~/_bin/:$PATH"
-export PATH="/usr/local/sbin:$PATH"
-export PATH="/usr/local/bin/miniScript:$PATH"
-export PATH=".:$PATH"
-# export PATH="$HOME/.jenv/bin:$PATH"
-# eval "$(jenv init -)"
+# Add $PATH changes here
