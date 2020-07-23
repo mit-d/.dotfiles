@@ -50,6 +50,7 @@ alias 'c++2a'='c++ --std=c++2a'
 alias youtube-mp3="youtube-dl -x -f bestaudio --audio-quality 0 --audio-format mp3 $1 -o \"$HOME/Music/Ableton/User Library/Samples/youtube/%(title)s-%(id)s.%(ext)s\""
 alias ls="ls -G "
 alias su="sudo $SHELL"
+[[ -f `which nvim` ]] && alias e=`which nvim` || alias e=$EDITOR
 
 function zle-line-init zle-keymap-select {
     VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]% %{$reset_color%}"
@@ -58,7 +59,9 @@ function zle-line-init zle-keymap-select {
 }
 
 # Configurations
+set -o vi # enable vi binds
 export EDITOR=vi
+
 LS_COLORS=$LS_COLORS:'di=0;35:'; export LS_COLORS
 autoload -U edit-command-line; zle -N edit-command-line
 bindkey "^X^E" edit-command-line
@@ -68,3 +71,6 @@ bindkey -M vicmd v edit-command-line
 # bindkey 'v' edit-command-line
 
 # Add $PATH changes here
+
+# keep this line at the bottom of ~/.zshrc
+[ -x /bin/fish ] && SHELL=/bin/fish exec /bin/fish
