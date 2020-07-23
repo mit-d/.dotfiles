@@ -73,4 +73,6 @@ bindkey -M vicmd v edit-command-line
 # Add $PATH changes here
 
 # keep this line at the bottom of ~/.zshrc
-[ -x /bin/fish ] && SHELL=/bin/fish exec /bin/fish
+local fish_exec=`which fish`
+[ -x /bin/fish ] && SHELL=/bin/fish exec /bin/fish 
+[ -x $fish_exec ] && SHELL=$fish_exec exec $fish_exec
