@@ -26,3 +26,5 @@ export VISUAL=vim
 bindkey -M vicmd v edit-command-line
 
 # Add $PATH changes here
+local fish_exec="`which fish`"
+[ -x $fish_exec ] && SHELL=$fish_exec exec $fish_exec
