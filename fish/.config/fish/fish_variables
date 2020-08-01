@@ -1,6 +1,16 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
+SETUVAR __fish_init_2_39_8:\x1d
+SETUVAR __fish_init_2_3_0:\x1d
+SETUVAR __fish_init_3_x:\x1d
 SETUVAR __fish_initialized:3100
+SETUVAR _fish_abbr_demerge:doas\x20\x2du\x20root\x20emerge
+SETUVAR _fish_abbr_emerge_2D_clean_2D_all:emerge\x20\x2d\x2ddepclean\x20\x2dv
+SETUVAR _fish_abbr_emerge_2D_install:doas\x20emerge\x20\x2d\x2dask
+SETUVAR _fish_abbr_emerge_2D_sync_2D_world:doas\x20emerge\x20\x2d\x2dsync\x20\x26\x26\x20doas\x20emerge\x20\x2d\x2dupdate\x20\x2d\x2dchanged\x2duse\x20\x2d\x2ddeep\x20\x2d\x2dwith\x2dbdeps\x3dy\x20\x2d\x2dkeep\x2dgoing\x20\x40world
+SETUVAR _fish_abbr_emerge_2D_u:doas\x20emerge\x20\x2d\x2dupdate\x20\x2d\x2dchanged\x2duse\x20\x2d\x2ddeep
+SETUVAR _fish_abbr_emerge_2D_update:doas\x20emerge\x20\x2d\x2dupdate\x20\x2d\x2dchanged\x2duse\x20\x2d\x2ddeep\x20\x2d\x2dwith\x2dbdeps\x3dy\x20\x2d\x2dkeep\x2dgoing
+SETUVAR _fish_abbr_youtube_2D_mp3:youtube\x2ddl\x20\x2d\x2dextract\x2daudio\x20\x2df\x20\x27bestaudio\x27\x20\x2d\x2daudio\x2dformat\x20mp3
 SETUVAR fish_color_autosuggestion:555\x1ebrblack
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:005fd7

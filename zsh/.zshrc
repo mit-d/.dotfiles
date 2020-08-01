@@ -6,8 +6,6 @@ alias 'c++11'='c++ --std=c++11'
 alias 'c++14'='c++ --std=c++14'
 alias 'c++17'='c++ --std=c++17'
 alias 'c++2a'='c++ --std=c++2a'
-alias ls="ls -G "
-alias su="sudo $SHELL"
 
 # Set the editor
 [ -x /bin/vi ] && export EDITOR='/bin/vi'
@@ -26,3 +24,4 @@ export VISUAL=vim
 bindkey -M vicmd v edit-command-line
 
 # Add $PATH changes here
+[ -x /bin/fish ] && SHELL='/bin/fish' exec /bin/fish
