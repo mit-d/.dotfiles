@@ -11,6 +11,9 @@ SETUVAR _fish_abbr_emerge_2D_sync_2D_world:doas\x20emerge\x20\x2d\x2dsync\x20\x2
 SETUVAR _fish_abbr_emerge_2D_u:doas\x20emerge\x20\x2d\x2dupdate\x20\x2d\x2dchanged\x2duse\x20\x2d\x2ddeep
 SETUVAR _fish_abbr_emerge_2D_update:doas\x20emerge\x20\x2d\x2dupdate\x20\x2d\x2dchanged\x2duse\x20\x2d\x2ddeep\x20\x2d\x2dwith\x2dbdeps\x3dy\x20\x2d\x2dkeep\x2dgoing
 SETUVAR _fish_abbr_youtube_2D_mp3:youtube\x2ddl\x20\x2d\x2dextract\x2daudio\x20\x2df\x20\x27bestaudio\x27\x20\x2d\x2daudio\x2dformat\x20mp3
+SETUVAR _fish_abbr_sps:sudo\x20pacman\x20\x2dS
+SETUVAR _fish_abbr_t:todo\x2esh
+SETUVAR _fish_abbr_vm:exec\x20ssh\x20mit\x2dd\x40127\x2e0\x2e0\x2e1\x20\x2dp\x202222
 SETUVAR fish_color_autosuggestion:555\x1ebrblack
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:005fd7

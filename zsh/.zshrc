@@ -23,5 +23,7 @@ bindkey "^X^E" edit-command-line
 export VISUAL=vim
 bindkey -M vicmd v edit-command-line
 
-# Add $PATH changes here
 [ -x /bin/fish ] && SHELL='/bin/fish' exec /bin/fish
+
+local fish_exec="`which fish`"
+[ -x $fish_exec ] && SHELL=$fish_exec exec $fish_exec
