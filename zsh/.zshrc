@@ -1,3 +1,19 @@
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+     # ...
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+     # Mac OSX
+     source ~/.sh/darwin.shrc
+elif [[ "$OSTYPE" == "cygwin" ]]; then
+     # POSIX compatibility layer and Linux environment emulation for Windows
+elif [[ "$OSTYPE" == "msys" ]]; then
+     # Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
+elif [[ "$OSTYPE" == "win32" ]]; then
+     # I'm not sure this can happen.
+elif [[ "$OSTYPE" == "freebsd"* ]]; then
+     # ...
+else
+     # Unknown.
+fi
 
 export PROMPT="%m %F{red}%B%#%b %F{reset_colors}"
 
@@ -23,7 +39,7 @@ bindkey "^X^E" edit-command-line
 export VISUAL=vim
 bindkey -M vicmd v edit-command-line
 
-[ -x /bin/fish ] && SHELL='/bin/fish' exec /bin/fish
-
-local fish_exec="`which fish`"
+local fish_exec=`grep fish /etc/shells`
 [ -x $fish_exec ] && SHELL=$fish_exec exec $fish_exec
+
+
