@@ -38,8 +38,12 @@ autoload -U edit-command-line; zle -N edit-command-line
 bindkey "^X^E" edit-command-line
 export VISUAL=vim
 bindkey -M vicmd v edit-command-line
+autoload zmv
 
-local fish_exec=`grep fish /etc/shells`
-[ -x $fish_exec ] && SHELL=$fish_exec exec $fish_exec
+# # # # # # # # #
+#               #
+# added changes #
+#               #
+# # # # # # # # #
 
 
