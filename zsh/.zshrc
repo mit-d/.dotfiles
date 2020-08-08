@@ -1,5 +1,10 @@
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
      # ...
+     # Run tmux
+     if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+       exec tmux
+     fi
+
 elif [[ "$OSTYPE" == "darwin"* ]]; then
      # Mac OSX
      source ~/.sh/darwin.shrc
