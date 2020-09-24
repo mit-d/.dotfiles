@@ -51,4 +51,6 @@ autoload zmv
 #               #
 # # # # # # # # #
 
+export MPD_HOST="/run/mpd/socket"
+alias youtube-mp3="youtube-dl -x --audio-format 'mp3'"
 
