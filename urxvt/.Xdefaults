@@ -1,0 +1,49 @@
+!------------------------------------------------------------------------------
+! Import Color from ~/.xrdb
+! ------------------------------------------------------------------------------
+
+#include ".xrdb/color/eighties"
+
+urxvt.font: xft:DejaVu Sans Mono:pixelsize=14
+! ------------------------------------------------------------------------------
+! uRxvt configs
+! ------------------------------------------------------------------------------
+
+urxvt.geometry: 		72x18
+urxvt*letterSpace: 	    0
+urxvt.lineSpace: 		0
+urxvt*internalBorder:   24
+urxvt*externalBorder:   0
+urxvt*depth:            32
+urxvt*saveline:         2000
+urxvt*termName:         rxvt-256color
+urxvt*iso14755:         false
+urxvt*scrollBar:        false
+urxvt*scrollBar_right:  false
+!urxvt.perl-ext-common:  default,clipboard,url-select,keyboard-select
+!urxvt.copyCommand:      xclip -i -selection clipboard
+!urxvt.pasteCommand:     xclip -o -selection clipboard
+!urxvt.keysym.M-c:       perl:clipboard:copy
+!urxvt.keysym.M-v:       perl:clipboard:paste
+!urxvt.keysym.M-C-v:     perl:clipboard:paste_escaped
+!urxvt.keysym.M-Escape:  perl:keyboard-select:activate
+!urxvt.keysym.Shift-Up:	command:\033]720;1\007
+!urxvt.keysym.Shift-Down:command:\033]721;1\007
+!urxvt.keysym.M-s:       perl:keyboard-select:search
+!urxvt.keysym.M-u:       perl:url-select:select_next
+!urxvt.urlLauncher:      firefox
+!urxvt.underlineURLs:    true
+!urxvt.urlButton:        1
+!urxvt*buffered:         false          
+!urxvt.urgentOnBell: 	True
+
+! ------------------------------------------------------------------------------
+! Xft Font Configuration
+! ------------------------------------------------------------------------------
+
+!Xft.autohint: 0
+!Xft.lcdfilter: lcddefault
+!Xft.hintstyle: hintslight
+!Xft.hinting: 1
+!Xft.antialias: 1
+!Xft.rgba: rgb
