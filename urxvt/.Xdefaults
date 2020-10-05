@@ -1,17 +1,22 @@
-!------------------------------------------------------------------------------
 ! Import Color from ~/.xrdb
-! ------------------------------------------------------------------------------
 
 #include ".xrdb/color/eighties"
 
-urxvt.font: xft:DejaVu Sans Mono:pixelsize=14
-! ------------------------------------------------------------------------------
-! uRxvt configs
-! ------------------------------------------------------------------------------
+! urxvt.font: -*-rissole-*
+! urxvt.boldfont: -*-rissole-*
+! urxvt.italicfont: -*-rissole-*
+! urxvt.bolditalicfont: -*-rissole-*
+urxvt.font:             xft:Source Code Pro:style=Regular:size=10
+urxvt.boldfont:         xft:Source Code Pro:style=Bold:size=10
+urxvt.italicfont:       xft:Source Code Pro:style=Italic:size=10
+urxvt.bolditalicfont:   xft:Source Code Pro:style=Bold Italic:size=10
 
-urxvt.geometry: 		72x18
-urxvt*letterSpace: 	    0
-urxvt.lineSpace: 		0
+! uRxvt configs
+
+! urxvt.geometry: 	72x18
+urxvt.geometry: 	80x24
+urxvt*letterSpace: 	0
+urxvt.lineSpace: 	0
 urxvt*internalBorder:   24
 urxvt*externalBorder:   0
 urxvt*depth:            32
@@ -37,13 +42,11 @@ urxvt*scrollBar_right:  false
 !urxvt*buffered:         false          
 !urxvt.urgentOnBell: 	True
 
-! ------------------------------------------------------------------------------
 ! Xft Font Configuration
-! ------------------------------------------------------------------------------
 
-!Xft.autohint: 0
-!Xft.lcdfilter: lcddefault
-!Xft.hintstyle: hintslight
-!Xft.hinting: 1
-!Xft.antialias: 1
-!Xft.rgba: rgb
+Xft.autohint: 0
+Xft.lcdfilter: lcddefault
+Xft.hintstyle: hintslight
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
