@@ -1,0 +1,11 @@
+# Monitors #
+xrandr --rate 144.00
+xrandr --output DVI-D-2 --auto --right-of DP-1
+
+# Desktop #
+feh --bg-tile -z ~/Pictures/1600297380699.jpg
+picom --experimental-backends &
+polybar --config=~/.config/polybar/config.ini main &
+
+# Fonts
+xset +fp ~/.fonts/misc
