@@ -51,4 +51,5 @@ autoload zmv
 #               #
 # # # # # # # # #
 
+exec fish
 
