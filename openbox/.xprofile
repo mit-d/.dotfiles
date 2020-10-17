@@ -4,8 +4,11 @@ xrandr --output DVI-D-2 --auto --right-of DP-1
 
 # Desktop #
 feh --bg-tile -z ~/Pictures/1600297380699.jpg
-picom --experimental-backends &
-polybar --config=~/.config/polybar/config.ini main &
+picom --experimental-backends --config ~/.config/picom-lite.conf &
+tint2 &
 
 # Fonts
 xset +fp ~/.fonts/misc
+
+# Keyboard
+setxkbmap -option caps:ctrl_modifier

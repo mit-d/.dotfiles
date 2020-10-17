@@ -1,43 +1,32 @@
 [options]
 font = Source Code Pro 12
-
 [colors]
 # special
-foreground      = #c5c8c6
-foreground_bold = #c5c8c6
-cursor          = #c5c8c6
-background      = #1d1f21
-
+foreground      = #f1ebeb
+foreground_bold = #f1ebeb
+cursor          = #f1ebeb
+background      = #2d2d2d
 # black
-color0  = #282a2e
-color8  = #373b41
-
+color0  = #48483e
+color8  = #76715e
 # red
-color1  = #a54242
-color9  = #cc6666
-
+color1  = #dc2566
+color9  = #fa2772
 # green
-color2  = #8c9440
-color10 = #b5bd68
-
+color2  = #8fc029
+color10 = #a7e22e
 # yellow
-color3  = #de935f
-color11 = #f0c674
-
+color3  = #d4c96e
+color11 = #e7db75
 # blue
-color4  = #5f819d
-color12 = #81a2be
-
+color4  = #55bcce
+color12 = #66d9ee
 # magenta
-color5  = #85678f
-color13 = #b294bb
-
+color5  = #9358fe
+color13 = #ae82ff
 # cyan
-color6  = #5e8d87
-color14 = #8abeb7
-
+color6  = #56b7a5
+color14 = #66efd5
 # white
-color7  = #707880
-color15 = #c5c8c6
-
-
+color7  = #acada1
+color15 = #cfd0c2

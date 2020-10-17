@@ -259,7 +259,7 @@
       <action name="FocusToBottom"/>
       <action name="Unfocus"/>
     </keybind>
-    <keybind key="A-space">
+    <keybind key="A-S-space">
       <action name="ShowMenu">
         <menu>client-menu</menu>
       </action>
@@ -323,6 +323,11 @@
           <name>Konqueror</name>
         </startupnotify>
         <command>kfmclient openProfile filemanagement</command>
+      </action>
+    </keybind>
+    <keybind key="A-space">
+      <action name="Execute">
+        <command>rofi -show run</command>
       </action>
     </keybind>
   </keyboard>
