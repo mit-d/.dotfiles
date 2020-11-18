@@ -87,6 +87,7 @@ call neomake#configure#automake('w')
   : syntax on
     
   : let g:dotvim = '~/.vim'
+<<<<<<< HEAD
 " ex command for toggling hex mode - define mapping if desired
 command -bar Hexmode call ToggleHex()
 
@@ -129,3 +130,16 @@ function ToggleHex()
   let &readonly=l:oldreadonly
   let &modifiable=l:oldmodifiable
 endfunction
+=======
+
+
+""" Functions
+function! s:DiffWithSaved()
+  let filetype=&ft
+  diffthis
+  vnew | r # | normal! 1Gdd
+  diffthis
+  exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+endfunction
+com! DiffSaved call s:DiffWithSaved()
+>>>>>>> cb5bd7676f349c8c9b2facbf599247692f759ff4

@@ -11,9 +11,15 @@ SETUVAR _fish_abbr_emerge_2D_install:doas\x20emerge\x20\x2d\x2dask
 SETUVAR _fish_abbr_emerge_2D_sync_2D_world:doas\x20emerge\x20\x2d\x2dsync\x20\x26\x26\x20doas\x20emerge\x20\x2d\x2dupdate\x20\x2d\x2dchanged\x2duse\x20\x2d\x2ddeep\x20\x2d\x2dwith\x2dbdeps\x3dy\x20\x2d\x2dkeep\x2dgoing\x20\x40world
 SETUVAR _fish_abbr_emerge_2D_u:doas\x20emerge\x20\x2d\x2dupdate\x20\x2d\x2dchanged\x2duse\x20\x2d\x2ddeep
 SETUVAR _fish_abbr_emerge_2D_update:doas\x20emerge\x20\x2d\x2dupdate\x20\x2d\x2dchanged\x2duse\x20\x2d\x2ddeep\x20\x2d\x2dwith\x2dbdeps\x3dy\x20\x2d\x2dkeep\x2dgoing
+<<<<<<< HEAD
 SETUVAR _fish_abbr_myip:dig\x20\x2bshort\x20myip\x2eopendns\x2ecom\x20\x40resolver1\x2eopendns\x2ecom
+=======
+SETUVAR _fish_abbr_grab_2D_window:xprop\x20\x7c\x20grep\x20\x22\x5eWM_CLASS\x22
+>>>>>>> cb5bd7676f349c8c9b2facbf599247692f759ff4
 SETUVAR _fish_abbr_sps:sudo\x20pacman\x20\x2dS
+SETUVAR _fish_abbr_spu:sudo\x20pacman\x20\x2dSyyu
 SETUVAR _fish_abbr_t:todo\x2esh
+SETUVAR _fish_abbr_vim:nvim
 SETUVAR _fish_abbr_vm:exec\x20ssh\x20mit\x2dd\x40127\x2e0\x2e0\x2e1\x20\x2dp\x202222
 SETUVAR _fish_abbr_youtube_2D_mp3:youtube\x2ddl\x20\x2d\x2dextract\x2daudio\x20\x2df\x20\x27bestaudio\x27\x20\x2d\x2daudio\x2dformat\x20mp3
 SETUVAR fish_color_autosuggestion:555\x1ebrblack

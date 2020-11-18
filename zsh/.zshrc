@@ -2,7 +2,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
      # ...
      # Run tmux
      if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-       exec tmux
+       # exec tmux
      fi
 
 elif [[ "$OSTYPE" == "darwin"* ]]; then
@@ -55,6 +55,10 @@ autoload zmv
 #               #
 # # # # # # # # #
 
+<<<<<<< HEAD
 alias ytmp3="youtube-dl --extract-audio --audio-format mp3"
+=======
+exec fish
+>>>>>>> cb5bd7676f349c8c9b2facbf599247692f759ff4
 
 exec /usr/local/bin/fish
