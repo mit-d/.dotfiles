@@ -29,20 +29,24 @@ alias 'c++17'='c++ --std=c++17'
 alias 'c++2a'='c++ --std=c++2a'
 
 # Set the editor
-[ -x /bin/vi ] && export EDITOR='/bin/vi'
-[ -x /bin/vim ] && export EDITOR='/bin/vim'
-[ -x /usr/bin/vi ] && export EDITOR='/usr/bin/vi'
-[ -x /usr/bin/vim ] && export EDITOR='/usr/bin/vim'
+[ -x '/bin/vi' ] && export EDITOR='/bin/vi'
+[ -x '/bin/vim' ] && export EDITOR='/bin/vim'
+[ -x '/usr/bin/vi' ] && export EDITOR='/usr/bin/vi'
+[ -x '/usr/bin/vim' ] && export EDITOR='/usr/bin/vim'
+[ -x '/usr/local/bin/vim' ] && export EDITOR='/usr/local/bin/vim'
+[ -x '/usr/local/bin/nvim' ] && export EDITOR='/usr/local/bin/nvim'
 alias e="$EDITOR"
 
 # Configurations
 set -o vi # enable vi binds
 
+# visual mode -> edit command in temp vim buffer
 LS_COLORS=$LS_COLORS:'di=0;35:'; export LS_COLORS
 autoload -U edit-command-line; zle -N edit-command-line
 bindkey "^X^E" edit-command-line
 export VISUAL=vim
 bindkey -M vicmd v edit-command-line
+# batch file manipulation
 autoload zmv
 
 # # # # # # # # #
@@ -51,4 +55,6 @@ autoload zmv
 #               #
 # # # # # # # # #
 
+alias ytmp3="youtube-dl --extract-audio --audio-format mp3"
 
+exec /usr/local/bin/fish
