@@ -1,9 +1,9 @@
 " vimrc 1.0 by mit-d
 set nocp
 set ttyfast
-set nu
-set rnu
-set list
+set nonu
+set nornu
+set nolist
 set mouse=a
 set ru "ruler"
 set wmnu "wildmenu"
@@ -23,7 +23,7 @@ set et "expandtab"
 set si "smartindent"
 set sta "smarttab"
 
-set fdm=indent "foldmethod"
+set fdm=manual "foldmethod=indent"
 
 set hls "hlsearch"
 set is "incsearch"
@@ -33,5 +33,7 @@ set ic "ignorecase"
 set magic
 
 filetype plugin indent on
-syntax on
+syntax off
 let g:dotvim = '~/.vim'
+
+com So syntax on
