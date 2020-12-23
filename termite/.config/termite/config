@@ -1,32 +1,25 @@
 [options]
-font = Source Code Pro 12
+font = Source Code Pro 11
+
+### theme2
 [colors]
-# special
-foreground      = #f1ebeb
-foreground_bold = #f1ebeb
-cursor          = #f1ebeb
-background      = #2d2d2d
-# black
-color0  = #48483e
-color8  = #76715e
-# red
-color1  = #dc2566
-color9  = #fa2772
-# green
-color2  = #8fc029
-color10 = #a7e22e
-# yellow
-color3  = #d4c96e
-color11 = #e7db75
-# blue
-color4  = #55bcce
-color12 = #66d9ee
-# magenta
-color5  = #9358fe
-color13 = #ae82ff
-# cyan
-color6  = #56b7a5
-color14 = #66efd5
-# white
-color7  = #acada1
-color15 = #cfd0c2
+foreground      = #ffffff
+foreground_bold = #ffffff
+cursor          = #ffffff
+background      = #000000
+color0  = #191919
+color8  = #484848
+color1  = #eb3d51
+color9  = #be6262
+color2  = #66b61a
+color10 = #4b8a10
+color3  = #d98e1d
+color11 = #e5d95e
+color4  = #23ffa8
+color12 = #23aaff
+color5  = #ff00da
+color13 = #ab005b
+color6  = #68a783
+color14 = #bbcd81
+color7  = #eaeaea
+color15 = #bbbbbb

@@ -1,10 +1,5 @@
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-     # ...
-     # Run tmux
-     if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-       # exec tmux
-     fi
-
+    source ~/.sh/linux.shrc
 elif [[ "$OSTYPE" == "darwin"* ]]; then
      # Mac OSX
      source ~/.sh/darwin.shrc
@@ -20,7 +15,7 @@ else
      # Unknown.
 fi
 
-export PROMPT="%m %F{red}%B%#%b %F{reset_colors}"
+export PROMPT="%K{blue}%F{black}%m%K{reset_colors} %F{magenta}%B%#%b %K{reset_colors}%F{reset_colors}"
 
 # Aliases
 alias 'c++11'='c++ --std=c++11'
@@ -29,30 +24,21 @@ alias 'c++17'='c++ --std=c++17'
 alias 'c++2a'='c++ --std=c++2a'
 
 # Set the editor
-[ -x '/bin/vi' ] && export EDITOR='/bin/vi'
-[ -x '/bin/vim' ] && export EDITOR='/bin/vim'
-[ -x '/usr/bin/vi' ] && export EDITOR='/usr/bin/vi'
-[ -x '/usr/bin/vim' ] && export EDITOR='/usr/bin/vim'
-[ -x '/usr/local/bin/vim' ] && export EDITOR='/usr/local/bin/vim'
-[ -x '/usr/local/bin/nvim' ] && export EDITOR='/usr/local/bin/nvim'
+export EDITOR="/bin/env vim"
 alias e="$EDITOR"
 
 # Configurations
 set -o vi # enable vi binds
 
-# visual mode -> edit command in temp vim buffer
-LS_COLORS=$LS_COLORS:'di=0;35:'; export LS_COLORS
+# LS_COLORS=$LS_COLORS:'di=0;35:'; export LS_COLORS
+alias ls="ls --color"
 autoload -U edit-command-line; zle -N edit-command-line
 bindkey "^X^E" edit-command-line
-export VISUAL=vim
-bindkey -M vicmd v edit-command-line
-# batch file manipulation
+export VISUAL=$EDITOR
 autoload zmv
+export BROWSER=surf
 
 # # # # # # # # #
-#               #
 # added changes #
-#               #
 # # # # # # # # #
-
-alias ytmp3="youtube-dl --extract-audio --audio-format mp3"
+LOCAL_RC_PATH="$HOME/.zshrc.loc"
