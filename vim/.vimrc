@@ -5,35 +5,33 @@ set nonu
 set nornu
 set nolist
 set mouse=a
-set ru "ruler"
-set wmnu "wildmenu"
-set ls=2 "laststatus"
-set ar "autoread"
+set ru
+set wmnu
+set ls=2
+set ar
 
 set nowrap
-set lbr "linebreak"
+set nolbr
 set sbr=(+)
-set tw=80 "textwidth"
-set so=5 "scrolloff"
+set tw=0
+set so=5
 
-set ai "autoindent"
+set ai
 set shiftwidth=4
-set sts=4 "softtabstop"
-set et "expandtab"
-set si "smartindent"
-set sta "smarttab"
+set sts=4
+set et
+set si
+set sta
 
-set fdm=manual "foldmethod=indent"
+set fdm=manual
 
-set hls "hlsearch"
-set is "incsearch"
-set sm "showmatch"
-set scs "smartcase"
-set ic "ignorecase"
+set hls
+set is
+set sm
+set scs
+set ic
 set magic
 
 filetype plugin indent on
-syntax off
+sy off
 let g:dotvim = '~/.vim'
-
-com So syntax on
