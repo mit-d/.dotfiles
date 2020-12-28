@@ -1,40 +1,32 @@
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-     # ...
-     # Run tmux
-     if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-       # exec tmux
-     fi
+# if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+# elif [[ "$OSTYPE" == "darwin"* ]]; then
+#      source ~/.sh/darwin.shrc
+# elif [[ "$OSTYPE" == "cygwin" ]]; then
+# elif [[ "$OSTYPE" == "msys" ]]; then
+# elif [[ "$OSTYPE" == "win32" ]]; then
+# elif [[ "$OSTYPE" == "freebsd"* ]]; then
+# else
+#      # unknown os
+# fi
 
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-     # Mac OSX
-     source ~/.sh/darwin.shrc
-elif [[ "$OSTYPE" == "cygwin" ]]; then
-     # POSIX compatibility layer and Linux environment emulation for Windows
-elif [[ "$OSTYPE" == "msys" ]]; then
-     # Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
-elif [[ "$OSTYPE" == "win32" ]]; then
-     # I'm not sure this can happen.
-elif [[ "$OSTYPE" == "freebsd"* ]]; then
-     # ...
-else
-     # Unknown.
-fi
+[ -f ~/.sh/"$OSTYPE.shrc" ] && . ~/.sh/"$OSTYPE.shrc" ||\
+    echo "Creating new local configurations at \"~/.sh/$OSTYPE.shrc\""\
+    && mkdir -p ~/.sh\
+    && touch ~/.sh/"$OSTYPE.shrc"\
 
 export PROMPT="%m %F{red}%B%#%b %F{reset_colors}"
 
-# Aliases
-alias 'c++11'='c++ --std=c++11'
-alias 'c++14'='c++ --std=c++14'
-alias 'c++17'='c++ --std=c++17'
-alias 'c++2a'='c++ --std=c++2a'
+# aliases
+for i in '11' '14' '17' '2a'
+do
+    alias "c++$i"="c++ --std=c++$i"
+done
 
 # Set the editor
-[ -x '/bin/vi' ] && export EDITOR='/bin/vi'
-[ -x '/bin/vim' ] && export EDITOR='/bin/vim'
-[ -x '/usr/bin/vi' ] && export EDITOR='/usr/bin/vi'
-[ -x '/usr/bin/vim' ] && export EDITOR='/usr/bin/vim'
-[ -x '/usr/local/bin/vim' ] && export EDITOR='/usr/local/bin/vim'
-[ -x '/usr/local/bin/nvim' ] && export EDITOR='/usr/local/bin/nvim'
+for i in "`which vim`" "`which vi`" "/bin/vi" "/bin/vim"
+do
+    [ -x $i ] && export EDITOR=$i
+done
 alias e="$EDITOR"
 
 # Configurations
@@ -49,10 +41,5 @@ bindkey -M vicmd v edit-command-line
 # batch file manipulation
 autoload zmv
 
-# # # # # # # # #
-#               #
 # added changes #
-#               #
-# # # # # # # # #
-
 alias ytmp3="youtube-dl --extract-audio --audio-format mp3"
