@@ -5,9 +5,8 @@ alias alp="strat -r alpine"
 
 if command -v doas
 then
-    alias el="doas $0"
-    alias dosu="doas"
-else
-    alias el="sudo -E $0"
+    alias el='doas $0'
+else if command -v sudo
+    alias el='sudo -E $0'
 fi
 
