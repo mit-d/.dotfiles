@@ -1,14 +1,18 @@
-" vimrc 1.0 by mit-d
-set nocp
+" vimrc by mit-d 2021
+
+set nocompatible
 set ttyfast
+set mouse=a
+set autoread
+set wildmenu
+
 set nonu
 set nornu
+set ruler
+
 set nolist
-set mouse=a
-set ru
-set wmnu
-set ls=2
-set ar
+set laststatus=2
+
 
 set nowrap
 set nolbr
@@ -16,14 +20,12 @@ set sbr=(+)
 set tw=0
 set so=5
 
-set ai
-set shiftwidth=4
+set autoindent
+set sw=4
 set sts=4
 set et
 set si
 set sta
-
-set fdm=manual
 
 set hls
 set is
@@ -34,4 +36,8 @@ set magic
 
 filetype plugin indent on
 sy off
-let g:dotvim = '~/.vim'
+
+let mapleader=","
+
+" other rc files
+runtime git.vim
