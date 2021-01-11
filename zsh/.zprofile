@@ -1,5 +1,5 @@
 # Create arch-dependant rc files
-[ -f ~/.sh/"$OSTYPE.shrc" ] && . ~/.sh/"$OSTYPE.shrc" ||\
-    echo "Creating new local configurations at \"~/.sh/$OSTYPE.shrc\""\
+[ -f ~/.sh/"$OSTYPE.sh" ] && . ~/.sh/"$OSTYPE.sh" ||\
+    echo "Creating new local configurations at \"~/.sh/$OSTYPE.sh\""\
     && mkdir -p ~/.sh\
-    && touch ~/.sh/"$OSTYPE.shrc"\
+    && touch ~/.sh/"$OSTYPE.sh"\
