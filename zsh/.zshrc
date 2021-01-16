@@ -16,6 +16,7 @@ export PATH="$PATH:$HOME/.bin"
 for i in '11' '14' '17' '2a'; do; alias "c++$i"="c++ --std=c++$i"; done
 alias e="$EDITOR"
 alias ytmp3="youtube-dl --extract-audio --audio-format mp3"
+alias myip="curl https://ident.me && echo"
 
 # behavior
 set -o vi
