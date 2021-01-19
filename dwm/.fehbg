@@ -1,0 +1,2 @@
+#!/bin/sh
+feh --no-fehbg --bg-fill '/home/derek/Pictures/Wallpapers/1609538881304.jpeg' 
