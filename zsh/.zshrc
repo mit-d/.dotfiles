@@ -1,10 +1,12 @@
 # arch specific
 [ -f ~/.sh/"$OSTYPE.sh" ] && . ~/.sh/"$OSTYPE.sh" || echo "~/.sh/$OSTYPE.sh not found"
 
-# cosmetic
-local z_su="%(#.%F{yellow}.%F{magenta})%B"
-local z_re="%F{reset_colors}%b"
-export PROMPT="%~ $z_su%# $z_re"
+# escapes manpage: zshmisc, 
+export PROMPT='%B%(!.%F{3}.%F{9})%#%b %F{reset_colors}' # %# with color
+export PROMPT="%~ $PROMPT"   # pwd
+export PROMPT="%n $PROMPT"   # $USERNAME
+export RPROMPT="%* $RPROMPT" # Time
+export RPROMPT="%y $RPROMPT" # tty
 
 # env
 for i in "$(which vim)" "$(which vi)" "/bin/vi" "/bin/vim"
@@ -27,5 +29,18 @@ zle -N edit-command-line; bindkey "^X^E" edit-command-line
 if [ -z "$TMUX" ] && command -v tmux; then
     exec tmux
 fi
+
+export PATH="/home/derek/.bin:$PATH"
+
+# Set man colors
+man() {
+    LESS_TERMCAP_md=$'\e[01;31m' \
+    LESS_TERMCAP_me=$'\e[0m' \
+    LESS_TERMCAP_us=$'\e[01;32m' \
+    LESS_TERMCAP_ue=$'\e[0m' \
+    LESS_TERMCAP_so=$'\e[45;93m' \
+    LESS_TERMCAP_se=$'\e[0m' \
+    command man "$@"
+}
 
 # added changes #
