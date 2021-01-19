@@ -33,5 +33,7 @@ set ic
 set magic
 
 filetype plugin indent on
+set background=dark
 sy off
 let g:dotvim = '~/.vim'
+
