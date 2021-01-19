@@ -35,9 +35,11 @@ set ic
 set magic
 
 filetype plugin indent on
+set background=dark
 sy off
 
 let mapleader=","
 
 " other rc files
+let g:dotvim = '~/.vim'
 runtime git.vim
