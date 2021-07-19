@@ -15,8 +15,8 @@ set laststatus=2
 
 
 set nowrap
-set nolbr
-set sbr=(+)
+set lbr
+set showbreak=+\ 
 set tw=0
 set so=5
 
@@ -39,6 +39,14 @@ set background=dark
 sy off
 
 let mapleader=","
+nno XX ZQ
+ino (<CR> (<CR>)<C-c>O
+ino {<CR> {<CR>}<C-c>O
+ino [<CR> [<CR>]<C-c>O
+
+ino (; ();<ESC>hi
+ino {; {};<ESC>hi
+ino [; [];<ESC>hi
 
 " other rc files
 let g:dotvim = '~/.vim'
