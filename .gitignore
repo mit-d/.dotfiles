@@ -1,3 +1,4 @@
 mpd/.mpd/state
 *netrwhist
 *.bck
+vim/.config/nvim/pack/*
