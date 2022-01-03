@@ -1,6 +1,10 @@
 # auto completion
 autoload -Uz compinit && compinit
 
+# auto complete options
+setopt COMPLETE_IN_WORD # complete in word
+setopt AUTO_CD # auto-complete directory for cd
+
 # verbose
 zstyle ':completion:*' verbose yes
 
@@ -22,3 +26,4 @@ zstyle ':completion:*' squeeze-slashes true
 
 # never complet the parent directory
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
+
