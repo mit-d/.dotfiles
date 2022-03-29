@@ -3,14 +3,20 @@
 
 # Prompt
 ###############################################################################
-# escapes manpage: zshmisc, 
-export PROMPT='%B%(!.%F{3}.%F{9})%#%b %F{reset_colors}' # (%#) with color
-# export PROMPT="%~ $PROMPT"   # pwd
-# export PROMPT="%n $PROMPT"   # $USERNAME
-# export RPROMPT="%* $RPROMPT" # Time
-# export RPROMPT="%y $RPROMPT" # tty (right)
-# export PROMPT="%y $PROMPT" # tty (left)
-# export RPROMPT="%F{black}$RPROMPT" # tty
+
+# Set up PROMPT
+PROMPT='%B%(!.%F{3}.%F{9})%#%b %F{reset_colors}'
+PROMPT="%~ $PROMPT" # pwd
+# PROMPT="%n $PROMPT" # $USERNAME
+# PROMPT="%y $PROMPT" # tty (left)
+export PROMPT
+
+RPROMPT=""
+# RPROMPT="%* $RPROMPT" # time (right)
+# RPROMPT="%D $RPROMPT" # date (right)
+# RPROMPT="%y $RPROMPT" # tty (right)
+# RPROMPT="%F{black}$RPROMPT" # set color
+export RPROMPT
 
 # behavior
 ###############################################################################

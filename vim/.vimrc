@@ -13,7 +13,6 @@ set ruler
 set nolist
 set laststatus=2
 
-
 set nowrap
 set lbr
 set showbreak=+\ 
@@ -38,7 +37,6 @@ filetype plugin indent on
 set background=dark
 sy off
 
-let mapleader=","
 nno XX ZQ
 ino (<CR> (<CR>)<C-c>O
 ino {<CR> {<CR>}<C-c>O
@@ -47,6 +45,17 @@ ino [<CR> [<CR>]<C-c>O
 ino (; ();<ESC>hi
 ino {; {};<ESC>hi
 ino [; [];<ESC>hi
+
+let mapleader=","
+
+function ClangFormatBuffer()
+    let cursor_pos = getpos('.')
+    :%!clang-format
+    call setpos('.', cursor_pos)
+endfunction
+
+nno <leader>f :call ClangFormatBuffer()
+nno <leader>W :w !sudo tee %
 
 " other rc files
 let g:dotvim = '~/.vim'
