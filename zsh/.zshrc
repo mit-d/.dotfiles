@@ -49,6 +49,7 @@ setopt NO_BEEP
 
 source "$HOME/.zsh/alias.zsh"
 source "$HOME/.zsh/completion.zsh"
+[ -e "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
 # sudo apt install command-not-found
 [ -e "/etc/zsh_command_not_found" ] && source /etc/zsh_command_not_found

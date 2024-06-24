@@ -1,3 +1,6 @@
 [submodule "mpv/.config/mpv/scripts/mpv-cut"]
 	path = mpv/.config/mpv/scripts/mpv-cut
 	url = https://github.com/familyfriendlymikey/mpv-cut
+[submodule "zsh/.zsh/zsh-autosuggestions"]
+	path = zsh/.zsh/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions
