@@ -81,3 +81,10 @@ man() {
     LESS_TERMCAP_se=$'\e[0m' \
     command man "$@"
 }
+
+# WSL2 ssh fix
+ssh-init() {
+    [ -x /usr/bin/ssh-agent ] && eval "$(ssh-agent -s)"
+    ssh-add ~/.ssh/github-bully-wsl2-debian
+}
+
