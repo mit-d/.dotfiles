@@ -71,6 +71,24 @@ function git-revert-ws() {
     git reset --hard  # discard all non-staged data
 }
 
+function git-rename-remote-branch() {
+    local old_branch=$1
+    local new_branch=$2
+
+    # Rename the local branch
+    git branch -m $old_branch $new_branch
+
+    # Delete the old branch on remote
+    git push origin :$old_branch
+
+    # Unset the upstream tracking branch
+    git branch --unset-upstream $new_branch
+
+    # Push the new branch to remote and set upstream
+    git push origin $new_branch -u
+}
+
+
 # Set man colors
 man() {
     LESS_TERMCAP_md=$'\e[01;31m' \
