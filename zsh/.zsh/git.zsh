@@ -164,15 +164,36 @@ function gtag() {
   fi
 }
 
-function git-revert-ws() {
-    mybranch=master
-    git checkout -b tmp git-svn
+function git-ws() {
+  # Ensure we're inside a git repository.
+  git rev-parse --is-inside-work-tree >/dev/null || { echo "Not a git repository."; return 1; }
 
-    # compute the non-ws diff to mybranch and apply it
-    git diff -U0 -w --no-color $mybranch | git apply -R --cached --ignore-whitespace --unidiff-zero -
+  local ref="HEAD" show_patch=0 reset=1
 
-    git commit -m "non ws changes"
-    git reset --hard  # discard all non-staged data
+  opts=$(getopt -o hp --long help,patch -- "$@") || { echo "Opts parsing failed"; return 1; }
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+      -p|--patch) show_patch=1; shift ;;
+      -h|--help)
+        echo "Usage: git-ws [--patch] [--keep-index]"
+        echo "  --patch:      Display the patch."
+        echo "  --keep-index: Don't reset the index before staging."
+        return 0 ;;
+      *) break ;;
+    esac
+  done
+
+  git rev-parse --verify "$ref" >/dev/null 2>&1 || { echo "Reference '$ref' does not exist."; return 1; }
+
+  local patch
+  patch=$(git diff -U0 -w --ignore-all-space --ignore-blank-lines --no-color "$ref")
+  if [[ -z $patch ]]; then
+    echo "No non-whitespace changes found."
+    return 0
+  fi
+  (( show_patch )) && { echo "$patch"; return 0; }
+  (( reset )) && git reset
+  echo "$patch" | git apply --cached --unidiff-zero
 }
 
 function git-rename-remote-branch() {
