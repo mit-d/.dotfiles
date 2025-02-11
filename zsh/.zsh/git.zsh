@@ -83,3 +83,83 @@ git_update_mr() {
 
   echo "Updated $info_file." >&2
 }
+
+function gtag() {
+  local delete=0 rename=0 clear=0 gitname opts
+  opts=$(getopt -o drc --long delete,rename,clear -- "$@") || { echo "Opts parsing failed"; return 1; }
+  eval set -- "$opts"
+  while true; do
+    case "$1" in
+      -d|--delete) delete=1; shift ;;
+      -r|--rename) rename=1; shift ;;
+      -c|--clear) clear=1; shift ;;
+      --) shift; break ;;
+      *) break ;;
+    esac
+  done
+
+  # Handle rename mode
+  if (( rename )); then
+    (( $# < 2 )) && { echo "Usage: gtag --rename old_gitname new_gitname"; return 1; }
+    local old=$1 new=$2
+    local -a tags
+    tags=(${(f)"$(git tag | grep -E "^${old}/")"})
+    (( ${#tags[@]} == 0 )) && { echo "No tags for ${old}"; return 0; }
+    for tag in "${tags[@]}"; do
+      local new_tag="${new}${tag#$old}"
+      git tag "$new_tag" "$(git rev-parse "$tag")" &&
+      git tag -d "$tag" &&
+      echo "Renamed: $tag -> $new_tag"
+    done
+    return 0
+  fi
+
+  # Determine gitname from positional args or git config
+  if [[ $# -gt 0 ]]; then
+    gitname="$*"
+  else
+    gitname="$(git config user.name)"
+  fi
+  [[ -z "$gitname" ]] && { echo "Missing git name."; return 1; }
+  if [[ "$gitname" == *" "* ]]; then
+    gitname=$(echo "$gitname" | awk '{printf "%s%s", tolower(substr($1,1,1)), tolower($NF)}')
+  else
+    gitname=$(tr '[:upper:]' '[:lower:]' <<< "$gitname")
+  fi
+
+  # Handle clear mode: show matching tags and require confirmation
+  if (( clear )); then
+    local -a tags
+    tags=(${(f)"$(git tag | grep -E "^${gitname}/")"})
+    if (( ${#tags[@]} == 0 )); then
+      echo "No tags to clear for ${gitname}"
+      return 0
+    fi
+    echo "Tags to be deleted:"
+    printf "  %s\n" "${tags[@]}"
+    echo "Type 'Yes' to delete all these tags:"
+    read -r answer
+    if [[ "$answer" != "Yes" ]]; then
+      echo "Aborted."
+      return 0
+    fi
+    for tag in "${tags[@]}"; do
+      git tag -d "$tag" && echo "Deleted: $tag"
+    done
+    return 0
+  fi
+
+  local today=$(date +"%Y-%m-%d")
+  # Handle delete mode: Delete the latest tag for today.
+  if (( delete )); then
+    local tag=$(git tag | grep -E "^${gitname}/${today}/[0-9]+$" | sort -V | tail -n1)
+    [[ -z "$tag" ]] && { echo "No tag for ${gitname} on ${today}"; return 1; }
+    git tag -d "$tag" && echo "Deleted tag: $tag"
+  else
+    local max num tag
+    max=$(git tag | grep -E "^${gitname}/${today}/" | sed "s#^${gitname}/${today}/##" | sort -n | tail -n1)
+    num=$(( max ? max + 1 : 1 ))
+    tag="${gitname}/${today}/${num}"
+    git tag "$tag" && echo "Created tag: $tag"
+  fi
+}
