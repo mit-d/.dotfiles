@@ -163,3 +163,32 @@ function gtag() {
     git tag "$tag" && echo "Created tag: $tag"
   fi
 }
+
+function git-revert-ws() {
+    mybranch=master
+    git checkout -b tmp git-svn
+
+    # compute the non-ws diff to mybranch and apply it
+    git diff -U0 -w --no-color $mybranch | git apply -R --cached --ignore-whitespace --unidiff-zero -
+
+    git commit -m "non ws changes"
+    git reset --hard  # discard all non-staged data
+}
+
+function git-rename-remote-branch() {
+    local old_branch=$1
+    local new_branch=$2
+
+    # Rename the local branch
+    git branch -m $old_branch $new_branch
+
+    # Delete the old branch on remote
+    git push origin :$old_branch
+
+    # Unset the upstream tracking branch
+    git branch --unset-upstream $new_branch
+
+    # Push the new branch to remote and set upstream
+    git push origin $new_branch -u
+}
+
