@@ -4,7 +4,6 @@
 #       setxkbmap -option caps:ctrl_modifier
 #   Wayland/Gnome
 #       gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier']"
-gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier']"
 
 if command -v doas >/dev/null
 then

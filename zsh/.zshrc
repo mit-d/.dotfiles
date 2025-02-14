@@ -50,7 +50,13 @@ setopt NO_BEEP
 source "$HOME/.zsh/alias.zsh"
 source "$HOME/.zsh/completion.zsh"
 source "$HOME/.zsh/git.zsh"
+
+# sudo apt install zsh-autosuggestions
+# git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
 [ -e "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+# git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highligting
+[ -e "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] && source "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 # sudo apt install command-not-found
 [ -e "/etc/zsh_command_not_found" ] && source /etc/zsh_command_not_found
