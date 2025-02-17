@@ -17,3 +17,8 @@ elif command -v sudo >/dev/null 2>&1; then
   alias el='sudo -E $SHELL'
 fi
 
+
+[[ -n "$COPY_COMMAND" ]] && alias C="$COPY_COMMAND"
+[[ -n "$PASTE_COMMAND" ]] && alias P="$PASTE_COMMAND"
+
+
