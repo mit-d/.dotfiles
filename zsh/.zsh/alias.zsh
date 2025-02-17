@@ -9,3 +9,11 @@ alias myip="curl https://ipinfo.io 2>/dev/null | jq -C"
 alias ytmp3="youtube-dl --extract-audio --audio-format mp3"
 for i in '11' '14' '17' '2a'; alias "c++$i"="c++ --std=c++$i"
 alias ls="ls --color=auto"
+
+if command -v doas >/dev/null 2>&1; then
+  alias sudo='doas'
+  alias el='doas $SHELL'
+elif command -v sudo >/dev/null 2>&1; then
+  alias el='sudo -E $SHELL'
+fi
+

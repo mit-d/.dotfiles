@@ -1,6 +1,3 @@
-# arch specific
-[ -f ~/.sh/"$OSTYPE.shrc" ] && . ~/.sh/"$OSTYPE.shrc" || echo "~/.sh/$OSTYPE.shrc not found"
-
 # Prompt
 ###############################################################################
 
@@ -76,4 +73,15 @@ man() {
     LESS_TERMCAP_so=$'\e[45;93m' \
     LESS_TERMCAP_se=$'\e[0m' \
     command man "$@"
+}
+
+bak() {
+    mkdir -p .bak
+    local file=".bak/$1.$(date --iso-8601).bak"
+    local num=1
+    while [ -e "$file" ]; do
+        file=".bak/$1.$(date --iso-8601).bak ($num)"
+        ((num++))
+    done
+    rsync -a "$1" "$file"
 }
