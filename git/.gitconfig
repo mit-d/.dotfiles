@@ -1,0 +1,7 @@
+[user]
+	email = derekmttn@gmail.com
+	name = mit-d
+[push]
+	autoSetupRemote = true
+[core]
+	excludesFile = ~/.config/git/ignore
