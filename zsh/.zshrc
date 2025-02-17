@@ -51,7 +51,6 @@ source "$HOME/.zsh/alias.zsh"
 source "$HOME/.zsh/completion.zsh"
 source "$HOME/.zsh/git.zsh"
 
-# sudo apt install zsh-autosuggestions
 # git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
 [ -e "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
 

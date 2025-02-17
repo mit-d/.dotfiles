@@ -45,7 +45,7 @@
 font-family = Operator Mono Lig
 font-size = 14
 theme = GruvboxDarkHard
-command = ~/.bin/ghostty-tmux.sh
+command = /usr/bin/env tmux
 window-padding-balance = true
 window-padding-x = 10
 window-inherit-working-directory = true
