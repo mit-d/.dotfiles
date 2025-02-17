@@ -20,3 +20,17 @@ application/tool.
 
 The included `Makefile` provides utility commands, and will install all 
 packages that haven't been ignored.
+
+This repository contains submodules. They should be optional, but to
+initialize them after cloning run:
+
+```bash
+git submodule update --init --recursive
+```
+
+To update the submodules later, use:
+
+```bash
+git submodule update --recursive --remote
+```
+
