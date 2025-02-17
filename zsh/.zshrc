@@ -49,7 +49,13 @@ setopt NO_BEEP
 
 source "$HOME/.zsh/alias.zsh"
 source "$HOME/.zsh/completion.zsh"
+source "$HOME/.zsh/git.zsh"
+
+# git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
 [ -e "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+# git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highligting
+[ -e "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] && source "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 # sudo apt install command-not-found
 [ -e "/etc/zsh_command_not_found" ] && source /etc/zsh_command_not_found
@@ -60,16 +66,6 @@ ZSH_LOC_RC="$HOME/.zshrc_local"
 
 # Functions
 ###############################################################################
-function git-revert-ws() {
-    mybranch=master
-    git checkout -b tmp git-svn
-
-    # compute the non-ws diff to mybranch and apply it
-    git diff -U0 -w --no-color $mybranch | git apply -R --cached --ignore-whitespace --unidiff-zero -
-
-    git commit -m "non ws changes"
-    git reset --hard  # discard all non-staged data
-}
 
 # Set man colors
 man() {

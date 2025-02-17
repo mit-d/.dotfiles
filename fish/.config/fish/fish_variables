@@ -3,7 +3,7 @@
 SETUVAR __fish_init_2_39_8:\x1d
 SETUVAR __fish_init_2_3_0:\x1d
 SETUVAR __fish_init_3_x:\x1d
-SETUVAR __fish_initialized:3100
+SETUVAR __fish_initialized:3400
 SETUVAR _fish_abbr_demerge:doas\x20\x2du\x20root\x20emerge
 SETUVAR _fish_abbr_dl:http\x20\x2d\x2ddownload
 SETUVAR _fish_abbr_dumpulog:java\x20\x2djar\x20/home/derek/IdeaProjects/ULogReader/out/artifacts/ULogReader_jar/ULogReader\x2ejar
@@ -13,17 +13,16 @@ SETUVAR _fish_abbr_emerge_2D_sync_2D_world:doas\x20emerge\x20\x2d\x2dsync\x20\x2
 SETUVAR _fish_abbr_emerge_2D_u:doas\x20emerge\x20\x2d\x2dupdate\x20\x2d\x2dchanged\x2duse\x20\x2d\x2ddeep
 SETUVAR _fish_abbr_emerge_2D_update:doas\x20emerge\x20\x2d\x2dupdate\x20\x2d\x2dchanged\x2duse\x20\x2d\x2ddeep\x20\x2d\x2dwith\x2dbdeps\x3dy\x20\x2d\x2dkeep\x2dgoing
 SETUVAR _fish_abbr_emerge_2D_world:emerge\x20\x2duDU\x20\x2d\x2dkeep\x2dgoing\x20\x2d\x2dwith\x2dbdeps\x3dy\x20\x40world
+SETUVAR _fish_abbr_grab_2D_window:xprop\x20\x7c\x20grep\x20\x22\x5eWM_CLASS\x22
+SETUVAR _fish_abbr_igrep:grep\x20\x2di
 SETUVAR _fish_abbr_l:ls
 SETUVAR _fish_abbr_ll:ls\x20\x2dl
 SETUVAR _fish_abbr_lll:ls\x20\x2dalh
+SETUVAR _fish_abbr_myip:dig\x20\x2bshort\x20myip\x2eopendns\x2ecom\x20\x40resolver1\x2eopendns\x2ecom
 SETUVAR _fish_abbr_neo:neofetch
 SETUVAR _fish_abbr_randulg:shuf\x20\x2a\x2eulg\x20\x2de\x20\x7c\x20head\x20\x2dn\x201
-SETUVAR _fish_abbr_myip:dig\x20\x2bshort\x20myip\x2eopendns\x2ecom\x20\x40resolver1\x2eopendns\x2ecom
-SETUVAR _fish_abbr_grab_2D_window:xprop\x20\x7c\x20grep\x20\x22\x5eWM_CLASS\x22
-SETUVAR _fish_abbr_igrep:grep\x20\x2di
 SETUVAR _fish_abbr_sps:sudo\x20pacman\x20\x2dS
 SETUVAR _fish_abbr_spu:sudo\x20pacman\x20\x2dSyyu
-SETUVAR _fish_abbr_t:tree\x20\x2daL\x201
 SETUVAR _fish_abbr_t:todo\x2esh
 SETUVAR _fish_abbr_vim:nvim
 SETUVAR _fish_abbr_vm:exec\x20ssh\x20mit\x2dd\x40127\x2e0\x2e0\x2e1\x20\x2dp\x202222
@@ -57,4 +56,5 @@ SETUVAR fish_pager_color_completion:\x1d
 SETUVAR fish_pager_color_description:B3A06D\x1eyellow
 SETUVAR fish_pager_color_prefix:white\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
+SETUVAR fish_pager_color_selected_background:\x2dr
 SETUVAR fish_user_paths:/home/derek/\x2ebin\x1e/home/derek/\x2elocal/bin\x1e/usr/mbin/\x1e/usr/sbin/
