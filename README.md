@@ -17,6 +17,10 @@ application/tool.
 - A Unix-like environment.
 
 ## Usage
+Quick Start
+```bash
+cd $HOME && git clone --recurse-submodules https://github.com/mit-d/.dotfiles && cd .dotfiles && make stow
+```
 
 The included `Makefile` provides utility commands, and will install all 
 packages that haven't been ignored.
