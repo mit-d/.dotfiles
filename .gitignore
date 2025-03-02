@@ -1,3 +1,5 @@
-mpd/.mpd/state
 *netrwhist
 *.bck
+
+mpd/.mpd/state
+zsh/.zsh/.zcompdump

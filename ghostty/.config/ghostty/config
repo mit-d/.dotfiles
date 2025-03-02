@@ -42,12 +42,21 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
-font-family = Operator Mono Lig
-font-size = 14
-theme = GruvboxDarkHard
-command = /usr/bin/env tmux
+window-height = 25
+window-width = 80
 window-padding-balance = true
 window-padding-x = 10
 window-inherit-working-directory = true
 window-theme = ghostty
 # window-decoration = false
+
+theme = GruvboxDarkHard
+
+font-family = Operator Mono Lig
+font-style = Light
+font-style-bold = Book
+font-style-italic = Light Italic
+font-style-bold-italic = Book Italic
+font-size = 14
+
+command = /usr/bin/env tmux

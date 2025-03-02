@@ -1,6 +1,14 @@
 
+## Aliases
+################################################################################
+
 alias bclean='git switch main && git fetch --prune && git branch --merged | egrep -v "(^\*|^\s*main|^\s*dev|^\s*rc|^\s*staging)" | xargs git branch -d'
 alias bcleanrc='git switch rc && git fetch --prune && git branch --merged | egrep -v "(^\*|^\s*main|^\s*dev|^\s*rc|^\s*staging)" | xargs git branch -d'
+
+## Functions
+################################################################################
+
+Git() { vim -c ':sy on' +"Git $*" +only }
 
 git_summary() {
   local base=${1:-origin/main}
