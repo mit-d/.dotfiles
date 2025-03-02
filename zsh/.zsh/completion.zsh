@@ -1,3 +1,7 @@
+
+# Set up local completions
+fpath+="$HOME/.zsh/completions"
+
 # auto completion
 autoload -Uz compinit && compinit
 
@@ -22,8 +26,8 @@ zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:kill:*' force-list always
 
 # remove trailing slash from directories
-zstyle ':completion:*' squeeze-slashes true
+# zstyle ':completion:*' squeeze-slashes true
 
-# never complet the parent directory
+# never complete the parent directory
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
 
