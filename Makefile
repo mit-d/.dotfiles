@@ -19,6 +19,10 @@ all: help
 # Stow the directories
 stow:
 	@echo "Stowing directories: $(STOW_DIRS)"
+	mkdir -p "$(TARGET_DIR)/.zsh/completions"
+	mkdir -p "$(TARGET_DIR)/.local/share"
+	mkdir -p "$(TARGET_DIR)/.local/bin"
+	mkdir -p "$(TARGET_DIR)/.config"
 	@stow --target "$(TARGET_DIR)" --verbose $(VERBOSITY) $(STOW_DIRS)
 
 # Perform a dry run to see what would be stowed
