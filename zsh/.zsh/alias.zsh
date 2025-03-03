@@ -32,7 +32,7 @@ if command -v fastfetch &>/dev/null; then
   alias ff='fastfetch'
 fi
 
-if command -v g++; then
+if command -v g++ &>/dev/null; then
   alias 'c++'='g++'
   for i in '11' '14' '17' '2a'; do
     alias "c++$i"="c++ --std=c++$i"

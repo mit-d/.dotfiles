@@ -116,3 +116,8 @@ bak() {
     done
     rsync -a "$1" "$file"
 }
+
+# Start tmux if it is installed + not running
+case $- in *i*) # Ensure interactive shell
+  if [ -z "$TMUX" ] && command -v tmux &>/dev/null; then exec tmux; fi ;;
+esac
