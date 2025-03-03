@@ -3,3 +3,5 @@
 
 mpd/.mpd/state
 zsh/.zsh/.zcompdump
+
+.idea/**/*
