@@ -29,7 +29,6 @@
 	prompt = false
 [fetch]
 	prune = true
-	pruneTags = true
 	all = true
 [help]
 	autocorrect = prompt
