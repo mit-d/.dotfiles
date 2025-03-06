@@ -73,6 +73,7 @@ abbrevs+=(
 abbrevs+=(
   "dk"    "docker"
   "dkr"   "docker run -it"
+  "dksh"   "docker exec -it __CURSOR__ /bin/bash"
   "dki"   "docker images"
   "dkig"  "docker images | grep __CURSOR__ | awk '{print \$3}'"
   "dkbd"  "docker build ."
@@ -90,7 +91,7 @@ abbrevs+=(
   "apti"  "apt install"
   "aptr"  "apt remove --purge"
   "aptu"  "apt update"
-  "aptug" "sh -c 'apt update && apt-get dist-upgrade'"
+  "aptug" "sudo apt update && sudo apt full-upgrade"
   "aptar" "apt autoremove"
   "flup"  "flatpak update"
 )
@@ -104,6 +105,17 @@ abbrevs+=(
   "ctle"  "doas systemctl enable"
   "ctlre" "doas systemctl restart"
   "ctls"  "doas systemctl stop"
+  "hz"    "history 1 | fzf"
+  "ping"  "ping -c 5"
+)
+
+abbrevs+=(
+  "NULL" '&>/dev/null'    # Pipes all output to /dev/null
+  "L"    "| less"         # Pipe output to less pager
+  "T"    "| tee -a"       # Append output to file
+  "G"    "| grep -ni"     # Grep with line numbers and case-insensitive
+  "X"    "| $COPY_COMMAND"
+  "Z"    "| fzf"
 )
 
 # Loop over the keys of the abbreviations array and create aliases for each

@@ -6,6 +6,8 @@ alias ls="ls --file-type --color=auto -h"
 alias ll="ls -al"
 alias tree="tree -CF"
 alias l="tree -L 1"
+alias ping="ping -c 5"
+alias brew="doas -u linuxbrew brew"
 
 if [[ -n "$COPY_COMMAND" ]]; then
   alias C="$COPY_COMMAND"
@@ -54,8 +56,11 @@ alias -g NULL='&>/dev/null' # Pipes all output to /dev/null
 alias -g L="| less"         # Pipe output to less pager
 alias -g T="| tee -a"       # Append output to file
 alias -g G="| grep -ni"     # Grep with line numbers and case-insensitive
+alias -g X="| $COPY_COMMAND"
+alias -g Z="| fzf"
 
 ## Expand aliases with Control-Space
 ################################################################################
 function expand-alias() { zle _expand_alias }
 zle -N expand-alias && bindkey '^ ' expand-alias
+alias dictz="fzf </usr/share/dict/words"

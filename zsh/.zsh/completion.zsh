@@ -1,6 +1,7 @@
 
 # Set up local completions
 fpath+="$HOME/.zsh/completions"
+# fpath+="/home/linuxbrew/.linuxbrew/share/zsh/site-functions" ## Disabling for now, permission problems
 
 # auto completion
 autoload -Uz compinit && compinit

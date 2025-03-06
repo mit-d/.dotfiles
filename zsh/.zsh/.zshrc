@@ -74,17 +74,20 @@ bindkey "^X^E" edit-command-line
 ## when my leader key is right next to escape, `v and <esc>v are too similar.
 # bindkey -M vicmd v edit-command-line
 
+autoload -U history-search-end
+# zle -N history-beginning-search-backward-end history-search-end
+# zle -N history-beginning-search-forward-end history-search-end
+# bindkey "^[[A" history-beginning-search-backward-end
+# bindkey "^[[B" history-beginning-search-forward-end
+
 # Environment + Options
 ###############################################################################
 
 # History
 export HISTSIZE=100000 SAVEHIST=100000 HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"
-setopt APPEND_HISTORY
-setopt EXTENDED_HISTORY
-setopt HIST_EXPIRE_DUPS_FIRST
-setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_SPACE
-setopt INC_APPEND_HISTORY
+setopt histignorealldups sharehistory
+setopt APPEND_HISTORY EXTENDED_HISTORY INC_APPEND_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST HIST_IGNORE_DUPS HIST_IGNORE_SPACE
 
 # no beeping!
 setopt NO_BEEP
@@ -96,7 +99,7 @@ export MAILCHECK=60
 ###############################################################################
 
 # Set man colors
-man() {
+function man {
     LESS_TERMCAP_md=$'\e[01;31m' \
     LESS_TERMCAP_me=$'\e[0m' \
     LESS_TERMCAP_us=$'\e[01;32m' \
@@ -106,7 +109,7 @@ man() {
     command man "$@"
 }
 
-bak() {
+function bak {
     mkdir -p .bak
     local file=".bak/$1.$(date --iso-8601).bak"
     local num=1
@@ -116,6 +119,21 @@ bak() {
     done
     rsync -a "$1" "$file"
 }
+
+# Bind C-r Custom history search widget using fzf
+function fzf-history-widget {
+  # Fetch and select from your Zsh history, stripping leading numbers
+  local selected_command
+  selected_command="$(fc -lrn 1 | fzf --height=40% --reverse --prompt='History> ')"
+
+  # If a command was actually selected, replace the current buffer with it
+  if [[ -n "$selected_command" ]]; then
+    BUFFER="$selected_command"
+    CURSOR=${#BUFFER}
+  fi
+  zle reset-prompt
+}
+zle -N fzf-history-widget; bindkey '^R' fzf-history-widget
 
 # Bind Alt-Enter to run current line as root
 run-as-root() { BUFFER="sudo $BUFFER"; zle accept-line }

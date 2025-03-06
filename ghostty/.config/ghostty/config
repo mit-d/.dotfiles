@@ -52,11 +52,12 @@ window-theme = ghostty
 
 theme = GruvboxDarkHard
 
-font-family = Operator Mono Lig
-font-style = Light
-font-style-bold = Book
-font-style-italic = Light Italic
-font-style-bold-italic = Book Italic
+font-family = Hasklig
+font-style = Medium
+font-style-bold = Bold
+font-style-italic = Medium Italic
+font-style-bold-italic = Bold Italic
+
 font-size = 14
 
 command = /usr/bin/env tmux
