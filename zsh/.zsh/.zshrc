@@ -116,3 +116,23 @@ bak() {
     done
     rsync -a "$1" "$file"
 }
+
+# Bind Alt-Enter to run current line as root
+run-as-root() { BUFFER="sudo $BUFFER"; zle accept-line }
+zle -N run-as-root; bindkey "^[^M" run-as-root
+
+# Bind Alt-\ to toggle escape on current line
+escape-cmd() {
+  if [[ $BUFFER == \\* ]]; then
+    BUFFER="${BUFFER:1}"
+  else
+    BUFFER="\\$BUFFER"
+  fi
+  zle end-of-line
+}
+zle -N escape-cmd; bindkey "^[\\" escape-cmd
+
+# Start tmux if it is installed + not running
+case $- in *i*) # Ensure interactive shell
+  if [ -z "$TMUX" ] && command -v tmux &>/dev/null; then exec tmux; fi ;;
+esac

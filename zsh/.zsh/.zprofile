@@ -12,20 +12,20 @@ export EDITOR=vi
 export VISUAL=vi
 
 ## Detect and set COPY and PASTE commands based on availability
-if command -v wl-copy >/dev/null 2>&1 && command -v wl-paste >/dev/null 2>&1; then
+if command -v wl-copy &>/dev/null && command -v wl-paste &>/dev/null; then
   export COPY_COMMAND="wl-copy"
   export PASTE_COMMAND="wl-paste"
-elif command -v xclip >/dev/null 2>&1; then
+elif command -v xclip &>/dev/null; then
   export COPY_COMMAND="xclip -selection clipboard"
   export PASTE_COMMAND="xclip -selection clipboard -o"
-elif command -v xsel >/dev/null 2>&1; then
+elif command -v xsel &>/dev/null; then
   export COPY_COMMAND="xsel --clipboard --input"
   export PASTE_COMMAND="xsel --clipboard --output"
-elif command -v clip.exe >/dev/null 2>&1; then
+elif command -v clip.exe &>/dev/null; then
   # For Windows using WSL
   export COPY_COMMAND="clip.exe"
   export PASTE_COMMAND="powershell.exe Get-Clipboard"
-elif command -v pbcopy >/dev/null 2>&1 && command -v pbpaste >/dev/null 2>&1; then
+elif command -v pbcopy &>/dev/null && command -v pbpaste &>/dev/null; then
   # For macOS
   export COPY_COMMAND="pbcopy"
   export PASTE_COMMAND="pbpaste"
