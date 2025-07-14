@@ -54,3 +54,6 @@ case "$OSTYPE" in
     # Catch-all for unsupported OS types
     ;;
 esac
+
+# Set google chrome bin for Karma
+export CHROME_BIN=/home/dmitten/.bin/ungoogled-chromium.sh

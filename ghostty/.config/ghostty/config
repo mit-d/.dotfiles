@@ -51,6 +51,8 @@ window-theme = ghostty
 # window-decoration = false
 
 theme = GruvboxDarkHard
+# theme = Hardcore
+# theme = Monokai Soda
 
 font-family = Hasklig
 font-style = Medium

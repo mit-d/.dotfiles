@@ -7,6 +7,10 @@
 # Global Order: zshenv, zprofile, zshrc, zlogin
 #
 
+## PROFILING - uncomment to profile startup time
+# zmodload zsh/zprof # add zprof to end of file
+
+
 ## Source path vars
 ###############################################################################
 
@@ -23,6 +27,11 @@ fi
 # Completion formatting
 if [[ -f "$HOME/.zsh/completion.zsh" ]]; then
   source "$HOME/.zsh/completion.zsh"
+fi
+
+# Lazy NVM loading
+if [[ -f "$HOME/.zsh/nvm.zsh" ]]; then
+  source "$HOME/.zsh/nvm.zsh"
 fi
 
 # Misc aliases
@@ -74,12 +83,6 @@ bindkey "^X^E" edit-command-line
 ## when my leader key is right next to escape, `v and <esc>v are too similar.
 # bindkey -M vicmd v edit-command-line
 
-autoload -U history-search-end
-# zle -N history-beginning-search-backward-end history-search-end
-# zle -N history-beginning-search-forward-end history-search-end
-# bindkey "^[[A" history-beginning-search-backward-end
-# bindkey "^[[B" history-beginning-search-forward-end
-
 # Environment + Options
 ###############################################################################
 
@@ -88,6 +91,11 @@ export HISTSIZE=100000 SAVEHIST=100000 HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"
 setopt histignorealldups sharehistory
 setopt APPEND_HISTORY EXTENDED_HISTORY INC_APPEND_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST HIST_IGNORE_DUPS HIST_IGNORE_SPACE
+# autoload -Uz history-search-end
+# zle -N history-beginning-search-backward-end history-search-end
+# zle -N history-beginning-search-forward-end history-search-end
+# bindkey "$terminfo[kcuu1]" history-beginning-search-backward-end
+# bindkey "$terminfo[kcud1]" history-beginning-search-forward-end
 
 # no beeping!
 setopt NO_BEEP
@@ -154,3 +162,6 @@ zle -N escape-cmd; bindkey "^[\\" escape-cmd
 case $- in *i*) # Ensure interactive shell
   if [ -z "$TMUX" ] && command -v tmux &>/dev/null; then exec tmux; fi ;;
 esac
+
+# bun completions
+[ -s "/home/dmitten/.bun/_bun" ] && source "/home/dmitten/.bun/_bun"

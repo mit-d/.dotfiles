@@ -54,3 +54,5 @@
 	config-override = "!git config --file ~/.gitconfig_overrides"
 [include]
 	path = ~/.gitconfig_overrides
+[pager]
+	status = true

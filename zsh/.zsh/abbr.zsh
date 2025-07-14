@@ -19,6 +19,7 @@ abbrevs+=(
   "grs"     "git reset --soft"
   "gs"      "git status"
   "gss"     "git status -s"
+  "unstage" "git restore --staged"
   #"gadcp"   "git add . && git commit -m 'Auto-commit' && git push"
   #"gai"     "git add --interactive"
   #"gap"     "git add --patch"
@@ -73,11 +74,13 @@ abbrevs+=(
 abbrevs+=(
   "dk"    "docker"
   "dkr"   "docker run -it"
-  "dksh"   "docker exec -it __CURSOR__ /bin/bash"
+  "dke"   "docker exec -it"
+  "dksh"  "docker exec -it __CURSOR__ /bin/bash"
   "dki"   "docker images"
   "dkig"  "docker images | grep __CURSOR__ | awk '{print \$3}'"
   "dkbd"  "docker build ."
   "dkbt"  "docker build -t __CURSOR__ ."
+  "dkpa"  "docker system prune -a"
   "drid"  "docker rmi -f \$(docker images -q -f \"dangling=true\")"
   "dco"   "docker compose"
   "dcr"   "docker compose run -it __CURSOR__ --rm"
@@ -116,6 +119,12 @@ abbrevs+=(
   "G"    "| grep -ni"     # Grep with line numbers and case-insensitive
   "X"    "| $COPY_COMMAND"
   "Z"    "| fzf"
+)
+
+abbrevs+=(
+  "feat" "git switch -C feat/dmitten/WARH-__CURSOR__"
+  "bugs" "git switch -C bugs/dmitten/WARH-__CURSOR__"
+  "manage"  "vg jaguar manage --"
 )
 
 # Loop over the keys of the abbreviations array and create aliases for each
