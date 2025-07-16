@@ -1,0 +1,36 @@
+#!/bin/sh
+# check-deps - Report missing tools expected by dotfiles
+# Usage: check-deps
+
+pass=0
+fail=0
+total=0
+
+check() {
+    category="$1"
+    shift
+    printf '\n%s:\n' "$category"
+    for tool in "$@"; do
+        total=$((total + 1))
+        if command -v "$tool" >/dev/null 2>&1; then
+            printf '  [ok] %s\n' "$tool"
+            pass=$((pass + 1))
+        else
+            printf '  [!!] %s\n' "$tool"
+            fail=$((fail + 1))
+            [ "$category" = "Required" ] && missing_required=1
+        fi
+    done
+}
+
+missing_required=0
+
+check "Required" git stow zsh tmux nvim
+check "Expected" fzf bat curl jq rsync
+check "Optional" docker kubectl magick yt-dlp doas
+
+printf '\n%s/%s found' "$pass" "$total"
+[ "$fail" -gt 0 ] && printf ', %s missing' "$fail"
+printf '\n'
+
+exit "$missing_required"

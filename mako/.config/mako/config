@@ -1,0 +1,17 @@
+# Monokai Dark Soda - source of truth: ~/.config/hypr/palettes/monokai-dark-soda.conf
+font=SauceCodePro Nerd Font 11
+background-color=#0c0c0cee
+text-color=#f6f6ef
+border-color=#9d65ff
+border-size=2
+border-radius=10
+padding=12
+margin=10
+default-timeout=5000
+max-visible=3
+layer=overlay
+anchor=top-right
+
+[urgency=critical]
+border-color=#f4005f
+default-timeout=0

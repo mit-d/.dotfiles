@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+# Bootstrap file for zunit tests
+
+# Get repo root (bootstrap is in tests/_support, so go up two levels)
+REPO_ROOT="${0:A:h:h:h}"
+export REPO_ROOT
+
+# Mock ZLE before sourcing abbr.zsh
+zle() { : }
+
+# Source the abbreviation file
+source "${REPO_ROOT}/zsh/.zsh/abbr.zsh"

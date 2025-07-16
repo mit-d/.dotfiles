@@ -1,0 +1,20 @@
+# Stow defaults (providing .stow-local-ignore overrides the built-in list)
+RCS
+.+,v
+CVS
+\.#.+
+\.cvsignore
+\.svn
+_darcs
+\.hg
+\.git
+\.gitignore
+\.gitmodules
+.+~
+\#.*\#
+^/README.*
+^/LICENSE.*
+^/COPYING
+
+# Don't stow example files
+.*\.example

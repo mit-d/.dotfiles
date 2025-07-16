@@ -1,63 +1,68 @@
-# This is the configuration file for Ghostty.
-#
-# This template file has been automatically created at the following
-# path since Ghostty couldn't find any existing config files on your system:
-#
-#   /home/derek-mitten/.config/ghostty/config
-#
-# The template does not set any default options, since Ghostty ships
-# with sensible defaults for all options. Users should only need to set
-# options that they want to change from the default.
-#
-# Run `ghostty +show-config --default --docs` to view a list of
-# all available config options and their default values.
-#
-# Additionally, each config option is also explained in detail
-# on Ghostty's website, at https://ghostty.org/docs/config.
+# Ghostty Configuration for macOS - Optimized for Web Development
 
-# Config syntax crash course
-# ==========================
-# # The config file consists of simple key-value pairs,
-# # separated by equals signs.
-# font-family = Iosevka
-# window-padding-x = 2
-#
-# # Spacing around the equals sign does not matter.
-# # All of these are identical:
-# key=value
-# key= value
-# key =value
-# key = value
-#
-# # Any line beginning with a # is a comment. It's not possible to put
-# # a comment after a config option, since it would be interpreted as a
-# # part of the value. For example, this will have a value of "#123abc":
-# background = #123abc
-#
-# # Empty values are used to reset config keys to default.
-# key =
-#
-# # Some config options have unique syntaxes for their value,
-# # which is explained in the docs for that config option.
-# # Just for example:
-# resize-overlay-duration = 4s 200ms
+# OSX ONLY: we don't want to use /usr/bin/login (slow)
+command = tmux
 
-window-height = 25
-window-width = 80
+# Window Configuration
+window-height = 30
+window-width = 120
 window-padding-balance = true
-window-padding-x = 10
+window-padding-x = 12
+window-padding-y = 8
 window-inherit-working-directory = true
-window-theme = ghostty
-# window-decoration = false
+window-theme = dark
+window-decoration = false
+window-save-state = always
 
-theme = GruvboxDarkHard
+# macOS-specific optimizations
+macos-non-native-fullscreen = false
+macos-option-as-alt = true
+macos-window-shadow = true
+macos-titlebar-style = tabs
 
-font-family = Hasklig
-font-style = Medium
+# Theme and Appearance
+theme = dark:Monokai Remastered,light:Monokai Pro Light Sun
+background-opacity = 0.70
+unfocused-split-opacity = 0.55
+
+# Font Configuration (optimized for web development)
+font-family = SauceCodePro Nerd Font
+font-size = 14
+font-style = Regular
 font-style-bold = Bold
-font-style-italic = Medium Italic
+font-style-italic = Italic
 font-style-bold-italic = Bold Italic
 
-font-size = 14
+# Performance and rendering
+resize-overlay = after-first
+resize-overlay-duration = 500ms
 
-command = /usr/bin/env tmux
+# Shell integration
+shell-integration = zsh
+shell-integration-features = cursor,sudo,title
+
+# Keybindings for web development workflow
+keybind = super+t=new_tab
+keybind = super+w=close_surface
+keybind = super+shift+t=new_tab
+keybind = super+equal=increase_font_size:1
+keybind = super+minus=decrease_font_size:1
+keybind = super+zero=reset_font_size
+
+# Cursor configuration
+cursor-style = block
+cursor-opacity = 1.0
+cursor-color = #fe8019
+
+# Copy/paste optimization
+copy-on-select = false
+clipboard-paste-protection = true
+
+# Mouse support
+mouse-hide-while-typing = true
+mouse-shift-capture = true
+
+# Terminal features for web development
+link-url = true
+osc-color-report-format = 8-bit
+# working-directory = inherit

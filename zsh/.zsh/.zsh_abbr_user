@@ -1,0 +1,59 @@
+# Personal abbreviations - added by user
+# This file is sourced after the built-in abbreviations
+# Use `abbr -a` to add new ones (they'll be appended here)
+
+# Command-position abbreviations (@key format)
+abbrevs[@t]="task __CURSOR__"
+abbrevs[@db]="echo \"export DB_NAME=__CURSOR__\" >~/.db-env && source ~/.db-env"
+abbrevs[@gd]="nvim -c ':DiffviewOpen'"
+abbrevs[@gdm]="nvim -c ':DiffviewOpen origin/main...HEAD'"
+abbrevs[@clod]="claude"
+abbrevs[@c]="claude"
+abbrevs[@dot]="cd ~/.dotfiles"
+
+# === Pacman (anywhere - prefixed with 'pac') ===
+abbrevs[paci]="sudo pacman -S __CURSOR__"
+abbrevs[pacr]="sudo pacman -Rns __CURSOR__"
+abbrevs[pacs]="pacman -Ss __CURSOR__"
+abbrevs[pacq]="pacman -Qi __CURSOR__"
+abbrevs[pacl]="pacman -Ql __CURSOR__"
+abbrevs[pacu]="sudo pacman -Syu"
+abbrevs[pacf]="pacman -F __CURSOR__"
+abbrevs[paco]="pacman -Qdt"
+abbrevs[pacclean]="sudo pacman -Rns \$(pacman -Qdtq)"
+abbrevs[paclog]="pacman -Qe | sort"
+abbrevs[pacmir]="sudo pacman -Syy"
+
+# === Pacman context (after "pacman ") ===
+abbrevs[pacman:-S]="--needed --noconfirm -S"
+abbrevs[pacman:-Ss]="--color always -Ss"
+abbrevs[pacman:-Qi]="--color always -Qi"
+abbrevs[pacman:-Ql]="-Ql"
+abbrevs[pacman:-Qe]="-Qe"
+abbrevs[pacman:-Qdt]="-Qdt"
+abbrevs[pacman:-Rns]="-Rns"
+abbrevs[pacman:-Syu]="-Syu"
+
+# === Yay / AUR (anywhere - prefixed with 'ya') ===
+abbrevs[ya]="yay"
+abbrevs[yai]="yay -S __CURSOR__"
+abbrevs[yar]="yay -Rns __CURSOR__"
+abbrevs[yas]="yay -Ss __CURSOR__"
+abbrevs[yau]="yay -Syu"
+abbrevs[yaq]="yay -Qi __CURSOR__"
+abbrevs[yaclean]="yay -Sc"
+abbrevs[yastats]="yay -Ps"
+
+# === Yay context (after "yay ") ===
+abbrevs[yay:-S]="-S"
+abbrevs[yay:-Ss]="-Ss"
+abbrevs[yay:-Rns]="-Rns"
+abbrevs[yay:-Syu]="-Syu"
+abbrevs[yay:-Qi]="-Qi"
+abbrevs[yay:-Sc]="-Sc"
+abbrevs[yay:-Ps]="-Ps"
+
+# === Pacman cache / maintenance ===
+abbrevs[paccache]="sudo paccache -r"
+abbrevs[pacunlock]="sudo rm /var/lib/pacman/db.lck"
+abbrevs[packeys]="sudo pacman-key --refresh-keys"

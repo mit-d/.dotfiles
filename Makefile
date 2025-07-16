@@ -1,17 +1,38 @@
-# List of ignored directories (space-separated, trailing slash required)
-IGNORE_DIRS := dwm/ keyboard/ mpd/ obmenu-gen/ openbox/ picom/ polybar/ termite/ tint2/
-
 # Target directory for symlinks
 TARGET_DIR ?= $(HOME)
 
 # Default verbosity level for stow (1..4)
 VERBOSITY ?= 1
 
-# Find all non-ignored directories (dynamically generated)
-STOW_DIRS := $(filter-out $(IGNORE_DIRS), $(wildcard */))
+# --- Flavor detection ---
+# Override with: make stow FLAVOR=osx
+ifdef FLAVOR
+  _FLAVOR := $(FLAVOR)
+else ifeq ($(shell uname -s),Darwin)
+  _FLAVOR := osx
+else ifeq ($(shell test -f /etc/arch-release && echo yes),yes)
+  _FLAVOR := arch
+else
+  _FLAVOR :=
+endif
+
+# Validate flavor
+ifeq ($(_FLAVOR),)
+  FLAVOR_LIST := $(basename $(notdir $(wildcard flavors/*.conf)))
+  $(error Could not detect platform. Set FLAVOR explicitly: $(FLAVOR_LIST))
+endif
+
+FLAVOR_FILE := flavors/$(_FLAVOR).conf
+ifeq ($(wildcard $(FLAVOR_FILE)),)
+  FLAVOR_LIST := $(basename $(notdir $(wildcard flavors/*.conf)))
+  $(error Unknown flavor '$(_FLAVOR)'. Available: $(FLAVOR_LIST))
+endif
+
+# Read package list from flavor file (strip comments and blank lines)
+STOW_DIRS := $(shell awk '!/^[[:space:]]*\x23/ && NF' $(FLAVOR_FILE) | tr '\n' ' ')
 
 # Main targets
-.PHONY: all stow restow delete dry-run list clean help
+.PHONY: all stow restow delete dry-run list clean help adopt
 
 # Default: list all available packages
 all: help
@@ -40,14 +61,43 @@ delete:
 	@echo "Deleting stow symlinks for directories: $(STOW_DIRS)"
 	@stow --delete --target "$(TARGET_DIR)" --verbose $(VERBOSITY) $(STOW_DIRS)
 
-# List all directories (all, ignored, and stowable)
+# Adopt a file into a stow package
+# Usage: make adopt FILE=~/.config/app/config.toml PACKAGE=app
+adopt:
+ifndef FILE
+	$(error FILE is required. Usage: make adopt FILE=~/.config/foo/bar PACKAGE=pkgname)
+endif
+ifndef PACKAGE
+	$(error PACKAGE is required. Usage: make adopt FILE=~/.config/foo/bar PACKAGE=pkgname)
+endif
+	@FILE_ABS="$$(realpath "$(FILE)")"; \
+	TARGET_ABS="$$(realpath "$(TARGET_DIR)")"; \
+	if [ ! -e "$$FILE_ABS" ]; then \
+		echo "Error: File '$(FILE)' does not exist"; exit 1; \
+	fi; \
+	if [ -L "$$FILE_ABS" ]; then \
+		echo "Error: '$(FILE)' is already a symlink"; exit 1; \
+	fi; \
+	REL_PATH="$${FILE_ABS#$$TARGET_ABS/}"; \
+	if [ "$$REL_PATH" = "$$FILE_ABS" ]; then \
+		echo "Error: File must be under $(TARGET_DIR)"; exit 1; \
+	fi; \
+	DEST_DIR="$(PACKAGE)/$$REL_PATH"; \
+	mkdir -p "$$(dirname "$$DEST_DIR")"; \
+	mv "$$FILE_ABS" "$$DEST_DIR"; \
+	echo "Moved '$$FILE_ABS' -> '$$DEST_DIR'"; \
+	stow --target "$(TARGET_DIR)" --verbose $(VERBOSITY) $(PACKAGE); \
+	echo "Adopted '$(FILE)' into package '$(PACKAGE)'"
+
+# List detected flavor and stowable directories
 list:
-	@echo "All directories:"; \
-	for dir in $(wildcard */); do echo "  $$dir"; done
-	@echo "\nIgnored directories:"; \
-	for ignore in $(IGNORE_DIRS); do echo "  $$ignore"; done
-	@echo "\nDirectories to stow:"; \
-	for stow in $(STOW_DIRS); do echo "  $$stow"; done
+	@echo "Detected flavor: $(_FLAVOR) ($(FLAVOR_FILE))"
+	@echo ""
+	@echo "Packages to stow:"
+	@for pkg in $(STOW_DIRS); do echo "  $$pkg"; done
+	@echo ""
+	@echo "All directories:"
+	@for dir in $(wildcard */); do echo "  $$dir"; done
 
 # Clean generated/intermediate files (optional target for extensibility)
 clean:
@@ -56,18 +106,23 @@ clean:
 # Help target to display usage
 help:
 	@echo "Available Commands:"
-	@echo "  make list         - List all directories (all, ignored, stowable)."
-	@echo "  make stow         - Stow all available directories."
-	@echo "  make restow       - Re-stow all available directories (update symlinks)."
-	@echo "  make delete       - Remove symlinks for all stowed directories."
-	@echo "  make dry-run      - Perform a dry run without making any changes."
+	@echo "  make list         - List detected flavor and packages."
+	@echo "  make stow         - Stow packages for detected flavor."
+	@echo "  make restow       - Re-stow packages (update symlinks)."
+	@echo "  make delete       - Remove symlinks for stowed packages."
+	@echo "  make dry-run      - Perform a dry run without making changes."
+	@echo "  make adopt        - Adopt a file into a stow package."
 	@echo "  make help         - Show this help message."
 	@echo ""
 	@echo "Options:"
+	@echo "  FLAVOR=<name>     - Override detected platform (available: $(basename $(notdir $(wildcard flavors/*.conf))))."
 	@echo "  TARGET_DIR=<dir>  - Specify target directory for symlinks (default: $(HOME))."
 	@echo "  VERBOSITY=<level> - Set verbosity level for stow (default: 1)."
+	@echo "  FILE=<path>       - File to adopt (for adopt command)."
+	@echo "  PACKAGE=<name>    - Target package (for adopt command)."
 	@echo ""
 	@echo "Examples:"
-	@echo "  make stow VERBOSITY=2                     - Stow with increased verbosity."
-	@echo "  make delete TARGET_DIR=/etc VERBOSITY=1   - Delete symlinks in /etc directory."
-
+	@echo "  make stow                                   - Stow packages (auto-detect platform)."
+	@echo "  make stow FLAVOR=osx                        - Stow macOS packages."
+	@echo "  make stow VERBOSITY=2                       - Stow with increased verbosity."
+	@echo "  make adopt FILE=~/.config/app/config PACKAGE=app - Adopt file into package."

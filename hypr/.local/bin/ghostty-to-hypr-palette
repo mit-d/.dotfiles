@@ -1,0 +1,92 @@
+#!/bin/bash
+# Convert Ghostty terminal themes to Hyprland palette files
+#
+# Usage: ghostty-to-hypr-palette [output-dir]
+#   output-dir defaults to ~/.config/hypr/palettes
+
+set -euo pipefail
+
+GHOSTTY_THEMES="${GHOSTTY_THEMES:-/usr/share/ghostty/themes}"
+PALETTE_DIR="${1:-$HOME/.config/hypr/palettes}"
+
+mkdir -p "$PALETTE_DIR"
+
+slugify() {
+    echo "$1" | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g; s/[^a-z0-9-]//g'
+}
+
+get_val() {
+    grep "^${2}" "$1" 2>/dev/null | head -1 | sed 's/.*#//'
+}
+
+get_pal() {
+    grep "^palette = ${2}=#" "$1" 2>/dev/null | head -1 | sed 's/.*#//'
+}
+
+count=0
+
+for theme_file in "$GHOSTTY_THEMES"/*; do
+    [[ -f "$theme_file" ]] || continue
+
+    theme_name=$(basename "$theme_file")
+    slug=$(slugify "$theme_name")
+
+    bg=$(get_val "$theme_file" "background")
+    fg=$(get_val "$theme_file" "foreground")
+    sel=$(get_val "$theme_file" "selection-background")
+
+    red=$(get_pal "$theme_file" 1)
+    green=$(get_pal "$theme_file" 2)
+    orange=$(get_pal "$theme_file" 3)
+    accent=$(get_pal "$theme_file" 5)
+    cyan=$(get_pal "$theme_file" 6)
+    dim=$(get_pal "$theme_file" 8)
+    yellow=$(get_pal "$theme_file" 11)
+
+    # Skip if essential colors are missing
+    [[ -z "$bg" || -z "$fg" ]] && continue
+
+    # Fallbacks
+    sel="${sel:-$bg}"
+    dim="${dim:-$bg}"
+    accent="${accent:-$fg}"
+    red="${red:-$fg}"
+    yellow="${yellow:-${orange:-$fg}}"
+    green="${green:-$fg}"
+    orange="${orange:-$fg}"
+    cyan="${cyan:-$fg}"
+
+    cat >"${PALETTE_DIR}/${slug}.conf" <<EOF
+# ${theme_name}
+# Auto-generated from Ghostty theme
+
+# Core palette
+\$bg = rgb(${bg})
+\$base = rgb(${sel})
+\$text = rgb(${fg})
+\$dim = rgb(${dim})
+\$accent = rgb(${accent})
+\$accent2 = rgb(${red})
+\$yellow = rgb(${yellow})
+\$green = rgb(${green})
+\$orange = rgb(${orange})
+\$cyan = rgb(${cyan})
+
+# Borders and shadows (base colors with transparency)
+\$border_active_1 = rgba(${accent}ee)
+\$border_active_2 = rgba(${red}ee)
+\$border_inactive = rgba(${dim}aa)
+\$shadow_color = rgba(${bg}ee)
+
+# Lock screen (base colors with per-element alpha)
+\$lock_accent = rgba(${accent}cc)
+\$lock_bg = rgba(${bg}d9)
+\$lock_text = rgb(${fg})
+\$lock_text_dim = rgba(${fg}cc)
+\$lock_yellow = rgba(${yellow}ff)
+EOF
+
+    ((count++)) || true
+done
+
+echo "Generated ${count} palette files in ${PALETTE_DIR}"

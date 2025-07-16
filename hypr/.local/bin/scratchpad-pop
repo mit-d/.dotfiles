@@ -1,0 +1,8 @@
+#!/bin/bash
+# Pop the most recent window from special:magic back to the active workspace
+ws=$(hyprctl activeworkspace -j | jq -r '.id')
+addr=$(hyprctl clients -j | jq -r '[.[] | select(.workspace.name == "special:magic")] | last | .address // empty')
+
+if [ -n "$addr" ]; then
+    hyprctl dispatch movetoworkspacesilent "$ws,address:$addr"
+fi

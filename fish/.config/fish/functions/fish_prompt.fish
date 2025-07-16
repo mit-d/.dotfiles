@@ -1,30 +1,21 @@
+# a called to `_pure_prompt_new_line` is triggered by an event
 function fish_prompt
-	if not set -q VIRTUAL_ENV_DISABLE_PROMPT
-        set -g VIRTUAL_ENV_DISABLE_PROMPT true
+    set --local exit_codes $pipestatus # save previous exit codes
+
+    # Handle transient prompt (Fish 4.1.0+)
+    # When --final-rendering is passed, show simplified prompt for scrollback
+    if contains -- --final-rendering $argv
+        set --local last_status $exit_codes[-1]
+
+        echo -e -n (_pure_prompt_transient $last_status)
+        echo -e -n (_pure_prompt_ending)
+        return
     end
-    set_color yellow
-    printf '%s' (whoami)
-    set_color normal
-    printf ' at '
 
-    set_color magenta
-    echo -n (prompt_hostname)
-    set_color normal
-    printf ' in '
+    _pure_print_prompt_rows # manage default vs. compact prompt
+    _pure_place_iterm2_prompt_mark # place iTerm shell integration mark
+    echo -e -n (_pure_prompt $exit_codes) # print prompt
+    echo -e -n (_pure_prompt_ending) # reset colors and end prompt
 
-    set_color $fish_color_cwd
-    printf '%s' (prompt_pwd)
-    set_color normal
-
-    set_color cyan
-    printf '%s' (fish_vcs_prompt)
-    set_color normal
-
-    # Line 2
-    echo
-    if test $VIRTUAL_ENV
-        printf "(%s) " (set_color blue)(basename $VIRTUAL_ENV)(set_color normal)
-    end
-    printf '↪ '
-    set_color normal
+    set _pure_fresh_session false
 end

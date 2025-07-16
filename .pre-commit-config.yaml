@@ -1,0 +1,114 @@
+exclude: |
+  (?x)^(
+    zsh/\.zsh/zsh-autosuggestions/.*|
+    zsh/\.zsh/zsh-syntax-highlighting/.*|
+    mpv/\.config/mpv/scripts/mpv-cut/.*|
+    vim/\.config/nvim/autoload/plug\.vim|
+    hypr/\.config/hypr/palettes/.*|
+    tests/_output/.*
+  )$
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+        args: [--fix=lf]
+      - id: check-executables-have-shebangs
+      - id: check-shebang-scripts-are-executable
+
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.11.0.1
+    hooks:
+      - id: shellcheck
+        args: [--severity=warning]
+        types: [shell]
+        exclude: |
+          (?x)(
+            \.zsh$|
+            \.zshrc$|
+            \.zprofile$|
+            \.zlogin$|
+            \.zlogout$|
+            \.zshenv$|
+            plug\.sh$|
+            tests/
+          )
+
+  - repo: https://github.com/scop/pre-commit-shfmt
+    rev: v3.12.0-2
+    hooks:
+      - id: shfmt
+        args: [-i, "4", -w]
+        types: [shell]
+        exclude: |
+          (?x)(
+            \.zsh$|
+            \.zshrc$|
+            \.zprofile$|
+            \.zlogin$|
+            \.zlogout$|
+            \.zshenv$
+          )
+
+  - repo: https://github.com/JohnnyMorganz/StyLua
+    rev: v2.3.1
+    hooks:
+      - id: stylua
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.1.0
+    hooks:
+      - id: prettier
+        types_or: [json, yaml, markdown, css]
+
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.21.0
+    hooks:
+      - id: markdownlint-cli2
+
+  - repo: local
+    hooks:
+      - id: fish-indent
+        name: fish_indent
+        entry: fish_indent -w
+        language: system
+        types: [fish]
+        exclude: |
+          (?x)(
+            _pure_|
+            fisher\.fish$|
+            fish_default_mode_prompt\.fish$
+          )
+
+  - repo: local
+    hooks:
+      - id: check-uncommon-chars
+        name: Check for uncommon Unicode characters
+        entry: >
+          perl -ne '
+            close ARGV if eof;
+            if (/[^\t\r\n\x20-\x7E]/) {
+              s/([^\t\r\n\x20-\x7E])/\033[31m$1\033[0m/g;
+              print "$ARGV:$.: $_";
+              $fail = 1;
+            }
+            END { exit($fail ? 1 : 0) }
+          '
+        language: system
+        types_or: [text]
+        exclude: |
+          (?x)(
+            \.vimrc$|
+            init\.vim$|
+            prompt\.zsh$|
+            abbr\.zsh$|
+            config\.jsonc$|
+            _pure_|
+            pure\.fish$|
+            fisher\.fish$
+          )
