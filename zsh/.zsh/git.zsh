@@ -258,3 +258,54 @@ function git-rename-remote-branch {
 
   print -u2 "Renamed remote branch: $old_branch -> $new_branch"
 }
+
+function gitbr {
+  local search_pattern=$1
+
+  # Default to showing all branches if no pattern is specified
+  if [[ -z "$search_pattern" ]]; then
+    search_pattern="."
+  fi
+
+  # Get branches sorted by last commit date
+  # Format: refname:short for branch name, committerdate:relative for sorting
+  git for-each-ref --sort=-committerdate refs/heads/ --format="%(refname:short)" |
+    # Filter branches to match the pattern
+    grep -i "$search_pattern" |
+    # Pipe to fzf for selection
+    fzf --ansi --height 50% --reverse --header "Select a branch:" --preview "git log -n 5 --color=always {}"
+}
+
+function git-skip {
+  # Get all modified files (both staged and unstaged)
+  local MODIFIED_FILES=$(git status --porcelain | grep -E '^ M|^M |^MM' | awk '{print $2}')
+  local UNTRACKED_FILES=$(git status --porcelain | grep -E '^\?\?' | awk '{print $2}')
+
+  echo "Setting skip-worktree for modified files:"
+  # Set skip-worktree bit for each modified file
+  for file in $MODIFIED_FILES; do
+      git update-index --skip-worktree "$file"
+      echo "  Set skip-worktree for $file"
+  done
+
+  if [ -n "$UNTRACKED_FILES" ]; then
+      echo -e "\nWarning: Found untracked files that can't be marked with skip-worktree:"
+      for file in $UNTRACKED_FILES; do
+          echo "  $file"
+      done
+      echo "Consider adding these files to the repository first if you want to skip-worktree them."
+  fi
+
+  echo -e "\nDone. Files will now be ignored by Git."
+}
+
+function git-unskip {
+  # Get all files with skip-worktree set
+  local SKIP_WORKTREE_FILES=$(git ls-files -v | grep "^S" | awk '{print $2}')
+
+  # Remove skip-worktree bit
+  for file in $SKIP_WORKTREE_FILES; do
+      git update-index --no-skip-worktree "$file"
+      echo "Removed skip-worktree for $file"
+  done
+}

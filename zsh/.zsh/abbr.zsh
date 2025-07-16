@@ -5,7 +5,7 @@ typeset -A abbrevs
 
 # Git
 abbrevs+=(
-  "sw"      "switch" 
+  "sw"      "switch"
   "ga"      "git add"
   "gb"      "git branch"
   "gc"      "git commit"
@@ -19,6 +19,7 @@ abbrevs+=(
   "grs"     "git reset --soft"
   "gs"      "git status"
   "gss"     "git status -s"
+  "unstage" "git restore --staged"
   #"gadcp"   "git add . && git commit -m 'Auto-commit' && git push"
   #"gai"     "git add --interactive"
   #"gap"     "git add --patch"
@@ -78,6 +79,7 @@ abbrevs+=(
   "dkig"  "docker images | grep __CURSOR__ | awk '{print \$3}'"
   "dkbd"  "docker build ."
   "dkbt"  "docker build -t __CURSOR__ ."
+  "dkpa"  "docker system prune -a"
   "drid"  "docker rmi -f \$(docker images -q -f \"dangling=true\")"
   "dco"   "docker compose"
   "dcr"   "docker compose run -it __CURSOR__ --rm"
@@ -101,10 +103,10 @@ abbrevs+=(
 #  "sudo"  "doas"
   "eof"   "<<EOF"
   "manz"  "apropos __CURSOR__ | fzf | cut -f1,2 -d' ' | xargs man"
-  "ctl"   "sudo systemctl"
-  "ctle"  "sudo systemctl enable"
-  "ctlre" "sudo systemctl restart"
-  "ctls"  "sudo systemctl stop"
+#  "ctl"   "sudo systemctl"
+#  "ctle"  "sudo systemctl enable"
+#  "ctlre" "sudo systemctl restart"
+#  "ctls"  "sudo systemctl stop"
   "hz"    "history 1 | fzf"
   "ping"  "ping -c 5"
 )
@@ -116,6 +118,12 @@ abbrevs+=(
   "G"    "| grep -ni"     # Grep with line numbers and case-insensitive
   "X"    "| $COPY_COMMAND"
   "Z"    "| fzf"
+)
+
+abbrevs+=(
+  "feat" "git switch -C feat/dmitten/WARH-__CURSOR__"
+  "bugs" "git switch -C bugs/dmitten/WARH-__CURSOR__"
+  "manage"  "vg jaguar manage --"
 )
 
 # Loop over the keys of the abbreviations array and create aliases for each
