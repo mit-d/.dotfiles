@@ -46,6 +46,11 @@ case "$OSTYPE" in
   darwin*)
     # macOS (OSTYPE is 'darwin*')
     alias 'su'='sudo su'
+    # caps:ctrl
+    hidutil property --set '{"UserKeyMapping":[
+      {"HIDKeyboardModifierMappingSrc": 0x700000039,"HIDKeyboardModifierMappingDst": 0x7000000E0},
+      {"HIDKeyboardModifierMappingSrc": 0x7000000E0,"HIDKeyboardModifierMappingDst": 0x700000039}
+    ]}' >>/dev/null
     ;;
   msys*|cygwin*|win32*)
     # Windows (via WSL, Cygwin, Git Bash, or MINGW)
@@ -54,3 +59,8 @@ case "$OSTYPE" in
     # Catch-all for unsupported OS types
     ;;
 esac
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+

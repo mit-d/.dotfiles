@@ -73,7 +73,7 @@ abbrevs+=(
 abbrevs+=(
   "dk"    "docker"
   "dkr"   "docker run -it"
-  "dksh"   "docker exec -it __CURSOR__ /bin/bash"
+  "dke"   "docker exec -it __CURSOR__ /bin/bash"
   "dki"   "docker images"
   "dkig"  "docker images | grep __CURSOR__ | awk '{print \$3}'"
   "dkbd"  "docker build ."
@@ -98,13 +98,13 @@ abbrevs+=(
 
 # Misc
 abbrevs+=(
-  "sudo"  "doas"
+#  "sudo"  "doas"
   "eof"   "<<EOF"
   "manz"  "apropos __CURSOR__ | fzf | cut -f1,2 -d' ' | xargs man"
-  "ctl"   "doas systemctl"
-  "ctle"  "doas systemctl enable"
-  "ctlre" "doas systemctl restart"
-  "ctls"  "doas systemctl stop"
+  "ctl"   "sudo systemctl"
+  "ctle"  "sudo systemctl enable"
+  "ctlre" "sudo systemctl restart"
+  "ctls"  "sudo systemctl stop"
   "hz"    "history 1 | fzf"
   "ping"  "ping -c 5"
 )

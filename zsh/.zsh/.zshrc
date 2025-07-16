@@ -20,6 +20,11 @@ if [[ -f "$HOME/.zsh/prompt.zsh" ]]; then
   source "$HOME/.zsh/prompt.zsh"
 fi
 
+# Stop here for intellij
+if [ -n "$INTELLIJ_ENVIRONMENT_READER" ]; then
+  return 0
+fi
+
 # Completion formatting
 if [[ -f "$HOME/.zsh/completion.zsh" ]]; then
   source "$HOME/.zsh/completion.zsh"
@@ -52,6 +57,9 @@ fi
 # https://github.com/zsh-users/zsh-autosuggestions
 if [ -e "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
   source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
+fi
+if [ -e "/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+  source "/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 fi
 
 # https://github.com/zsh-users/zsh-syntax-highlighting.git
@@ -154,3 +162,10 @@ zle -N escape-cmd; bindkey "^[\\" escape-cmd
 case $- in *i*) # Ensure interactive shell
   if [ -z "$TMUX" ] && command -v tmux &>/dev/null; then exec tmux; fi ;;
 esac
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/derekmitten/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+#
+export PATH="/opt/homebrew/opt/gnu-getopt/bin:$PATH"

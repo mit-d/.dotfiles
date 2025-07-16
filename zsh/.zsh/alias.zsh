@@ -2,12 +2,11 @@
 ################################################################################
 alias e="$EDITOR"
 alias ip="ip --color"
-alias ls="ls --file-type --color=auto -h"
+alias ls="ls --color=auto -h"
 alias ll="ls -al"
 alias tree="tree -CF"
 alias l="tree -L 1"
 alias ping="ping -c 5"
-alias brew="doas -u linuxbrew brew"
 
 if [[ -n "$COPY_COMMAND" ]]; then
   alias C="$COPY_COMMAND"
