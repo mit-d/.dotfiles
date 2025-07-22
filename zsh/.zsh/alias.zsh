@@ -2,7 +2,7 @@
 ################################################################################
 alias e="$EDITOR"
 alias ip="ip --color"
-alias ls="ls --color=auto -h"
+alias ls="ls --color -h"
 alias ll="ls -al"
 alias tree="tree -CF"
 alias l="tree -L 1"

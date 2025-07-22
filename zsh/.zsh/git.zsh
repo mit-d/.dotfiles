@@ -37,76 +37,6 @@ function get_mr_file {
   print "${HOME}/Documents/mr-$mr_number.md"
 }
 
-git_update_mr() {
-  local enable_edit=false upload=false info_file="$(get_mr_file)"
-
-  # Parse flags
-  while [[ $# -gt 0 ]]; do
-    case "$1" in
-      -e) enable_edit=true; shift ;;
-      -u) upload=true; shift ;;
-      -f=*) info_file="${1#-f=}"; shift ;;
-      -f)
-        shift
-        if [[ $# -gt 0 ]]; then
-          info_file="$1"
-          shift
-        else
-          print -u2 "Error: -f requires a filename."
-          return 1
-        fi
-        ;;
-      --) shift; break ;;
-      *) break ;;
-    esac
-  done
-
-  local base=${1:-origin/main} target=${2:-HEAD}
-
-  # If file missing and not editing, just print commits for piping
-  if [[ ! -f "$info_file" && "$enable_edit" != true ]]; then
-    git_summary "$base" "$target"
-    return
-  fi
-
-  # Create if needed, only for editing
-  if [[ ! -f "$info_file" ]]; then
-    {
-      echo "# Summary"
-      echo
-      echo "# Testing Instructions"
-      echo
-      echo "# Commits"
-    } > "$info_file"
-  fi
-
-  # Optionally edit
-  if [[ "$enable_edit" == true ]]; then
-    print -u2 "Editing $info_file..."
-    "${EDITOR:-nano}" "$info_file"
-  fi
-
-  # Remove old commits block
-  sed -i '/^# Commits$/,$d' "$info_file"
-
-  # Pipe output to file AND stdout
-  {
-    echo "# Commits"
-    echo
-    git_summary "$base" "$target"
-  } | tee -a "$info_file"
-
-  print -u2 "Updated $info_file."
-
-  if [[ "$upload" == true ]]; then
-    if command -v glab &>/dev/null; then
-      glab mr update -d "$(cat $info_file)"
-    else
-      echo "Command 'glab' not found. Not updating gitlab PR"
-    fi
-  fi
-}
-
 function gtag {
   local delete=0 rename=0 clear=0 gitname opts
 
@@ -309,3 +239,9 @@ function git-unskip {
       echo "Removed skip-worktree for $file"
   done
 }
+
+# Load `git_update_mr` function
+if [[ -f "$HOME/.zsh/git_update_mr.zsh" ]]; then
+  source "$HOME/.zsh/git_update_mr.zsh"
+fi
+
