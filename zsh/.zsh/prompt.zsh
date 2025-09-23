@@ -14,33 +14,37 @@ zstyle ':vcs_info:git:*' stagedstr '%F{green}●%F{blue}'
 zstyle ':vcs_info:git:*' unstagedstr '%F{red}●%F{blue}'
 zstyle ':vcs_info:git:*' formats '%u%c (%b)'
 
-# Environment variables to display in the prompt
+# Environment variables to display in the prompt with optional labels
 ENV_VARS=(
-  "DB_NAME"
-  "TEST_DB_NAME"
-  "VIRTUAL_ENV"
+  "DB_NAME::"
+  "TEST_DB_NAME:::"
+  "VIRTUAL_ENV:py:"
   "TEST_ARGS"
 )
+
+random_color() {
+  local seed=${1:-$RANDOM} # Use provided seed or default to a random value
+  local colors=(red green yellow blue magenta cyan)
+  local hash=$(($(echo -n "$seed" | cksum | awk '{print $1}') % ${#colors[@]}))
+  echo "${colors[hash]}"
+}
 
 # Function to build prompt with environment variables
 build_env_prompt() {
   local env_prompt=""
-  for var in "${ENV_VARS[@]}"; do
+  for entry in "${ENV_VARS[@]}"; do
+    local var="${entry%%:*}" # Variable name
+    local label="${entry#*:}" # Label or fallback to variable name
+    [[ "$label" == "$var" ]] && label="$var"
     if [[ -n "${(P)var}" ]]; then
       local value="${(P)var}"
-      if [[ "$value" == /* ]]; then
-        # Replace $PWD with . only if $PWD is not root
-        if [[ "$PWD" != "/" && "$value" == "$PWD"* ]]; then
-          value="${value/#$PWD/.}"
-        fi
-        # Replace $HOME with ~
-        value="${value/#$HOME/~}"
-        # Remove './' at the start
-        value="${value/#.\//}"
-        env_prompt+="%F{cyan}${var}:${value}%f "
-      else
-        env_prompt+="%F{cyan}${var}:${value}%f "
+      if [[ "$PWD" != "/" && "$value" == "$PWD"* ]]; then
+        value="${value/#$PWD/.}" # Replace PWD with '.'
       fi
+      value="${value/#$HOME/~}" # Replace HOME with '~'
+      value="${value/#.\//}"
+      local color="$(random_color $var)"
+      env_prompt+="%F{8}${label}%F{$color}${value}%f "
     fi
   done
   echo "$env_prompt"
@@ -48,11 +52,15 @@ build_env_prompt() {
 
 npm_prompt() {
   # Add nvm current version
-  if command -v nvm > /dev/null 2>&1; then
+  if command -v nvm >/dev/null 2 >&1; then
     local node_version=$(nvm current)
     echo "%F{yellow}node:${node_version}%f "
   fi
 }
+
+
+
+
 
 
 
