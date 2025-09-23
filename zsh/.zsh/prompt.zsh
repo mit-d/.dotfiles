@@ -17,7 +17,9 @@ zstyle ':vcs_info:git:*' formats '%u%c (%b)'
 # Environment variables to display in the prompt
 ENV_VARS=(
   "DB_NAME"
+  "TEST_DB_NAME"
   "VIRTUAL_ENV"
+  "TEST_ARGS"
 )
 
 # Function to build prompt with environment variables
