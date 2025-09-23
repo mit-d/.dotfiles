@@ -28,26 +28,31 @@ build_env_prompt() {
       env_prompt+="%F{cyan}${var}:${(P)var}%f "
     fi
   done
-
-  # Add nvm current version
-  if command -v nvm > /dev/null 2>&1; then
-    local node_version=$(nvm current)
-    env_prompt+="%F{yellow}node:${node_version}%f "
-  fi
   echo "$env_prompt"
 }
 
+npm_prompt() {
+  # Add nvm current version
+  if command -v nvm > /dev/null 2>&1; then
+    local node_version=$(nvm current)
+    echo "%F{yellow}node:${node_version}%f "
+  fi
+}
 
-# Conditional RPROMPT to show VCS info only if available
-RPROMPT='%F{blue}${VCS_MSG:+${VCS_MSG}}%f'
+
 
 precmd() {
   vcs_info
   VCS_MSG="${vcs_info_msg_0_}"
+
   # Build the main prompt
   PROMPT="%B%F{red}%#%b%f "
-  PROMPT="$(build_env_prompt)${PROMPT}"
   PROMPT="%~ $PROMPT"
+
+  # Build rprompt
+  RPROMPT='%F{blue}${VCS_MSG:+${VCS_MSG}}%f'
+  RPROMPT="$(build_env_prompt)${RPROMPT}"
+  RPROMPT="$(npm_prompt)${RPROMPT}"
 }
 
 setopt PROMPT_SUBST
