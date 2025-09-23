@@ -126,7 +126,7 @@ abbrevs+=(
   "bugs"     "git switch -C bugs/dmitten/WARH-__CURSOR__"
   "manage"   "docker exec -it jaguar-debug python manage.py __CURSOR__"
   "managesh" "docker exec -it jaguar-debugshell python manage.py __CURSOR__"
-  "db"       "DB_NAME=__CURSOR__ exec zsh"
+  "db"       "export DB_NAME=__CURSOR__"
 )
 
 # Loop over the keys of the abbreviations array and create aliases for each
