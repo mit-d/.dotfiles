@@ -35,6 +35,9 @@ if [ -d "$HOME/Android/Sdk/platform-tools" ]; then
   path+="$HOME/Android/Sdk/platform-tools"
 fi
 
-
+# Java
+if [ -d "/opt/homebrew/opt/openjdk/bin" ]; then
+  path+="/opt/homebrew/opt/openjdk/bin"
+fi
 ## Remove duplicates from path
 typeset -U -T PATH path

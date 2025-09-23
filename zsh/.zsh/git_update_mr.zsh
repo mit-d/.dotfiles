@@ -11,6 +11,7 @@ Update merge request information with git commit summary.
 OPTIONS:
     -e, --edit      Enable editing of the info file
     -u, --upload    Upload to GitLab using glab command
+    -s, --sync      Download description from GitLab before editing
     -f FILE         Use specific info file (default: from get_mr_file)
     -h, --help      Show this help message
 
@@ -21,6 +22,7 @@ ARGUMENTS:
 EXAMPLES:
     git_update_mr
     git_update_mr -e -u
+    git_update_mr -s -e -u
     git_update_mr -f my_mr.md origin/develop feature-branch
 EOF
 }
@@ -81,16 +83,70 @@ _git_update_mr_validate_file_path() {
     fi
 }
 
+# Function to sync description from GitLab
+_git_update_mr_sync_from_gitlab() {
+    local info_file="$1"
+    
+    if ! _git_update_mr_command_exists glab; then
+        print -u2 "Error: glab command not found. Install GitLab CLI to enable sync functionality."
+        return 1
+    fi
+    
+    print -u2 "Syncing description from GitLab..."
+    
+    local mr_description
+    if ! mr_description=$(glab mr view --output json 2>/dev/null | jq -r '.description // ""' 2>/dev/null); then
+        print -u2 "Warning: Failed to fetch merge request description from GitLab"
+        return 1
+    fi
+    
+    if [[ -z "$mr_description" || "$mr_description" == "null" ]]; then
+        print -u2 "No description found on GitLab merge request"
+        return 0
+    fi
+    
+    # Create backup before overwriting
+    local backup
+    if [[ -f "$info_file" ]]; then
+        if ! backup=$(_git_update_mr_create_backup "$info_file"); then
+            print -u2 "Error: Failed to create backup before sync"
+            return 1
+        fi
+    fi
+    
+    # Write the downloaded description to the file
+    if ! print "$mr_description" > "$info_file"; then
+        print -u2 "Error: Failed to write synced description to file"
+        if [[ -n "$backup" ]]; then
+            mv "$backup" "$info_file"
+        fi
+        return 1
+    fi
+    
+    if [[ -n "$backup" ]]; then
+        rm -f "$backup"
+    fi
+    
+    print -u2 "Successfully synced description from GitLab"
+    return 0
+}
+
+get_mr_file() {
+  local mr_number=$(glab mr view | awk 'NR == 8 { print $2 }')
+  local mr_dir="${GLAB_MR_FILE_DIR:-${HOME}/Documents}"
+  print "${mr_dir}/mr-$mr_number.md"
+}
+
 # Main function
-git_update_mr() {
+_git_update_mr() {
     setopt LOCAL_OPTIONS ERR_EXIT PIPE_FAIL
     
-    local enable_edit=false upload=false info_file="" show_help=false
+    local enable_edit=false upload=false sync=false info_file="" show_help=false
     local -A opts
     local -a remaining_args
 
     # Parse command line arguments using zsh zparseopts
-    if ! zparseopts -D -A opts e -edit u -upload f: h -help; then
+    if ! zparseopts -D -A opts e -edit u -upload s -sync f: h -help; then
         print -u2 "Error: Invalid options"
         print -u2 "Use -h or --help for usage information"
         return 1
@@ -102,6 +158,7 @@ git_update_mr() {
     # Process parsed options - check if key exists in array (not if value is non-empty)
     [[ -v "opts[-e]" || -v "opts[--edit]" ]] && enable_edit=true
     [[ -v "opts[-u]" || -v "opts[--upload]" ]] && upload=true
+    [[ -v "opts[-s]" || -v "opts[--sync]" ]] && sync=true
     [[ -v "opts[-h]" || -v "opts[--help]" ]] && show_help=true
     [[ -v "opts[-f]" ]] && info_file="${opts[-f]}"
 
@@ -139,6 +196,17 @@ git_update_mr() {
         return 1
     fi
 
+    # Sync from GitLab if requested
+    if [[ "$sync" == true ]]; then
+        if ! _git_update_mr_sync_from_gitlab "$info_file"; then
+            # Continue execution even if sync fails, unless it's a critical error
+            if [[ $? -eq 1 && ! -f "$info_file" ]]; then
+                print -u2 "Error: Sync failed and no local file exists"
+                return 1
+            fi
+        fi
+    fi
+
     # If file doesn't exist and we're not editing, just show commits
     if [[ ! -f "$info_file" && "$enable_edit" != true ]]; then
         print -u2 "Info file not found, showing commit summary:"
@@ -151,7 +219,33 @@ git_update_mr() {
         if ! cat > "$info_file" << 'EOF'
 # Summary
 
-# Testing Instructions
+-----
+
+TBD
+
+# Testing
+
+-----
+
+## Local Environment Setup
+
+|                     |                                                                             |
+|---------------------|-----------------------------------------------------------------------------|
+| C1 Business Type    | `Home Warranty`, `Automotive`, `Boat`, `Manufacture`, `Builder`, `FireArm`  |
+| Angular Application | `warranty_dash`, `affiliate_dash`                                           |
+| Depot Database      | `rc`                                                                        |
+
+## Testing Instructions
+
+-----
+
+TBD
+
+## Test Coverage
+
+-----
+
+TBD
 
 # Commits
 EOF
@@ -231,12 +325,26 @@ _git_update_mr_completion() {
         '--edit[Enable editing of the info file]' 
         '-u[Upload to GitLab using glab command]' 
         '--upload[Upload to GitLab using glab command]' 
+        '-s[Download description from GitLab before editing]' 
+        '--sync[Download description from GitLab before editing]' 
         '-f[Use specific info file]:file:_files' 
         '-h[Show help message]' 
         '--help[Show help message]'
     )
     _arguments -s $options '1:base branch:_git_branch_names' '2:target branch:_git_branch_names'
 }
+
+git_update_mr() {
+    # Wrapper that catches any exits from the main function
+    if _git_update_mr "$@"; then
+        return 0
+    else
+        local exit_code=$?
+        print -u2 "git_update_mr failed with exit code: $exit_code"
+        return $exit_code
+    fi
+}
+
 
 # Register completion function
 compdef _git_update_mr_completion git_update_mr

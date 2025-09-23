@@ -13,8 +13,26 @@ precmd() { vcs_info; VCS_MSG="${vcs_info_msg_0_}" }
 
 setopt PROMPT_SUBST
 PROMPT="%B%F{red}%#%b%f "
+
+ENV_VARS=(
+  "DB_NAME"
+)
+
+# Function to build prompt with environment variables
+build_env_prompt() {
+  local env_prompt=""
+  for var in "${ENV_VARS[@]}"; do
+    if [[ -n "${(P)var}" ]]; then
+      env_prompt+="%F{cyan}${var}:${(P)var}%f "
+    fi
+  done
+  echo "$env_prompt"
+}
+PROMPT="$(build_env_prompt)${PROMPT}"
+
 PROMPT="%~ $PROMPT"
 export PROMPT
+
 
 # RPROMPT='%F{blue}${VCS_MSG}%f'
 RPROMPT='%F{blue}${VCS_MSG}%f'

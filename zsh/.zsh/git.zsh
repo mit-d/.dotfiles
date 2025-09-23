@@ -32,11 +32,6 @@ git_summary() {
   fi
 }
 
-function get_mr_file {
-  local mr_number=$(glab mr view | awk 'NR == 8 { print $2 }')
-  print "${HOME}/Documents/mr-$mr_number.md"
-}
-
 function gtag {
   local delete=0 rename=0 clear=0 gitname opts
 
@@ -189,23 +184,6 @@ function git-rename-remote-branch {
   print -u2 "Renamed remote branch: $old_branch -> $new_branch"
 }
 
-function gitbr {
-  local search_pattern=$1
-
-  # Default to showing all branches if no pattern is specified
-  if [[ -z "$search_pattern" ]]; then
-    search_pattern="."
-  fi
-
-  # Get branches sorted by last commit date
-  # Format: refname:short for branch name, committerdate:relative for sorting
-  git for-each-ref --sort=-committerdate refs/heads/ --format="%(refname:short)" |
-    # Filter branches to match the pattern
-    grep -i "$search_pattern" |
-    # Pipe to fzf for selection
-    fzf --ansi --height 50% --reverse --header "Select a branch:" --preview "git log -n 5 --color=always {}"
-}
-
 function git-skip {
   # Get all modified files (both staged and unstaged)
   local MODIFIED_FILES=$(git status --porcelain | grep -E '^ M|^M |^MM' | awk '{print $2}')
@@ -240,8 +218,12 @@ function git-unskip {
   done
 }
 
-# Load `git_update_mr` function
+# Load git-specific functions
 if [[ -f "$HOME/.zsh/git_update_mr.zsh" ]]; then
   source "$HOME/.zsh/git_update_mr.zsh"
+fi
+
+if [[ -f "$HOME/.zsh/gitbr.zsh" ]]; then
+  source "$HOME/.zsh/gitbr.zsh"
 fi
 

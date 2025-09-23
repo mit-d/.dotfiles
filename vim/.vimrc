@@ -71,3 +71,7 @@ ino [<CR> [<CR>]<C-c>O
 ino (; ();<ESC>hi
 ino {; {};<ESC>hi
 ino [; [];<ESC>hi
+
+" fzf
+set rtp+=/opt/homebrew/opt/fzf
+

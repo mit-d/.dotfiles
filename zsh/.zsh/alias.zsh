@@ -63,3 +63,5 @@ alias -g Z="| fzf"
 function expand-alias() { zle _expand_alias }
 zle -N expand-alias && bindkey '^ ' expand-alias
 alias dictz="fzf </usr/share/dict/words"
+
+alias psql="psql-17"

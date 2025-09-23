@@ -82,6 +82,7 @@ abbrevs+=(
   "dkpa"  "docker system prune -a"
   "drid"  "docker rmi -f \$(docker images -q -f \"dangling=true\")"
   "dco"   "docker compose"
+  "dcou"   "docker compose up -d --remove-orphans"
   "dcr"   "docker compose run -it __CURSOR__ --rm"
 )
 
@@ -121,9 +122,11 @@ abbrevs+=(
 )
 
 abbrevs+=(
-  "feat" "git switch -C feat/dmitten/WARH-__CURSOR__"
-  "bugs" "git switch -C bugs/dmitten/WARH-__CURSOR__"
-  "manage"  "vg jaguar manage --"
+  "feat"     "git switch -C feat/dmitten/WARH-__CURSOR__"
+  "bugs"     "git switch -C bugs/dmitten/WARH-__CURSOR__"
+  "manage"   "docker exec -it jaguar-debug python manage.py __CURSOR__"
+  "managesh" "docker exec -it jaguar-debugshell python manage.py __CURSOR__"
+  "db"       "DB_NAME=__CURSOR__ exec zsh"
 )
 
 # Loop over the keys of the abbreviations array and create aliases for each

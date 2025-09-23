@@ -108,6 +108,9 @@ setopt HIST_EXPIRE_DUPS_FIRST HIST_IGNORE_DUPS HIST_IGNORE_SPACE
 # no beeping!
 setopt NO_BEEP
 
+# Extended globbing
+setopt EXTENDED_GLOB
+
 # Check mail every minute
 export MAILCHECK=60
 

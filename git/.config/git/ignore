@@ -82,6 +82,11 @@ out/
 *.backup
 *.old
 
+# Patch files
+*.patch
+*.diff
+*.sdiff
+
 # Archive files
 *.zip
 *.tar.gz
