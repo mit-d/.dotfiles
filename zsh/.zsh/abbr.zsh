@@ -3,8 +3,8 @@
 setopt extendedglob
 typeset -A abbrevs
 
-# Git
-abbrevs+=(
+# Git Abbreviations
+typeset -A git_abbrevs=(
   "sw"      "switch"
   "ga"      "git add"
   "gb"      "git branch"
@@ -20,58 +20,58 @@ abbrevs+=(
   "gs"      "git status"
   "gss"     "git status -s"
   "unstage" "git restore --staged"
-  #"gadcp"   "git add . && git commit -m 'Auto-commit' && git push"
-  #"gai"     "git add --interactive"
-  #"gap"     "git add --patch"
-  #"gau"     "git add --update"
-  #"gba"     "git branch -a"
-  #"gbav"    "git branch -a -vv"
-  #"gbm"     "git branch -M"
-  #"gbmd"    'git branch --merged | grep  -v "\*\|main" | xargs -n1 git branch -d'
-  #"gbsc"    "git branch --show-current"
-  #"gbsmd"   "git fetch -p && for branch in \$(git branch -vv | grep ': gone]' | awk '{print \$1}'); do git branch -D \$branch; done"
-  #"gbv"     "git branch -vv"
-  #"gbz"     "git branch | fzf | xargs git checkout"
-  #"gca"     "git commit --amend"
-  #"gcane"   "git commit --amend --no-edit"
-  #"gcdi"    "git clean -di"
-  #"gci"     "git commit --interactive"
-  #"gcm"     "git commit --message"
-  #"gcwip"   "git commit -m 'WIP'"
-  #"gdc"     "git diff --cached"
-  #"gdm"     "git diff origin/main..__CURSOR__"
-  #"gdt"     "git difftool"
-  #"gfo"     "git fetch origin"
-  #"gfp"     "git fetch --prune"
-  #"gfpt"    "git fetch --prune --tags"
-  #"gmnf"    "git merge --no-ff"
-  #"gpf"     "git push --force-with-lease"
-  #"gpl"     "git pull"
-  #"gpo"     "git push origin"
-  #"gpod"    "git push origin --delete"
-  #"grb"     "git rebase"
-  #"grba"    "git rebase --abort"
-  #"grbc"    "git rebase --continue"
-  #"grbi"    "git rebase -i"
-  #"grbm"    "git rebase origin/main"
-  #"gre"     "git restore --staged --worktree"
-  #"grh"     "git reset --hard"
-  #"grs"     "git reset --soft"
-  #"grsm"    "git reset --soft origin/main"
-  #"gs-"     "git switch -"
-  #"gsc"     "git switch -C"
-  #"gsgl"    "git submodule -q foreach git pull -q origin main"
-  #"gsm"     "git switch main"
-  #"gsti"    "git stashed --keep-index"
-  #"gstl"    "git stash list"
-  #"gstl"    "git status"
-  #"gstp"    "git stash pop"
-  #"gsts"    "git stash --staged"
-  #"gsu"     "git submodule update --init --recursive"
 )
 
-# Docker
-abbrevs+=(
+typeset -A git_abbrevs_extra=(
+  "gadcp"   "git add . && git commit -m 'Auto-commit' && git push"
+  "gai"     "git add --interactive"
+  "gap"     "git add --patch"
+  "gau"     "git add --update"
+  "gba"     "git branch -a"
+  "gbav"    "git branch -a -vv"
+  "gbm"     "git branch -M"
+  "gbmd"    'git branch --merged | grep  -v "\*\|main" | xargs -n1 git branch -d'
+  "gbsc"    "git branch --show-current"
+  "gbsmd"   "git fetch -p && for branch in \$(git branch -vv | grep ': gone]' | awk '{print \$1}'); do git branch -D \$branch; done"
+  "gbv"     "git branch -vv"
+  "gbz"     "git branch | fzf | xargs git checkout"
+  "gca"     "git commit --amend"
+  "gcane"   "git commit --amend --no-edit"
+  "gcdi"    "git clean -di"
+  "gci"     "git commit --interactive"
+  "gcm"     "git commit --message"
+  "gcwip"   "git commit -m 'WIP'"
+  "gdc"     "git diff --cached"
+  "gdm"     "git diff origin/main..__CURSOR__"
+  "gdt"     "git difftool"
+  "gfo"     "git fetch origin"
+  "gfp"     "git fetch --prune"
+  "gfpt"    "git fetch --prune --tags"
+  "gmnf"    "git merge --no-ff"
+  "gpf"     "git push --force-with-lease"
+  "gpl"     "git pull"
+  "gpo"     "git push origin"
+  "gpod"    "git push origin --delete"
+  "grb"     "git rebase"
+  "grba"    "git rebase --abort"
+  "grbc"    "git rebase --continue"
+  "grbi"    "git rebase -i"
+  "grbm"    "git rebase origin/main"
+  "gre"     "git restore --staged --worktree"
+  "grsm"    "git reset --soft origin/main"
+  "gs-"     "git switch -"
+  "gsc"     "git switch -C"
+  "gsgl"    "git submodule -q foreach git pull -q origin main"
+  "gsm"     "git switch main"
+  "gsti"    "git stashed --keep-index"
+  "gstl"    "git stash list"
+  "gstp"    "git stash pop"
+  "gsts"    "git stash --staged"
+  "gsu"     "git submodule update --init --recursive"
+)
+
+# Docker Abbreviations
+typeset -A docker_abbrevs=(
   "dk"    "docker"
   "dkr"   "docker run -it"
   "dke"   "docker exec -it __CURSOR__ /bin/bash"
@@ -82,12 +82,12 @@ abbrevs+=(
   "dkpa"  "docker system prune -a"
   "drid"  "docker rmi -f \$(docker images -q -f \"dangling=true\")"
   "dco"   "docker compose"
-  "dcou"   "docker compose up -d --remove-orphans"
+  "dcou"  "docker compose up -d --remove-orphans"
   "dcr"   "docker compose run -it __CURSOR__ --rm"
 )
 
-# Package Manager
-abbrevs+=(
+# Package Manager Abbreviations
+typeset -A apt_abbrevs=(
   "apts"  "apt search"
   "aptl"  "apt list"
   "aptlu" "apt list -u"
@@ -99,20 +99,22 @@ abbrevs+=(
   "flup"  "flatpak update"
 )
 
-# Misc
-abbrevs+=(
-#  "sudo"  "doas"
-  "eof"   "<<EOF"
-  "manz"  "apropos __CURSOR__ | fzf | cut -f1,2 -d' ' | xargs man"
-#  "ctl"   "sudo systemctl"
-#  "ctle"  "sudo systemctl enable"
-#  "ctlre" "sudo systemctl restart"
-#  "ctls"  "sudo systemctl stop"
-  "hz"    "history 1 | fzf"
-  "ping"  "ping -c 5"
+typeset -A systemctl_abbrevs=(
+  "ctl"   "sudo systemctl"
+  "ctle"  "sudo systemctl enable"
+  "ctlre" "sudo systemctl restart"
+  "ctls"  "sudo systemctl stop"
 )
 
-abbrevs+=(
+# Miscellaneous Abbreviations
+typeset -A misc_abbrevs=(
+  "eof"   "<<EOF"
+  "manz"  "apropos __CURSOR__ | fzf | cut -f1,2 -d' ' | xargs man"
+  "hz"    "history 1 | fzf"
+)
+
+# Output Redirection Abbreviations
+typeset -A output_abbrevs=(
   "NULL" '&>/dev/null'    # Pipes all output to /dev/null
   "L"    "| less"         # Pipe output to less pager
   "T"    "| tee -a"       # Append output to file
@@ -121,13 +123,73 @@ abbrevs+=(
   "Z"    "| fzf"
 )
 
-abbrevs+=(
+typeset -A k8s_abbrevs=(
+  "k"      "kubectl"
+  "kgp"    "kubectl get pods"
+  "kgn"    "kubectl get nodes"
+  "kga"    "kubectl get all"
+  "kdp"    "kubectl describe pod"
+  "kl"     "kubectl logs"
+  "kex"    "kubectl exec -it"
+  "kctx"   "kubectl config use-context"
+  "kns"    "kubectl config set-context --current --namespace"
+)
+
+typeset -A sysmon_abbrevs=(
+  "psa"    "ps aux"
+  "top"    "htop"
+  "dfh"    "df -h"
+  "upt"    "uptime"
+  "who"    "who -a"
+)
+
+typeset -A net_abbrevs=(
+  "curlh"  "curl -I"
+  "wgetr"  "wget -r"
+  "ping"  "ping -c 5"
+  "tracer" "traceroute"
+  "nslook" "nslookup"
+  "dig"    "dig +short"
+)
+
+typeset -A pyenv_abbrevs=(
+  "venv"   "python -m venv .venv"
+  "act"    "source .venv/bin/activate"
+  "deact"  "deactivate"
+  "pipup"  "pip install --upgrade pip"
+  "req"    "pip install -r requirements.txt"
+  "freeze" "pip freeze > requirements.txt"
+)
+
+# Custom Workflow Abbreviations
+typeset -A custom_abbrevs=(
   "feat"     "git switch -C feat/dmitten/WARH-__CURSOR__"
   "bugs"     "git switch -C bugs/dmitten/WARH-__CURSOR__"
   "manage"   "docker exec -it jaguar-debug python manage.py __CURSOR__"
   "managesh" "docker exec -it jaguar-debugshell python manage.py __CURSOR__"
   "db"       "export DB_NAME=__CURSOR__"
 )
+
+# List of associative arrays to merge
+typeset -a abbrev_arrays=(
+  git_abbrevs
+  # git_abbrevs_extra
+  k8s_abbrevs
+  docker_abbrevs
+  pyenv_abbrevs
+  sysmon_abbrevs
+  net_abbrevs
+  misc_abbrevs
+  output_abbrevs
+  custom_abbrevs
+  # apt_abbrevs
+  # systemctl_abbrevs
+)
+
+# Merge all arrays into abbrevs
+for array in ${abbrev_arrays[@]}; do
+  abbrevs+=( ${(kv)${(P)array}} )
+done
 
 # Loop over the keys of the abbreviations array and create aliases for each
 for abbr in ${(k)abbrevs}; do

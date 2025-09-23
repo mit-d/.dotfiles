@@ -27,7 +27,11 @@ build_env_prompt() {
   local env_prompt=""
   for var in "${ENV_VARS[@]}"; do
     if [[ -n "${(P)var}" ]]; then
-      env_prompt+="%F{cyan}${var}:${(P)var}%f "
+      if [[ "$var" == "VIRTUAL_ENV" ]]; then
+        env_prompt+="%F{cyan}${var}:$(basename ${(P)var})%f "
+      else
+        env_prompt+="%F{cyan}${var}:${(P)var}%f "
+      fi
     fi
   done
   echo "$env_prompt"
