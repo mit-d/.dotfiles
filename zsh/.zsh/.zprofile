@@ -33,34 +33,34 @@ fi
 
 ## OS-specific setup
 case "$OSTYPE" in
-  linux*)
-    # Linux-specific config
-    if [ "$XDG_SESSION_TYPE" = "x11" ] && command -v setxkbmap >/dev/null 2>&1; then
-      # X11 environment
-      setxkbmap -option caps:ctrl_modifier
-    elif [ "$XDG_SESSION_TYPE" = "wayland" ] && command -v gsettings >/dev/null 2>&1; then
-      # Wayland with GNOME
-      gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier']"
-    fi
-    ;;
-  darwin*)
-    # macOS (OSTYPE is 'darwin*')
-    alias 'su'='sudo su'
-    # caps:ctrl
-    hidutil property --set '{"UserKeyMapping":[
-      {"HIDKeyboardModifierMappingSrc": 0x700000039,"HIDKeyboardModifierMappingDst": 0x7000000E0},
-      {"HIDKeyboardModifierMappingSrc": 0x7000000E0,"HIDKeyboardModifierMappingDst": 0x700000039}
-    ]}' >>/dev/null
-    ;;
-  msys*|cygwin*|win32*)
-    # Windows (via WSL, Cygwin, Git Bash, or MINGW)
-    ;;
-  *)
-    # Catch-all for unsupported OS types
-    ;;
+linux*)
+  # Linux-specific config
+  if [ "$XDG_SESSION_TYPE" = "x11" ] && command -v setxkbmap >/dev/null 2 >&1; then
+    # X11 environment
+    setxkbmap -option caps:ctrl_modifier
+  elif [ "$XDG_SESSION_TYPE" = "wayland" ] && command -v gsettings >/dev/null 2 >&1; then
+    # Wayland with GNOME
+    gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier']"
+  fi
+  ;;
+darwin*)
+  # macOS (OSTYPE is 'darwin*')
+  alias 'su'='sudo su'
+  # caps:ctrl
+  hidutil property --set '{"UserKeyMapping":[
+{"HIDKeyboardModifierMappingSrc": 0x700000039,"HIDKeyboardModifierMappingDst": 0x7000000E0},
+{"HIDKeyboardModifierMappingSrc": 0x7000000E0,"HIDKeyboardModifierMappingDst": 0x700000039}
+  ]}' >>/dev/null
+  ;;
+msys* | cygwin* | win32*)
+  # Windows (via WSL, Cygwin, Git Bash, or MINGW)
+  ;;
+*)
+  # Catch-all for unsupported OS types
+  ;;
 esac
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh" # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
 

@@ -11,6 +11,14 @@
 # zmodload zsh/zprof # add zprof to end of file
 
 
+
+
+
+
+
+
+
+
 ## Source path vars
 ###############################################################################
 
@@ -63,18 +71,10 @@ fi
 ## Plugins
 ###############################################################################
 
-# https://github.com/zsh-users/zsh-autosuggestions
-if [ -e "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
-  source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
-fi
-if [ -e "/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
-  source "/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-fi
-
-# https://github.com/zsh-users/zsh-syntax-highlighting.git
-if [ -e "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
-  source "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-fi
+for plugin in zsh-autosuggestions zsh-syntax-highlighting; do
+  [[ -e "$HOME/.zsh/$plugin/$plugin.zsh" ]] && source "$HOME/.zsh/$plugin/$plugin.zsh"
+  [[ -e "/opt/homebrew/share/$plugin/$plugin.zsh" ]] && source "/opt/homebrew/share/$plugin/$plugin.zsh"
+done
 
 # sudo apt install command-not-found
 if [ -e "/etc/zsh_command_not_found" ]; then
@@ -119,24 +119,24 @@ export MAILCHECK=60
 
 # Set man colors
 function man {
-    LESS_TERMCAP_md=$'\e[01;31m' \
-    LESS_TERMCAP_me=$'\e[0m' \
-    LESS_TERMCAP_us=$'\e[01;32m' \
-    LESS_TERMCAP_ue=$'\e[0m' \
-    LESS_TERMCAP_so=$'\e[45;93m' \
-    LESS_TERMCAP_se=$'\e[0m' \
-    command man "$@"
+  LESS_TERMCAP_md=$'\e[01;31m' \
+  LESS_TERMCAP_me=$'\e[0m' \
+  LESS_TERMCAP_us=$'\e[01;32m' \
+  LESS_TERMCAP_ue=$'\e[0m' \
+  LESS_TERMCAP_so=$'\e[45;93m' \
+  LESS_TERMCAP_se=$'\e[0m' \
+  command man "$@"
 }
 
 function bak {
-    mkdir -p .bak
-    local file=".bak/$1.$(date --iso-8601).bak"
-    local num=1
-    while [ -e "$file" ]; do
-        file=".bak/$1.$(date --iso-8601).bak ($num)"
-        ((num++))
-    done
-    rsync -a "$1" "$file"
+  mkdir -p .bak
+  local file=".bak/$1.$(date --iso-8601).bak"
+  local num=1
+  while [ -e "$file" ]; do
+    file=".bak/$1.$(date --iso-8601).bak ($num)"
+    ((num++))
+  done
+  rsync -a "$1" "$file"
 }
 
 # Bind C-r Custom history search widget using fzf
@@ -155,7 +155,10 @@ function fzf-history-widget {
 zle -N fzf-history-widget; bindkey '^R' fzf-history-widget
 
 # Bind Alt-Enter to run current line as root
-run-as-root() { BUFFER="sudo $BUFFER"; zle accept-line }
+run-as-root() {
+  BUFFER="sudo $BUFFER";
+  zle accept-line;
+}
 zle -N run-as-root; bindkey "^[^M" run-as-root
 
 # Bind Alt-\ to toggle escape on current line
