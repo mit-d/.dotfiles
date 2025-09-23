@@ -27,10 +27,19 @@ build_env_prompt() {
   local env_prompt=""
   for var in "${ENV_VARS[@]}"; do
     if [[ -n "${(P)var}" ]]; then
-      if [[ "$var" == "VIRTUAL_ENV" ]]; then
-        env_prompt+="%F{cyan}${var}:$(basename ${(P)var})%f "
+      local value="${(P)var}"
+      if [[ "$value" == /* ]]; then
+        # Replace $PWD with . only if $PWD is not root
+        if [[ "$PWD" != "/" && "$value" == "$PWD"* ]]; then
+          value="${value/#$PWD/.}"
+        fi
+        # Replace $HOME with ~
+        value="${value/#$HOME/~}"
+        # Remove './' at the start
+        value="${value/#.\//}"
+        env_prompt+="%F{cyan}${var}:${value}%f "
       else
-        env_prompt+="%F{cyan}${var}:${(P)var}%f "
+        env_prompt+="%F{cyan}${var}:${value}%f "
       fi
     fi
   done
