@@ -147,9 +147,9 @@ magic-abbrev-expand() {
   LBUFFER+=${command:-$MATCH}
 
   # If the expanded text contains __CURSOR__, split it into left and right buffers
-  if [[ "${command}" =~ "__CURSOR__" ]]; then
-    RBUFFER=${LBUFFER[(ws:__CURSOR__:)2]}
-    LBUFFER=${LBUFFER[(ws:__CURSOR__:)1]}
+  if [[ "${command}" == *"__CURSOR__"* ]]; then
+    LBUFFER="${command%%__CURSOR__*}"
+    RBUFFER="${command#*__CURSOR__}"
   else
     # If there's no cursor placeholder, just insert a space
     zle self-insert

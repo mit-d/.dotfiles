@@ -45,7 +45,7 @@ alias myip="curl https://ipinfo.io 2>/dev/null | jq -C"
 
 # Suffix Aliases
 ################################################################################
-for type (txt md); do
+for type in txt md; do
   alias -s $type="${EDITOR:-nano} -- "
 done
 
