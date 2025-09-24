@@ -252,32 +252,22 @@ function abbr {
     local arrow_color='\033[0;37m'  # White
     local value_color='\033[0;32m'  # Green
     local reset='\033[0m'           # Reset color
-
-    for array in ${abbrev_arrays[@]}; do
-      # Print header with color and decorative border
-      echo -e "${reset}${header_color}${array}${reset}"
-
-      # Get all keys and sort them for consistent output
-      local keys=(${(ko)${(P)array}})
-
-      for key in $keys; do
-        local value=${${(P)array}[$key]}
-        printf "${key_color}%-12s${reset} ${arrow_color}→${reset} ${value_color}%s${reset}\n" "$key" "$value"
-      done
-      echo
-    done
-  else
-    # Plain output for non-interactive (pipes, redirects, etc.)
-    for array in ${abbrev_arrays[@]}; do
-      echo "${array}"
-      local keys=(${(ko)${(P)array}})
-      for key in $keys; do
-        local value=${${(P)array}[$key]}
-        printf "%-12s -> %s\n" "$key" "$value"
-      done
-      echo
-    done
+    local arrow="→"
   fi
+
+  for array in ${abbrev_arrays[@]}; do
+    # Print header
+    echo -e "${header_color}${array}${reset}"
+
+    # Get all keys and sort them for consistent output
+    local keys=(${(ko)${(P)array}})
+
+    for key in $keys; do
+      local value=${${(P)array}[$key]}
+      printf "${key_color}%-12s${reset} ${arrow_color}${arrow}${reset} ${value_color}%s${reset}\n" "$key" "$value"
+    done
+    echo
+  done
 }
 
 # Ensures that autosuggestions are cleared when custom ENTER widget is used
