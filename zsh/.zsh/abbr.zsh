@@ -243,5 +243,42 @@ bindkey "^M" magic-abbrev-expand-and-execute  # Enter triggers expansion plus co
 bindkey "^x " no-magic-abbrev-expand          # Ctrl+x + space inserts space literally
 bindkey -M isearch " " self-insert            # During isearch, space just inserts space
 
+function abbr {
+  # Check if output is to a terminal (interactive)
+  if [[ -t 1 ]]; then
+    # Colors for interactive terminal
+    local header_color='\033[1;36m' # Bold cyan
+    local key_color='\033[1;33m'    # Bold yellow
+    local arrow_color='\033[0;37m'  # White
+    local value_color='\033[0;32m'  # Green
+    local reset='\033[0m'           # Reset color
+
+    for array in ${abbrev_arrays[@]}; do
+      # Print header with color and decorative border
+      echo -e "${reset}${header_color}${array}${reset}"
+
+      # Get all keys and sort them for consistent output
+      local keys=(${(ko)${(P)array}})
+
+      for key in $keys; do
+        local value=${${(P)array}[$key]}
+        printf "${key_color}%-12s${reset} ${arrow_color}→${reset} ${value_color}%s${reset}\n" "$key" "$value"
+      done
+      echo
+    done
+  else
+    # Plain output for non-interactive (pipes, redirects, etc.)
+    for array in ${abbrev_arrays[@]}; do
+      echo "${array}"
+      local keys=(${(ko)${(P)array}})
+      for key in $keys; do
+        local value=${${(P)array}[$key]}
+        printf "%-12s -> %s\n" "$key" "$value"
+      done
+      echo
+    done
+  fi
+}
+
 # Ensures that autosuggestions are cleared when custom ENTER widget is used
 export ZSH_AUTOSUGGEST_CLEAR_WIDGETS=(magic-abbrev-expand-and-execute)
