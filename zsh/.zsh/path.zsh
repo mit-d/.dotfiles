@@ -18,12 +18,13 @@ directories=(
   # Homebrew
   "/opt/homebrew/bin"
   "/opt/homebrew/opt/openjdk/bin"
+  "/opt/homebrew/opt/coreutils/libexec/gnubin"
 )
 
 # Add directories to PATH if they exist
 for dir in "${directories[@]}"; do
   if [ -d "$dir" ]; then
-    path+="$dir"
+    path=("$dir" $path)
   fi
 done
 
