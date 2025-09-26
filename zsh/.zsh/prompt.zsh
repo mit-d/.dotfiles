@@ -19,7 +19,7 @@ ENV_VARS=(
   "DB_NAME::"
   "TEST_DB_NAME:::"
   "VIRTUAL_ENV:py:"
-  "TEST_ARGS"
+  "BBP_TEST_EXTRA_ARGS:"
 )
 
 random_color() {
