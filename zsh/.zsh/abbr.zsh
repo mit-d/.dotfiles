@@ -5,21 +5,24 @@ typeset -A abbrevs
 
 # Git Abbreviations
 typeset -A git_abbrevs=(
-  "sw"      "switch"
-  "ga"      "git add"
-  "gb"      "git branch"
-  "gc"      "git commit"
-  "gd"      "git diff"
-  "gf"      "git fetch --prune --tags"
-  "gl"      "git log"
-  "glg"     "git log --graph --oneline"
-  "glgl"    "git log --graph --oneline --all"
-  "gr"      "git reset --mixed"
-  "grh"     "git reset --hard"
-  "grs"     "git reset --soft"
-  "gs"      "git status"
-  "gss"     "git status -s"
-  "unstage" "git restore --staged"
+  "sw"            "switch"
+  "ga"            "git add"
+  "gb"            "git branch"
+  "gc"            "git commit"
+  "gd"            "git diff"
+  "gf"            "git fetch --prune --tags"
+  "gl"            "git log"
+  "glg"           "git log --graph --oneline"
+  "glgl"          "git log --graph --oneline --all"
+  "gr"            "git reset --mixed"
+  "grh"           "git reset --hard"
+  "grs"           "git reset --soft"
+  "gs"            "git status"
+  "gss"           "git status -s"
+  "unstage"       "git restore --staged"
+  "gchanged"      "git diff --name-only \"\$(git merge-base HEAD origin/main)\"...HEAD"
+  "gblackchanged" 'black $(git diff --name-only "$(git merge-base HEAD origin/main)"...HEAD | grep -E "\.py$")'
+  "gblacknew"     'black $(git diff --name-only --diff-filter=A "$(git merge-base HEAD origin/main)"...HEAD | grep -E "\.py$")'
 )
 
 typeset -A git_abbrevs_extra=(
@@ -115,12 +118,12 @@ typeset -A misc_abbrevs=(
 
 # Output Redirection Abbreviations
 typeset -A output_abbrevs=(
-  "NULL" '&>/dev/null'    # Pipes all output to /dev/null
-  "L"    "| less"         # Pipe output to less pager
-  "T"    "| tee -a"       # Append output to file
-  "G"    "| grep -ni"     # Grep with line numbers and case-insensitive
-  "X"    "| $COPY_COMMAND"
-  "Z"    "| fzf"
+  "_NULL" "&>/dev/null"  # Pipes all output to /dev/null
+  "_L" "| less"          # Pipe output to less pager
+  "_T" "| tee -a"        # Append output to file
+  "_C" "| $COPY_COMMAND" # Pipe to copy command
+  "_G" "| grep -ni"      # Grep with line numbers and case-insensitive
+  "_Z" "| fzf"           # Pipe to fzf
 )
 
 typeset -A k8s_abbrevs=(
@@ -165,9 +168,10 @@ typeset -A pyenv_abbrevs=(
 typeset -A custom_abbrevs=(
   "feat"     "git switch -C feat/dmitten/WARH-__CURSOR__"
   "bugs"     "git switch -C bugs/dmitten/WARH-__CURSOR__"
+  "misc"     "git switch -C misc/dmitten/__CURSOR__"
   "manage"   "docker exec -it jaguar-debug python manage.py __CURSOR__"
   "managesh" "docker exec -it jaguar-debugshell python manage.py __CURSOR__"
-  "db"       "export DB_NAME=__CURSOR__"
+  "db"       "echo \"export DB_NAME=__CURSOR__\" >~/.db-env && source ~/.db-env"
 )
 
 # List of associative arrays to merge

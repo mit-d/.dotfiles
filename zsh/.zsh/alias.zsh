@@ -49,15 +49,6 @@ for type in txt md; do
   alias -s $type="${EDITOR:-nano} -- "
 done
 
-# Global Aliases
-################################################################################
-alias -g NULL='&>/dev/null' # Pipes all output to /dev/null
-alias -g L="| less"         # Pipe output to less pager
-alias -g T="| tee -a"       # Append output to file
-alias -g G="| grep -ni"     # Grep with line numbers and case-insensitive
-alias -g X="| $COPY_COMMAND"
-alias -g Z="| fzf"
-
 ## Expand aliases with Control-Space
 ################################################################################
 function expand-alias() { zle _expand_alias }

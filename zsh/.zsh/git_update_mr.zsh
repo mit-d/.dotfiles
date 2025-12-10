@@ -151,7 +151,14 @@ _git_update_mr() {
         print -u2 "Use -h or --help for usage information"
         return 1
     fi
-    
+
+    # Check if we're in a git repository
+    if ! git rev-parse --git-dir &>/dev/null; then
+        echo "Error: Not in a git repository" >&2
+        _git_update_mr_usage
+        return 1
+    fi
+
     # Store remaining arguments
     remaining_args=("$@")
 
@@ -221,31 +228,44 @@ _git_update_mr() {
 
 -----
 
-TBD
+_TBD_
+
+## Screenshots and Examples
+
+<details>
+<summary>Click to expand</summary>
+
+### _TBD_
+
+![Title](){width=960}
+
+</details>
 
 # Testing
 
 -----
 
+<details>
+<summary>Click to expand</summary>
+
 ## Local Environment Setup
 
-|                     |                                                                             |
-|---------------------|-----------------------------------------------------------------------------|
-| C1 Business Type    | `Home Warranty`, `Automotive`, `Boat`, `Manufacture`, `Builder`, `FireArm`  |
-| Angular Application | `warranty_dash`, `affiliate_dash`                                           |
-| Depot Database      | `rc`                                                                        |
+|                     |                                   |
+|---------------------|-----------------------------------|
+| C1 Business Type    | `Home Warranty`                   |
+| Angular Application | `warranty_dash`, `affiliate_dash` |
+| Depot Database      | `rc`                              |
+
 
 ## Testing Instructions
 
------
-
-TBD
+_TBD_
 
 ## Test Coverage
 
------
+_TBD_
 
-TBD
+</details>
 
 # Commits
 EOF
@@ -287,7 +307,7 @@ EOF
         return 1
     fi
     
-    if ! { print "# Commits"; print ""; git_summary "$base" "$target"; } >> "$info_file"; then
+    if ! { print "# Commits\n\n-----"; print ""; git_summary "$base" "$target"; } >> "$info_file"; then
         print -u2 "Error: Failed to append commits section"
         return 1
     fi
