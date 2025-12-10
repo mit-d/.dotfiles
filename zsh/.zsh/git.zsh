@@ -184,41 +184,81 @@ function git-rename-remote-branch {
   print -u2 "Renamed remote branch: $old_branch -> $new_branch"
 }
 
-function git-skip {
-  # Get all modified files (both staged and unstaged)
-  local MODIFIED_FILES=$(git status --porcelain | grep -E '^ M|^M |^MM' | awk '{print $2}')
-  local UNTRACKED_FILES=$(git status --porcelain | grep -E '^\?\?' | awk '{print $2}')
+# Glob patterns for project files to exclude from local commits
+GIT_COMMIT_LOCAL_PROJECT_GLOBS=(
+  "*.ts"
+  "*.html"
+  "jaguar/**/*.py"
+)
 
-  echo "Setting skip-worktree for modified files:"
-  # Set skip-worktree bit for each modified file
-  for file in $MODIFIED_FILES; do
-      git update-index --skip-worktree "$file"
-      echo "  Set skip-worktree for $file"
-  done
+# Glob patterns for files to explicitly include as project files
+GIT_COMMIT_LOCAL_PROJECT_INCLUDE_GLOBS=(
+  "jaguar/**/settings.py"
+)
 
-  if [ -n "$UNTRACKED_FILES" ]; then
-      echo -e "\nWarning: Found untracked files that can't be marked with skip-worktree:"
-      for file in $UNTRACKED_FILES; do
-          echo "  $file"
-      done
-      echo "Consider adding these files to the repository first if you want to skip-worktree them."
+function git-commit-project-files {
+  # 1. Stage everything initially
+  git add -A
+
+  # 2. Unstage excluded files in batch (much faster than looping git reset)
+  # We construct a list of files matching the exclude patterns that are currently staged
+  local excluded_files
+  excluded_files=$(git diff --name-only --cached -- "${GIT_COMMIT_LOCAL_PROJECT_GLOBS[@]}" 2>/dev/null)
+  
+  if [[ -n "$excluded_files" ]]; then
+    # We use xargs to handle long lists of files safely
+    echo "$excluded_files" | xargs -r git reset -q --
   fi
 
-  echo -e "\nDone. Files will now be ignored by Git."
-}
-
-function git-unskip {
-  # Get all files with skip-worktree set
-  local SKIP_WORKTREE_FILES=$(git ls-files -v | grep "^S" | awk '{print $2}')
-
-  # Remove skip-worktree bit
-  for file in $SKIP_WORKTREE_FILES; do
-      git update-index --no-skip-worktree "$file"
-      echo "Removed skip-worktree for $file"
+  # 3. Re-stage specifically included exceptions
+  # (Only if the pattern matches actual files to avoid errors)
+  for pattern in "${GIT_COMMIT_LOCAL_PROJECT_INCLUDE_GLOBS[@]}"; do
+    git add -- "$pattern" 2>/dev/null
   done
+
+  # 4. Check if we have anything left to commit
+  if git diff --cached --quiet; then
+    echo "No local files to commit." >&2
+    return 0
+  fi
+
+  # 5. Get the Tree Hash of the current index
+  # This represents the exact state of the project files we are about to commit.
+  # It is much faster and more accurate than piping diff to sha256sum.
+  local current_tree_hash
+  current_tree_hash=$(git write-tree)
+
+  # 6. Check for duplicate states
+  # We look for any commit pointed to by our tags that has the EXACT same tree.
+  # This replaces the slow loop with a single fast lookup.
+  local existing_commit
+  existing_commit=$(git log --tags="misc/local-files/*" --format="%T %H" | \
+    grep "^$current_tree_hash" | head -n 1 | awk '{print $2}')
+
+  # 7. Commit and Tag
+  local timestamp
+  timestamp=$(date -u +"%Y-%m-%dT%H%M%SZ")
+  
+  if git commit --no-verify -q -m "FIXME: LOCAL FILES: $timestamp"; then
+    if [[ -n "$existing_commit" ]]; then
+      echo "Identical state already exists in commit: ${existing_commit:0:8}" >&2
+      echo "Created commit: FIXME: LOCAL FILES: $timestamp" >&2
+    else
+      git tag "misc/local-files/$timestamp"
+      echo "Created commit and tag: misc/local-files/$timestamp" >&2
+    fi
+  else
+    echo "Failed to create commit." >&2
+    return 1
+  fi
 }
+
 
 # Load git-specific functions
+if [[ -f "$HOME/.zsh/git_skip.zsh" ]]; then
+  source "$HOME/.zsh/git_skip.zsh"
+fi
+
 if [[ -f "$HOME/.zsh/git_update_mr.zsh" ]]; then
   source "$HOME/.zsh/git_update_mr.zsh"
 fi
