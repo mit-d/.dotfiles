@@ -11,7 +11,7 @@ VERBOSITY ?= 1
 STOW_DIRS := $(filter-out $(IGNORE_DIRS), $(wildcard */))
 
 # Main targets
-.PHONY: all stow restow delete dry-run list clean help
+.PHONY: all stow restow delete dry-run list clean help adopt
 
 # Default: list all available packages
 all: help
@@ -40,6 +40,34 @@ delete:
 	@echo "Deleting stow symlinks for directories: $(STOW_DIRS)"
 	@stow --delete --target "$(TARGET_DIR)" --verbose $(VERBOSITY) $(STOW_DIRS)
 
+# Adopt a file into a stow package
+# Usage: make adopt FILE=~/.config/app/config.toml PACKAGE=app
+adopt:
+ifndef FILE
+	$(error FILE is required. Usage: make adopt FILE=~/.config/foo/bar PACKAGE=pkgname)
+endif
+ifndef PACKAGE
+	$(error PACKAGE is required. Usage: make adopt FILE=~/.config/foo/bar PACKAGE=pkgname)
+endif
+	@FILE_ABS="$$(realpath "$(FILE)")"; \
+	TARGET_ABS="$$(realpath "$(TARGET_DIR)")"; \
+	if [ ! -e "$$FILE_ABS" ]; then \
+		echo "Error: File '$(FILE)' does not exist"; exit 1; \
+	fi; \
+	if [ -L "$$FILE_ABS" ]; then \
+		echo "Error: '$(FILE)' is already a symlink"; exit 1; \
+	fi; \
+	REL_PATH="$${FILE_ABS#$$TARGET_ABS/}"; \
+	if [ "$$REL_PATH" = "$$FILE_ABS" ]; then \
+		echo "Error: File must be under $(TARGET_DIR)"; exit 1; \
+	fi; \
+	DEST_DIR="$(PACKAGE)/$$REL_PATH"; \
+	mkdir -p "$$(dirname "$$DEST_DIR")"; \
+	mv "$$FILE_ABS" "$$DEST_DIR"; \
+	echo "Moved '$$FILE_ABS' -> '$$DEST_DIR'"; \
+	stow --target "$(TARGET_DIR)" --verbose $(VERBOSITY) $(PACKAGE); \
+	echo "Adopted '$(FILE)' into package '$(PACKAGE)'"
+
 # List all directories (all, ignored, and stowable)
 list:
 	@echo "All directories:"; \
@@ -61,13 +89,17 @@ help:
 	@echo "  make restow       - Re-stow all available directories (update symlinks)."
 	@echo "  make delete       - Remove symlinks for all stowed directories."
 	@echo "  make dry-run      - Perform a dry run without making any changes."
+	@echo "  make adopt        - Adopt a file into a stow package."
 	@echo "  make help         - Show this help message."
 	@echo ""
 	@echo "Options:"
 	@echo "  TARGET_DIR=<dir>  - Specify target directory for symlinks (default: $(HOME))."
 	@echo "  VERBOSITY=<level> - Set verbosity level for stow (default: 1)."
+	@echo "  FILE=<path>       - File to adopt (for adopt command)."
+	@echo "  PACKAGE=<name>    - Target package (for adopt command)."
 	@echo ""
 	@echo "Examples:"
 	@echo "  make stow VERBOSITY=2                     - Stow with increased verbosity."
 	@echo "  make delete TARGET_DIR=/etc VERBOSITY=1   - Delete symlinks in /etc directory."
+	@echo "  make adopt FILE=~/.config/app/config PACKAGE=app - Adopt file into package."
 
