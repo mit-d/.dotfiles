@@ -188,12 +188,16 @@ function git-rename-remote-branch {
 GIT_COMMIT_LOCAL_PROJECT_GLOBS=(
   "*.ts"
   "*.html"
+  "*.scss"
   "jaguar/**/*.py"
 )
 
 # Glob patterns for files to explicitly include as project files
 GIT_COMMIT_LOCAL_PROJECT_INCLUDE_GLOBS=(
   "jaguar/**/settings.py"
+  "jaguar/manage.py"
+  "jaguar/bbp/tests/*runner.py"
+  "jaguar/jaguar/jaguar_log.py"
 )
 
 function git-commit-project-files {

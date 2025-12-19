@@ -43,6 +43,10 @@ fi
 alias filecount='ls -aRF | wc -l'
 alias myip="curl https://ipinfo.io 2>/dev/null | jq -C"
 
+# Helper Aliases
+################################################################################
+alias extract_words="tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:][:space:]' | tr '[:space:]' '\n' | grep -v '^$'"
+
 # Suffix Aliases
 ################################################################################
 for type in txt md; do
