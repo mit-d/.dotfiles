@@ -6,7 +6,7 @@ typeset -A abbrevs
 # Git Abbreviations
 typeset -A git_abbrevs=(
   "sw"            "switch"
-  "ga"            "git add"
+  # "ga"            "git add"
   "gb"            "git branch"
   "gc"            "git commit"
   "gd"            "git diff"
@@ -17,8 +17,8 @@ typeset -A git_abbrevs=(
   "gr"            "git reset --mixed"
   "grh"           "git reset --hard"
   "grs"           "git reset --soft"
-  "gs"            "git status"
-  "gss"           "git status -s"
+  "gs"            "git status -s"
+  "gss"           "git status"
   "unstage"       "git restore --staged"
   "gchanged"      "git diff --name-only \"\$(git merge-base HEAD origin/main)\"...HEAD"
   "gblackchanged" 'black $(git diff --name-only "$(git merge-base HEAD origin/main)"...HEAD | grep -E "\.py$")'

@@ -60,3 +60,7 @@ zle -N expand-alias && bindkey '^ ' expand-alias
 alias dictz="fzf </usr/share/dict/words"
 
 #alias psql="psql-17"
+
+if command -v claude &>/dev/null; then
+  alias clod="claude"
+fi

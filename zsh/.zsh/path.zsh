@@ -7,9 +7,6 @@ directories=(
   "$HOME/.bin"
   "$HOME/.local/bin"
 
-  # Node.js
-  "$HOME/.npm_global/bin"
-
   # JetBrains
   "$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
   "$HOME/.local/share/JetBrains/Toolbox/scripts"
@@ -19,6 +16,10 @@ directories=(
   "/opt/homebrew/bin"
   "/opt/homebrew/opt/openjdk/bin"
   "/opt/homebrew/opt/coreutils/libexec/gnubin"
+
+  # Node.js
+  "$HOME/.npm_global/bin"
+
 )
 
 # Add directories to PATH if they exist

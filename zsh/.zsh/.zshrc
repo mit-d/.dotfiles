@@ -118,6 +118,11 @@ if [[ -z "$TMUX" ]] && command -v tmux &>/dev/null; then
   exec tmux
 fi
 
+# Activate python .venv if it exists
+if [[ -e "$HOME/.venv/bin/activate" ]]; then
+  source "$HOME/.venv/bin/activate"
+fi
+
 ## Docker CLI completions
 fpath=(/Users/derekmitten/.docker/completions $fpath)
 autoload -Uz compinit

@@ -1,5 +1,8 @@
 # Ghostty Configuration for macOS - Optimized for Web Development
 
+# OSX ONLY: we don't want to use /usr/bin/login (slow)
+command = /bin/zsh
+
 # Window Configuration
 window-height = 30
 window-width = 120

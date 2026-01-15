@@ -127,3 +127,8 @@ config.local.*
 
 # Git pr script
 mr_info.md
+
+*claude*
+*CLAUDE*
+*junie*
+*aiassistant*
