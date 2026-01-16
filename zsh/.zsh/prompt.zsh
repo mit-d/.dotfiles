@@ -50,11 +50,19 @@ build_env_prompt() {
   echo "$env_prompt"
 }
 
+# Cached node version for prompt (avoids slow nvm call on every prompt)
+_cached_node_version=""
+_cached_node_dir=""
+
 npm_prompt() {
-  # Add nvm current version
-  if command -v nvm >/dev/null 2 >&1; then
-    local node_version=$(nvm current)
-    echo "%F{yellow}node:${node_version}%f "
+  # Only show node version if nvm is actually loaded (not just the lazy wrapper)
+  if [[ -n "$NVM_BIN" ]]; then
+    # Refresh cache on directory change
+    if [[ "$PWD" != "$_cached_node_dir" ]]; then
+      _cached_node_dir="$PWD"
+      _cached_node_version=$(node --version 2>/dev/null)
+    fi
+    [[ -n "$_cached_node_version" ]] && echo "%F{yellow}node:${_cached_node_version}%f "
   fi
 }
 

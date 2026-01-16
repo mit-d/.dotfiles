@@ -113,8 +113,8 @@ function escape-cmd {
 zle -N escape-cmd
 bindkey "^[\\" escape-cmd
 
-# Start tmux if not running
-if [[ -z "$TMUX" ]] && command -v tmux &>/dev/null; then
+# Start tmux if not running (set ZSH_NO_TMUX=1 to disable)
+if [[ -z "$TMUX" && -z "$ZSH_NO_TMUX" ]] && command -v tmux &>/dev/null; then
   exec tmux
 fi
 
@@ -125,8 +125,7 @@ fi
 
 ## Docker CLI completions
 fpath=(/Users/derekmitten/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
+# compinit is already called in completion.zsh
 
 ## Bun completions
 [[ -s "/home/dmitten/.bun/_bun" ]] && source "/home/dmitten/.bun/_bun"

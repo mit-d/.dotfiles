@@ -61,6 +61,16 @@ msys* | cygwin* | win32*)
 esac
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh" # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
+
+# Lazy-load NVM for faster shell startup
+_nvm_lazy_load() {
+  unset -f nvm node npm npx 2>/dev/null
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+}
+
+nvm() { _nvm_lazy_load; nvm "$@"; }
+node() { _nvm_lazy_load; node "$@"; }
+npm() { _nvm_lazy_load; npm "$@"; }
+npx() { _nvm_lazy_load; npx "$@"; }
 
