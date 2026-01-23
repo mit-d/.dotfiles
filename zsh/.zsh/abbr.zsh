@@ -156,12 +156,17 @@ typeset -A net_abbrevs=(
 )
 
 typeset -A pyenv_abbrevs=(
-  "venv"   "python -m venv .venv"
+  "venv"   "uv venv"
   "act"    "source .venv/bin/activate"
   "deact"  "deactivate"
-  "pipup"  "pip install --upgrade pip"
-  "req"    "pip install -r requirements.txt"
-  "freeze" "pip freeze > requirements.txt"
+  "req"    "uv pip install -r requirements.txt"
+  "freeze" "uv pip freeze > requirements.txt"
+  "sync"   "uv sync"
+  "lock"   "uv lock"
+  "uvi"    "uv pip install"
+  "uvr"    "uv pip uninstall"
+  "uvl"    "uv pip list"
+  "uvadd"  "uv add"
 )
 
 # Custom Workflow Abbreviations

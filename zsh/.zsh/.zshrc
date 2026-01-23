@@ -9,16 +9,20 @@
 ###############################################################################
 ZSH_DIR="$HOME/.zsh"
 
-# Source configuration files if they exist
-for file in $ZSH_DIR/*.zsh; do
-  source "$file"
+# Source POSIX-compliant scripts (portable across shells)
+for file in "$ZSH_DIR"/posix/*.sh; do
+  [ -f "$file" ] && . "$file"
+done
+
+# Source ZSH-only configuration files
+# These use ZSH-specific features like zstyle, compinit, vcs_info, ZLE widgets
+for file in abbr.zsh completion.zsh prompt.zsh interactive.zsh; do
+  [ -f "$ZSH_DIR/$file" ] && source "$ZSH_DIR/$file"
 done
 
 # When this dotfile is being used, we will treat ~/.zshrc as local
 # configuration that won't be checked into source control.
-if [[ -e "$HOME/.zshrc" ]]; then
-  source "$HOME/.zshrc"
-fi
+[[ -e "$HOME/.zshrc" ]] && source "$HOME/.zshrc"
 
 # Stop here for IntelliJ
 [[ -n "$INTELLIJ_ENVIRONMENT_READER" ]] && return 0
@@ -58,7 +62,7 @@ export MAILCHECK=60
 ###############################################################################
 
 # Set man colors
-function man {
+man() {
   LESS_TERMCAP_md=$'\e[01;31m' \
   LESS_TERMCAP_me=$'\e[0m' \
   LESS_TERMCAP_us=$'\e[01;32m' \
@@ -69,7 +73,7 @@ function man {
 }
 
 # Backup function
-function bak {
+bak() {
   mkdir -p .bak
   local file=".bak/$1.$(date --iso-8601).bak"
   local num=1
@@ -81,7 +85,7 @@ function bak {
 }
 
 # FZF history search
-function fzf-history-widget {
+fzf-history-widget() {
   local selected_command
   selected_command="$(fc -lrn 1 | fzf --height=40% --reverse --prompt='History> ')"
   if [[ -n "$selected_command" ]]; then
@@ -94,7 +98,7 @@ zle -N fzf-history-widget
 bindkey '^R' fzf-history-widget
 
 # Run current line as root
-function run-as-root {
+run-as-root() {
   BUFFER="sudo $BUFFER"
   zle accept-line
 }
@@ -102,7 +106,7 @@ zle -N run-as-root
 bindkey "^[^M" run-as-root
 
 # Toggle escape on current line
-function escape-cmd {
+escape-cmd() {
   if [[ $BUFFER == \\* ]]; then
     BUFFER="${BUFFER:1}"
   else
@@ -119,9 +123,7 @@ if [[ -z "$TMUX" && -z "$ZSH_NO_TMUX" ]] && command -v tmux &>/dev/null; then
 fi
 
 # Activate python .venv if it exists
-if [[ -e "$HOME/.venv/bin/activate" ]]; then
-  source "$HOME/.venv/bin/activate"
-fi
+[[ -e "$HOME/.venv/bin/activate" ]] && source "$HOME/.venv/bin/activate"
 
 ## Docker CLI completions
 fpath=(/Users/derekmitten/.docker/completions $fpath)
