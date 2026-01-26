@@ -8,7 +8,7 @@ alias ls="ls --color -h"
 alias ll="ls -al"
 alias tree="tree -CF"
 alias l="tree -L 1"
-alias ping="ping -c 5"
+alias ping5="ping -c 5"
 
 # Clipboard aliases (if COPY_COMMAND/PASTE_COMMAND are set)
 if [ -n "$COPY_COMMAND" ]; then

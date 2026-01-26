@@ -193,3 +193,32 @@
   # Should be empty - no docker:sw context abbrev
   assert "$expansion" is_empty
 }
+
+# Docker context abbreviations
+@test 'docker context: "docker r" expands to "docker run -it"' {
+  setopt extendedglob
+  local LBUFFER="docker r"
+  local MATCH prefix ctx_key cmd_prefix
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  prefix="$LBUFFER"
+  cmd_prefix="${prefix%%[[:space:]]*}"
+
+  ctx_key="${cmd_prefix}:${MATCH}"
+  local expansion="${abbrevs_ctx[$ctx_key]}"
+
+  assert "${prefix}${expansion}" same_as "docker run -it"
+}
+
+@test 'docker context: "docker b" expands to "docker build"' {
+  assert "${abbrevs_ctx[docker:b]}" same_as "build"
+}
+
+# Kubectl context abbreviations
+@test 'kubectl context: "kubectl gp" expands to "kubectl get pods"' {
+  assert "${abbrevs_ctx[kubectl:gp]}" same_as "get pods"
+}
+
+@test 'kubectl context: "kubectl l" expands to "kubectl logs -f"' {
+  assert "${abbrevs_ctx[kubectl:l]}" same_as "logs -f"
+}

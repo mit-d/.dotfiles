@@ -68,6 +68,48 @@ typeset -A git_ctx_abbrevs=(
   "pl"    "pull"
 )
 
+# Docker subcommand abbreviations (expand only after "docker ")
+typeset -A docker_ctx_abbrevs=(
+  "r"     "run -it"
+  "e"     "exec -it"
+  "b"     "build"
+  "i"     "images"
+  "ps"    "ps -a"
+  "rm"    "rm -f"
+  "rmi"   "rmi -f"
+  "l"     "logs -f"
+  "p"     "pull"
+  "pa"    "system prune -a"
+)
+
+# Docker Compose subcommand abbreviations (expand only after "docker compose ")
+typeset -A compose_ctx_abbrevs=(
+  "u"     "up -d"
+  "d"     "down"
+  "r"     "run --rm"
+  "l"     "logs -f"
+  "ps"    "ps -a"
+  "b"     "build"
+  "p"     "pull"
+)
+
+# Kubectl subcommand abbreviations (expand only after "kubectl ")
+typeset -A kubectl_ctx_abbrevs=(
+  "g"     "get"
+  "gp"    "get pods"
+  "gn"    "get nodes"
+  "gs"    "get svc"
+  "gd"    "get deploy"
+  "ga"    "get all"
+  "d"     "describe"
+  "dp"    "describe pod"
+  "dn"    "describe node"
+  "l"     "logs -f"
+  "e"     "exec -it"
+  "a"     "apply -f"
+  "del"   "delete"
+)
+
 typeset -A git_abbrevs_extra=(
   "gadcp"   "git add . && git commit -m 'Auto-commit' && git push"
   "gai"     "git add --interactive"
@@ -252,6 +294,15 @@ done
 for key val in "${(@kv)git_ctx_abbrevs}"; do
   abbrevs_ctx[git:$key]=$val
 done
+for key val in "${(@kv)docker_ctx_abbrevs}"; do
+  abbrevs_ctx[docker:$key]=$val
+done
+for key val in "${(@kv)compose_ctx_abbrevs}"; do
+  abbrevs_ctx[docker\ compose:$key]=$val
+done
+for key val in "${(@kv)kubectl_ctx_abbrevs}"; do
+  abbrevs_ctx[kubectl:$key]=$val
+done
 
 # Load user abbreviations from persistence file
 [[ -f "$ABBR_USER_FILE" ]] && source "$ABBR_USER_FILE"
@@ -346,13 +397,14 @@ bindkey -M isearch " " self-insert
 ###############################################################################
 
 abbr() {
-  local action="list" position="anywhere" ctx_prefix="" name="" expansion=""
+  local action="list" position="anywhere" ctx_prefix="" name="" expansion="" newname=""
 
   # Parse arguments
   while [[ $# -gt 0 ]]; do
     case "$1" in
       -a|--add)     action="add"; shift ;;
       -e|--erase)   action="erase"; shift ;;
+      -r|--rename)  action="rename"; shift ;;
       -s|--show)    action="show"; shift ;;
       -l|--list)    action="list"; shift ;;
       -c|--command) position="command"; shift ;;
@@ -361,8 +413,10 @@ abbr() {
       *)
         if [[ -z "$name" ]]; then
           name="$1"
-        else
+        elif [[ -z "$expansion" ]]; then
           expansion="$1"
+        else
+          newname="$1"
         fi
         shift
         ;;
@@ -432,6 +486,56 @@ abbr() {
         echo "Abbreviation not found: $name" >&2
         return 1
       fi
+      ;;
+
+    rename)
+      if [[ -z "$name" || -z "$expansion" ]]; then
+        echo "Usage: abbr -r OLDNAME NEWNAME" >&2
+        return 1
+      fi
+      local oldname="$name" newname="$expansion" val=""
+      # Check each store for the old name
+      if [[ -n "${abbrevs[$oldname]}" ]]; then
+        val="${abbrevs[$oldname]}"
+        unset "abbrevs[$oldname]"
+        unalias "$oldname" 2>/dev/null
+        abbrevs[$newname]="$val"
+        alias $newname="$val"
+        if [[ -f "$ABBR_USER_FILE" ]]; then
+          sed -i.bak "s/abbrevs\[$oldname\]/abbrevs[$newname]/" "$ABBR_USER_FILE"
+          rm -f "${ABBR_USER_FILE}.bak"
+        fi
+        echo "Renamed: $oldname → $newname"
+        return 0
+      fi
+      if [[ -n "${abbrevs_cmd[$oldname]}" ]]; then
+        val="${abbrevs_cmd[$oldname]}"
+        unset "abbrevs_cmd[$oldname]"
+        abbrevs_cmd[$newname]="$val"
+        if [[ -f "$ABBR_USER_FILE" ]]; then
+          sed -i.bak "s/abbrevs_cmd\[$oldname\]/abbrevs_cmd[$newname]/" "$ABBR_USER_FILE"
+          rm -f "${ABBR_USER_FILE}.bak"
+        fi
+        echo "Renamed: $oldname → $newname"
+        return 0
+      fi
+      # Check context abbrevs
+      for key in ${(k)abbrevs_ctx}; do
+        if [[ "$key" == *":$oldname" ]]; then
+          local ctx="${key%%:*}"
+          val="${abbrevs_ctx[$key]}"
+          unset "abbrevs_ctx[$key]"
+          abbrevs_ctx[$ctx:$newname]="$val"
+          if [[ -f "$ABBR_USER_FILE" ]]; then
+            sed -i.bak "s/abbrevs_ctx\[$ctx:$oldname\]/abbrevs_ctx[$ctx:$newname]/" "$ABBR_USER_FILE"
+            rm -f "${ABBR_USER_FILE}.bak"
+          fi
+          echo "Renamed: $ctx $oldname → $ctx $newname"
+          return 0
+        fi
+      done
+      echo "Abbreviation not found: $oldname" >&2
+      return 1
       ;;
 
     show)
@@ -506,6 +610,7 @@ USAGE:
   abbr -a -c NAME EXP      Add a command-position abbreviation (first word only)
   abbr -a -C CTX NAME EXP  Add a context abbreviation (after CTX, e.g., "git")
   abbr -e NAME             Erase an abbreviation
+  abbr -r OLD NEW          Rename an abbreviation
   abbr -s, --show          Show abbreviations as abbr commands (for export)
   abbr -h, --help          Show this help
 
@@ -515,6 +620,7 @@ EXAMPLES:
   abbr -a -C git sw switch           # "git sw" → "git switch"
   abbr -a -C docker b build          # "docker b" → "docker build"
   abbr -e gp                         # remove abbreviation
+  abbr -r gp gpush                   # rename gp to gpush
 
 KEYBINDINGS:
   Space     Expand abbreviation
@@ -524,6 +630,62 @@ EOF
       ;;
   esac
 }
+
+# Completion for abbr command
+_abbr() {
+  local -a subcmds
+  subcmds=(
+    '-a:Add a new abbreviation'
+    '--add:Add a new abbreviation'
+    '-e:Erase an abbreviation'
+    '--erase:Erase an abbreviation'
+    '-r:Rename an abbreviation'
+    '--rename:Rename an abbreviation'
+    '-l:List all abbreviations'
+    '--list:List all abbreviations'
+    '-s:Show abbreviations as commands'
+    '--show:Show abbreviations as commands'
+    '-c:Add command-position abbreviation'
+    '--command:Add command-position abbreviation'
+    '-C:Add context abbreviation (requires PREFIX)'
+    '--context:Add context abbreviation (requires PREFIX)'
+    '-h:Show help'
+    '--help:Show help'
+  )
+
+  local -a all_abbrevs
+  all_abbrevs=(${(k)abbrevs} ${(k)abbrevs_cmd})
+  for key in ${(k)abbrevs_ctx}; do
+    all_abbrevs+=("${key#*:}")
+  done
+
+  case "$words[2]" in
+    -e|--erase|-r|--rename)
+      _describe 'abbreviation' all_abbrevs
+      ;;
+    -C|--context)
+      if [[ $CURRENT -eq 3 ]]; then
+        local -a contexts=(git docker "docker compose" kubectl)
+        _describe 'context' contexts
+      elif [[ $CURRENT -eq 4 ]]; then
+        _message 'abbreviation name'
+      else
+        _message 'expansion'
+      fi
+      ;;
+    -a|--add)
+      if [[ $CURRENT -eq 3 ]]; then
+        _message 'abbreviation name'
+      else
+        _message 'expansion'
+      fi
+      ;;
+    *)
+      _describe 'abbr command' subcmds
+      ;;
+  esac
+}
+(( $+functions[compdef] )) && compdef _abbr abbr
 
 # Autosuggestion compatibility
 export ZSH_AUTOSUGGEST_CLEAR_WIDGETS=(magic-abbrev-expand-and-execute)
