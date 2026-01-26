@@ -1,0 +1,195 @@
+#!/usr/bin/env zunit
+
+# abbr.zsh is sourced in tests/_support/bootstrap
+
+@test 'abbrevs associative array is populated' {
+  assert "${#abbrevs}" is_positive
+}
+
+@test 'abbrevs_ctx associative array is populated' {
+  assert "${#abbrevs_ctx}" is_positive
+}
+
+@test 'git context abbreviations have correct keys' {
+  assert "${abbrevs_ctx[git:sw]}" same_as "switch"
+  assert "${abbrevs_ctx[git:co]}" same_as "checkout"
+  assert "${abbrevs_ctx[git:rb]}" same_as "rebase"
+}
+
+@test 'sw is NOT in anywhere abbrevs' {
+  assert "${abbrevs[sw]}" is_empty
+}
+
+@test 'gs is in anywhere abbrevs' {
+  assert "${abbrevs[gs]}" same_as "git status -s"
+}
+
+@test 'context key format is prefix:abbr' {
+  local keys="${(k)abbrevs_ctx}"
+  assert "$keys" contains "git:sw"
+  assert "$keys" contains "git:co"
+}
+
+@test 'context detection: extracts command prefix correctly' {
+  local prefix="git "
+  local cmd_prefix="${prefix%%[[:space:]]*}"
+  assert "$cmd_prefix" same_as "git"
+}
+
+@test 'context detection: identifies space in prefix' {
+  local prefix="git "
+  if [[ "$prefix" == *[[:space:]]* ]]; then
+    assert 1 equals 1
+  else
+    assert 1 equals 0
+  fi
+}
+
+@test 'context detection: no space when at command position' {
+  local prefix=""
+  if [[ "$prefix" == *[[:space:]]* ]]; then
+    assert 1 equals 0
+  else
+    assert 1 equals 1
+  fi
+}
+
+@test 'context lookup succeeds for git:sw' {
+  local ctx_key="git:sw"
+  local expansion="${abbrevs_ctx[$ctx_key]}"
+  assert "$expansion" is_not_empty
+  assert "$expansion" same_as "switch"
+}
+
+@test 'context lookup fails for nonexistent prefix' {
+  local ctx_key="notreal:sw"
+  local expansion="${abbrevs_ctx[$ctx_key]}"
+  assert "$expansion" is_empty
+}
+
+@test 'extendedglob is set' {
+  if [[ -o extendedglob ]]; then
+    assert 1 equals 1
+  else
+    assert 1 equals 0
+  fi
+}
+
+@test 'MATCH captures trailing word correctly' {
+  setopt extendedglob
+  local LBUFFER="git sw"
+  local MATCH
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  assert "$MATCH" same_as "sw"
+  assert "$LBUFFER" same_as "git "
+}
+
+@test 'MATCH captures single word correctly' {
+  setopt extendedglob
+  local LBUFFER="gs"
+  local MATCH
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  assert "$MATCH" same_as "gs"
+  assert "$LBUFFER" same_as ""
+}
+
+# Test the expansion logic directly (simulating magic-abbrev-expand)
+@test 'expansion: "git sw" expands to "git switch"' {
+  setopt extendedglob
+  local LBUFFER="git sw"
+  local MATCH prefix expansion ctx_key cmd_prefix
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  prefix="$LBUFFER"
+  cmd_prefix="${prefix%%[[:space:]]*}"
+
+  # Context check
+  if [[ -n "$cmd_prefix" && "$prefix" == *[[:space:]]* ]]; then
+    ctx_key="${cmd_prefix}:${MATCH}"
+    expansion="${abbrevs_ctx[$ctx_key]}"
+  fi
+
+  assert "$expansion" same_as "switch"
+  assert "${prefix}${expansion}" same_as "git switch"
+}
+
+@test 'expansion: "sw" alone does NOT expand' {
+  setopt extendedglob
+  local LBUFFER="sw"
+  local MATCH prefix expansion ctx_key cmd_prefix
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  prefix="$LBUFFER"
+  cmd_prefix="${prefix%%[[:space:]]*}"
+
+  # Context check - should not match (no space in prefix)
+  local found=0
+  if [[ -n "$cmd_prefix" && "$prefix" == *[[:space:]]* ]]; then
+    ctx_key="${cmd_prefix}:${MATCH}"
+    if [[ -n "${abbrevs_ctx[$ctx_key]}" ]]; then
+      found=1
+    fi
+  fi
+
+  # Anywhere check - sw is not in abbrevs
+  if [[ -n "${abbrevs[$MATCH]}" ]]; then
+    found=1
+  fi
+
+  assert "$found" equals 0
+}
+
+@test 'expansion: "gs" expands anywhere' {
+  setopt extendedglob
+  local LBUFFER="gs"
+  local MATCH prefix
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  prefix="$LBUFFER"
+
+  local expansion="${abbrevs[$MATCH]}"
+  assert "$expansion" same_as "git status -s"
+}
+
+@test 'expansion: "echo gs" expands gs in middle of line' {
+  setopt extendedglob
+  local LBUFFER="echo gs"
+  local MATCH prefix
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  prefix="$LBUFFER"
+
+  local expansion="${abbrevs[$MATCH]}"
+  assert "${prefix}${expansion}" same_as "echo git status -s"
+}
+
+@test 'expansion: "git rb" expands to "git rebase"' {
+  setopt extendedglob
+  local LBUFFER="git rb"
+  local MATCH prefix ctx_key cmd_prefix
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  prefix="$LBUFFER"
+  cmd_prefix="${prefix%%[[:space:]]*}"
+
+  ctx_key="${cmd_prefix}:${MATCH}"
+  local expansion="${abbrevs_ctx[$ctx_key]}"
+
+  assert "${prefix}${expansion}" same_as "git rebase"
+}
+
+@test 'expansion: "docker sw" does NOT expand (wrong context)' {
+  setopt extendedglob
+  local LBUFFER="docker sw"
+  local MATCH prefix ctx_key cmd_prefix
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  prefix="$LBUFFER"
+  cmd_prefix="${prefix%%[[:space:]]*}"
+
+  ctx_key="${cmd_prefix}:${MATCH}"
+  local expansion="${abbrevs_ctx[$ctx_key]}"
+
+  # Should be empty - no docker:sw context abbrev
+  assert "$expansion" is_empty
+}

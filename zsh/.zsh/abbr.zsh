@@ -1,12 +1,22 @@
-# Abbreviations
+# Abbreviations (fish-like)
+###############################################################################
+# Position modes:
+#   - anywhere:  expand anywhere on the line (default, backwards compatible)
+#   - command:   expand only as first word
+#   - context:   expand only after a specific prefix (e.g., "git sw" → "git switch")
 ###############################################################################
 setopt extendedglob
-typeset -A abbrevs
 
-# Git Abbreviations
+# Main abbreviation stores
+typeset -A abbrevs          # anywhere
+typeset -A abbrevs_cmd      # command position only
+typeset -A abbrevs_ctx      # context-specific (key format: "prefix:abbr")
+
+# Persistence file for runtime additions
+ABBR_USER_FILE="${ZDOTDIR:-$HOME}/.zsh_abbr_user"
+
+# Git Abbreviations (expand anywhere - these start with 'g' so no conflict)
 typeset -A git_abbrevs=(
-  "sw"            "switch"
-  # "ga"            "git add"
   "gb"            "git branch"
   "gc"            "git commit"
   "gd"            "git diff"
@@ -23,8 +33,39 @@ typeset -A git_abbrevs=(
   "gchanged"      "git diff --name-only \"\$(git merge-base HEAD origin/main)\"...HEAD"
   "gblackchanged" 'black $(git diff --name-only "$(git merge-base HEAD origin/main)"...HEAD | grep -E "\.py$")'
   "gblacknew"     'black $(git diff --name-only --diff-filter=A "$(git merge-base HEAD origin/main)"...HEAD | grep -E "\.py$")'
-  # posix/git.sh expansion
-  "wtf"       'gwt feat/dmitten/WARH-__CURSOR__'
+  "wtf"           'gwt feat/dmitten/WARH-__CURSOR__'
+)
+
+# Git subcommand abbreviations (expand only after "git ")
+typeset -A git_ctx_abbrevs=(
+  "sw"    "switch"
+  "sw-"   "switch -"
+  "swc"   "switch -C"
+  "swm"   "switch main"
+  "co"    "checkout"
+  "cp"    "cherry-pick"
+  "rb"    "rebase"
+  "rbi"   "rebase -i"
+  "rbm"   "rebase origin/main"
+  "rba"   "rebase --abort"
+  "rbc"   "rebase --continue"
+  "rs"    "reset"
+  "rsh"   "reset --hard"
+  "rss"   "reset --soft"
+  "st"    "stash"
+  "stp"   "stash pop"
+  "stl"   "stash list"
+  "df"    "diff"
+  "dfc"   "diff --cached"
+  "lg"    "log --graph --oneline"
+  "lga"   "log --graph --oneline --all"
+  "aa"    "add -A"
+  "ap"    "add --patch"
+  "cm"    "commit -m"
+  "ca"    "commit --amend"
+  "can"   "commit --amend --no-edit"
+  "pf"    "push --force-with-lease"
+  "pl"    "pull"
 )
 
 typeset -A git_abbrevs_extra=(
@@ -68,7 +109,7 @@ typeset -A git_abbrevs_extra=(
   "gsc"     "git switch -C"
   "gsgl"    "git submodule -q foreach git pull -q origin main"
   "gsm"     "git switch main"
-  "gsti"    "git stashed --keep-index"
+  "gsti"    "git stash --keep-index"
   "gstl"    "git stash list"
   "gstp"    "git stash pop"
   "gsts"    "git stash --staged"
@@ -142,19 +183,18 @@ typeset -A k8s_abbrevs=(
 
 typeset -A sysmon_abbrevs=(
   "psa"    "ps aux"
-  "top"    "htop"
   "dfh"    "df -h"
   "upt"    "uptime"
-  "who"    "who -a"
+  "whoa"   "who -a"
 )
 
 typeset -A net_abbrevs=(
   "curlh"  "curl -I"
   "wgetr"  "wget -r"
-  "ping"  "ping -c 5"
+  "ping5"  "ping -c 5"
   "tracer" "traceroute"
   "nslook" "nslookup"
-  "dig"    "dig +short"
+  "digs"   "dig +short"
 )
 
 typeset -A pyenv_abbrevs=(
@@ -181,7 +221,7 @@ typeset -A custom_abbrevs=(
   "db"       "echo \"export DB_NAME=__CURSOR__\" >~/.db-env && source ~/.db-env"
 )
 
-# List of associative arrays to merge
+# Arrays to merge into main stores
 typeset -a abbrev_arrays=(
   git_abbrevs
   # git_abbrevs_extra
@@ -197,92 +237,293 @@ typeset -a abbrev_arrays=(
   # systemctl_abbrevs
 )
 
-# Merge all arrays into abbrevs
+# Context abbreviation arrays (format: array[prefix]="name1:name2:...")
+typeset -a ctx_abbrev_arrays=(
+  git_ctx_abbrevs
+)
+
+# Merge "anywhere" arrays into abbrevs
 for array in ${abbrev_arrays[@]}; do
   abbrevs+=( ${(kv)${(P)array}} )
 done
 
-# Loop over the keys of the abbreviations array and create aliases for each
-for abbr in ${(k)abbrevs}; do
-  alias $abbr="${abbrevs[$abbr]}"
+# Merge context arrays into abbrevs_ctx
+# Context abbrevs are stored with key "prefix:abbr"
+for key val in "${(@kv)git_ctx_abbrevs}"; do
+  abbrevs_ctx[git:$key]=$val
 done
 
+# Load user abbreviations from persistence file
+[[ -f "$ABBR_USER_FILE" ]] && source "$ABBR_USER_FILE"
+
+# Create aliases for anywhere abbreviations (for tab completion)
+for key in ${(k)abbrevs}; do
+  alias $key="${abbrevs[$key]}"
+done
+
+###############################################################################
+# Expansion Engine
+###############################################################################
+
 magic-abbrev-expand() {
-  local MATCH
-  # Remove (from the end of LBUFFER) any continuous alphanumeric/underscore characters
-  # and capture them in MATCH
+  local MATCH prefix expansion ctx_key cmd_prefix
+
+  # Extract the word being typed (alphanumeric + underscore)
   LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  prefix="$LBUFFER"
 
-  # Look up the abbreviation in the abbrevs associative array
-  command=${abbrevs[$MATCH]}
+  # Determine context: extract first word from prefix
+  cmd_prefix="${prefix%%[[:space:]]*}"
+  # Check if prefix has any content after the command
+  local after_cmd="${prefix#*[[:space:]]}"
 
-  # Append the command if found, otherwise the original MATCH
-  LBUFFER+=${command:-$MATCH}
+  # 1. Check context abbreviations first (e.g., "git sw" → "git switch")
+  if [[ -n "$cmd_prefix" && "$prefix" == *[[:space:]]* ]]; then
+    ctx_key="${cmd_prefix}:${MATCH}"
+    if [[ -n "${abbrevs_ctx[$ctx_key]}" ]]; then
+      expansion="${abbrevs_ctx[$ctx_key]}"
+      LBUFFER="${prefix}${expansion}"
+      _abbr_handle_cursor "$prefix" "$expansion"
+      return
+    fi
+  fi
 
-  # If the expanded text contains __CURSOR__, split it into left and right buffers
-  if [[ "${command}" == *"__CURSOR__"* ]]; then
-    LBUFFER="${command%%__CURSOR__*}"
-    RBUFFER="${command#*__CURSOR__}"
+  # 2. Check command-position abbreviations (first word only)
+  if [[ -z "${prefix// /}" ]] && [[ -n "${abbrevs_cmd[$MATCH]}" ]]; then
+    expansion="${abbrevs_cmd[$MATCH]}"
+    LBUFFER="${prefix}${expansion}"
+    _abbr_handle_cursor "$prefix" "$expansion"
+    return
+  fi
+
+  # 3. Check anywhere abbreviations (default)
+  if [[ -n "${abbrevs[$MATCH]}" ]]; then
+    expansion="${abbrevs[$MATCH]}"
+    LBUFFER="${prefix}${expansion}"
+    _abbr_handle_cursor "$prefix" "$expansion"
+    return
+  fi
+
+  # No match - restore original
+  LBUFFER="${prefix}${MATCH}"
+  zle self-insert
+}
+
+# Helper: handle __CURSOR__ placeholder
+_abbr_handle_cursor() {
+  local prefix="$1" expansion="$2"
+  if [[ "$expansion" == *"__CURSOR__"* ]]; then
+    LBUFFER="${prefix}${expansion%%__CURSOR__*}"
+    RBUFFER="${expansion#*__CURSOR__}"
   else
-    # If there's no cursor placeholder, just insert a space
     zle self-insert
   fi
 }
 
 magic-abbrev-expand-and-execute() {
-  # Perform the abbreviation expansion
   magic-abbrev-expand
-  # Remove the last character (usually the space or the newline)
   zle backward-delete-char
-  # Accept the current command line and execute
   zle accept-line
 }
 
 no-magic-abbrev-expand() {
-  # Insert a literal space without expanding an abbreviation
   LBUFFER+=' '
 }
 
-# Create ZLE widgets from the functions above
+# Register widgets
 zle -N magic-abbrev-expand
 zle -N magic-abbrev-expand-and-execute
 zle -N no-magic-abbrev-expand
 
-# Bind keys to the custom widgets
-bindkey " " magic-abbrev-expand               # Space triggers abbreviation expansion
-bindkey "^M" magic-abbrev-expand-and-execute  # Enter triggers expansion plus command execution
-bindkey "^x " no-magic-abbrev-expand          # Ctrl+x + space inserts space literally
-bindkey -M isearch " " self-insert            # During isearch, space just inserts space
+# Key bindings
+bindkey " " magic-abbrev-expand
+bindkey "^M" magic-abbrev-expand-and-execute
+bindkey "^x " no-magic-abbrev-expand
+bindkey -M isearch " " self-insert
 
-function abbr {
-  if [[ -t 1 ]]; then
-    # Colors for interactive terminal
-    local header_color='\033[1;36m' # Bold cyan
-    local key_color='\033[1;33m'    # Bold yellow
-    local arrow_color='\033[0;37m'  # White
-    local value_color='\033[0;32m'  # Green
-    local reset='\033[0m'           # Reset color
+###############################################################################
+# abbr CLI (fish-like management)
+###############################################################################
 
-    for array in ${abbrev_arrays[@]}; do
-      # Print header with color
-      echo -e "${header_color}${array}${reset}"
+abbr() {
+  local action="list" position="anywhere" ctx_prefix="" name="" expansion=""
 
-      # Get all keys and sort them for consistent output
-      local keys=(${(ko)${(P)array}})
+  # Parse arguments
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -a|--add)     action="add"; shift ;;
+      -e|--erase)   action="erase"; shift ;;
+      -s|--show)    action="show"; shift ;;
+      -l|--list)    action="list"; shift ;;
+      -c|--command) position="command"; shift ;;
+      -C|--context) position="context"; ctx_prefix="$2"; shift 2 ;;
+      -h|--help)    action="help"; shift ;;
+      *)
+        if [[ -z "$name" ]]; then
+          name="$1"
+        else
+          expansion="$1"
+        fi
+        shift
+        ;;
+    esac
+  done
 
-      for key in $keys; do
-        local value=${${(P)array}[$key]}
-        printf "${key_color}%-12s${reset} ${arrow_color}→${reset} ${value_color}%s${reset}\n" "$key" "$value"
+  case "$action" in
+    add)
+      if [[ -z "$name" || -z "$expansion" ]]; then
+        echo "Usage: abbr -a [-c|-C PREFIX] NAME EXPANSION" >&2
+        return 1
+      fi
+      case "$position" in
+        command)
+          abbrevs_cmd[$name]="$expansion"
+          echo "abbrevs_cmd[$name]=\"$expansion\"" >> "$ABBR_USER_FILE"
+          echo "Added command abbreviation: $name → $expansion"
+          ;;
+        context)
+          if [[ -z "$ctx_prefix" ]]; then
+            echo "Context mode requires -C PREFIX" >&2
+            return 1
+          fi
+          abbrevs_ctx["${ctx_prefix}:${name}"]="$expansion"
+          echo "abbrevs_ctx[${ctx_prefix}:${name}]=\"$expansion\"" >> "$ABBR_USER_FILE"
+          echo "Added context abbreviation: $ctx_prefix $name → $ctx_prefix $expansion"
+          ;;
+        *)
+          abbrevs[$name]="$expansion"
+          alias $name="$expansion"
+          echo "abbrevs[$name]=\"$expansion\"" >> "$ABBR_USER_FILE"
+          echo "Added abbreviation: $name → $expansion"
+          ;;
+      esac
+      ;;
+
+    erase)
+      if [[ -z "$name" ]]; then
+        echo "Usage: abbr -e NAME" >&2
+        return 1
+      fi
+      local found=0
+      if [[ -n "${abbrevs[$name]}" ]]; then
+        unset "abbrevs[$name]"
+        unalias "$name" 2>/dev/null
+        found=1
+      fi
+      if [[ -n "${abbrevs_cmd[$name]}" ]]; then
+        unset "abbrevs_cmd[$name]"
+        found=1
+      fi
+      # Check all context prefixes
+      for key in ${(k)abbrevs_ctx}; do
+        if [[ "$key" == *":$name" ]]; then
+          unset "abbrevs_ctx[$key]"
+          found=1
+        fi
       done
-      echo
-    done
-  else
-    # Pretty print typeset as valid zsh for non-interactive
-    for array in ${abbrev_arrays[@]}; do
-      typeset -p $array | sed 's/\[/\n  [/g; s/)/\n)/' | sed '1s/^/\n/'
-    done
-  fi
+      if [[ $found -eq 1 ]]; then
+        # Remove from persistence file
+        if [[ -f "$ABBR_USER_FILE" ]]; then
+          sed -i.bak "/\[$name\]=/d; /\[.*:$name\]=/d" "$ABBR_USER_FILE"
+          rm -f "${ABBR_USER_FILE}.bak"
+        fi
+        echo "Erased abbreviation: $name"
+      else
+        echo "Abbreviation not found: $name" >&2
+        return 1
+      fi
+      ;;
+
+    show)
+      echo "# Anywhere abbreviations"
+      for key in ${(ko)abbrevs}; do
+        echo "abbr -a ${(q)key} ${(q)abbrevs[$key]}"
+      done
+      echo "\n# Command-position abbreviations"
+      for key in ${(ko)abbrevs_cmd}; do
+        echo "abbr -a -c ${(q)key} ${(q)abbrevs_cmd[$key]}"
+      done
+      echo "\n# Context abbreviations"
+      for key in ${(ko)abbrevs_ctx}; do
+        local ctx="${key%%:*}"
+        local abbr="${key#*:}"
+        echo "abbr -a -C ${(q)ctx} ${(q)abbr} ${(q)abbrevs_ctx[$key]}"
+      done
+      ;;
+
+    list)
+      local header='\033[1;36m' key_c='\033[1;33m' arrow='\033[0;37m'
+      local val_c='\033[0;32m' ctx_c='\033[1;35m' reset='\033[0m'
+
+      if [[ -t 1 ]]; then
+        # Anywhere abbreviations (from arrays)
+        for array in ${abbrev_arrays[@]}; do
+          echo -e "${header}${array}${reset}"
+          for key in ${(ko)${(P)array}}; do
+            printf "${key_c}%-12s${reset} ${arrow}→${reset} ${val_c}%s${reset}\n" \
+              "$key" "${${(P)array}[$key]}"
+          done
+          echo
+        done
+
+        # Context abbreviations
+        if [[ ${#abbrevs_ctx} -gt 0 ]]; then
+          echo -e "${header}context_abbrevs${reset}"
+          for key in ${(ko)abbrevs_ctx}; do
+            local ctx="${key%%:*}"
+            local abbr="${key#*:}"
+            printf "${ctx_c}%-6s${reset} ${key_c}%-8s${reset} ${arrow}→${reset} ${val_c}%s${reset}\n" \
+              "$ctx" "$abbr" "${abbrevs_ctx[$key]}"
+          done
+          echo
+        fi
+
+        # Command-position abbreviations
+        if [[ ${#abbrevs_cmd} -gt 0 ]]; then
+          echo -e "${header}command_abbrevs${reset}"
+          for key in ${(ko)abbrevs_cmd}; do
+            printf "${key_c}%-12s${reset} ${arrow}→${reset} ${val_c}%s${reset}\n" \
+              "$key" "${abbrevs_cmd[$key]}"
+          done
+          echo
+        fi
+      else
+        # Non-interactive: output as zsh
+        for array in ${abbrev_arrays[@]}; do
+          typeset -p $array | sed 's/\[/\n  [/g; s/)/\n)/' | sed '1s/^/\n/'
+        done
+      fi
+      ;;
+
+    help)
+      cat <<'EOF'
+abbr - fish-like abbreviation manager
+
+USAGE:
+  abbr                     List all abbreviations
+  abbr -l, --list          List all abbreviations
+  abbr -a NAME EXPANSION   Add an anywhere abbreviation
+  abbr -a -c NAME EXP      Add a command-position abbreviation (first word only)
+  abbr -a -C CTX NAME EXP  Add a context abbreviation (after CTX, e.g., "git")
+  abbr -e NAME             Erase an abbreviation
+  abbr -s, --show          Show abbreviations as abbr commands (for export)
+  abbr -h, --help          Show this help
+
+EXAMPLES:
+  abbr -a gp "git push"              # expands anywhere
+  abbr -a -c ll "ls -la"             # expands only as first word
+  abbr -a -C git sw switch           # "git sw" → "git switch"
+  abbr -a -C docker b build          # "docker b" → "docker build"
+  abbr -e gp                         # remove abbreviation
+
+KEYBINDINGS:
+  Space     Expand abbreviation
+  Enter     Expand and execute
+  Ctrl+x    Insert literal space (no expansion)
+EOF
+      ;;
+  esac
 }
 
-# Ensures that autosuggestions are cleared when custom ENTER widget is used
+# Autosuggestion compatibility
 export ZSH_AUTOSUGGEST_CLEAR_WIDGETS=(magic-abbrev-expand-and-execute)
