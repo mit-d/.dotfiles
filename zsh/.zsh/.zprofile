@@ -7,29 +7,36 @@
 # Global Order: zshenv, zprofile, zshrc, zlogin
 #
 
+## Source PATH (after path_helper runs in /etc/zprofile)
+. "$ZDOTDIR/posix/path.sh"
+
 ## Set up editor
 export EDITOR=vi
 export VISUAL=vi
 
-## Detect and set COPY and PASTE commands based on availability
-if command -v wl-copy &>/dev/null && command -v wl-paste &>/dev/null; then
-  export COPY_COMMAND="wl-copy"
-  export PASTE_COMMAND="wl-paste"
-elif command -v xclip &>/dev/null; then
-  export COPY_COMMAND="xclip -selection clipboard"
-  export PASTE_COMMAND="xclip -selection clipboard -o"
-elif command -v xsel &>/dev/null; then
-  export COPY_COMMAND="xsel --clipboard --input"
-  export PASTE_COMMAND="xsel --clipboard --output"
-elif command -v clip.exe &>/dev/null; then
-  # For Windows using WSL
-  export COPY_COMMAND="clip.exe"
-  export PASTE_COMMAND="powershell.exe Get-Clipboard"
-elif command -v pbcopy &>/dev/null && command -v pbpaste &>/dev/null; then
-  # For macOS
+## Detect and set COPY and PASTE commands based on OS (avoids unnecessary command -v calls)
+case "$OSTYPE" in
+darwin*)
   export COPY_COMMAND="pbcopy"
   export PASTE_COMMAND="pbpaste"
-fi
+  ;;
+linux*)
+  if command -v wl-copy &>/dev/null; then
+    export COPY_COMMAND="wl-copy"
+    export PASTE_COMMAND="wl-paste"
+  elif command -v xclip &>/dev/null; then
+    export COPY_COMMAND="xclip -selection clipboard"
+    export PASTE_COMMAND="xclip -selection clipboard -o"
+  elif command -v xsel &>/dev/null; then
+    export COPY_COMMAND="xsel --clipboard --input"
+    export PASTE_COMMAND="xsel --clipboard --output"
+  fi
+  ;;
+msys*|cygwin*|win32*)
+  export COPY_COMMAND="clip.exe"
+  export PASTE_COMMAND="powershell.exe Get-Clipboard"
+  ;;
+esac
 
 ## OS-specific setup
 case "$OSTYPE" in
@@ -46,11 +53,7 @@ linux*)
 darwin*)
   # macOS (OSTYPE is 'darwin*')
   alias 'su'='sudo su'
-  # caps:ctrl
-  hidutil property --set '{"UserKeyMapping":[
-{"HIDKeyboardModifierMappingSrc": 0x700000039,"HIDKeyboardModifierMappingDst": 0x7000000E0},
-{"HIDKeyboardModifierMappingSrc": 0x7000000E0,"HIDKeyboardModifierMappingDst": 0x700000039}
-  ]}' >>/dev/null
+  # caps:ctrl remapping moved to .zlogin (only needs to run once per login)
   ;;
 msys* | cygwin* | win32*)
   # Windows (via WSL, Cygwin, Git Bash, or MINGW)

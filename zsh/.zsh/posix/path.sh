@@ -1,19 +1,24 @@
 # path.sh - PATH configuration
 # POSIX-compliant shell script
 
-# Add directory to PATH if it exists and isn't already in PATH
+# Add directory to front of PATH if it exists (removes duplicates)
+# Uses pure shell parameter expansion to avoid subprocess overhead:
+#   ${PATH%%:$dir:*} - everything before the match
+#   ${PATH#*:$dir:}  - everything after the match
+#   ${PATH#:}        - strip leading colon if present
 _add_to_path() {
 	dir="$1"
-	if [ -d "$dir" ]; then
-		case ":${PATH}:" in
-		*:"$dir":*) ;; # Already in PATH
-		*) PATH="$dir:$PATH" ;;
-		esac
-	fi
+	[ -d "$dir" ] || return
+	case ":$PATH:" in
+		*:"$dir":*) PATH="${PATH%%:$dir:*}:${PATH#*:$dir:}" ;;
+	esac
+	PATH="$dir:${PATH#:}"
 }
 
 # Directories to add to PATH (in reverse priority order - last added = highest priority)
 _add_to_path "$HOME/.npm_global/bin"
+_add_to_path "/opt/homebrew/opt/gnu-getopt/bin"
+_add_to_path "/opt/homebrew/opt/findutils/libexec/gnubin"
 _add_to_path "/opt/homebrew/opt/coreutils/libexec/gnubin"
 _add_to_path "/opt/homebrew/opt/openjdk/bin"
 _add_to_path "/opt/homebrew/bin"

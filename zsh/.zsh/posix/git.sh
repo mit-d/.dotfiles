@@ -355,3 +355,29 @@ git_commit_project_files() {
 		return 1
 	fi
 }
+
+# Append a commit to git-blame-ignore-revs with a comment
+git_ignore_rev() {
+	rev="${1:-HEAD}"
+	
+	# Get the configured ignore-revs file, default to .git-blame-ignore-revs
+	ignore_file=$(git config blame.ignoreRevsFile 2>/dev/null) || ignore_file=".git-blame-ignore-revs"
+	
+	# Get the full commit hash
+	full_hash=$(git rev-parse "$rev" 2>/dev/null) || {
+		echo "Error: Invalid revision '$rev'" >&2
+		return 1
+	}
+	
+	# Get the first line of the commit message
+	commit_msg=$(git log -1 --format='%s' "$full_hash")
+	
+	# Append to the file
+	printf '%s # %s\n' "$full_hash" "$commit_msg" >> "$ignore_file"
+	
+	echo "Added: $full_hash # $commit_msg"
+}
+
+gwt() {
+    git worktree add -B "$1" "../$1"
+}

@@ -9,7 +9,7 @@ autoload -Uz vcs_info
 zstyle ':vcs_info:git:*' formats '(%b)'
 zstyle ':vcs_info:git:*' actionformats '(%b|%a)'
 zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' check-for-changes false  # Disable for speed (set true if you need staged/unstaged indicators)
 zstyle ':vcs_info:git:*' stagedstr '%F{green}●%F{blue}'
 zstyle ':vcs_info:git:*' unstagedstr '%F{red}●%F{blue}'
 zstyle ':vcs_info:git:*' formats '%u%c (%b)'
@@ -23,10 +23,11 @@ ENV_VARS=(
 )
 
 random_color() {
-  local seed=${1:-$RANDOM} # Use provided seed or default to a random value
+  local seed=${1:-$RANDOM}
   local colors=(red green yellow blue magenta cyan)
-  local hash=$(($(echo -n "$seed" | cksum | awk '{print $1}') % ${#colors[@]}))
-  echo "${colors[hash]}"
+  # Use zsh's built-in string hashing instead of spawning cksum/awk
+  local hash=$(( ${#seed} * 31 + $(printf '%d' "'${seed[1]}") ))
+  echo "${colors[hash % ${#colors[@]} + 1]}"
 }
 
 # Function to build prompt with environment variables

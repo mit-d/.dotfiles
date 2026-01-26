@@ -23,6 +23,8 @@ typeset -A git_abbrevs=(
   "gchanged"      "git diff --name-only \"\$(git merge-base HEAD origin/main)\"...HEAD"
   "gblackchanged" 'black $(git diff --name-only "$(git merge-base HEAD origin/main)"...HEAD | grep -E "\.py$")'
   "gblacknew"     'black $(git diff --name-only --diff-filter=A "$(git merge-base HEAD origin/main)"...HEAD | grep -E "\.py$")'
+  # posix/git.sh expansion
+  "wtf"       'gwt feat/dmitten/WARH-__CURSOR__'
 )
 
 typeset -A git_abbrevs_extra=(

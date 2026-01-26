@@ -130,7 +130,4 @@ fpath=(/Users/derekmitten/.docker/completions $fpath)
 # compinit is already called in completion.zsh
 
 ## Bun completions
-[[ -s "/home/dmitten/.bun/_bun" ]] && source "/home/dmitten/.bun/_bun"
-
-# Add GNU getopt to PATH
-export PATH="/opt/homebrew/opt/gnu-getopt/bin:$PATH"
+[[ -s "$HOME/.bun/_bun" ]] && source "$HOME/.bun/_bun"

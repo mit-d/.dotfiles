@@ -3,8 +3,13 @@
 fpath+="$HOME/.zsh/completions"
 # fpath+="/home/linuxbrew/.linuxbrew/share/zsh/site-functions" ## Disabling for now, permission problems
 
-# auto completion
-autoload -Uz compinit && compinit
+# auto completion (use cached completions if fresh, regenerate daily)
+autoload -Uz compinit
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
 
 # auto complete options
 setopt COMPLETE_IN_WORD # complete in word
