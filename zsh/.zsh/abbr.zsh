@@ -687,64 +687,15 @@ _abbr() {
 }
 (( $+functions[compdef] )) && compdef _abbr abbr
 
-# Show available abbreviations for current context (Ctrl+x a)
-# Usage: type "git " then press Ctrl+x a to see git abbreviations
-abbr-show-context() {
-  local cmd_prefix="${LBUFFER%%[[:space:]]*}"
-  local current_word="${LBUFFER##* }"
-  local -a matches
-
-  # Check for context abbreviations
-  if [[ -n "$cmd_prefix" && "$LBUFFER" == *[[:space:]]* ]]; then
-    # Handle "docker compose" as special case
-    if [[ "$LBUFFER" == "docker compose "* ]]; then
-      cmd_prefix="docker compose"
-    fi
-
-    for key in ${(ko)abbrevs_ctx}; do
-      if [[ "$key" == ${cmd_prefix}:* ]]; then
-        local abbr="${key#*:}"
-        local expansion="${abbrevs_ctx[$key]}"
-        # Filter by current word prefix if any
-        if [[ -z "$current_word" || "$abbr" == ${current_word}* ]]; then
-          matches+=("$abbr → $expansion")
-        fi
-      fi
-    done
-
-    if [[ ${#matches} -eq 0 ]]; then
-      zle -M "No abbreviations for: $cmd_prefix"
-    else
-      zle -M "[$cmd_prefix] ${(F)matches}"
-    fi
-  else
-    # At command position - show anywhere abbreviations matching current word
-    local count=0
-    for key in ${(ko)abbrevs}; do
-      if [[ -z "$current_word" || "$key" == ${current_word}* ]]; then
-        matches+=("$key → ${abbrevs[$key]}")
-        ((count++))
-        [[ $count -ge 20 ]] && { matches+=("... (use 'abbr' to see all)"); break; }
-      fi
-    done
-
-    if [[ ${#matches} -eq 0 ]]; then
-      zle -M "No abbreviations matching: $current_word"
-    else
-      zle -M "${(F)matches}"
-    fi
-  fi
-}
-zle -N abbr-show-context
-bindkey "^Xa" abbr-show-context
-
-# Insert abbreviation from menu (Ctrl+x Tab)
-abbr-complete() {
+# Abbreviation picker with fzf (Ctrl+x a)
+# Shows abbreviations for current context, select to insert or Esc to cancel
+abbr-fzf() {
   local cmd_prefix="${LBUFFER%%[[:space:]]*}"
   local current_word="${LBUFFER##* }"
   local prefix_before_word="${LBUFFER% *}"
   [[ "$LBUFFER" != *" "* ]] && prefix_before_word=""
   local -a candidates
+  local header="anywhere"
 
   # Determine which abbreviations to offer
   if [[ -n "$cmd_prefix" && "$LBUFFER" == *[[:space:]]* ]]; then
@@ -753,48 +704,52 @@ abbr-complete() {
       cmd_prefix="docker compose"
       prefix_before_word="docker compose"
     fi
+    header="$cmd_prefix"
 
     for key in ${(ko)abbrevs_ctx}; do
       if [[ "$key" == ${cmd_prefix}:* ]]; then
         local abbr="${key#*:}"
+        local expansion="${abbrevs_ctx[$key]}"
         if [[ -z "$current_word" || "$abbr" == ${current_word}* ]]; then
-          candidates+=("$abbr")
+          candidates+=("$(printf '%-10s → %s' "$abbr" "$expansion")")
         fi
       fi
     done
   else
     for key in ${(ko)abbrevs}; do
       if [[ -z "$current_word" || "$key" == ${current_word}* ]]; then
-        candidates+=("$key")
+        candidates+=("$(printf '%-12s → %s' "$key" "${abbrevs[$key]}")")
       fi
     done
   fi
 
   if [[ ${#candidates} -eq 0 ]]; then
-    zle -M "No matching abbreviations"
+    zle -M "No abbreviations for: $header"
     return 1
-  elif [[ ${#candidates} -eq 1 ]]; then
-    # Single match - insert it
+  fi
+
+  local selection
+  selection=$(printf '%s\n' "${candidates[@]}" | \
+    fzf --height=~50% --reverse --prompt="[$header] " \
+        --header="Select abbreviation (Esc to cancel)" \
+        --preview-window=hidden)
+
+  if [[ -n "$selection" ]]; then
+    # Extract just the abbreviation (before the →)
+    local abbr="${selection%% →*}"
+    abbr="${abbr%% *}"  # Trim trailing spaces
+
     if [[ -n "$prefix_before_word" ]]; then
-      LBUFFER="${prefix_before_word} ${candidates[1]}"
+      LBUFFER="${prefix_before_word} ${abbr}"
     else
-      LBUFFER="${candidates[1]}"
-    fi
-  else
-    # Multiple matches - use menu selection
-    local selection
-    selection=$(printf '%s\n' "${candidates[@]}" | fzf --height=10 --reverse --prompt="abbr> ")
-    if [[ -n "$selection" ]]; then
-      if [[ -n "$prefix_before_word" ]]; then
-        LBUFFER="${prefix_before_word} ${selection}"
-      else
-        LBUFFER="${selection}"
-      fi
+      LBUFFER="${abbr}"
     fi
   fi
+
+  zle reset-prompt
 }
-zle -N abbr-complete
-bindkey "^X^I" abbr-complete  # Ctrl+x Tab
+zle -N abbr-fzf
+bindkey "^Xo" abbr-fzf    # Ctrl+x o
 
 # Autosuggestion compatibility
 export ZSH_AUTOSUGGEST_CLEAR_WIDGETS=(magic-abbrev-expand-and-execute)
