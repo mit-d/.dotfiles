@@ -253,14 +253,15 @@ typeset -A pyenv_abbrevs=(
   "uvadd"  "uv add"
 )
 
-# Custom Workflow Abbreviations
-typeset -A custom_abbrevs=(
+# Custom Workflow Abbreviations (command-position only - won't expand in commit messages)
+typeset -A custom_cmd_abbrevs=(
   "feat"     "git switch -C feat/dmitten/WARH-__CURSOR__"
   "bugs"     "git switch -C bugs/dmitten/WARH-__CURSOR__"
   "misc"     "git switch -C misc/dmitten/__CURSOR__"
   "manage"   "docker exec -it jaguar-debug python manage.py __CURSOR__"
   "managesh" "docker exec -it jaguar-debugshell python manage.py __CURSOR__"
   "db"       "echo \"export DB_NAME=__CURSOR__\" >~/.db-env && source ~/.db-env"
+  "t"        "task __CURSOR__"
 )
 
 # Arrays to merge into main stores
@@ -274,9 +275,13 @@ typeset -a abbrev_arrays=(
   net_abbrevs
   misc_abbrevs
   output_abbrevs
-  custom_abbrevs
   # apt_abbrevs
   # systemctl_abbrevs
+)
+
+# Arrays for command-position only (won't expand mid-line)
+typeset -a abbrev_cmd_arrays=(
+  custom_cmd_abbrevs
 )
 
 # Context abbreviation arrays (format: array[prefix]="name1:name2:...")
@@ -287,6 +292,11 @@ typeset -a ctx_abbrev_arrays=(
 # Merge "anywhere" arrays into abbrevs
 for array in ${abbrev_arrays[@]}; do
   abbrevs+=( ${(kv)${(P)array}} )
+done
+
+# Merge command-position arrays into abbrevs_cmd
+for array in ${abbrev_cmd_arrays[@]}; do
+  abbrevs_cmd+=( ${(kv)${(P)array}} )
 done
 
 # Merge context arrays into abbrevs_ctx
