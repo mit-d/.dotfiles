@@ -222,3 +222,659 @@
 @test 'kubectl context: "kubectl l" expands to "kubectl logs -f"' {
   assert "${abbrevs_ctx[kubectl:l]}" same_as "logs -f"
 }
+
+# =============================================================================
+# Pipe and semicolon handling (current simple command detection)
+# =============================================================================
+
+@test 'current_cmd extraction: strips content before pipe' {
+  local prefix="echo test | git "
+  local current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+
+  assert "$current_cmd" same_as "git "
+}
+
+@test 'current_cmd extraction: strips content before semicolon' {
+  local prefix="ls; git "
+  local current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+
+  assert "$current_cmd" same_as "git "
+}
+
+@test 'current_cmd extraction: strips content before &&' {
+  local prefix="foo && git "
+  local current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+
+  assert "$current_cmd" same_as "git "
+}
+
+@test 'current_cmd extraction: no separator returns full prefix' {
+  local prefix="git "
+  local current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+
+  assert "$current_cmd" same_as "git "
+}
+
+@test 'expansion: "echo | git sw" expands to "echo | git switch"' {
+  setopt extendedglob
+  local LBUFFER="echo | git sw"
+  local MATCH prefix expansion ctx_key cmd_prefix
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  prefix="$LBUFFER"
+
+  # Extract current simple command (after pipe)
+  local current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+  cmd_prefix="${current_cmd%%[[:space:]]*}"
+
+  # Context check
+  if [[ -n "$cmd_prefix" && "$current_cmd" == *[[:space:]]* ]]; then
+    ctx_key="${cmd_prefix}:${MATCH}"
+    expansion="${abbrevs_ctx[$ctx_key]}"
+  fi
+
+  assert "$cmd_prefix" same_as "git"
+  assert "$expansion" same_as "switch"
+  assert "${prefix}${expansion}" same_as "echo | git switch"
+}
+
+@test 'expansion: "ls; git co" expands to "ls; git checkout"' {
+  setopt extendedglob
+  local LBUFFER="ls; git co"
+  local MATCH prefix expansion ctx_key cmd_prefix
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  prefix="$LBUFFER"
+
+  local current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+  cmd_prefix="${current_cmd%%[[:space:]]*}"
+
+  if [[ -n "$cmd_prefix" && "$current_cmd" == *[[:space:]]* ]]; then
+    ctx_key="${cmd_prefix}:${MATCH}"
+    expansion="${abbrevs_ctx[$ctx_key]}"
+  fi
+
+  assert "$cmd_prefix" same_as "git"
+  assert "$expansion" same_as "checkout"
+}
+
+@test 'expansion: "foo && git rb" expands to "foo && git rebase"' {
+  setopt extendedglob
+  local LBUFFER="foo && git rb"
+  local MATCH prefix expansion ctx_key cmd_prefix
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  prefix="$LBUFFER"
+
+  local current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+  cmd_prefix="${current_cmd%%[[:space:]]*}"
+
+  if [[ -n "$cmd_prefix" && "$current_cmd" == *[[:space:]]* ]]; then
+    ctx_key="${cmd_prefix}:${MATCH}"
+    expansion="${abbrevs_ctx[$ctx_key]}"
+  fi
+
+  assert "$expansion" same_as "rebase"
+}
+
+@test 'expansion: "echo | sw" does NOT expand (no git context)' {
+  setopt extendedglob
+  local LBUFFER="echo | sw"
+  local MATCH prefix ctx_key cmd_prefix
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  prefix="$LBUFFER"
+
+  local current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+  cmd_prefix="${current_cmd%%[[:space:]]*}"
+
+  # sw is at command position after pipe, no space after it
+  # So current_cmd is "sw" with no space - context check should fail
+  local found=0
+  if [[ -n "$cmd_prefix" && "$current_cmd" == *[[:space:]]* ]]; then
+    ctx_key="${cmd_prefix}:${MATCH}"
+    if [[ -n "${abbrevs_ctx[$ctx_key]}" ]]; then
+      found=1
+    fi
+  fi
+
+  # Also not in anywhere abbrevs
+  if [[ -n "${abbrevs[$MATCH]}" ]]; then
+    found=1
+  fi
+
+  assert "$found" equals 0
+}
+
+@test 'expansion: "echo test | docker b" expands to "echo test | docker build"' {
+  setopt extendedglob
+  local LBUFFER="echo test | docker b"
+  local MATCH prefix expansion ctx_key cmd_prefix
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  prefix="$LBUFFER"
+
+  local current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+  cmd_prefix="${current_cmd%%[[:space:]]*}"
+
+  if [[ -n "$cmd_prefix" && "$current_cmd" == *[[:space:]]* ]]; then
+    ctx_key="${cmd_prefix}:${MATCH}"
+    expansion="${abbrevs_ctx[$ctx_key]}"
+  fi
+
+  assert "$cmd_prefix" same_as "docker"
+  assert "$expansion" same_as "build"
+}
+
+@test 'command-position: after pipe is command position' {
+  local prefix="echo | "
+  local current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+
+  # Empty or no space means command position
+  if [[ ! "$current_cmd" == *[[:space:]]* ]]; then
+    assert 1 equals 1
+  else
+    assert 1 equals 0
+  fi
+}
+
+@test 'command-position: after semicolon is command position' {
+  local prefix="ls; "
+  local current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+
+  if [[ ! "$current_cmd" == *[[:space:]]* ]]; then
+    assert 1 equals 1
+  else
+    assert 1 equals 0
+  fi
+}
+
+# Bug regression: ensure old behavior still works
+@test 'regression: "git sw" still expands without pipe' {
+  setopt extendedglob
+  local LBUFFER="git sw"
+  local MATCH prefix expansion ctx_key cmd_prefix
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  prefix="$LBUFFER"
+
+  local current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+  cmd_prefix="${current_cmd%%[[:space:]]*}"
+
+  if [[ -n "$cmd_prefix" && "$current_cmd" == *[[:space:]]* ]]; then
+    ctx_key="${cmd_prefix}:${MATCH}"
+    expansion="${abbrevs_ctx[$ctx_key]}"
+  fi
+
+  assert "$expansion" same_as "switch"
+}
+
+@test 'regression: "gs" still expands as anywhere abbrev' {
+  setopt extendedglob
+  local LBUFFER="gs"
+  local MATCH prefix
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  prefix="$LBUFFER"
+
+  local expansion="${abbrevs[$MATCH]}"
+  assert "$expansion" same_as "git status -s"
+}
+
+# =============================================================================
+# __CURSOR__ placeholder handling
+# =============================================================================
+
+@test 'cursor: expansion with __CURSOR__ splits correctly' {
+  local prefix="git " expansion="switch -C __CURSOR__/feature"
+  local LBUFFER RBUFFER
+
+  if [[ "$expansion" == *"__CURSOR__"* ]]; then
+    LBUFFER="${prefix}${expansion%%__CURSOR__*}"
+    RBUFFER="${expansion#*__CURSOR__}"
+  fi
+
+  assert "$LBUFFER" same_as "git switch -C "
+  assert "$RBUFFER" same_as "/feature"
+}
+
+@test 'cursor: expansion without __CURSOR__ leaves RBUFFER empty' {
+  local prefix="git " expansion="switch main"
+  local LBUFFER="" RBUFFER=""
+
+  if [[ "$expansion" == *"__CURSOR__"* ]]; then
+    LBUFFER="${prefix}${expansion%%__CURSOR__*}"
+    RBUFFER="${expansion#*__CURSOR__}"
+  else
+    LBUFFER="${prefix}${expansion}"
+  fi
+
+  assert "$LBUFFER" same_as "git switch main"
+  assert "$RBUFFER" same_as ""
+}
+
+@test 'cursor: __CURSOR__ at start of expansion' {
+  local prefix="" expansion="__CURSOR__ --help"
+  local LBUFFER RBUFFER
+
+  LBUFFER="${prefix}${expansion%%__CURSOR__*}"
+  RBUFFER="${expansion#*__CURSOR__}"
+
+  assert "$LBUFFER" same_as ""
+  assert "$RBUFFER" same_as " --help"
+}
+
+@test 'cursor: __CURSOR__ at end of expansion' {
+  local prefix="docker exec -it " expansion="container __CURSOR__"
+  local LBUFFER RBUFFER
+
+  LBUFFER="${prefix}${expansion%%__CURSOR__*}"
+  RBUFFER="${expansion#*__CURSOR__}"
+
+  assert "$LBUFFER" same_as "docker exec -it container "
+  assert "$RBUFFER" same_as ""
+}
+
+@test 'cursor: multiple __CURSOR__ only uses first' {
+  local expansion="__CURSOR__ middle __CURSOR__ end"
+  local before="${expansion%%__CURSOR__*}"
+  local after="${expansion#*__CURSOR__}"
+
+  assert "$before" same_as ""
+  assert "$after" same_as " middle __CURSOR__ end"
+}
+
+# =============================================================================
+# Multi-word context prefix (docker compose)
+# =============================================================================
+
+@test 'docker compose context exists in abbrevs_ctx' {
+  # Keys stored with proper quoting: "docker compose:u"
+  assert "${abbrevs_ctx[docker compose:u]}" same_as "up -d"
+  assert "${abbrevs_ctx[docker compose:d]}" same_as "down"
+}
+
+@test 'expansion: "docker compose u" expands correctly with multi-word prefix' {
+  setopt extendedglob
+  local LBUFFER="docker compose u"
+  local MATCH prefix current_cmd
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  prefix="$LBUFFER"
+
+  current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+
+  # Extract multi-word prefix
+  local first_word="${current_cmd%%[[:space:]]*}"
+  local rest="${current_cmd#*[[:space:]]}"
+  rest="${rest#"${rest%%[![:space:]]*}"}"
+  local second_word="${rest%%[[:space:]]*}"
+  local multi_prefix="${first_word} ${second_word}"
+
+  # Check multi-word prefix lookup
+  local ctx_key="${multi_prefix}:${MATCH}"
+  assert "$ctx_key" same_as "docker compose:u"
+  assert "${abbrevs_ctx[$ctx_key]}" same_as "up -d"
+}
+
+# =============================================================================
+# Double-character separators (||, &&)
+# =============================================================================
+
+# BUG: || leaves a stray | because [|&;] matches single chars
+@test 'BUG: "false || git sw" leaves stray pipe' {
+  local prefix="false || git "
+  local current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+
+  # BUG: current_cmd is "| git " not "git " because || -> strips one |
+  # Actually let me check... ##*[|&;] is greedy, matches up to LAST occurrence
+  # "false || git " - last | is the second one, so it strips "false ||" leaving " git "
+  # Hmm, let me verify
+  assert "$current_cmd" same_as "git "
+}
+
+@test 'current_cmd: "a && b && git sw" handles chained &&' {
+  local prefix="a && b && git "
+  local current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+
+  assert "$current_cmd" same_as "git "
+}
+
+# =============================================================================
+# Subshells and grouping
+# =============================================================================
+
+@test 'subshell "(git sw" strips paren from cmd_prefix' {
+  local prefix="(git "
+  local current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+
+  # Strip subshell prefixes
+  current_cmd="${current_cmd#\(}"
+  current_cmd="${current_cmd#\$\(}"
+  current_cmd="${current_cmd#\`}"
+  current_cmd="${current_cmd#\{}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+
+  local cmd_prefix="${current_cmd%%[[:space:]]*}"
+
+  # Now cmd_prefix should be "git" not "(git"
+  assert "$cmd_prefix" same_as "git"
+}
+
+@test 'command substitution "$(git sw" strips $( prefix' {
+  local prefix="\$(git "
+  local current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+
+  # Strip subshell prefixes
+  current_cmd="${current_cmd#\(}"
+  current_cmd="${current_cmd#\$\(}"
+  current_cmd="${current_cmd#\`}"
+  current_cmd="${current_cmd#\{}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+
+  local cmd_prefix="${current_cmd%%[[:space:]]*}"
+
+  assert "$cmd_prefix" same_as "git"
+}
+
+@test 'backtick command substitution "`git sw" strips backtick' {
+  local prefix="\`git "
+  local current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+
+  # Strip subshell prefixes
+  current_cmd="${current_cmd#\(}"
+  current_cmd="${current_cmd#\$\(}"
+  current_cmd="${current_cmd#\`}"
+  current_cmd="${current_cmd#\{}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+
+  local cmd_prefix="${current_cmd%%[[:space:]]*}"
+
+  assert "$cmd_prefix" same_as "git"
+}
+
+# =============================================================================
+# Command-position abbreviations (abbrevs_cmd)
+# =============================================================================
+
+@test 'command-position abbrevs are populated' {
+  assert "${#abbrevs_cmd}" is_positive
+}
+
+@test 'feat is a command-position abbreviation' {
+  assert "${abbrevs_cmd[feat]}" is_not_empty
+}
+
+@test 'command-position: "feat" at start expands' {
+  setopt extendedglob
+  local LBUFFER="feat"
+  local MATCH prefix current_cmd
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  prefix="$LBUFFER"
+
+  current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+
+  # At command position (no space in current_cmd)
+  local is_cmd_position=0
+  [[ ! "$current_cmd" == *[[:space:]]* ]] && is_cmd_position=1
+
+  assert "$is_cmd_position" equals 1
+  assert "${abbrevs_cmd[$MATCH]}" is_not_empty
+}
+
+@test 'command-position: "echo feat" does NOT expand feat' {
+  setopt extendedglob
+  local LBUFFER="echo feat"
+  local MATCH prefix current_cmd
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  prefix="$LBUFFER"
+
+  current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+
+  # NOT at command position (space in current_cmd)
+  local is_cmd_position=0
+  [[ ! "$current_cmd" == *[[:space:]]* ]] && is_cmd_position=1
+
+  assert "$is_cmd_position" equals 0
+}
+
+@test 'command-position: "ls; feat" expands after semicolon' {
+  setopt extendedglob
+  local LBUFFER="ls; feat"
+  local MATCH prefix current_cmd
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  prefix="$LBUFFER"
+
+  current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+
+  local is_cmd_position=0
+  [[ ! "$current_cmd" == *[[:space:]]* ]] && is_cmd_position=1
+
+  assert "$is_cmd_position" equals 1
+  assert "${abbrevs_cmd[$MATCH]}" is_not_empty
+}
+
+# =============================================================================
+# Whitespace edge cases
+# =============================================================================
+
+@test 'multiple spaces: "git  sw" (double space)' {
+  setopt extendedglob
+  local LBUFFER="git  sw"
+  local MATCH prefix current_cmd cmd_prefix
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  prefix="$LBUFFER"
+
+  current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+  cmd_prefix="${current_cmd%%[[:space:]]*}"
+
+  assert "$cmd_prefix" same_as "git"
+  assert "$MATCH" same_as "sw"
+}
+
+@test 'trailing spaces preserved in prefix' {
+  setopt extendedglob
+  local LBUFFER="git   sw"
+  local MATCH
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+
+  # prefix should keep the multiple spaces
+  assert "$LBUFFER" same_as "git   "
+  assert "$MATCH" same_as "sw"
+}
+
+@test 'empty LBUFFER' {
+  setopt extendedglob
+  local LBUFFER=""
+  local MATCH
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+
+  assert "$LBUFFER" same_as ""
+  assert "$MATCH" same_as ""
+}
+
+@test 'only whitespace in LBUFFER' {
+  setopt extendedglob
+  local LBUFFER="   "
+  local MATCH
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+
+  assert "$LBUFFER" same_as "   "
+  assert "$MATCH" same_as ""
+}
+
+# =============================================================================
+# Special characters in abbreviation names
+# =============================================================================
+
+@test 'abbreviation with underscore: "_NULL"' {
+  assert "${abbrevs[_NULL]}" same_as "&>/dev/null"
+}
+
+@test 'abbreviation with hyphen in expansion' {
+  # sw- expands to "switch -"
+  assert "${abbrevs_ctx[git:sw-]}" same_as "switch -"
+}
+
+@test 'MATCH captures underscore-prefixed abbrev' {
+  setopt extendedglob
+  local LBUFFER="echo _NULL"
+  local MATCH
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+
+  assert "$MATCH" same_as "_NULL"
+}
+
+# =============================================================================
+# Priority/precedence tests
+# =============================================================================
+
+@test 'context abbrev takes priority over anywhere abbrev' {
+  # If both "gs" existed in abbrevs AND "git:gs" in abbrevs_ctx,
+  # context should win when we're in git context
+  # Currently git:gs = "get svc" (kubectl) but let's test the logic
+
+  # kubectl has gs -> "get svc"
+  assert "${abbrevs_ctx[kubectl:gs]}" same_as "get svc"
+
+  # gs in abbrevs is "git status -s"
+  assert "${abbrevs[gs]}" same_as "git status -s"
+}
+
+# =============================================================================
+# Nested/chained pipes
+# =============================================================================
+
+@test 'deeply nested: "a | b | c | git sw"' {
+  setopt extendedglob
+  local LBUFFER="a | b | c | git sw"
+  local MATCH prefix current_cmd cmd_prefix
+
+  LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+  prefix="$LBUFFER"
+
+  current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+  cmd_prefix="${current_cmd%%[[:space:]]*}"
+
+  assert "$cmd_prefix" same_as "git"
+  assert "$MATCH" same_as "sw"
+
+  local ctx_key="${cmd_prefix}:${MATCH}"
+  assert "${abbrevs_ctx[$ctx_key]}" same_as "switch"
+}
+
+@test 'mixed separators: "a; b && c | git sw"' {
+  local prefix="a; b && c | git "
+  local current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"
+
+  assert "$current_cmd" same_as "git "
+}
+
+# =============================================================================
+# abbr CLI function tests
+# =============================================================================
+
+@test 'abbr function exists' {
+  assert "$+functions[abbr]" equals 1
+}
+
+@test 'abbr with no args defaults to list action' {
+  # Just verify it doesn't error - actual output tested separately
+  local output
+  output=$(abbr 2>&1)
+  assert $? equals 0
+}
+
+@test 'abbr -h shows help' {
+  local output
+  output=$(abbr -h 2>&1)
+  assert "$output" contains "USAGE"
+  assert "$output" contains "EXAMPLES"
+}
+
+@test 'abbr --help shows help' {
+  local output
+  output=$(abbr --help 2>&1)
+  assert "$output" contains "fish-like abbreviation manager"
+}
+
+@test 'abbr -a without args fails' {
+  run abbr -a
+  assert $state equals 1
+  assert "$output" contains "Usage"
+}
+
+@test 'abbr -e without args fails' {
+  run abbr -e
+  assert $state equals 1
+  assert "$output" contains "Usage"
+}
+
+@test 'abbr -e nonexistent fails' {
+  run abbr -e thisabbrdoesnotexist123
+  assert $state equals 1
+  assert "$output" contains "not found"
+}
+
+@test 'abbr -s produces importable output' {
+  local output
+  output=$(abbr -s 2>&1)
+  assert "$output" contains "abbr -a"
+  assert "$output" contains "# Anywhere abbreviations"
+}

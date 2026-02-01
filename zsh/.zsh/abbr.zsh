@@ -309,9 +309,12 @@ done
 for key val in "${(@kv)docker_ctx_abbrevs}"; do
   abbrevs_ctx[docker:$key]=$val
 done
+# Use a variable to avoid quoting issues with spaces in keys
+local _dc_prefix="docker compose"
 for key val in "${(@kv)compose_ctx_abbrevs}"; do
-  abbrevs_ctx[docker\ compose:$key]=$val
+  abbrevs_ctx[$_dc_prefix:$key]=$val
 done
+unset _dc_prefix
 for key val in "${(@kv)kubectl_ctx_abbrevs}"; do
   abbrevs_ctx[kubectl:$key]=$val
 done
@@ -335,13 +338,42 @@ magic-abbrev-expand() {
   LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
   prefix="$LBUFFER"
 
-  # Determine context: extract first word from prefix
-  cmd_prefix="${prefix%%[[:space:]]*}"
-  # Check if prefix has any content after the command
-  local after_cmd="${prefix#*[[:space:]]}"
+  # Find the current simple command (after |, ||, &&, ;, or start of line)
+  # This ensures "echo | git sw" sees "git" as the command, not "echo"
+  local current_cmd="$prefix"
+  current_cmd="${current_cmd##*[|&;]}"           # Remove up to last separator
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"  # Trim leading whitespace
+
+  # Strip subshell/command substitution prefixes: (, $(, `, {
+  current_cmd="${current_cmd#\(}"
+  current_cmd="${current_cmd#\$\(}"
+  current_cmd="${current_cmd#\`}"
+  current_cmd="${current_cmd#\{}"
+  current_cmd="${current_cmd#"${current_cmd%%[![:space:]]*}"}"  # Trim again after stripping
+
+  # Determine context: extract first word from current command
+  cmd_prefix="${current_cmd%%[[:space:]]*}"
 
   # 1. Check context abbreviations first (e.g., "git sw" → "git switch")
-  if [[ -n "$cmd_prefix" && "$prefix" == *[[:space:]]* ]]; then
+  if [[ -n "$cmd_prefix" && "$current_cmd" == *[[:space:]]* ]]; then
+    # Try multi-word context prefixes first (e.g., "docker compose")
+    # Extract first two words for potential multi-word prefix
+    local first_word="${current_cmd%%[[:space:]]*}"
+    local rest="${current_cmd#*[[:space:]]}"
+    rest="${rest#"${rest%%[![:space:]]*}"}"  # Trim leading space
+    local second_word="${rest%%[[:space:]]*}"
+    local multi_prefix="${first_word} ${second_word}"
+
+    # Check multi-word prefix first (e.g., "docker compose:u")
+    ctx_key="${multi_prefix}:${MATCH}"
+    if [[ -n "${abbrevs_ctx[$ctx_key]}" ]]; then
+      expansion="${abbrevs_ctx[$ctx_key]}"
+      LBUFFER="${prefix}${expansion}"
+      _abbr_handle_cursor "$prefix" "$expansion"
+      return
+    fi
+
+    # Fall back to single-word prefix (e.g., "git:sw")
     ctx_key="${cmd_prefix}:${MATCH}"
     if [[ -n "${abbrevs_ctx[$ctx_key]}" ]]; then
       expansion="${abbrevs_ctx[$ctx_key]}"
@@ -351,8 +383,8 @@ magic-abbrev-expand() {
     fi
   fi
 
-  # 2. Check command-position abbreviations (first word only)
-  if [[ -z "${prefix// /}" ]] && [[ -n "${abbrevs_cmd[$MATCH]}" ]]; then
+  # 2. Check command-position abbreviations (first word of current command)
+  if [[ ! "$current_cmd" == *[[:space:]]* ]] && [[ -n "${abbrevs_cmd[$MATCH]}" ]]; then
     expansion="${abbrevs_cmd[$MATCH]}"
     LBUFFER="${prefix}${expansion}"
     _abbr_handle_cursor "$prefix" "$expansion"
@@ -711,10 +743,22 @@ abbr-fzf() {
 
   # Determine which abbreviations to offer
   if [[ -n "$cmd_prefix" && "$LBUFFER" == *[[:space:]]* ]]; then
-    # Handle "docker compose" as special case
-    if [[ "$LBUFFER" == "docker compose "* ]]; then
-      cmd_prefix="docker compose"
-      prefix_before_word="docker compose"
+    # Check for multi-word context prefixes (e.g., "docker compose")
+    local first_word="${LBUFFER%%[[:space:]]*}"
+    local rest="${LBUFFER#*[[:space:]]}"
+    rest="${rest#"${rest%%[![:space:]]*}"}"
+    local second_word="${rest%%[[:space:]]*}"
+    local multi_prefix="${first_word} ${second_word}"
+
+    # Check if multi-word prefix has context abbreviations
+    local has_multi=0
+    for key in ${(k)abbrevs_ctx}; do
+      [[ "$key" == "${multi_prefix}:"* ]] && { has_multi=1; break; }
+    done
+
+    if [[ $has_multi -eq 1 && "$LBUFFER" == "${multi_prefix} "* ]]; then
+      cmd_prefix="$multi_prefix"
+      prefix_before_word="$multi_prefix"
     fi
     header="$cmd_prefix"
 
