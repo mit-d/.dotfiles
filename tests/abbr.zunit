@@ -6,14 +6,15 @@
   assert "${#abbrevs}" is_positive
 }
 
-@test 'abbrevs_ctx associative array is populated' {
-  assert "${#abbrevs_ctx}" is_positive
+@test 'context abbreviations exist in abbrevs' {
+  # Check that at least one context key exists (git:sw)
+  assert "${abbrevs[git:sw]}" is_not_empty
 }
 
 @test 'git context abbreviations have correct keys' {
-  assert "${abbrevs_ctx[git:sw]}" same_as "switch"
-  assert "${abbrevs_ctx[git:co]}" same_as "checkout"
-  assert "${abbrevs_ctx[git:rb]}" same_as "rebase"
+  assert "${abbrevs[git:sw]}" same_as "switch"
+  assert "${abbrevs[git:co]}" same_as "checkout"
+  assert "${abbrevs[git:rb]}" same_as "rebase"
 }
 
 @test 'sw is NOT in anywhere abbrevs' {
@@ -25,7 +26,7 @@
 }
 
 @test 'context key format is prefix:abbr' {
-  local keys="${(k)abbrevs_ctx}"
+  local keys="${(k)abbrevs}"
   assert "$keys" contains "git:sw"
   assert "$keys" contains "git:co"
 }
@@ -56,14 +57,14 @@
 
 @test 'context lookup succeeds for git:sw' {
   local ctx_key="git:sw"
-  local expansion="${abbrevs_ctx[$ctx_key]}"
+  local expansion="${abbrevs[$ctx_key]}"
   assert "$expansion" is_not_empty
   assert "$expansion" same_as "switch"
 }
 
 @test 'context lookup fails for nonexistent prefix' {
   local ctx_key="notreal:sw"
-  local expansion="${abbrevs_ctx[$ctx_key]}"
+  local expansion="${abbrevs[$ctx_key]}"
   assert "$expansion" is_empty
 }
 
@@ -106,7 +107,7 @@
   # Context check
   if [[ -n "$cmd_prefix" && "$prefix" == *[[:space:]]* ]]; then
     ctx_key="${cmd_prefix}:${MATCH}"
-    expansion="${abbrevs_ctx[$ctx_key]}"
+    expansion="${abbrevs[$ctx_key]}"
   fi
 
   assert "$expansion" same_as "switch"
@@ -126,7 +127,7 @@
   local found=0
   if [[ -n "$cmd_prefix" && "$prefix" == *[[:space:]]* ]]; then
     ctx_key="${cmd_prefix}:${MATCH}"
-    if [[ -n "${abbrevs_ctx[$ctx_key]}" ]]; then
+    if [[ -n "${abbrevs[$ctx_key]}" ]]; then
       found=1
     fi
   fi
@@ -173,7 +174,7 @@
   cmd_prefix="${prefix%%[[:space:]]*}"
 
   ctx_key="${cmd_prefix}:${MATCH}"
-  local expansion="${abbrevs_ctx[$ctx_key]}"
+  local expansion="${abbrevs[$ctx_key]}"
 
   assert "${prefix}${expansion}" same_as "git rebase"
 }
@@ -188,7 +189,7 @@
   cmd_prefix="${prefix%%[[:space:]]*}"
 
   ctx_key="${cmd_prefix}:${MATCH}"
-  local expansion="${abbrevs_ctx[$ctx_key]}"
+  local expansion="${abbrevs[$ctx_key]}"
 
   # Should be empty - no docker:sw context abbrev
   assert "$expansion" is_empty
@@ -205,22 +206,22 @@
   cmd_prefix="${prefix%%[[:space:]]*}"
 
   ctx_key="${cmd_prefix}:${MATCH}"
-  local expansion="${abbrevs_ctx[$ctx_key]}"
+  local expansion="${abbrevs[$ctx_key]}"
 
   assert "${prefix}${expansion}" same_as "docker run -it"
 }
 
 @test 'docker context: "docker b" expands to "docker build"' {
-  assert "${abbrevs_ctx[docker:b]}" same_as "build"
+  assert "${abbrevs[docker:b]}" same_as "build"
 }
 
 # Kubectl context abbreviations
 @test 'kubectl context: "kubectl gp" expands to "kubectl get pods"' {
-  assert "${abbrevs_ctx[kubectl:gp]}" same_as "get pods"
+  assert "${abbrevs[kubectl:gp]}" same_as "get pods"
 }
 
 @test 'kubectl context: "kubectl l" expands to "kubectl logs -f"' {
-  assert "${abbrevs_ctx[kubectl:l]}" same_as "logs -f"
+  assert "${abbrevs[kubectl:l]}" same_as "logs -f"
 }
 
 # =============================================================================
@@ -280,7 +281,7 @@
   # Context check
   if [[ -n "$cmd_prefix" && "$current_cmd" == *[[:space:]]* ]]; then
     ctx_key="${cmd_prefix}:${MATCH}"
-    expansion="${abbrevs_ctx[$ctx_key]}"
+    expansion="${abbrevs[$ctx_key]}"
   fi
 
   assert "$cmd_prefix" same_as "git"
@@ -303,7 +304,7 @@
 
   if [[ -n "$cmd_prefix" && "$current_cmd" == *[[:space:]]* ]]; then
     ctx_key="${cmd_prefix}:${MATCH}"
-    expansion="${abbrevs_ctx[$ctx_key]}"
+    expansion="${abbrevs[$ctx_key]}"
   fi
 
   assert "$cmd_prefix" same_as "git"
@@ -325,7 +326,7 @@
 
   if [[ -n "$cmd_prefix" && "$current_cmd" == *[[:space:]]* ]]; then
     ctx_key="${cmd_prefix}:${MATCH}"
-    expansion="${abbrevs_ctx[$ctx_key]}"
+    expansion="${abbrevs[$ctx_key]}"
   fi
 
   assert "$expansion" same_as "rebase"
@@ -349,7 +350,7 @@
   local found=0
   if [[ -n "$cmd_prefix" && "$current_cmd" == *[[:space:]]* ]]; then
     ctx_key="${cmd_prefix}:${MATCH}"
-    if [[ -n "${abbrevs_ctx[$ctx_key]}" ]]; then
+    if [[ -n "${abbrevs[$ctx_key]}" ]]; then
       found=1
     fi
   fi
@@ -377,7 +378,7 @@
 
   if [[ -n "$cmd_prefix" && "$current_cmd" == *[[:space:]]* ]]; then
     ctx_key="${cmd_prefix}:${MATCH}"
-    expansion="${abbrevs_ctx[$ctx_key]}"
+    expansion="${abbrevs[$ctx_key]}"
   fi
 
   assert "$cmd_prefix" same_as "docker"
@@ -427,7 +428,7 @@
 
   if [[ -n "$cmd_prefix" && "$current_cmd" == *[[:space:]]* ]]; then
     ctx_key="${cmd_prefix}:${MATCH}"
-    expansion="${abbrevs_ctx[$ctx_key]}"
+    expansion="${abbrevs[$ctx_key]}"
   fi
 
   assert "$expansion" same_as "switch"
@@ -512,10 +513,10 @@
 # Multi-word context prefix (docker compose)
 # =============================================================================
 
-@test 'docker compose context exists in abbrevs_ctx' {
+@test 'docker compose context exists in abbrevs' {
   # Keys stored with proper quoting: "docker compose:u"
-  assert "${abbrevs_ctx[docker compose:u]}" same_as "up -d"
-  assert "${abbrevs_ctx[docker compose:d]}" same_as "down"
+  assert "${abbrevs[docker compose:u]}" same_as "up -d"
+  assert "${abbrevs[docker compose:d]}" same_as "down"
 }
 
 @test 'expansion: "docker compose u" expands correctly with multi-word prefix' {
@@ -540,7 +541,7 @@
   # Check multi-word prefix lookup
   local ctx_key="${multi_prefix}:${MATCH}"
   assert "$ctx_key" same_as "docker compose:u"
-  assert "${abbrevs_ctx[$ctx_key]}" same_as "up -d"
+  assert "${abbrevs[$ctx_key]}" same_as "up -d"
 }
 
 # =============================================================================
@@ -630,15 +631,16 @@
 }
 
 # =============================================================================
-# Command-position abbreviations (abbrevs_cmd)
+# Command-position abbreviations (@key format in abbrevs)
 # =============================================================================
 
 @test 'command-position abbrevs are populated' {
-  assert "${#abbrevs_cmd}" is_positive
+  # Check that at least one command-position key exists (@feat)
+  assert "${abbrevs[@feat]}" is_not_empty
 }
 
 @test 'feat is a command-position abbreviation' {
-  assert "${abbrevs_cmd[feat]}" is_not_empty
+  assert "${abbrevs[@feat]}" is_not_empty
 }
 
 @test 'command-position: "feat" at start expands' {
@@ -658,7 +660,7 @@
   [[ ! "$current_cmd" == *[[:space:]]* ]] && is_cmd_position=1
 
   assert "$is_cmd_position" equals 1
-  assert "${abbrevs_cmd[$MATCH]}" is_not_empty
+  assert "${abbrevs[@${MATCH}]}" is_not_empty
 }
 
 @test 'command-position: "echo feat" does NOT expand feat' {
@@ -696,7 +698,7 @@
   [[ ! "$current_cmd" == *[[:space:]]* ]] && is_cmd_position=1
 
   assert "$is_cmd_position" equals 1
-  assert "${abbrevs_cmd[$MATCH]}" is_not_empty
+  assert "${abbrevs[@${MATCH}]}" is_not_empty
 }
 
 # =============================================================================
@@ -764,7 +766,7 @@
 
 @test 'abbreviation with hyphen in expansion' {
   # sw- expands to "switch -"
-  assert "${abbrevs_ctx[git:sw-]}" same_as "switch -"
+  assert "${abbrevs[git:sw-]}" same_as "switch -"
 }
 
 @test 'MATCH captures underscore-prefixed abbrev' {
@@ -782,14 +784,13 @@
 # =============================================================================
 
 @test 'context abbrev takes priority over anywhere abbrev' {
-  # If both "gs" existed in abbrevs AND "git:gs" in abbrevs_ctx,
-  # context should win when we're in git context
-  # Currently git:gs = "get svc" (kubectl) but let's test the logic
+  # If both "gs" existed in abbrevs as plain key AND "kubectl:gs" as context,
+  # context should win when we're in kubectl context
 
-  # kubectl has gs -> "get svc"
-  assert "${abbrevs_ctx[kubectl:gs]}" same_as "get svc"
+  # kubectl has kubectl:gs -> "get svc"
+  assert "${abbrevs[kubectl:gs]}" same_as "get svc"
 
-  # gs in abbrevs is "git status -s"
+  # gs in abbrevs (plain key) is "git status -s"
   assert "${abbrevs[gs]}" same_as "git status -s"
 }
 
@@ -814,7 +815,7 @@
   assert "$MATCH" same_as "sw"
 
   local ctx_key="${cmd_prefix}:${MATCH}"
-  assert "${abbrevs_ctx[$ctx_key]}" same_as "switch"
+  assert "${abbrevs[$ctx_key]}" same_as "switch"
 }
 
 @test 'mixed separators: "a; b && c | git sw"' {
@@ -1008,9 +1009,9 @@
 }
 
 @test 'export-fish: abbreviations with __CURSOR__ use % in output' {
-  # The wtf abbreviation contains __CURSOR__
+  # The dkbt abbreviation contains __CURSOR__
   local output
-  output=$(abbr export-fish 2>&1 | grep "wtf")
+  output=$(abbr export-fish 2>&1 | grep "dkbt")
   # Should contain % instead of __CURSOR__
   assert "$output" contains "%"
 }

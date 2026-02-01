@@ -1,17 +1,23 @@
 # Abbreviations (fish-like)
 ###############################################################################
-# Position modes:
-#   - anywhere:  expand anywhere on the line (default, backwards compatible)
-#   - command:   expand only as first word
-#   - context:   expand only after a specific prefix (e.g., "git sw" → "git switch")
+# Key formats in abbrevs:
+#   - "gp"          anywhere abbreviation (expands anywhere on the line)
+#   - "git:sw"      context abbreviation (expands only after "git ")
+#   - "@feat"       command abbreviation (expands only as first word)
+#
+# Function abbreviations are stored separately in abbrevs_func
 ###############################################################################
 setopt extendedglob
 
-# Main abbreviation stores
-typeset -A abbrevs          # anywhere
-typeset -A abbrevs_cmd      # command position only
-typeset -A abbrevs_ctx      # context-specific (key format: "prefix:abbr")
-typeset -A abbrevs_func     # function-based (value is function name)
+# Main abbreviation store
+# Keys can be:
+#   - plain word: expands anywhere
+#   - "prefix:word": expands only after prefix (context)
+#   - "@word": expands only as first word (command position)
+typeset -gA abbrevs
+
+# Function abbreviations (value is function name to call)
+typeset -gA abbrevs_func
 
 # Persistence file for runtime additions
 ABBR_USER_FILE="${ZDOTDIR:-$HOME}/.zsh_abbr_user"
@@ -68,7 +74,7 @@ _abbr_fn_timestamp() {
 }
 
 # Default function abbreviations
-typeset -A abbrevs_func=(
+abbrevs_func=(
   "!!"    "_abbr_fn_last_cmd"
   '!$'    "_abbr_fn_last_arg"
   "!^"    "_abbr_fn_first_arg"
@@ -78,8 +84,16 @@ typeset -A abbrevs_func=(
   "!!ts"  "_abbr_fn_timestamp"
 )
 
-# Git Abbreviations (expand anywhere - these start with 'g' so no conflict)
-typeset -A git_abbrevs=(
+###############################################################################
+# Built-in Abbreviations
+###############################################################################
+# Key format:
+#   "word"         - expands anywhere
+#   "prefix:word"  - expands only after prefix (context)
+#   "@word"        - expands only as first word (command position)
+
+abbrevs=(
+  # === Git (anywhere - prefixed with 'g') ===
   "gb"            "git branch"
   "gc"            "git commit"
   "gd"            "git diff"
@@ -93,301 +107,148 @@ typeset -A git_abbrevs=(
   "gs"            "git status -s"
   "gss"           "git status"
   "unstage"       "git restore --staged"
-  "gchanged"      "git diff --name-only \"\$(git merge-base HEAD origin/main)\"...HEAD"
-  "gblackchanged" 'black $(git diff --name-only "$(git merge-base HEAD origin/main)"...HEAD | grep -E "\.py$")'
-  "gblacknew"     'black $(git diff --name-only --diff-filter=A "$(git merge-base HEAD origin/main)"...HEAD | grep -E "\.py$")'
-  "wtf"           'gwt feat/dmitten/WARH-__CURSOR__'
+
+  # === Git context (after "git ") ===
+  "git:sw"        "switch"
+  "git:sw-"       "switch -"
+  "git:swc"       "switch -C"
+  "git:swm"       "switch main"
+  "git:co"        "checkout"
+  "git:cp"        "cherry-pick"
+  "git:rb"        "rebase"
+  "git:rbi"       "rebase -i"
+  "git:rbm"       "rebase origin/main"
+  "git:rba"       "rebase --abort"
+  "git:rbc"       "rebase --continue"
+  "git:rs"        "reset"
+  "git:rsh"       "reset --hard"
+  "git:rss"       "reset --soft"
+  "git:st"        "stash"
+  "git:stp"       "stash pop"
+  "git:stl"       "stash list"
+  "git:df"        "diff"
+  "git:dfc"       "diff --cached"
+  "git:lg"        "log --graph --oneline"
+  "git:lga"       "log --graph --oneline --all"
+  "git:aa"        "add -A"
+  "git:ap"        "add --patch"
+  "git:cm"        "commit -m"
+  "git:ca"        "commit --amend"
+  "git:can"       "commit --amend --no-edit"
+  "git:pf"        "push --force-with-lease"
+  "git:pl"        "pull"
+
+  # === Kubernetes (anywhere - prefixed with 'k') ===
+  "k"             "kubectl"
+  "kgp"           "kubectl get pods"
+  "kgn"           "kubectl get nodes"
+  "kga"           "kubectl get all"
+  "kdp"           "kubectl describe pod"
+  "kl"            "kubectl logs"
+  "kex"           "kubectl exec -it"
+  "kctx"          "kubectl config use-context"
+  "kns"           "kubectl config set-context --current --namespace"
+
+  # === Kubectl context (after "kubectl ") ===
+  "kubectl:g"     "get"
+  "kubectl:gp"    "get pods"
+  "kubectl:gn"    "get nodes"
+  "kubectl:gs"    "get svc"
+  "kubectl:gd"    "get deploy"
+  "kubectl:ga"    "get all"
+  "kubectl:d"     "describe"
+  "kubectl:dp"    "describe pod"
+  "kubectl:dn"    "describe node"
+  "kubectl:l"     "logs -f"
+  "kubectl:e"     "exec -it"
+  "kubectl:a"     "apply -f"
+  "kubectl:del"   "delete"
+
+  # === Docker (anywhere - prefixed with 'dk') ===
+  "dk"            "docker"
+  "dkr"           "docker run -it"
+  "dke"           "docker exec -it __CURSOR__ /bin/bash"
+  "dki"           "docker images"
+  "dkbd"          "docker build ."
+  "dkbt"          "docker build -t __CURSOR__ ."
+  "dkpa"          "docker system prune -a"
+  "dco"           "docker compose"
+  "dcou"          "docker compose up -d --remove-orphans"
+
+  # === Docker context (after "docker ") ===
+  "docker:r"      "run -it"
+  "docker:e"      "exec -it"
+  "docker:b"      "build"
+  "docker:i"      "images"
+  "docker:ps"     "ps -a"
+  "docker:rm"     "rm -f"
+  "docker:rmi"    "rmi -f"
+  "docker:l"      "logs -f"
+  "docker:p"      "pull"
+  "docker:pa"     "system prune -a"
+
+  # === Docker Compose context (after "docker compose ") ===
+  "docker compose:u"   "up -d"
+  "docker compose:d"   "down"
+  "docker compose:r"   "run --rm"
+  "docker compose:l"   "logs -f"
+  "docker compose:ps"  "ps -a"
+  "docker compose:b"   "build"
+  "docker compose:p"   "pull"
+
+  # === Python/UV ===
+  "venv"          "uv venv"
+  "act"           "source .venv/bin/activate"
+  "deact"         "deactivate"
+  "req"           "uv pip install -r requirements.txt"
+  "freeze"        "uv pip freeze > requirements.txt"
+  "sync"          "uv sync"
+  "lock"          "uv lock"
+  "uvi"           "uv pip install"
+  "uvr"           "uv pip uninstall"
+  "uvl"           "uv pip list"
+  "uvadd"         "uv add"
+
+  # === System monitoring ===
+  "psa"           "ps aux"
+  "dfh"           "df -h"
+  "upt"           "uptime"
+  "whoa"          "who -a"
+
+  # === Networking ===
+  "curlh"         "curl -I"
+  "wgetr"         "wget -r"
+  "ping5"         "ping -c 5"
+  "tracer"        "traceroute"
+  "nslook"        "nslookup"
+  "digs"          "dig +short"
+
+  # === Misc ===
+  "eof"           "<<EOF"
+  "hz"            "history 1 | fzf"
+
+  # === Output redirection (anywhere) ===
+  "_NULL"         "&>/dev/null"
+  "_L"            "| less"
+  "_T"            "| tee -a"
+  "_G"            "| grep -ni"
+  "_Z"            "| fzf"
+
+  # === Command-position only (prefixed with @) ===
+  "@feat"         "git switch -C feat/dmitten/WARH-__CURSOR__"
+  "@bugs"         "git switch -C bugs/dmitten/WARH-__CURSOR__"
+  "@misc"         "git switch -C misc/dmitten/__CURSOR__"
+  "@t"            "task __CURSOR__"
 )
 
-# Git subcommand abbreviations (expand only after "git ")
-typeset -A git_ctx_abbrevs=(
-  "sw"    "switch"
-  "sw-"   "switch -"
-  "swc"   "switch -C"
-  "swm"   "switch main"
-  "co"    "checkout"
-  "cp"    "cherry-pick"
-  "rb"    "rebase"
-  "rbi"   "rebase -i"
-  "rbm"   "rebase origin/main"
-  "rba"   "rebase --abort"
-  "rbc"   "rebase --continue"
-  "rs"    "reset"
-  "rsh"   "reset --hard"
-  "rss"   "reset --soft"
-  "st"    "stash"
-  "stp"   "stash pop"
-  "stl"   "stash list"
-  "df"    "diff"
-  "dfc"   "diff --cached"
-  "lg"    "log --graph --oneline"
-  "lga"   "log --graph --oneline --all"
-  "aa"    "add -A"
-  "ap"    "add --patch"
-  "cm"    "commit -m"
-  "ca"    "commit --amend"
-  "can"   "commit --amend --no-edit"
-  "pf"    "push --force-with-lease"
-  "pl"    "pull"
-)
-
-# Docker subcommand abbreviations (expand only after "docker ")
-typeset -A docker_ctx_abbrevs=(
-  "r"     "run -it"
-  "e"     "exec -it"
-  "b"     "build"
-  "i"     "images"
-  "ps"    "ps -a"
-  "rm"    "rm -f"
-  "rmi"   "rmi -f"
-  "l"     "logs -f"
-  "p"     "pull"
-  "pa"    "system prune -a"
-)
-
-# Docker Compose subcommand abbreviations (expand only after "docker compose ")
-typeset -A compose_ctx_abbrevs=(
-  "u"     "up -d"
-  "d"     "down"
-  "r"     "run --rm"
-  "l"     "logs -f"
-  "ps"    "ps -a"
-  "b"     "build"
-  "p"     "pull"
-)
-
-# Kubectl subcommand abbreviations (expand only after "kubectl ")
-typeset -A kubectl_ctx_abbrevs=(
-  "g"     "get"
-  "gp"    "get pods"
-  "gn"    "get nodes"
-  "gs"    "get svc"
-  "gd"    "get deploy"
-  "ga"    "get all"
-  "d"     "describe"
-  "dp"    "describe pod"
-  "dn"    "describe node"
-  "l"     "logs -f"
-  "e"     "exec -it"
-  "a"     "apply -f"
-  "del"   "delete"
-)
-
-typeset -A git_abbrevs_extra=(
-  "gadcp"   "git add . && git commit -m 'Auto-commit' && git push"
-  "gai"     "git add --interactive"
-  "gap"     "git add --patch"
-  "gau"     "git add --update"
-  "gba"     "git branch -a"
-  "gbav"    "git branch -a -vv"
-  "gbm"     "git branch -M"
-  "gbmd"    'git branch --merged | grep  -v "\*\|main" | xargs -n1 git branch -d'
-  "gbsc"    "git branch --show-current"
-  "gbsmd"   "git fetch -p && for branch in \$(git branch -vv | grep ': gone]' | awk '{print \$1}'); do git branch -D \$branch; done"
-  "gbv"     "git branch -vv"
-  "gbz"     "git branch | fzf | xargs git checkout"
-  "gca"     "git commit --amend"
-  "gcane"   "git commit --amend --no-edit"
-  "gcdi"    "git clean -di"
-  "gci"     "git commit --interactive"
-  "gcm"     "git commit --message"
-  "gcwip"   "git commit -m 'WIP'"
-  "gdc"     "git diff --cached"
-  "gdm"     "git diff origin/main..__CURSOR__"
-  "gdt"     "git difftool"
-  "gfo"     "git fetch origin"
-  "gfp"     "git fetch --prune"
-  "gfpt"    "git fetch --prune --tags"
-  "gmnf"    "git merge --no-ff"
-  "gpf"     "git push --force-with-lease"
-  "gpl"     "git pull"
-  "gpo"     "git push origin"
-  "gpod"    "git push origin --delete"
-  "grb"     "git rebase"
-  "grba"    "git rebase --abort"
-  "grbc"    "git rebase --continue"
-  "grbi"    "git rebase -i"
-  "grbm"    "git rebase origin/main"
-  "gre"     "git restore --staged --worktree"
-  "grsm"    "git reset --soft origin/main"
-  "gs-"     "git switch -"
-  "gsc"     "git switch -C"
-  "gsgl"    "git submodule -q foreach git pull -q origin main"
-  "gsm"     "git switch main"
-  "gsti"    "git stash --keep-index"
-  "gstl"    "git stash list"
-  "gstp"    "git stash pop"
-  "gsts"    "git stash --staged"
-  "gsu"     "git submodule update --init --recursive"
-)
-
-# Docker Abbreviations
-typeset -A docker_abbrevs=(
-  "dk"    "docker"
-  "dkr"   "docker run -it"
-  "dke"   "docker exec -it __CURSOR__ /bin/bash"
-  "dki"   "docker images"
-  "dkig"  "docker images | grep __CURSOR__ | awk '{print \$3}'"
-  "dkbd"  "docker build ."
-  "dkbt"  "docker build -t __CURSOR__ ."
-  "dkpa"  "docker system prune -a"
-  "drid"  "docker rmi -f \$(docker images -q -f \"dangling=true\")"
-  "dco"   "docker compose"
-  "dcou"  "docker compose up -d --remove-orphans"
-  "dcr"   "docker compose run -it __CURSOR__ --rm"
-)
-
-# Package Manager Abbreviations
-typeset -A apt_abbrevs=(
-  "apts"  "apt search"
-  "aptl"  "apt list"
-  "aptlu" "apt list -u"
-  "apti"  "apt install"
-  "aptr"  "apt remove --purge"
-  "aptu"  "apt update"
-  "aptug" "sudo apt update && sudo apt full-upgrade"
-  "aptar" "apt autoremove"
-  "flup"  "flatpak update"
-)
-
-typeset -A systemctl_abbrevs=(
-  "ctl"   "sudo systemctl"
-  "ctle"  "sudo systemctl enable"
-  "ctlre" "sudo systemctl restart"
-  "ctls"  "sudo systemctl stop"
-)
-
-# Miscellaneous Abbreviations
-typeset -A misc_abbrevs=(
-  "eof"   "<<EOF"
-  "manz"  "apropos __CURSOR__ | fzf | cut -f1,2 -d' ' | xargs man"
-  "hz"    "history 1 | fzf"
-)
-
-# Output Redirection Abbreviations
-typeset -A output_abbrevs=(
-  "_NULL" "&>/dev/null"  # Pipes all output to /dev/null
-  "_L" "| less"          # Pipe output to less pager
-  "_T" "| tee -a"        # Append output to file
-  "_C" "| $COPY_COMMAND" # Pipe to copy command
-  "_G" "| grep -ni"      # Grep with line numbers and case-insensitive
-  "_Z" "| fzf"           # Pipe to fzf
-)
-
-typeset -A k8s_abbrevs=(
-  "k"      "kubectl"
-  "kgp"    "kubectl get pods"
-  "kgn"    "kubectl get nodes"
-  "kga"    "kubectl get all"
-  "kdp"    "kubectl describe pod"
-  "kl"     "kubectl logs"
-  "kex"    "kubectl exec -it"
-  "kctx"   "kubectl config use-context"
-  "kns"    "kubectl config set-context --current --namespace"
-)
-
-typeset -A sysmon_abbrevs=(
-  "psa"    "ps aux"
-  "dfh"    "df -h"
-  "upt"    "uptime"
-  "whoa"   "who -a"
-)
-
-typeset -A net_abbrevs=(
-  "curlh"  "curl -I"
-  "wgetr"  "wget -r"
-  "ping5"  "ping -c 5"
-  "tracer" "traceroute"
-  "nslook" "nslookup"
-  "digs"   "dig +short"
-)
-
-typeset -A pyenv_abbrevs=(
-  "venv"   "uv venv"
-  "act"    "source .venv/bin/activate"
-  "deact"  "deactivate"
-  "req"    "uv pip install -r requirements.txt"
-  "freeze" "uv pip freeze > requirements.txt"
-  "sync"   "uv sync"
-  "lock"   "uv lock"
-  "uvi"    "uv pip install"
-  "uvr"    "uv pip uninstall"
-  "uvl"    "uv pip list"
-  "uvadd"  "uv add"
-)
-
-# Custom Workflow Abbreviations (command-position only - won't expand in commit messages)
-typeset -A custom_cmd_abbrevs=(
-  "feat"     "git switch -C feat/dmitten/WARH-__CURSOR__"
-  "bugs"     "git switch -C bugs/dmitten/WARH-__CURSOR__"
-  "misc"     "git switch -C misc/dmitten/__CURSOR__"
-  "manage"   "docker exec jaguar-debug python manage.py __CURSOR__ 2>/dev/null"
-  "manageit" "docker exec -it jaguar-debug python manage.py __CURSOR__"
-  "manageh"  "docker exec jaguar-debug python manage.py __CURSOR__ --help 2>/dev/null | bat -pl help"
-  "managesh" "docker exec -it jaguar-debugshell python manage.py __CURSOR__"
-  "db"       "echo \"export DB_NAME=__CURSOR__\" >~/.db-env && source ~/.db-env"
-  "t"        "task __CURSOR__"
-)
-
-# Arrays to merge into main stores
-typeset -a abbrev_arrays=(
-  git_abbrevs
-  # git_abbrevs_extra
-  k8s_abbrevs
-  docker_abbrevs
-  pyenv_abbrevs
-  sysmon_abbrevs
-  net_abbrevs
-  misc_abbrevs
-  output_abbrevs
-  # apt_abbrevs
-  # systemctl_abbrevs
-)
-
-# Arrays for command-position only (won't expand mid-line)
-typeset -a abbrev_cmd_arrays=(
-  custom_cmd_abbrevs
-)
-
-# Context abbreviation arrays (format: array[prefix]="name1:name2:...")
-typeset -a ctx_abbrev_arrays=(
-  git_ctx_abbrevs
-)
-
-# Merge "anywhere" arrays into abbrevs
-for array in ${abbrev_arrays[@]}; do
-  abbrevs+=( ${(kv)${(P)array}} )
-done
-
-# Merge command-position arrays into abbrevs_cmd
-for array in ${abbrev_cmd_arrays[@]}; do
-  abbrevs_cmd+=( ${(kv)${(P)array}} )
-done
-
-# Merge context arrays into abbrevs_ctx
-# Context abbrevs are stored with key "prefix:abbr"
-for key val in "${(@kv)git_ctx_abbrevs}"; do
-  abbrevs_ctx[git:$key]=$val
-done
-for key val in "${(@kv)docker_ctx_abbrevs}"; do
-  abbrevs_ctx[docker:$key]=$val
-done
-# Use a variable to avoid quoting issues with spaces in keys
-local _dc_prefix="docker compose"
-for key val in "${(@kv)compose_ctx_abbrevs}"; do
-  abbrevs_ctx[$_dc_prefix:$key]=$val
-done
-unset _dc_prefix
-for key val in "${(@kv)kubectl_ctx_abbrevs}"; do
-  abbrevs_ctx[kubectl:$key]=$val
-done
-
-# Load user abbreviations from persistence file
+# Load user abbreviations from persistence file (overrides built-ins)
 [[ -f "$ABBR_USER_FILE" ]] && source "$ABBR_USER_FILE"
 
-# Create aliases for anywhere abbreviations (for tab completion)
+# Create aliases for simple (non-context, non-command) abbreviations
 for key in ${(k)abbrevs}; do
-  alias $key="${abbrevs[$key]}"
+  # Skip context (has :) and command-position (starts with @) abbreviations
+  [[ "$key" == *:* || "$key" == @* ]] && continue
+  alias $key="${abbrevs[$key]}" 2>/dev/null
 done
 
 ###############################################################################
@@ -471,10 +332,10 @@ magic-abbrev-expand() {
   # Determine context: extract first word from current command
   cmd_prefix="${current_cmd%%[[:space:]]*}"
 
-  # 1. Check context abbreviations first (e.g., "git sw" → "git switch")
+  # 1. Check context abbreviations (e.g., "git sw" → "git switch")
+  #    These are stored as "prefix:word" in abbrevs
   if [[ -n "$cmd_prefix" && "$current_cmd" == *[[:space:]]* ]]; then
     # Try multi-word context prefixes first (e.g., "docker compose")
-    # Extract first two words for potential multi-word prefix
     local first_word="${current_cmd%%[[:space:]]*}"
     local rest="${current_cmd#*[[:space:]]}"
     rest="${rest#"${rest%%[![:space:]]*}"}"  # Trim leading space
@@ -483,8 +344,8 @@ magic-abbrev-expand() {
 
     # Check multi-word prefix first (e.g., "docker compose:u")
     ctx_key="${multi_prefix}:${MATCH}"
-    if [[ -n "${abbrevs_ctx[$ctx_key]}" ]]; then
-      expansion="${abbrevs_ctx[$ctx_key]}"
+    if [[ -n "${abbrevs[$ctx_key]}" ]]; then
+      expansion="${abbrevs[$ctx_key]}"
       LBUFFER="${prefix}${expansion}"
       _abbr_handle_cursor "$prefix" "$expansion"
       return
@@ -492,8 +353,8 @@ magic-abbrev-expand() {
 
     # Fall back to single-word prefix (e.g., "git:sw")
     ctx_key="${cmd_prefix}:${MATCH}"
-    if [[ -n "${abbrevs_ctx[$ctx_key]}" ]]; then
-      expansion="${abbrevs_ctx[$ctx_key]}"
+    if [[ -n "${abbrevs[$ctx_key]}" ]]; then
+      expansion="${abbrevs[$ctx_key]}"
       LBUFFER="${prefix}${expansion}"
       _abbr_handle_cursor "$prefix" "$expansion"
       return
@@ -501,15 +362,17 @@ magic-abbrev-expand() {
   fi
 
   # 2. Check command-position abbreviations (first word of current command)
-  if [[ ! "$current_cmd" == *[[:space:]]* ]] && [[ -n "${abbrevs_cmd[$MATCH]}" ]]; then
-    expansion="${abbrevs_cmd[$MATCH]}"
+  #    These are stored as "@word" in abbrevs
+  if [[ ! "$current_cmd" == *[[:space:]]* ]] && [[ -n "${abbrevs[@${MATCH}]}" ]]; then
+    expansion="${abbrevs[@${MATCH}]}"
     LBUFFER="${prefix}${expansion}"
     _abbr_handle_cursor "$prefix" "$expansion"
     return
   fi
 
-  # 3. Check anywhere abbreviations (default)
-  if [[ -n "${abbrevs[$MATCH]}" ]]; then
+  # 3. Check anywhere abbreviations (plain keys, no prefix)
+  #    Skip keys with : or @ prefix
+  if [[ -n "${abbrevs[$MATCH]}" && "$MATCH" != *:* && "$MATCH" != @* ]]; then
     expansion="${abbrevs[$MATCH]}"
     LBUFFER="${prefix}${expansion}"
     _abbr_handle_cursor "$prefix" "$expansion"
@@ -604,8 +467,9 @@ abbr() {
           echo "Added function abbreviation: $name → $expansion()"
           ;;
         command)
-          abbrevs_cmd[$name]="$expansion"
-          echo "abbrevs_cmd[$name]=\"$expansion\"" >> "$ABBR_USER_FILE"
+          # Store with @ prefix for command-position
+          abbrevs[@${name}]="$expansion"
+          echo "abbrevs[@${name}]=\"$expansion\"" >> "$ABBR_USER_FILE"
           echo "Added command abbreviation: $name → $expansion"
           ;;
         context)
@@ -613,13 +477,14 @@ abbr() {
             echo "Context mode requires -C PREFIX" >&2
             return 1
           fi
-          abbrevs_ctx["${ctx_prefix}:${name}"]="$expansion"
-          echo "abbrevs_ctx[${ctx_prefix}:${name}]=\"$expansion\"" >> "$ABBR_USER_FILE"
+          # Store with prefix:name format
+          abbrevs["${ctx_prefix}:${name}"]="$expansion"
+          echo "abbrevs[${ctx_prefix}:${name}]=\"$expansion\"" >> "$ABBR_USER_FILE"
           echo "Added context abbreviation: $ctx_prefix $name → $ctx_prefix $expansion"
           ;;
         *)
           abbrevs[$name]="$expansion"
-          alias $name="$expansion"
+          alias $name="$expansion" 2>/dev/null
           echo "abbrevs[$name]=\"$expansion\"" >> "$ABBR_USER_FILE"
           echo "Added abbreviation: $name → $expansion"
           ;;
@@ -632,30 +497,33 @@ abbr() {
         return 1
       fi
       local found=0
+      # Check plain key
       if [[ -n "${abbrevs[$name]}" ]]; then
         unset "abbrevs[$name]"
         unalias "$name" 2>/dev/null
         found=1
       fi
-      if [[ -n "${abbrevs_cmd[$name]}" ]]; then
-        unset "abbrevs_cmd[$name]"
+      # Check command-position (@name)
+      if [[ -n "${abbrevs[@${name}]}" ]]; then
+        unset "abbrevs[@${name}]"
         found=1
       fi
+      # Check function abbreviations
       if [[ -n "${abbrevs_func[$name]}" ]]; then
         unset "abbrevs_func[$name]"
         found=1
       fi
-      # Check all context prefixes
-      for key in ${(k)abbrevs_ctx}; do
+      # Check all context prefixes (prefix:name)
+      for key in ${(k)abbrevs}; do
         if [[ "$key" == *":$name" ]]; then
-          unset "abbrevs_ctx[$key]"
+          unset "abbrevs[$key]"
           found=1
         fi
       done
       if [[ $found -eq 1 ]]; then
         # Remove from persistence file
         if [[ -f "$ABBR_USER_FILE" ]]; then
-          sed -i.bak "/\[$name\]=/d; /\[.*:$name\]=/d" "$ABBR_USER_FILE"
+          sed -i.bak "/\[$name\]=/d; /\[@$name\]=/d; /\[.*:$name\]=/d" "$ABBR_USER_FILE"
           rm -f "${ABBR_USER_FILE}.bak"
         fi
         echo "Erased abbreviation: $name"
@@ -670,65 +538,70 @@ abbr() {
         echo "Usage: abbr -r OLDNAME NEWNAME" >&2
         return 1
       fi
-      local oldname="$name" newname="$expansion" val=""
-      # Check each store for the old name
-      if [[ -n "${abbrevs[$oldname]}" ]]; then
+      local oldname="$name" newname="$expansion" val="" key_type=""
+
+      # Check plain key
+      if [[ -n "${abbrevs[$oldname]}" && "$oldname" != *:* && "$oldname" != @* ]]; then
         val="${abbrevs[$oldname]}"
         unset "abbrevs[$oldname]"
         unalias "$oldname" 2>/dev/null
         abbrevs[$newname]="$val"
-        alias $newname="$val"
-        if [[ -f "$ABBR_USER_FILE" ]]; then
-          sed -i.bak "s/abbrevs\[$oldname\]/abbrevs[$newname]/" "$ABBR_USER_FILE"
-          rm -f "${ABBR_USER_FILE}.bak"
-        fi
-        echo "Renamed: $oldname → $newname"
-        return 0
-      fi
-      if [[ -n "${abbrevs_cmd[$oldname]}" ]]; then
-        val="${abbrevs_cmd[$oldname]}"
-        unset "abbrevs_cmd[$oldname]"
-        abbrevs_cmd[$newname]="$val"
-        if [[ -f "$ABBR_USER_FILE" ]]; then
-          sed -i.bak "s/abbrevs_cmd\[$oldname\]/abbrevs_cmd[$newname]/" "$ABBR_USER_FILE"
-          rm -f "${ABBR_USER_FILE}.bak"
-        fi
-        echo "Renamed: $oldname → $newname"
-        return 0
-      fi
-      # Check context abbrevs
-      for key in ${(k)abbrevs_ctx}; do
-        if [[ "$key" == *":$oldname" ]]; then
-          local ctx="${key%%:*}"
-          val="${abbrevs_ctx[$key]}"
-          unset "abbrevs_ctx[$key]"
-          abbrevs_ctx[$ctx:$newname]="$val"
-          if [[ -f "$ABBR_USER_FILE" ]]; then
-            sed -i.bak "s/abbrevs_ctx\[$ctx:$oldname\]/abbrevs_ctx[$ctx:$newname]/" "$ABBR_USER_FILE"
-            rm -f "${ABBR_USER_FILE}.bak"
+        alias $newname="$val" 2>/dev/null
+        key_type="abbrevs"
+      # Check command-position
+      elif [[ -n "${abbrevs[@${oldname}]}" ]]; then
+        val="${abbrevs[@${oldname}]}"
+        unset "abbrevs[@${oldname}]"
+        abbrevs[@${newname}]="$val"
+        key_type="abbrevs[@"
+        oldname="@${oldname}"
+        newname="@${newname}"
+      else
+        # Check context abbrevs
+        for key in ${(k)abbrevs}; do
+          if [[ "$key" == *":$oldname" ]]; then
+            local ctx="${key%%:*}"
+            val="${abbrevs[$key]}"
+            unset "abbrevs[$key]"
+            abbrevs[${ctx}:${newname}]="$val"
+            if [[ -f "$ABBR_USER_FILE" ]]; then
+              sed -i.bak "s/abbrevs\[${ctx}:${oldname}\]/abbrevs[${ctx}:${newname}]/" "$ABBR_USER_FILE"
+              rm -f "${ABBR_USER_FILE}.bak"
+            fi
+            echo "Renamed: $ctx $oldname → $ctx $newname"
+            return 0
           fi
-          echo "Renamed: $ctx $oldname → $ctx $newname"
-          return 0
-        fi
-      done
-      echo "Abbreviation not found: $oldname" >&2
-      return 1
+        done
+        echo "Abbreviation not found: $oldname" >&2
+        return 1
+      fi
+
+      if [[ -f "$ABBR_USER_FILE" ]]; then
+        sed -i.bak "s/abbrevs\[$oldname\]/abbrevs[$newname]/" "$ABBR_USER_FILE"
+        rm -f "${ABBR_USER_FILE}.bak"
+      fi
+      echo "Renamed: $oldname → $newname"
+      return 0
       ;;
 
     show)
       echo "# Anywhere abbreviations"
       for key in ${(ko)abbrevs}; do
+        [[ "$key" == *:* || "$key" == @* ]] && continue
         echo "abbr -a ${(q)key} ${(q)abbrevs[$key]}"
       done
       echo "\n# Command-position abbreviations"
-      for key in ${(ko)abbrevs_cmd}; do
-        echo "abbr -a -c ${(q)key} ${(q)abbrevs_cmd[$key]}"
+      for key in ${(ko)abbrevs}; do
+        [[ "$key" != @* ]] && continue
+        local name="${key#@}"
+        echo "abbr -a -c ${(q)name} ${(q)abbrevs[$key]}"
       done
       echo "\n# Context abbreviations"
-      for key in ${(ko)abbrevs_ctx}; do
+      for key in ${(ko)abbrevs}; do
+        [[ "$key" != *:* ]] && continue
         local ctx="${key%%:*}"
         local abbr="${key#*:}"
-        echo "abbr -a -C ${(q)ctx} ${(q)abbr} ${(q)abbrevs_ctx[$key]}"
+        echo "abbr -a -C ${(q)ctx} ${(q)abbr} ${(q)abbrevs[$key]}"
       done
       echo "\n# Function abbreviations"
       for key in ${(ko)abbrevs_func}; do
@@ -904,61 +777,96 @@ abbr() {
         echo "abbr -a ${prefix}${set_cursor}-- ${key} ${(q)fish_val}"
       }
 
+      # Export anywhere abbreviations
       for key in ${(ko)abbrevs}; do
+        # Skip context and command-position keys
+        [[ "$key" == *:* || "$key" == @* ]] && continue
         _export_fish_abbr "$key" "${abbrevs[$key]}"
       done
 
-      # Note: command-position and context abbrevs don't have direct fish equivalents
-      if [[ ${#abbrevs_cmd} -gt 0 ]]; then
-        echo ""
-        echo "# Command-position abbreviations (no fish equivalent, using regular abbr)"
-        for key in ${(ko)abbrevs_cmd}; do
-          _export_fish_abbr "$key" "${abbrevs_cmd[$key]}"
-        done
-      fi
+      # Export command-position abbreviations (fish doesn't have equivalent, use regular)
+      local has_cmd=0
+      for key in ${(ko)abbrevs}; do
+        [[ "$key" != @* ]] && continue
+        if [[ $has_cmd -eq 0 ]]; then
+          echo ""
+          echo "# Command-position abbreviations (no fish equivalent, using regular abbr)"
+          has_cmd=1
+        fi
+        local name="${key#@}"
+        _export_fish_abbr "$name" "${abbrevs[$key]}"
+      done
+
+      # Export context abbreviations with a note
+      local has_ctx=0
+      for key in ${(ko)abbrevs}; do
+        [[ "$key" != *:* ]] && continue
+        if [[ $has_ctx -eq 0 ]]; then
+          echo ""
+          echo "# Context abbreviations (no fish equivalent, exporting as comments)"
+          has_ctx=1
+        fi
+        local ctx="${key%%:*}"
+        local abbr="${key#*:}"
+        echo "# $ctx context: $abbr → ${abbrevs[$key]}"
+      done
       ;;
 
     list)
       local header='\033[1;36m' key_c='\033[1;33m' arrow='\033[0;37m'
-      local val_c='\033[0;32m' ctx_c='\033[1;35m' reset='\033[0m'
+      local val_c='\033[0;32m' ctx_c='\033[1;35m' cmd_c='\033[1;34m' reset='\033[0m'
 
       if [[ -t 1 ]]; then
-        # Anywhere abbreviations (from arrays)
-        for array in ${abbrev_arrays[@]}; do
-          echo -e "${header}${array}${reset}"
-          for key in ${(ko)${(P)array}}; do
-            printf "${key_c}%-12s${reset} ${arrow}→${reset} ${val_c}%s${reset}\n" \
-              "$key" "${${(P)array}[$key]}"
-          done
-          echo
+        # Anywhere abbreviations (plain keys, no : or @)
+        echo -e "${header}Anywhere abbreviations${reset}"
+        for key in ${(ko)abbrevs}; do
+          [[ "$key" == *:* || "$key" == @* ]] && continue
+          printf "${key_c}%-12s${reset} ${arrow}→${reset} ${val_c}%s${reset}\n" \
+            "$key" "${abbrevs[$key]}"
         done
+        echo
 
-        # Context abbreviations
-        if [[ ${#abbrevs_ctx} -gt 0 ]]; then
-          echo -e "${header}context_abbrevs${reset}"
-          for key in ${(ko)abbrevs_ctx}; do
-            local ctx="${key%%:*}"
-            local abbr="${key#*:}"
-            printf "${ctx_c}%-6s${reset} ${key_c}%-8s${reset} ${arrow}→${reset} ${val_c}%s${reset}\n" \
-              "$ctx" "$abbr" "${abbrevs_ctx[$key]}"
-          done
-          echo
-        fi
+        # Context abbreviations (keys with :)
+        local has_ctx=0
+        for key in ${(ko)abbrevs}; do
+          [[ "$key" != *:* ]] && continue
+          if [[ $has_ctx -eq 0 ]]; then
+            echo -e "${header}Context abbreviations${reset}"
+            has_ctx=1
+          fi
+          local ctx="${key%%:*}"
+          local abbr="${key#*:}"
+          printf "${ctx_c}%-14s${reset} ${key_c}%-8s${reset} ${arrow}→${reset} ${val_c}%s${reset}\n" \
+            "$ctx" "$abbr" "${abbrevs[$key]}"
+        done
+        [[ $has_ctx -eq 1 ]] && echo
 
-        # Command-position abbreviations
-        if [[ ${#abbrevs_cmd} -gt 0 ]]; then
-          echo -e "${header}command_abbrevs${reset}"
-          for key in ${(ko)abbrevs_cmd}; do
-            printf "${key_c}%-12s${reset} ${arrow}→${reset} ${val_c}%s${reset}\n" \
-              "$key" "${abbrevs_cmd[$key]}"
+        # Command-position abbreviations (keys with @)
+        local has_cmd=0
+        for key in ${(ko)abbrevs}; do
+          [[ "$key" != @* ]] && continue
+          if [[ $has_cmd -eq 0 ]]; then
+            echo -e "${header}Command-position abbreviations${reset}"
+            has_cmd=1
+          fi
+          local name="${key#@}"
+          printf "${cmd_c}%-12s${reset} ${arrow}→${reset} ${val_c}%s${reset}\n" \
+            "$name" "${abbrevs[$key]}"
+        done
+        [[ $has_cmd -eq 1 ]] && echo
+
+        # Function abbreviations
+        if [[ ${#abbrevs_func} -gt 0 ]]; then
+          echo -e "${header}Function abbreviations${reset}"
+          for key in ${(ko)abbrevs_func}; do
+            printf "${key_c}%-12s${reset} ${arrow}→${reset} ${val_c}%s()${reset}\n" \
+              "$key" "${abbrevs_func[$key]}"
           done
-          echo
         fi
       else
         # Non-interactive: output as zsh
-        for array in ${abbrev_arrays[@]}; do
-          typeset -p $array | sed 's/\[/\n  [/g; s/)/\n)/' | sed '1s/^/\n/'
-        done
+        typeset -p abbrevs
+        typeset -p abbrevs_func
       fi
       ;;
 
@@ -979,6 +887,11 @@ USAGE:
   abbr import-fish [FILE]  Import fish abbreviations from FILE or stdin
   abbr export-fish         Export abbreviations in fish format
   abbr -h, --help          Show this help
+
+KEY FORMAT (in abbrevs array):
+  "gp"              Anywhere - expands anywhere on line
+  "git:sw"          Context  - expands only after "git "
+  "@feat"           Command  - expands only as first word
 
 EXAMPLES:
   abbr -a gp "git push"              # expands anywhere
@@ -1009,6 +922,7 @@ KEYBINDINGS:
   Space     Expand abbreviation
   Enter     Expand and execute
   Ctrl+x    Insert literal space (no expansion)
+  Ctrl+xo   Pick abbreviation with fzf
 EOF
       ;;
   esac
@@ -1036,10 +950,16 @@ _abbr() {
     '--help:Show help'
   )
 
+  # Collect all abbreviation names (stripping prefixes)
   local -a all_abbrevs
-  all_abbrevs=(${(k)abbrevs} ${(k)abbrevs_cmd})
-  for key in ${(k)abbrevs_ctx}; do
-    all_abbrevs+=("${key#*:}")
+  for key in ${(k)abbrevs}; do
+    if [[ "$key" == @* ]]; then
+      all_abbrevs+=("${key#@}")
+    elif [[ "$key" == *:* ]]; then
+      all_abbrevs+=("${key#*:}")
+    else
+      all_abbrevs+=("$key")
+    fi
   done
 
   case "$words[2]" in
@@ -1048,7 +968,12 @@ _abbr() {
       ;;
     -C|--context)
       if [[ $CURRENT -eq 3 ]]; then
-        local -a contexts=(git docker "docker compose" kubectl)
+        # Extract unique context prefixes
+        local -a contexts=()
+        for key in ${(k)abbrevs}; do
+          [[ "$key" == *:* ]] && contexts+=("${key%%:*}")
+        done
+        contexts=(${(u)contexts})
         _describe 'context' contexts
       elif [[ $CURRENT -eq 4 ]]; then
         _message 'abbreviation name'
@@ -1091,7 +1016,7 @@ abbr-fzf() {
 
     # Check if multi-word prefix has context abbreviations
     local has_multi=0
-    for key in ${(k)abbrevs_ctx}; do
+    for key in ${(k)abbrevs}; do
       [[ "$key" == "${multi_prefix}:"* ]] && { has_multi=1; break; }
     done
 
@@ -1101,17 +1026,19 @@ abbr-fzf() {
     fi
     header="$cmd_prefix"
 
-    for key in ${(ko)abbrevs_ctx}; do
-      if [[ "$key" == ${cmd_prefix}:* ]]; then
-        local abbr="${key#*:}"
-        local expansion="${abbrevs_ctx[$key]}"
-        if [[ -z "$current_word" || "$abbr" == ${current_word}* ]]; then
-          candidates+=("$(printf '%-10s → %s' "$abbr" "$expansion")")
-        fi
+    # Show context abbreviations for this prefix
+    for key in ${(ko)abbrevs}; do
+      [[ "$key" != ${cmd_prefix}:* ]] && continue
+      local abbr="${key#*:}"
+      local expansion="${abbrevs[$key]}"
+      if [[ -z "$current_word" || "$abbr" == ${current_word}* ]]; then
+        candidates+=("$(printf '%-10s → %s' "$abbr" "$expansion")")
       fi
     done
   else
+    # Show anywhere abbreviations (plain keys only)
     for key in ${(ko)abbrevs}; do
+      [[ "$key" == *:* || "$key" == @* ]] && continue
       if [[ -z "$current_word" || "$key" == ${current_word}* ]]; then
         candidates+=("$(printf '%-12s → %s' "$key" "${abbrevs[$key]}")")
       fi
