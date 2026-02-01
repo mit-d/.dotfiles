@@ -20,7 +20,8 @@ typeset -gA abbrevs
 typeset -gA abbrevs_func
 
 # Persistence file for runtime additions
-ABBR_USER_FILE="${ZDOTDIR:-$HOME}/.zsh_abbr_user"
+# Uses the same directory as this script (supports dotfiles structure)
+ABBR_USER_FILE="${0:A:h}/.zsh_abbr_user"
 
 ###############################################################################
 # Built-in abbreviation functions
@@ -235,10 +236,8 @@ abbrevs=(
   "_Z"            "| fzf"
 
   # === Command-position only (prefixed with @) ===
-  "@feat"         "git switch -C feat/dmitten/WARH-__CURSOR__"
-  "@bugs"         "git switch -C bugs/dmitten/WARH-__CURSOR__"
-  "@misc"         "git switch -C misc/dmitten/__CURSOR__"
-  "@t"            "task __CURSOR__"
+  # Note: Add personal command-position abbreviations to $ABBR_USER_FILE
+  # Example: abbrevs[@feat]="git switch -C feat/username/__CURSOR__"
 )
 
 # Load user abbreviations from persistence file (overrides built-ins)

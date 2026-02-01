@@ -1,0 +1,9 @@
+# Personal abbreviations - added by user
+# This file is sourced after the built-in abbreviations
+# Use `abbr -a` to add new ones (they'll be appended here)
+
+# Command-position abbreviations (@key format)
+abbrevs[@feat]="git switch -C feat/dmitten/WARH-__CURSOR__"
+abbrevs[@bugs]="git switch -C bugs/dmitten/WARH-__CURSOR__"
+abbrevs[@misc]="git switch -C misc/dmitten/__CURSOR__"
+abbrevs[@t]="task __CURSOR__"
