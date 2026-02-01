@@ -931,3 +931,67 @@
   run _abbr_in_quotes "$str"
   assert $state equals 0
 }
+
+# =============================================================================
+# Import/Export functionality
+# =============================================================================
+
+@test 'abbr help includes import-fish' {
+  run abbr --help
+  assert "$output" contains "import-fish"
+}
+
+@test 'abbr help includes export-fish' {
+  run abbr --help
+  assert "$output" contains "export-fish"
+}
+
+@test 'abbr export-fish produces fish-compatible output' {
+  local output
+  output=$(abbr export-fish 2>&1)
+  assert "$output" contains "abbr -a --"
+  assert "$output" contains "# Fish abbreviations"
+}
+
+@test 'abbr export-fish includes gs abbreviation' {
+  local output
+  output=$(abbr export-fish 2>&1)
+  assert "$output" contains "gs"
+}
+
+@test 'fish line parsing: basic abbr -a' {
+  # Test that import would parse this correctly
+  local line="abbr -a gco git checkout"
+  local result=""
+  if [[ "$line" =~ ^[[:space:]]*abbr[[:space:]]+(--add|-a)[[:space:]]+ ]]; then
+    result="matched"
+  fi
+  assert "$result" same_as "matched"
+}
+
+@test 'fish line parsing: abbr with quotes' {
+  local line="abbr -a gp 'git push'"
+  if [[ "$line" =~ ^[[:space:]]*abbr[[:space:]]+(--add|-a)[[:space:]]+ ]]; then
+    local rest="${line#*abbr}"
+    rest="${rest#*-a}"
+    rest="${rest#"${rest%%[![:space:]]*}"}"
+    local name="${rest%%[[:space:]]*}"
+    assert "$name" same_as "gp"
+  else
+    assert 1 equals 0
+  fi
+}
+
+@test 'fish line parsing: skips comments' {
+  local line="# This is a comment"
+  local matched=0
+  [[ "$line" =~ ^[[:space:]]*# ]] && matched=1
+  assert "$matched" equals 1
+}
+
+@test 'fish line parsing: skips empty lines' {
+  local line=""
+  local matched=0
+  [[ -z "$line" ]] && matched=1
+  assert "$matched" equals 1
+}

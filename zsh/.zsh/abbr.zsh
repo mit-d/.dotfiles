@@ -478,14 +478,16 @@ abbr() {
   # Parse arguments
   while [[ $# -gt 0 ]]; do
     case "$1" in
-      -a|--add)     action="add"; shift ;;
-      -e|--erase)   action="erase"; shift ;;
-      -r|--rename)  action="rename"; shift ;;
-      -s|--show)    action="show"; shift ;;
-      -l|--list)    action="list"; shift ;;
-      -c|--command) position="command"; shift ;;
-      -C|--context) position="context"; ctx_prefix="$2"; shift 2 ;;
-      -h|--help)    action="help"; shift ;;
+      -a|--add)       action="add"; shift ;;
+      -e|--erase)     action="erase"; shift ;;
+      -r|--rename)    action="rename"; shift ;;
+      -s|--show)      action="show"; shift ;;
+      -l|--list)      action="list"; shift ;;
+      -c|--command)   position="command"; shift ;;
+      -C|--context)   position="context"; ctx_prefix="$2"; shift 2 ;;
+      -h|--help)      action="help"; shift ;;
+      import-fish)    action="import-fish"; shift ;;
+      export-fish)    action="export-fish"; shift ;;
       *)
         if [[ -z "$name" ]]; then
           name="$1"
@@ -631,6 +633,110 @@ abbr() {
       done
       ;;
 
+    import-fish)
+      # Import fish abbreviations from stdin or file
+      # Fish format: abbr -a [-g] NAME EXPANSION
+      #              abbr --add [-g|--global] NAME EXPANSION
+      local input_file="$name"
+      local count=0 skipped=0
+      local line abbr_name abbr_expansion is_global
+
+      _parse_fish_line() {
+        local line="$1"
+        abbr_name="" abbr_expansion="" is_global=0
+
+        # Skip empty lines and comments
+        [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && return 1
+
+        # Match: abbr -a [-g] NAME EXPANSION or abbr --add [-g] NAME EXPANSION
+        if [[ "$line" =~ ^[[:space:]]*abbr[[:space:]]+(--add|-a)[[:space:]]+ ]]; then
+          local rest="${line#*abbr}"
+          rest="${rest#*--add}"
+          rest="${rest#*-a}"
+          rest="${rest#"${rest%%[![:space:]]*}"}"
+
+          # Check for global flag
+          if [[ "$rest" =~ ^(-g|--global)[[:space:]]+ ]]; then
+            is_global=1
+            rest="${rest#*-g}"
+            rest="${rest#*--global}"
+            rest="${rest#"${rest%%[![:space:]]*}"}"
+          fi
+
+          # Skip other flags (-U, --universal, etc.)
+          while [[ "$rest" =~ ^--?[a-zA-Z]+[[:space:]]+ ]]; do
+            rest="${rest#*--[a-zA-Z]*}"
+            rest="${rest#*-[a-zA-Z]}"
+            rest="${rest#"${rest%%[![:space:]]*}"}"
+          done
+
+          # Extract name (first word)
+          abbr_name="${rest%%[[:space:]]*}"
+          rest="${rest#"$abbr_name"}"
+          rest="${rest#"${rest%%[![:space:]]*}"}"
+
+          # Rest is expansion - handle quotes
+          abbr_expansion="$rest"
+          # Remove surrounding quotes if present
+          if [[ "$abbr_expansion" =~ ^\'(.*)\'$ ]]; then
+            abbr_expansion="${abbr_expansion:1:-1}"
+          elif [[ "$abbr_expansion" =~ ^\"(.*)\"$ ]]; then
+            abbr_expansion="${abbr_expansion:1:-1}"
+          fi
+
+          [[ -n "$abbr_name" && -n "$abbr_expansion" ]]
+          return $?
+        fi
+        return 1
+      }
+
+      if [[ -n "$input_file" && -f "$input_file" ]]; then
+        # Read from file
+        while IFS= read -r line || [[ -n "$line" ]]; do
+          if _parse_fish_line "$line"; then
+            abbrevs[$abbr_name]="$abbr_expansion"
+            alias "$abbr_name"="$abbr_expansion" 2>/dev/null
+            ((count++))
+          elif [[ -n "$line" && ! "$line" =~ ^[[:space:]]*# ]]; then
+            ((skipped++))
+          fi
+        done < "$input_file"
+      else
+        # Read from stdin
+        echo "Paste fish abbreviations (Ctrl+D when done):"
+        while IFS= read -r line || [[ -n "$line" ]]; do
+          if _parse_fish_line "$line"; then
+            abbrevs[$abbr_name]="$abbr_expansion"
+            alias "$abbr_name"="$abbr_expansion" 2>/dev/null
+            ((count++))
+          elif [[ -n "$line" && ! "$line" =~ ^[[:space:]]*# ]]; then
+            ((skipped++))
+          fi
+        done
+      fi
+
+      echo "Imported $count abbreviations"
+      [[ $skipped -gt 0 ]] && echo "Skipped $skipped unrecognized lines"
+      ;;
+
+    export-fish)
+      # Export abbreviations in fish format
+      echo "# Fish abbreviations exported from zsh-abbr"
+      echo "# Import with: source <file> (in fish shell)"
+      echo ""
+      for key in ${(ko)abbrevs}; do
+        echo "abbr -a -- ${key} ${(q)abbrevs[$key]}"
+      done
+      # Note: command-position and context abbrevs don't have direct fish equivalents
+      if [[ ${#abbrevs_cmd} -gt 0 ]]; then
+        echo ""
+        echo "# Command-position abbreviations (no fish equivalent, using regular abbr)"
+        for key in ${(ko)abbrevs_cmd}; do
+          echo "abbr -a -- ${key} ${(q)abbrevs_cmd[$key]}"
+        done
+      fi
+      ;;
+
     list)
       local header='\033[1;36m' key_c='\033[1;33m' arrow='\033[0;37m'
       local val_c='\033[0;32m' ctx_c='\033[1;35m' reset='\033[0m'
@@ -688,6 +794,8 @@ USAGE:
   abbr -e NAME             Erase an abbreviation
   abbr -r OLD NEW          Rename an abbreviation
   abbr -s, --show          Show abbreviations as abbr commands (for export)
+  abbr import-fish [FILE]  Import fish abbreviations from FILE or stdin
+  abbr export-fish         Export abbreviations in fish format
   abbr -h, --help          Show this help
 
 EXAMPLES:
@@ -697,6 +805,11 @@ EXAMPLES:
   abbr -a -C docker b build          # "docker b" → "docker build"
   abbr -e gp                         # remove abbreviation
   abbr -r gp gpush                   # rename gp to gpush
+
+IMPORT/EXPORT:
+  abbr import-fish ~/.config/fish/conf.d/abbr.fish
+  abbr export-fish > fish-abbr.fish
+  cat fish-abbr.fish | abbr import-fish
 
 KEYBINDINGS:
   Space     Expand abbreviation
