@@ -108,6 +108,10 @@ abbrevs=(
   "gs"            "git status -s"
   "gss"           "git status"
   "unstage"       "git restore --staged"
+  "gchanged"      "git diff --name-only \"\$(git merge-base HEAD origin/main)\"...HEAD"
+  "gblackchanged" 'black $(git diff --name-only "$(git merge-base HEAD origin/main)"...HEAD | grep -E "\.py$")'
+  "gblacknew"     'black $(git diff --name-only --diff-filter=A "$(git merge-base HEAD origin/main)"...HEAD | grep -E "\.py$")'
+  "wtf"           'gwt feat/dmitten/WARH-__CURSOR__'
 
   # === Git context (after "git ") ===
   "git:sw"        "switch"
@@ -170,11 +174,14 @@ abbrevs=(
   "dkr"           "docker run -it"
   "dke"           "docker exec -it __CURSOR__ /bin/bash"
   "dki"           "docker images"
+  "dkig"          "docker images | grep __CURSOR__ | awk '{print \$3}'"
   "dkbd"          "docker build ."
   "dkbt"          "docker build -t __CURSOR__ ."
   "dkpa"          "docker system prune -a"
+  "drid"          "docker rmi -f \$(docker images -q -f \"dangling=true\")"
   "dco"           "docker compose"
   "dcou"          "docker compose up -d --remove-orphans"
+  "dcr"           "docker compose run -it __CURSOR__ --rm"
 
   # === Docker context (after "docker ") ===
   "docker:r"      "run -it"
@@ -226,12 +233,14 @@ abbrevs=(
 
   # === Misc ===
   "eof"           "<<EOF"
+  "manz"          "apropos __CURSOR__ | fzf | cut -f1,2 -d' ' | xargs man"
   "hz"            "history 1 | fzf"
 
   # === Output redirection (anywhere) ===
   "_NULL"         "&>/dev/null"
   "_L"            "| less"
   "_T"            "| tee -a"
+  "_C"            "| ${COPY_COMMAND:-pbcopy}"
   "_G"            "| grep -ni"
   "_Z"            "| fzf"
 
