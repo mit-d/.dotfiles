@@ -1033,3 +1033,75 @@
   local zsh_val="${val//\%/__CURSOR__}"
   assert "$zsh_val" same_as "__CURSOR__ middle __CURSOR__ end"
 }
+
+# =============================================================================
+# Function abbreviations
+# =============================================================================
+
+@test 'abbrevs_func array exists' {
+  assert "${#abbrevs_func}" is_positive
+}
+
+@test 'built-in function !! exists' {
+  assert "${abbrevs_func[!!]}" same_as "_abbr_fn_last_cmd"
+}
+
+@test 'built-in function !$ exists' {
+  assert "${abbrevs_func[!\$]}" same_as "_abbr_fn_last_arg"
+}
+
+@test 'built-in function !!br exists' {
+  assert "${abbrevs_func[!!br]}" same_as "_abbr_fn_git_branch"
+}
+
+@test '_abbr_fn_last_cmd function exists' {
+  assert "$+functions[_abbr_fn_last_cmd]" equals 1
+}
+
+@test '_abbr_fn_last_arg function exists' {
+  assert "$+functions[_abbr_fn_last_arg]" equals 1
+}
+
+@test '_abbr_fn_git_branch function exists' {
+  assert "$+functions[_abbr_fn_git_branch]" equals 1
+}
+
+@test '_abbr_fn_date_iso returns valid date' {
+  local result="$(_abbr_fn_date_iso)"
+  # Should match YYYY-MM-DD format
+  assert "$result" matches "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+}
+
+@test '_abbr_fn_timestamp returns valid timestamp' {
+  local result="$(_abbr_fn_timestamp)"
+  # Should match YYYYMMDD_HHMMSS format
+  assert "$result" matches "^[0-9]{8}_[0-9]{6}$"
+}
+
+@test 'abbr help includes function abbreviations' {
+  run abbr --help
+  assert "$output" contains "-f"
+  assert "$output" contains "BUILT-IN FUNCTIONS"
+}
+
+@test 'abbr show includes function abbreviations section' {
+  local output
+  output=$(abbr -s 2>&1)
+  assert "$output" contains "# Function abbreviations"
+}
+
+@test 'function abbr: longest match checked first' {
+  # !!br should be checked before !! since it is longer
+  # The (Ok) flag sorts in reverse order (longest first)
+  local -a sorted_keys=(${(Ok)abbrevs_func})
+  local found_br=0 found_bang=0
+  for key in "${sorted_keys[@]}"; do
+    if [[ "$key" == "!!br" ]]; then
+      found_br=1
+    elif [[ "$key" == "!!" && $found_br -eq 0 ]]; then
+      # !! should come after !!br
+      assert 1 equals 0
+    fi
+  done
+  assert 1 equals 1
+}

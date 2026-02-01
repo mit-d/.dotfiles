@@ -11,9 +11,72 @@ setopt extendedglob
 typeset -A abbrevs          # anywhere
 typeset -A abbrevs_cmd      # command position only
 typeset -A abbrevs_ctx      # context-specific (key format: "prefix:abbr")
+typeset -A abbrevs_func     # function-based (value is function name)
 
 # Persistence file for runtime additions
 ABBR_USER_FILE="${ZDOTDIR:-$HOME}/.zsh_abbr_user"
+
+###############################################################################
+# Built-in abbreviation functions
+###############################################################################
+
+# !! - Last command
+_abbr_fn_last_cmd() {
+  fc -ln -1
+}
+
+# !$ - Last argument of previous command
+_abbr_fn_last_arg() {
+  local last_cmd="$(fc -ln -1)"
+  echo "${last_cmd##* }"
+}
+
+# !^ - First argument of previous command
+_abbr_fn_first_arg() {
+  local last_cmd="$(fc -ln -1)"
+  local without_cmd="${last_cmd#* }"
+  echo "${without_cmd%% *}"
+}
+
+# !* - All arguments of previous command
+_abbr_fn_all_args() {
+  local last_cmd="$(fc -ln -1)"
+  echo "${last_cmd#* }"
+}
+
+# !:n - Nth argument of previous command (0 = command itself)
+_abbr_fn_nth_arg() {
+  local n="${1:-1}"
+  local last_cmd="$(fc -ln -1)"
+  local -a words=(${(z)last_cmd})
+  echo "${words[$((n+1))]}"
+}
+
+# Current git branch
+_abbr_fn_git_branch() {
+  git branch --show-current 2>/dev/null || echo ""
+}
+
+# Current date (ISO format)
+_abbr_fn_date_iso() {
+  date +%Y-%m-%d
+}
+
+# Current timestamp
+_abbr_fn_timestamp() {
+  date +%Y%m%d_%H%M%S
+}
+
+# Default function abbreviations
+typeset -A abbrevs_func=(
+  "!!"    "_abbr_fn_last_cmd"
+  '!$'    "_abbr_fn_last_arg"
+  "!^"    "_abbr_fn_first_arg"
+  "!*"    "_abbr_fn_all_args"
+  "!!br"  "_abbr_fn_git_branch"
+  "!!d"   "_abbr_fn_date_iso"
+  "!!ts"  "_abbr_fn_timestamp"
+)
 
 # Git Abbreviations (expand anywhere - these start with 'g' so no conflict)
 typeset -A git_abbrevs=(
@@ -359,6 +422,28 @@ _abbr_in_quotes() {
 magic-abbrev-expand() {
   local MATCH prefix expansion ctx_key cmd_prefix
 
+  # 0. Check function abbreviations first (they may contain special chars like !, $)
+  # Check longest matches first to handle !!br before !!
+  local func_abbr func_name func_result
+  for func_abbr in ${(Ok)abbrevs_func}; do
+    if [[ "$LBUFFER" == *"$func_abbr" ]]; then
+      # Don't expand inside quotes
+      prefix="${LBUFFER%"$func_abbr"}"
+      if _abbr_in_quotes "$prefix"; then
+        break
+      fi
+      func_name="${abbrevs_func[$func_abbr]}"
+      if (( $+functions[$func_name] )); then
+        func_result="$($func_name)"
+        if [[ -n "$func_result" ]]; then
+          LBUFFER="${prefix}${func_result}"
+          zle self-insert
+          return
+        fi
+      fi
+    fi
+  done
+
   # Extract the word being typed (alphanumeric + underscore)
   LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
   prefix="$LBUFFER"
@@ -485,6 +570,7 @@ abbr() {
       -l|--list)      action="list"; shift ;;
       -c|--command)   position="command"; shift ;;
       -C|--context)   position="context"; ctx_prefix="$2"; shift 2 ;;
+      -f|--function)  position="function"; shift ;;
       -h|--help)      action="help"; shift ;;
       import-fish)    action="import-fish"; shift ;;
       export-fish)    action="export-fish"; shift ;;
@@ -504,10 +590,19 @@ abbr() {
   case "$action" in
     add)
       if [[ -z "$name" || -z "$expansion" ]]; then
-        echo "Usage: abbr -a [-c|-C PREFIX] NAME EXPANSION" >&2
+        echo "Usage: abbr -a [-c|-C PREFIX|-f] NAME EXPANSION" >&2
         return 1
       fi
       case "$position" in
+        function)
+          # Verify the function exists
+          if ! (( $+functions[$expansion] )); then
+            echo "Warning: function '$expansion' not found (abbreviation added anyway)" >&2
+          fi
+          abbrevs_func[$name]="$expansion"
+          echo "abbrevs_func[$name]=\"$expansion\"" >> "$ABBR_USER_FILE"
+          echo "Added function abbreviation: $name → $expansion()"
+          ;;
         command)
           abbrevs_cmd[$name]="$expansion"
           echo "abbrevs_cmd[$name]=\"$expansion\"" >> "$ABBR_USER_FILE"
@@ -544,6 +639,10 @@ abbr() {
       fi
       if [[ -n "${abbrevs_cmd[$name]}" ]]; then
         unset "abbrevs_cmd[$name]"
+        found=1
+      fi
+      if [[ -n "${abbrevs_func[$name]}" ]]; then
+        unset "abbrevs_func[$name]"
         found=1
       fi
       # Check all context prefixes
@@ -630,6 +729,10 @@ abbr() {
         local ctx="${key%%:*}"
         local abbr="${key#*:}"
         echo "abbr -a -C ${(q)ctx} ${(q)abbr} ${(q)abbrevs_ctx[$key]}"
+      done
+      echo "\n# Function abbreviations"
+      for key in ${(ko)abbrevs_func}; do
+        echo "abbr -a -f ${(q)key} ${(q)abbrevs_func[$key]}"
       done
       ;;
 
@@ -836,6 +939,7 @@ USAGE:
   abbr -a NAME EXPANSION   Add an anywhere abbreviation
   abbr -a -c NAME EXP      Add a command-position abbreviation (first word only)
   abbr -a -C CTX NAME EXP  Add a context abbreviation (after CTX, e.g., "git")
+  abbr -a -f NAME FUNC     Add a function abbreviation (FUNC is called for expansion)
   abbr -e NAME             Erase an abbreviation
   abbr -r OLD NEW          Rename an abbreviation
   abbr -s, --show          Show abbreviations as abbr commands (for export)
@@ -848,8 +952,18 @@ EXAMPLES:
   abbr -a -c ll "ls -la"             # expands only as first word
   abbr -a -C git sw switch           # "git sw" → "git switch"
   abbr -a -C docker b build          # "docker b" → "docker build"
+  abbr -a -f '!!' _abbr_fn_last_cmd  # !! → last command (function)
   abbr -e gp                         # remove abbreviation
   abbr -r gp gpush                   # rename gp to gpush
+
+BUILT-IN FUNCTIONS:
+  !!     Last command            _abbr_fn_last_cmd
+  !$     Last argument           _abbr_fn_last_arg
+  !^     First argument          _abbr_fn_first_arg
+  !*     All arguments           _abbr_fn_all_args
+  !!br   Current git branch      _abbr_fn_git_branch
+  !!d    Current date (ISO)      _abbr_fn_date_iso
+  !!ts   Timestamp               _abbr_fn_timestamp
 
 IMPORT/EXPORT:
   abbr import-fish ~/.config/fish/conf.d/abbr.fish
