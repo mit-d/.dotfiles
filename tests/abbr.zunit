@@ -1105,3 +1105,66 @@
   done
   assert 1 equals 1
 }
+
+# =============================================================================
+# Import persistence (--save, --dry-run)
+# =============================================================================
+
+@test 'abbr help includes --save option' {
+  run abbr --help
+  assert "$output" contains "--save"
+}
+
+@test 'abbr help includes --dry-run option' {
+  run abbr --help
+  assert "$output" contains "--dry-run"
+}
+
+@test 'import-fish dry-run does not modify abbrevs' {
+  local tmpfile=$(mktemp)
+  echo "abbr -a dryruntest echo hello" > "$tmpfile"
+
+  run abbr import-fish "$tmpfile" --dry-run
+
+  # Check the abbreviation was NOT added
+  assert "${abbrevs[dryruntest]-notset}" same_as "notset"
+  rm -f "$tmpfile"
+}
+
+@test 'import-fish dry-run shows preview' {
+  local tmpfile=$(mktemp)
+  echo "abbr -a previewtest echo hello" > "$tmpfile"
+
+  run abbr import-fish "$tmpfile" --dry-run
+  rm -f "$tmpfile"
+
+  assert "$output" contains "dry-run"
+  assert "$output" contains "previewtest"
+}
+
+@test 'import-fish --save mentions user file' {
+  local tmpfile=$(mktemp)
+  echo "abbr -a savetestabbr echo saved" > "$tmpfile"
+
+  # Use a temp file for ABBR_USER_FILE to avoid polluting real config
+  local save_file=$(mktemp)
+  ABBR_USER_FILE="$save_file" run abbr import-fish "$tmpfile" --save
+
+  assert "$output" contains "Saved"
+  rm -f "$tmpfile" "$save_file"
+}
+
+@test 'import-fish without --save does not mention saving' {
+  local tmpfile=$(mktemp)
+  echo "abbr -a nosavetest echo hello" > "$tmpfile"
+
+  run abbr import-fish "$tmpfile"
+  rm -f "$tmpfile"
+
+  # Should not mention "Saved"
+  if [[ "$output" == *"Saved"* ]]; then
+    assert 1 equals 0
+  else
+    assert 1 equals 1
+  fi
+}

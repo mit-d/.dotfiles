@@ -740,9 +740,25 @@ abbr() {
       # Import fish abbreviations from stdin or file
       # Fish format: abbr -a [-g] [--set-cursor[=MARKER]] NAME EXPANSION
       # Converts fish's cursor marker (default %) to __CURSOR__
-      local input_file="$name"
-      local count=0 skipped=0
+      #
+      # Options:
+      #   --save     Persist imported abbreviations to user file
+      #   --dry-run  Preview imports without applying
+      local input_file="" save_imports=0 dry_run=0
+      local count=0 skipped=0 saved=0
       local line abbr_name abbr_expansion is_global has_cursor cursor_marker
+
+      # Parse import-fish specific options
+      # name/expansion may contain leftover args from main parsing
+      for arg in "$name" "$expansion" "$newname"; do
+        case "$arg" in
+          --save)     save_imports=1 ;;
+          --dry-run)  dry_run=1 ;;
+          -*)         ;; # ignore other flags
+          "")         ;; # ignore empty
+          *)          [[ -z "$input_file" ]] && input_file="$arg" ;;
+        esac
+      done
 
       _parse_fish_line() {
         local line="$1"
@@ -821,32 +837,49 @@ abbr() {
         return 1
       }
 
+      _import_abbr() {
+        if [[ $dry_run -eq 1 ]]; then
+          echo "  [dry-run] $abbr_name → $abbr_expansion"
+        else
+          abbrevs[$abbr_name]="$abbr_expansion"
+          alias "$abbr_name"="$abbr_expansion" 2>/dev/null
+          if [[ $save_imports -eq 1 ]]; then
+            echo "abbrevs[$abbr_name]=\"$abbr_expansion\"" >> "$ABBR_USER_FILE"
+            ((saved++))
+          fi
+        fi
+        ((count++))
+      }
+
       if [[ -n "$input_file" && -f "$input_file" ]]; then
+        [[ $dry_run -eq 1 ]] && echo "Dry run - no changes will be made:"
         # Read from file
         while IFS= read -r line || [[ -n "$line" ]]; do
           if _parse_fish_line "$line"; then
-            abbrevs[$abbr_name]="$abbr_expansion"
-            alias "$abbr_name"="$abbr_expansion" 2>/dev/null
-            ((count++))
+            _import_abbr
           elif [[ -n "$line" && ! "$line" =~ ^[[:space:]]*# ]]; then
             ((skipped++))
           fi
         done < "$input_file"
       else
         # Read from stdin
-        echo "Paste fish abbreviations (Ctrl+D when done):"
+        [[ $dry_run -eq 0 ]] && echo "Paste fish abbreviations (Ctrl+D when done):"
+        [[ $dry_run -eq 1 ]] && echo "Dry run - paste abbreviations (Ctrl+D when done):"
         while IFS= read -r line || [[ -n "$line" ]]; do
           if _parse_fish_line "$line"; then
-            abbrevs[$abbr_name]="$abbr_expansion"
-            alias "$abbr_name"="$abbr_expansion" 2>/dev/null
-            ((count++))
+            _import_abbr
           elif [[ -n "$line" && ! "$line" =~ ^[[:space:]]*# ]]; then
             ((skipped++))
           fi
         done
       fi
 
-      echo "Imported $count abbreviations"
+      if [[ $dry_run -eq 1 ]]; then
+        echo "Would import $count abbreviations"
+      else
+        echo "Imported $count abbreviations"
+        [[ $save_imports -eq 1 ]] && echo "Saved $saved to $ABBR_USER_FILE"
+      fi
       [[ $skipped -gt 0 ]] && echo "Skipped $skipped unrecognized lines"
       ;;
 
@@ -966,9 +999,11 @@ BUILT-IN FUNCTIONS:
   !!ts   Timestamp               _abbr_fn_timestamp
 
 IMPORT/EXPORT:
-  abbr import-fish ~/.config/fish/conf.d/abbr.fish
-  abbr export-fish > fish-abbr.fish
-  cat fish-abbr.fish | abbr import-fish
+  abbr import-fish FILE             Import from file (session only)
+  abbr import-fish FILE --save      Import and persist to user file
+  abbr import-fish FILE --dry-run   Preview import without applying
+  abbr export-fish                  Export in fish format
+  cat fish.abbr | abbr import-fish  Import from stdin
 
 KEYBINDINGS:
   Space     Expand abbreviation
