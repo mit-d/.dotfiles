@@ -1,5 +1,5 @@
 # List of ignored directories (space-separated, trailing slash required)
-IGNORE_DIRS := dwm/ keyboard/ mpd/ obmenu-gen/ openbox/ picom/ polybar/ termite/ tint2/
+IGNORE_DIRS := dwm/ keyboard/ mpd/ obmenu-gen/ openbox/ picom/ polybar/ termite/ tint2/ tests/
 
 # Target directory for symlinks
 TARGET_DIR ?= $(HOME)
