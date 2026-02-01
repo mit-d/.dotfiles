@@ -635,15 +635,15 @@ abbr() {
 
     import-fish)
       # Import fish abbreviations from stdin or file
-      # Fish format: abbr -a [-g] NAME EXPANSION
-      #              abbr --add [-g|--global] NAME EXPANSION
+      # Fish format: abbr -a [-g] [--set-cursor[=MARKER]] NAME EXPANSION
+      # Converts fish's cursor marker (default %) to __CURSOR__
       local input_file="$name"
       local count=0 skipped=0
-      local line abbr_name abbr_expansion is_global
+      local line abbr_name abbr_expansion is_global has_cursor cursor_marker
 
       _parse_fish_line() {
         local line="$1"
-        abbr_name="" abbr_expansion="" is_global=0
+        abbr_name="" abbr_expansion="" is_global=0 has_cursor=0 cursor_marker="%"
 
         # Skip empty lines and comments
         [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && return 1
@@ -655,20 +655,43 @@ abbr() {
           rest="${rest#*-a}"
           rest="${rest#"${rest%%[![:space:]]*}"}"
 
-          # Check for global flag
-          if [[ "$rest" =~ ^(-g|--global)[[:space:]]+ ]]; then
-            is_global=1
-            rest="${rest#*-g}"
-            rest="${rest#*--global}"
-            rest="${rest#"${rest%%[![:space:]]*}"}"
-          fi
-
-          # Skip other flags (-U, --universal, etc.)
-          while [[ "$rest" =~ ^--?[a-zA-Z]+[[:space:]]+ ]]; do
-            rest="${rest#*--[a-zA-Z]*}"
-            rest="${rest#*-[a-zA-Z]}"
+          # Parse flags
+          while [[ "$rest" == -* ]]; do
+            case "$rest" in
+              --global[[:space:]]*|-g[[:space:]]*)
+                is_global=1
+                rest="${rest#--global}"
+                rest="${rest#-g}"
+                ;;
+              --set-cursor=*)
+                has_cursor=1
+                cursor_marker="${rest#--set-cursor=}"
+                cursor_marker="${cursor_marker%%[[:space:]]*}"
+                rest="${rest#--set-cursor=*}"
+                rest="${rest#*[[:space:]]}"
+                ;;
+              --set-cursor[[:space:]]*)
+                has_cursor=1
+                cursor_marker="%"
+                rest="${rest#--set-cursor}"
+                ;;
+              --*[[:space:]]*)
+                # Skip unknown long flags
+                rest="${rest#--*[[:space:]]}"
+                ;;
+              -[a-zA-Z][[:space:]]*)
+                # Skip unknown short flags
+                rest="${rest#-?}"
+                ;;
+              *)
+                break
+                ;;
+            esac
             rest="${rest#"${rest%%[![:space:]]*}"}"
           done
+
+          # Handle -- separator
+          [[ "$rest" == --[[:space:]]* ]] && rest="${rest#--[[:space:]]}"
 
           # Extract name (first word)
           abbr_name="${rest%%[[:space:]]*}"
@@ -678,10 +701,15 @@ abbr() {
           # Rest is expansion - handle quotes
           abbr_expansion="$rest"
           # Remove surrounding quotes if present
-          if [[ "$abbr_expansion" =~ ^\'(.*)\'$ ]]; then
+          if [[ "$abbr_expansion" == \'*\' ]]; then
             abbr_expansion="${abbr_expansion:1:-1}"
-          elif [[ "$abbr_expansion" =~ ^\"(.*)\"$ ]]; then
+          elif [[ "$abbr_expansion" == \"*\" ]]; then
             abbr_expansion="${abbr_expansion:1:-1}"
+          fi
+
+          # Convert fish cursor marker to __CURSOR__
+          if [[ $has_cursor -eq 1 && "$abbr_expansion" == *"$cursor_marker"* ]]; then
+            abbr_expansion="${abbr_expansion//$cursor_marker/__CURSOR__}"
           fi
 
           [[ -n "$abbr_name" && -n "$abbr_expansion" ]]
@@ -721,18 +749,35 @@ abbr() {
 
     export-fish)
       # Export abbreviations in fish format
+      # Converts __CURSOR__ to fish's --set-cursor with % marker
       echo "# Fish abbreviations exported from zsh-abbr"
       echo "# Import with: source <file> (in fish shell)"
       echo ""
+
+      _export_fish_abbr() {
+        local key="$1" val="$2" prefix="${3:-}"
+        local set_cursor=""
+        local fish_val="$val"
+
+        # Convert __CURSOR__ to fish cursor marker
+        if [[ "$val" == *"__CURSOR__"* ]]; then
+          set_cursor="--set-cursor "
+          fish_val="${val//__CURSOR__/%}"
+        fi
+
+        echo "abbr -a ${prefix}${set_cursor}-- ${key} ${(q)fish_val}"
+      }
+
       for key in ${(ko)abbrevs}; do
-        echo "abbr -a -- ${key} ${(q)abbrevs[$key]}"
+        _export_fish_abbr "$key" "${abbrevs[$key]}"
       done
+
       # Note: command-position and context abbrevs don't have direct fish equivalents
       if [[ ${#abbrevs_cmd} -gt 0 ]]; then
         echo ""
         echo "# Command-position abbreviations (no fish equivalent, using regular abbr)"
         for key in ${(ko)abbrevs_cmd}; do
-          echo "abbr -a -- ${key} ${(q)abbrevs_cmd[$key]}"
+          _export_fish_abbr "$key" "${abbrevs_cmd[$key]}"
         done
       fi
       ;;

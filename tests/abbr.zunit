@@ -995,3 +995,41 @@
   [[ -z "$line" ]] && matched=1
   assert "$matched" equals 1
 }
+
+# =============================================================================
+# Cursor marker conversion (__CURSOR__ <-> fish %)
+# =============================================================================
+
+@test 'export-fish: converts __CURSOR__ to fish % marker' {
+  local output
+  output=$(abbr export-fish 2>&1)
+  # wtf has __CURSOR__ in it, should export with --set-cursor
+  assert "$output" contains "--set-cursor"
+}
+
+@test 'export-fish: abbreviations with __CURSOR__ use % in output' {
+  # The wtf abbreviation contains __CURSOR__
+  local output
+  output=$(abbr export-fish 2>&1 | grep "wtf")
+  # Should contain % instead of __CURSOR__
+  assert "$output" contains "%"
+}
+
+@test 'cursor conversion: __CURSOR__ to % in string' {
+  local val="git checkout __CURSOR__/feature"
+  local fish_val="${val//__CURSOR__/%}"
+  assert "$fish_val" same_as "git checkout %/feature"
+}
+
+@test 'cursor conversion: % to __CURSOR__ in string' {
+  local val="git checkout %/feature"
+  # % must be escaped in zsh substitution
+  local zsh_val="${val//\%/__CURSOR__}"
+  assert "$zsh_val" same_as "git checkout __CURSOR__/feature"
+}
+
+@test 'cursor conversion: multiple cursors' {
+  local val="% middle % end"
+  local zsh_val="${val//\%/__CURSOR__}"
+  assert "$zsh_val" same_as "__CURSOR__ middle __CURSOR__ end"
+}
