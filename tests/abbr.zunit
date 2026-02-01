@@ -878,3 +878,56 @@
   assert "$output" contains "abbr -a"
   assert "$output" contains "# Anywhere abbreviations"
 }
+
+# =============================================================================
+# Quoted string handling - abbreviations should NOT expand inside quotes
+# =============================================================================
+
+@test '_abbr_in_quotes: detects inside single quotes' {
+  # "echo 'gs" - inside single quote
+  run _abbr_in_quotes "echo 'gs"
+  assert $state equals 0
+}
+
+@test '_abbr_in_quotes: detects outside single quotes' {
+  # "echo 'test' gs" - outside quotes
+  run _abbr_in_quotes "echo 'test' gs"
+  assert $state equals 1
+}
+
+@test '_abbr_in_quotes: detects inside double quotes' {
+  # 'echo "gs' - inside double quote
+  local str='echo "gs'
+  run _abbr_in_quotes "$str"
+  assert $state equals 0
+}
+
+@test '_abbr_in_quotes: detects outside double quotes' {
+  # 'echo "test" gs' - outside quotes
+  local str='echo "test" gs'
+  run _abbr_in_quotes "$str"
+  assert $state equals 1
+}
+
+@test '_abbr_in_quotes: handles escaped single quotes' {
+  # Outside quotes after escaped sequence
+  run _abbr_in_quotes "echo 'test' gs"
+  assert $state equals 1
+}
+
+@test '_abbr_in_quotes: empty string is outside quotes' {
+  run _abbr_in_quotes ""
+  assert $state equals 1
+}
+
+@test '_abbr_in_quotes: no quotes is outside' {
+  run _abbr_in_quotes "echo gs"
+  assert $state equals 1
+}
+
+@test '_abbr_in_quotes: mixed quotes - inside double' {
+  # "echo 'foo' \"gs" - closed single, open double
+  local str="echo 'foo' \"gs"
+  run _abbr_in_quotes "$str"
+  assert $state equals 0
+}

@@ -331,12 +331,44 @@ done
 # Expansion Engine
 ###############################################################################
 
+# Helper: check if cursor is inside a quoted string
+# Returns 0 (true) if inside quotes, 1 (false) if outside
+_abbr_in_quotes() {
+  local str="$1"
+  local single_count=0 double_count=0
+  local temp
+
+  # Count unescaped single quotes
+  temp="${str//\\\'/}"  # Remove escaped single quotes
+  while [[ "$temp" == *"'"* ]]; do
+    ((single_count++))
+    temp="${temp#*\'}"
+  done
+
+  # Count unescaped double quotes
+  temp="${str//\\\"/}"  # Remove escaped double quotes
+  while [[ "$temp" == *'"'* ]]; do
+    ((double_count++))
+    temp="${temp#*\"}"
+  done
+
+  # Inside quotes if either count is odd
+  (( single_count % 2 == 1 || double_count % 2 == 1 ))
+}
+
 magic-abbrev-expand() {
   local MATCH prefix expansion ctx_key cmd_prefix
 
   # Extract the word being typed (alphanumeric + underscore)
   LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
   prefix="$LBUFFER"
+
+  # Don't expand inside quoted strings
+  if _abbr_in_quotes "$prefix"; then
+    LBUFFER="${prefix}${MATCH}"
+    zle self-insert
+    return
+  fi
 
   # Find the current simple command (after |, ||, &&, ;, or start of line)
   # This ensures "echo | git sw" sees "git" as the command, not "echo"
