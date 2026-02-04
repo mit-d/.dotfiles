@@ -9,6 +9,8 @@ Plug 'rstacruz/vim-closer'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-commentary'
+Plug 'sindrets/diffview.nvim'
+Plug 'nvim-lua/plenary.nvim'
 autocmd FileType cpp,cs,java setlocal commentstring=//\ %s
 Plug 'tpope/vim-endwise'
 " Python
@@ -44,3 +46,5 @@ highlight NonText ctermbg=none
 """ source minimal vim configs
 source ~/.vimrc
 
+""" Close diffview before quitting to avoid E21 on non-modifiable buffers
+autocmd QuitPre * if &filetype ==# 'DiffviewFiles' || &filetype ==# 'DiffviewFileHistory' | tabclose | endif

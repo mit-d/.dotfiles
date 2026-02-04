@@ -393,19 +393,24 @@ magic-abbrev-expand() {
 }
 
 # Helper: handle __CURSOR__ placeholder
+# Sets _abbr_used_cursor=1 when __CURSOR__ was found (no trailing space added)
 _abbr_handle_cursor() {
   local prefix="$1" expansion="$2"
   if [[ "$expansion" == *"__CURSOR__"* ]]; then
     LBUFFER="${prefix}${expansion%%__CURSOR__*}"
     RBUFFER="${expansion#*__CURSOR__}"
+    _abbr_used_cursor=1
   else
     zle self-insert
   fi
 }
 
 magic-abbrev-expand-and-execute() {
+  _abbr_used_cursor=0
   magic-abbrev-expand
-  zle backward-delete-char
+  # Only delete the trailing space when self-insert added one;
+  # skip when __CURSOR__ positioned the cursor directly.
+  [[ $_abbr_used_cursor -eq 0 ]] && zle backward-delete-char
   zle accept-line
 }
 
