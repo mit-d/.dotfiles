@@ -298,7 +298,7 @@ git_commit_project_files() {
 
 	# Apply mode: cherry-pick the most recent misc/local-files/* tagged commit
 	if [ "$apply" -eq 1 ]; then
-		latest_tag=$(git tag -l "misc/local-files/*" | sort -r | head -n 1)
+		latest_tag=$(git tag -l --sort=-creatordate "misc/local-files/*" | head -n 1)
 		if [ -z "$latest_tag" ]; then
 			printf '%s\n' "No misc/local-files/* tags found." >&2
 			return 1

@@ -11,6 +11,7 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-commentary'
 Plug 'sindrets/diffview.nvim'
 Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-tree/nvim-web-devicons'
 autocmd FileType cpp,cs,java setlocal commentstring=//\ %s
 Plug 'tpope/vim-endwise'
 " Python

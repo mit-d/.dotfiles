@@ -55,9 +55,7 @@ alias myip="curl https://ipinfo.io 2>/dev/null | jq -C"
 # Helper aliases
 alias extract_words="tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:][:space:]' | tr '[:space:]' '\n' | grep -v '^$'"
 
-# Claude alias
-if command -v claude >/dev/null 2>&1; then
-	alias clod="claude"
-fi
-
 alias dictz="fzf </usr/share/dict/words"
+alias imgcolors='f() { magick "$1" -format %c histogram:info:- | sort -rn | head -${2:-20}; }; f'
+alias swatch='f() { magick "$1" -format %c histogram:info:- | sort -rn | head -${2:-10} | while read line; do hex=$(echo "$line" | grep -oE "#[0-9A-Fa-f]{6}" | head -1); [ -n "$hex" ] && printf "\e[48;2;%d;%d;%dm   \e[0m %s  %s\n" 0x${hex:1:2} 0x${hex:3:2} 0x${hex:5:2} "$hex" "$(echo $line | grep -oE "^[[:space:]]*[0-9]+")px"; done; }; f'
+alias dpy="docker exec -it jaguar-debug python manage.py"

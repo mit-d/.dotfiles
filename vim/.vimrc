@@ -72,6 +72,21 @@ ino (; ();<ESC>hi
 ino {; {};<ESC>hi
 ino [; [];<ESC>hi
 
+" C-w h/j/k/l falls through to tmux pane when at split edge
+if exists('$TMUX')
+  function! TmuxMove(direction)
+    let wnr = winnr()
+    silent! execute 'wincmd ' . a:direction
+    if wnr == winnr()
+      call system('tmux select-pane -' . tr(a:direction, 'hjkl', 'LDUR'))
+    endif
+  endfunction
+  nnoremap <silent> <C-a>h :call TmuxMove('h')<CR>
+  nnoremap <silent> <C-a>j :call TmuxMove('j')<CR>
+  nnoremap <silent> <C-a>k :call TmuxMove('k')<CR>
+  nnoremap <silent> <C-a>l :call TmuxMove('l')<CR>
+endif
+
 " fzf
 set rtp+=/opt/homebrew/opt/fzf
 
