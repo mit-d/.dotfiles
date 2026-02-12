@@ -71,6 +71,24 @@ _git_update_mr_remove_commits_block() {
 	rm -f "$backup"
 }
 
+# Function to format markdown file (prettier + markdownlint-cli2)
+# Uses same configs as vanguard: proseWrap=always, printWidth=80, MD013.tables=false
+_git_update_mr_format_file() {
+	file="$1"
+	tmp_config=""
+
+	if _git_update_mr_command_exists prettier; then
+		prettier --prose-wrap always --print-width 80 --parser markdown --write "$file" 2>/dev/null || true
+	fi
+
+	if _git_update_mr_command_exists markdownlint-cli2; then
+		tmp_config="${TMPDIR:-/tmp}/markdownlint-cli2-$$.yaml"
+		printf 'config:\n  MD013:\n    tables: false\n' >"$tmp_config"
+		markdownlint-cli2 --fix --config "$tmp_config" "$file" 2>/dev/null || true
+		rm -f "$tmp_config"
+	fi
+}
+
 # Function to validate file path
 _git_update_mr_validate_file_path() {
 	file="$1"
@@ -339,6 +357,9 @@ EOF
 		printf '%s\n' "Error: Failed to append commits section" >&2
 		return 1
 	}
+
+	# Format the file with prettier + markdownlint-cli2
+	_git_update_mr_format_file "$info_file"
 
 	printf '%s\n' "Successfully updated $info_file" >&2
 
