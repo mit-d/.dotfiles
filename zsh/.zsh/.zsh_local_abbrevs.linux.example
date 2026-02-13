@@ -1,0 +1,74 @@
+# GNU/Linux & systemd abbreviations
+# Copy to .zsh_abbr_user or source alongside it
+
+# === Systemctl (anywhere - prefixed with 'sc') ===
+abbrevs[sc]="systemctl"
+abbrevs[scs]="systemctl status __CURSOR__"
+abbrevs[scstart]="sudo systemctl start __CURSOR__"
+abbrevs[scstop]="sudo systemctl stop __CURSOR__"
+abbrevs[screstart]="sudo systemctl restart __CURSOR__"
+abbrevs[scenable]="sudo systemctl enable __CURSOR__"
+abbrevs[scdisable]="sudo systemctl disable __CURSOR__"
+abbrevs[screload]="sudo systemctl daemon-reload"
+abbrevs[sclist]="systemctl list-units --type=service"
+abbrevs[scfailed]="systemctl --failed"
+abbrevs[sctimers]="systemctl list-timers --all"
+
+# === Systemctl context (after "systemctl ") ===
+abbrevs[systemctl:s]="status"
+abbrevs[systemctl:start]="start"
+abbrevs[systemctl:stop]="stop"
+abbrevs[systemctl:r]="restart"
+abbrevs[systemctl:en]="enable"
+abbrevs[systemctl:dis]="disable"
+abbrevs[systemctl:dr]="daemon-reload"
+abbrevs[systemctl:lu]="list-units --type=service"
+abbrevs[systemctl:lt]="list-timers --all"
+abbrevs[systemctl:cat]="cat"
+abbrevs[systemctl:edit]="edit"
+
+# === Systemctl user (after "systemctl --user ") ===
+abbrevs[scu]="systemctl --user"
+abbrevs[scus]="systemctl --user status __CURSOR__"
+abbrevs[scustart]="systemctl --user start __CURSOR__"
+abbrevs[scustop]="systemctl --user stop __CURSOR__"
+abbrevs[scuenable]="systemctl --user enable __CURSOR__"
+
+# === Journalctl (anywhere - prefixed with 'jc') ===
+abbrevs[jc]="journalctl"
+abbrevs[jcf]="journalctl -f"
+abbrevs[jcu]="journalctl -u __CURSOR__ --no-pager -n 50"
+abbrevs[jcfu]="journalctl -fu __CURSOR__"
+abbrevs[jcb]="journalctl -b"
+abbrevs[jcerr]="journalctl -p err -b"
+abbrevs[jcboot]="journalctl --list-boots"
+abbrevs[jcsize]="journalctl --disk-usage"
+abbrevs[jcvac]="sudo journalctl --vacuum-time=7d"
+
+# === Journalctl context (after "journalctl ") ===
+abbrevs[journalctl:-f]="-f"
+abbrevs[journalctl:-u]="-u"
+abbrevs[journalctl:-fu]="-fu"
+abbrevs[journalctl:-b]="-b"
+abbrevs[journalctl:-p]="-p err -b"
+abbrevs[journalctl:--list-boots]="--list-boots"
+
+# === Networking (iproute2 / ss) ===
+abbrevs[ipa]="ip -c addr"
+abbrevs[ipr]="ip -c route"
+abbrevs[ipl]="ip -c link"
+abbrevs[ipn]="ip -c neigh"
+abbrevs[sstl]="ss -tlnp"
+abbrevs[ssul]="ss -ulnp"
+abbrevs[ssal]="ss -alnp"
+
+# === Filesystem / mounting ===
+abbrevs[lsblka]="lsblk -f"
+abbrevs[fstab]="sudo \$EDITOR /etc/fstab"
+abbrevs[mntl]="findmnt --real"
+
+# === Process / resource monitoring ===
+abbrevs[htop]="htop"
+abbrevs[iotop]="sudo iotop -oP"
+abbrevs[dmesgf]="dmesg -wH"
+abbrevs[freegh]="free -gh"
