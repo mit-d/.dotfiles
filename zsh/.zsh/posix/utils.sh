@@ -74,3 +74,9 @@ def to_schema:
 collapse_arrays | to_schema
 ' "${1:--}"
 }
+
+# Format markdown files (prettier + markdownlint)
+mdfmt() {
+  prettier -w --prose-wrap always --print-width 80 "$@"
+  markdownlint-cli2 --fix "$@"
+}
