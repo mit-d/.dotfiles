@@ -3,5 +3,10 @@
 
 mpd/.mpd/state
 zsh/.zsh/.zcompdump
+zsh/.zsh_abbr_user
 
 .idea/**/*
+
+# zunit test output
+tests/_output/*
+!tests/_output/.gitkeep

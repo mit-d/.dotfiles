@@ -12,4 +12,4 @@
 #
 # Global Order: zshenv, zprofile, zshrc, zlogin
 export ZDOTDIR="$HOME/.zsh"
-source "$ZDOTDIR/path.zsh"
+# . "$HOME/.cargo/env"

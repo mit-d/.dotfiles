@@ -1,0 +1,17 @@
+config:
+  # Line length - disabled, prettier handles wrapping
+  MD013: false
+
+  # Allow hard tabs in code blocks (Makefile snippets)
+  MD010:
+    code_blocks: false
+
+  # Allow duplicate headings in different sections
+  MD024:
+    siblings_only: true
+
+  # Allow raw HTML (common in GitHub markdown)
+  MD033: false
+
+  # Allow bare URLs
+  MD034: false

@@ -24,9 +24,9 @@
 	colorMoved = plain
 	mnemonicPrefix = true
 	renames = true
-	tool = vimdiff
-[difftool]
-	prompt = false
+	tool = nvimdiff
+[difftool "nvimdiff"]
+	cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 [fetch]
 	prune = true
 	all = true
@@ -54,3 +54,5 @@
 	config-override = "!git config --file ~/.gitconfig_overrides"
 [include]
 	path = ~/.gitconfig_overrides
+[pager]
+	status = true

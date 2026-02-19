@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=fx
+Comment=Terminal JSON viewer
+Exec=fx %f
+Terminal=true
+MimeType=application/json;
+NoDisplay=true

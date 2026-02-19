@@ -1,0 +1,17 @@
+# Sourced files can't be followed
+disable=SC1090,SC1091
+
+# Variables used by other tools or sourced contexts
+disable=SC2034
+
+# Aliases intentionally expand variables at definition time
+disable=SC2139
+
+# Aliases wrapping inline functions (f() { ... }; f) use positional params
+disable=SC2142
+
+# Variables assigned in subshell/pipeline context
+disable=SC2154
+
+# POSIX-sourced files run in bash/zsh where bashisms like $OSTYPE are available
+disable=SC3028

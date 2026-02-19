@@ -1,0 +1,41 @@
+#!/bin/bash
+# Randomly set a wallpaper from ~/Pictures/wallpapers on all monitors
+
+WALLPAPER_DIR="$HOME/Pictures/wallpapers"
+STATE_FILE="$XDG_RUNTIME_DIR/hyprpaper-current"
+
+# Read previous wallpaper path
+OLD_WALL=""
+[[ -f "$STATE_FILE" ]] && OLD_WALL=$(cat "$STATE_FILE")
+
+# Get sorted list of wallpapers, excluding current
+mapfile -t walls < <(find "$WALLPAPER_DIR" -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) | sort | grep -vxF "$OLD_WALL")
+
+if [[ ${#walls[@]} -eq 0 ]]; then
+    echo "No wallpapers found in $WALLPAPER_DIR" >&2
+    exit 1
+fi
+
+if [[ "$1" == "-r" ]]; then
+    # True random
+    NEW_WALL=$(printf '%s\n' "${walls[@]}" | shuf -n 1)
+else
+    # Deterministic: same wallpaper per day
+    day_hash=$(date +%Y-%m-%d | cksum | awk '{print $1}')
+    index=$((day_hash % ${#walls[@]}))
+    NEW_WALL="${walls[$index]}"
+fi
+
+# Preload new wallpaper
+hyprctl hyprpaper preload "$NEW_WALL"
+
+# Set on all monitors
+hyprctl hyprpaper wallpaper ",$NEW_WALL"
+
+# Unload old wallpaper if different
+if [[ -n "$OLD_WALL" && "$OLD_WALL" != "$NEW_WALL" ]]; then
+    hyprctl hyprpaper unload "$OLD_WALL"
+fi
+
+# Save current
+echo "$NEW_WALL" >"$STATE_FILE"

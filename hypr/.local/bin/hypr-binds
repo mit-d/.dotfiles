@@ -1,0 +1,11 @@
+#!/bin/bash
+hyprctl binds -j | jq -r '
+  def mod_name:
+    . as $m |
+    (if ($m / 64 | floor) % 2 == 1 then "SUPER + " else "" end) +
+    (if ($m / 1 | floor) % 2 == 1 then "SHIFT + " else "" end) +
+    (if ($m / 4 | floor) % 2 == 1 then "CTRL + " else "" end) +
+    (if ($m / 8 | floor) % 2 == 1 then "ALT + " else "" end) |
+    rtrimstr(" + ");
+  .[] | "\(.modmask | mod_name) + \(.key)\t\(.dispatcher) \(.arg)"
+' | column -t -s $'\t' | fzf --layout=reverse --prompt="Keybinds > "

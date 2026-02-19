@@ -1,0 +1,92 @@
+// -*- mode: jsonc -*-
+{
+  "layer": "top",
+  "position": "top",
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": [
+    "tray",
+    "cpu",
+    "memory",
+    "temperature",
+    "network",
+    "wireplumber",
+    "custom/power"
+  ],
+
+  "hyprland/workspaces": {
+    "format": "{name}",
+    "on-click": "activate",
+    "sort-by-number": true,
+    "persistent-workspaces": {
+      "DP-1": [1, 2, 3, 4],
+      "HDMI-A-1": [5, 6, 7, 8]
+    }
+  },
+
+  "clock": {
+    "format": "{:%H:%M  %a %b %d}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "month",
+      "weeks-pos": "left",
+      "format": {
+        "months": "<span color='#e0d561'><b>{}</b></span>",
+        "days": "<span color='#d9d9d9'>{}</span>",
+        "weeks": "<span color='#625e4c'>{}</span>",
+        "weekdays": "<span color='#58d1eb'><b>{}</b></span>",
+        "today": "<span color='#f4005f'><b><u>{}</u></b></span>"
+      }
+    }
+  },
+
+  "tray": {
+    "spacing": 8,
+    "icon-size": 16
+  },
+
+  "cpu": {
+    "format": " {usage}%",
+    "tooltip": true,
+    "interval": 5
+  },
+
+  "memory": {
+    "format": " {percentage}%",
+    "tooltip-format": "{used:0.1f}G / {total:0.1f}G used",
+    "interval": 10
+  },
+
+  "temperature": {
+    "critical-threshold": 85,
+    "format": " {temperatureC}°C",
+    "format-critical": " {temperatureC}°C",
+    "tooltip": true
+  },
+
+  "network": {
+    "format-wifi": " {essid}",
+    "format-ethernet": " ETH",
+    "format-disconnected": " offline",
+    "tooltip-format-wifi": "{ifname}: {ipaddr}/{cidr}\n{signalStrength}% signal\n{bandwidthUpBits} up / {bandwidthDownBits} down",
+    "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr}\n{bandwidthUpBits} up / {bandwidthDownBits} down"
+  },
+
+  "wireplumber": {
+    "format": "{icon} {volume}%",
+    "format-muted": " muted",
+    "format-icons": ["", "", ""],
+    "on-click": "pwvucontrol",
+    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-scroll-up": "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 2%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
+  },
+
+  "custom/power": {
+    "format": "",
+    "tooltip": false,
+    "on-click": "hyprlock",
+    "on-click-right": "systemctl poweroff",
+    "on-click-middle": "systemctl reboot"
+  }
+}

@@ -1,0 +1,11 @@
+# Vendored submodules
+zsh/.zsh/zsh-autosuggestions/
+zsh/.zsh/zsh-syntax-highlighting/
+mpv/.config/mpv/scripts/mpv-cut/
+
+# Vendored plugins
+vim/.config/nvim/autoload/plug.vim
+
+# Generated/binary
+hypr/.config/hypr/palettes/
+tests/_output/
