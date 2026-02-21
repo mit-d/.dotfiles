@@ -73,7 +73,7 @@ button:hover {
 /* Shared module styling */
 #clock,
 #cpu,
-#memory,
+#custom-memory,
 #custom-temperature,
 #network,
 #pulseaudio,
@@ -124,15 +124,15 @@ button:hover {
 }
 
 /* Memory */
-#memory {
+#custom-memory {
   color: #9d65ff;
 }
 
-#memory.warning {
+#custom-memory.warning {
   color: #fa8419;
 }
 
-#memory.critical {
+#custom-memory.critical {
   color: #f4005f;
 }
 
