@@ -48,7 +48,8 @@
   "cpu": {
     "format": " {usage}%",
     "tooltip": true,
-    "interval": 5
+    "interval": 5,
+    "on-click": "ghostty -e htop --sort-key=PERCENT_CPU"
   },
 
   "custom/memory": {
