@@ -6,7 +6,7 @@ typeset -U -T PATH path
 
 ## Suffix Aliases (ZSH-only)
 for type in txt md; do
-  alias -s $type="${EDITOR:-nano} -- "
+    alias -s $type="${EDITOR:-nano} -- "
 done
 
 ## Expand aliases with Control-Space (ZSH-only)

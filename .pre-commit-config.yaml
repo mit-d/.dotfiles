@@ -15,7 +15,12 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
+      - id: check-json
+        exclude: \.jsonc$
       - id: check-merge-conflict
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: detect-private-key
       - id: mixed-line-ending
         args: [--fix=lf]
       - id: check-executables-have-shebangs
@@ -55,6 +60,13 @@ repos:
             \.zshenv$
           )
 
+  - repo: https://github.com/lovesegfault/beautysh
+    rev: v6.4.2
+    hooks:
+      - id: beautysh
+        args: [-i, "4"]
+        types: [zsh]
+
   - repo: https://github.com/JohnnyMorganz/StyLua
     rev: v2.3.1
     hooks:
@@ -70,6 +82,13 @@ repos:
     rev: v0.21.0
     hooks:
       - id: markdownlint-cli2
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.1
+    hooks:
+      - id: codespell
+        args: [--ignore-words, .codespell-ignore]
+        exclude: _pure_
 
   - repo: local
     hooks:
