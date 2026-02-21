@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pre-commit:
+    name: Pre-commit hooks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # fish_indent hook uses language: system, so fish must be available
+      - name: Install fish shell
+        run: |
+          sudo apt-add-repository -y ppa:fish-shell/release-4
+          sudo apt-get update
+          sudo apt-get install -y fish
+
+      - uses: pre-commit/action@v3.0.1
+
+  zunit:
+    name: Zunit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Install zunit
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y zsh
+
+          # Install zunit
+          git clone --depth 1 https://github.com/zunit-zsh/zunit.git /tmp/zunit
+          cd /tmp/zunit
+          sudo ./build.zsh
+          sudo install -m 755 zunit /usr/local/bin/
+
+          # Install revolver (zunit dependency)
+          git clone --depth 1 https://github.com/molovo/revolver.git /tmp/revolver
+          sudo install -m 755 /tmp/revolver/revolver /usr/local/bin/
+
+          # Install color (revolver dependency) - ships as color.zsh
+          git clone --depth 1 https://github.com/molovo/color.git /tmp/color
+          sudo install -m 755 /tmp/color/color.zsh /usr/local/bin/color
+
+      - name: Run tests
+        run: zunit

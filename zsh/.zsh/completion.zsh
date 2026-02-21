@@ -6,9 +6,9 @@ fpath+="$HOME/.zsh/completions"
 # auto completion (use cached completions if fresh, regenerate daily)
 autoload -Uz compinit
 if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
-  compinit
+    compinit
 else
-  compinit -C
+    compinit -C
 fi
 
 # auto complete options

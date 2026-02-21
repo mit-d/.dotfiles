@@ -8,5 +8,14 @@ export REPO_ROOT
 # Mock ZLE before sourcing abbr.zsh
 zle() { : }
 
+# Stub out conditional commands so all abbreviations are loaded
+# Tests should be deterministic regardless of what's installed on the host
+kubectl() { : }
+docker() { : }
+fzf() { : }
+
 # Source the abbreviation file
 source "${REPO_ROOT}/zsh/.zsh/abbr.zsh"
+
+# Add test-only command-position abbreviation (user-defined, not built-in)
+abbrevs[@feat]="git switch -C feat/user/__CURSOR__"

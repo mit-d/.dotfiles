@@ -29,6 +29,7 @@ _add_to_path "$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
 _add_to_path "$HOME/.local/bin"
 _add_to_path "$HOME/.bin"
 _add_to_path "$HOME/bin"
+_add_to_path "$HOME/.cargo/bin"
 _add_to_path "$HOME/.cache/.bun/bin"
 
 export PATH

@@ -15,7 +15,13 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
+      - id: check-toml
+      - id: check-json
+        exclude: \.jsonc$
       - id: check-merge-conflict
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: detect-private-key
       - id: mixed-line-ending
         args: [--fix=lf]
       - id: check-executables-have-shebangs
@@ -55,6 +61,13 @@ repos:
             \.zshenv$
           )
 
+  - repo: https://github.com/lovesegfault/beautysh
+    rev: v6.4.2
+    hooks:
+      - id: beautysh
+        args: [-i, "4"]
+        types: [zsh]
+
   - repo: https://github.com/JohnnyMorganz/StyLua
     rev: v2.3.1
     hooks:
@@ -71,6 +84,13 @@ repos:
     hooks:
       - id: markdownlint-cli2
 
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.1
+    hooks:
+      - id: codespell
+        args: [--ignore-words, .codespell-ignore]
+        exclude: _pure_
+
   - repo: local
     hooks:
       - id: fish-indent
@@ -85,30 +105,17 @@ repos:
             fish_default_mode_prompt\.fish$
           )
 
-  - repo: local
+  - repo: https://github.com/abravalheri/validate-pyproject
+    rev: v0.25
     hooks:
-      - id: check-uncommon-chars
-        name: Check for uncommon Unicode characters
-        entry: >
-          perl -ne '
-            close ARGV if eof;
-            if (/[^\t\r\n\x20-\x7E]/) {
-              s/([^\t\r\n\x20-\x7E])/\033[31m$1\033[0m/g;
-              print "$ARGV:$.: $_";
-              $fail = 1;
-            }
-            END { exit($fail ? 1 : 0) }
-          '
-        language: system
-        types_or: [text]
-        exclude: |
-          (?x)(
-            \.vimrc$|
-            init\.vim$|
-            prompt\.zsh$|
-            abbr\.zsh$|
-            config\.jsonc$|
-            _pure_|
-            pure\.fish$|
-            fisher\.fish$
-          )
+      - id: validate-pyproject
+
+  - repo: https://github.com/tox-dev/pyproject-fmt
+    rev: v2.16.1
+    hooks:
+      - id: pyproject-fmt
+
+  - repo: https://github.com/mit-d/check-unicode
+    rev: v0.3.2
+    hooks:
+      - id: check-unicode
