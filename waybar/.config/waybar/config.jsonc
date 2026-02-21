@@ -8,7 +8,7 @@
     "tray",
     "cpu",
     "memory",
-    "temperature",
+    "custom/temperature",
     "network",
     "wireplumber",
     "custom/power"
@@ -57,11 +57,14 @@
     "interval": 10
   },
 
-  "temperature": {
-    "critical-threshold": 85,
-    "format": " {temperatureC}°C",
-    "format-critical": " {temperatureC}°C",
-    "tooltip": true
+  "custom/temperature": {
+    "exec": "~/.config/waybar/temps.sh",
+    "return-type": "json",
+    "interval": 5,
+    "format": " {}",
+    "format-critical": " {}",
+    "tooltip": true,
+    "on-click": "ghostty -e btop"
   },
 
   "network": {

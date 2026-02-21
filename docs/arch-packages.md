@@ -25,7 +25,7 @@ sudo pacman -S --needed \
 ```sh
 sudo pacman -S --needed \
   grim slurp wl-clipboard cliphist \
-  brightnessctl playerctl \
+  brightnessctl playerctl btop \
   imv mpv zathura zathura-pdf-mupdf \
   opendoas yt-dlp
 ```
@@ -59,7 +59,7 @@ sudo pacman -S --needed \
   waybar mako ghostty pipewire wireplumber \
   polkit-kde-agent xsettingsd \
   grim slurp wl-clipboard cliphist \
-  brightnessctl playerctl \
+  brightnessctl playerctl btop \
   imv mpv zathura zathura-pdf-mupdf \
   opendoas yt-dlp \
   ttf-sourcecodepro-nerd ttf-roboto adw-gtk-theme

@@ -13,4 +13,5 @@ allow-codepoints = [
   "U+2630", # vim/.config/nvim/init.vim TRIGRAM FOR HEAVEN [So]
   "U+E0A1", # vim/.config/nvim/init.vim U+E0A1 [Co]
   "U+26A1", # vim/.config/nvim/init.vim HIGH VOLTAGE SIGN [So]
+  "U+00B0", # waybar/.config/waybar/temps.sh U+00B0 DEGREE SIGN [So]
 ]

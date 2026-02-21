@@ -74,7 +74,7 @@ button:hover {
 #clock,
 #cpu,
 #memory,
-#temperature,
+#custom-temperature,
 #network,
 #pulseaudio,
 #wireplumber,
@@ -137,11 +137,11 @@ button:hover {
 }
 
 /* Temperature */
-#temperature {
+#custom-temperature {
   color: #98e024;
 }
 
-#temperature.critical {
+#custom-temperature.critical {
   color: #f4005f;
 }
 
