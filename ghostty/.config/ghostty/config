@@ -18,6 +18,9 @@ unfocused-split-opacity = 0.55
 
 # Font
 font-family = SauceCodePro Nerd Font
+font-family = Noto Sans Mono
+font-family = Noto Sans Mono CJK SC
+font-family = Noto Sans
 font-size = 14
 font-style = Regular
 font-style-bold = Bold
