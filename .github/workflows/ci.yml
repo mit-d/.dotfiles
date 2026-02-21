@@ -55,9 +55,9 @@ jobs:
           git clone --depth 1 https://github.com/molovo/revolver.git /tmp/revolver
           sudo install -m 755 /tmp/revolver/revolver /usr/local/bin/
 
-          # Install color (revolver dependency)
+          # Install color (revolver dependency) - ships as color.zsh
           git clone --depth 1 https://github.com/molovo/color.git /tmp/color
-          sudo install -m 755 /tmp/color/color /usr/local/bin/
+          sudo install -m 755 /tmp/color/color.zsh /usr/local/bin/color
 
       - name: Run tests
         run: zunit
