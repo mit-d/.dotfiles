@@ -35,6 +35,7 @@ sudo pacman -S --needed \
 ```sh
 sudo pacman -S --needed \
   ttf-sourcecodepro-nerd ttf-roboto \
+  noto-fonts noto-fonts-cjk noto-fonts-emoji \
   adw-gtk-theme
 ```
 
@@ -62,7 +63,9 @@ sudo pacman -S --needed \
   brightnessctl playerctl btop htop \
   imv mpv zathura zathura-pdf-mupdf \
   opendoas yt-dlp \
-  ttf-sourcecodepro-nerd ttf-roboto adw-gtk-theme
+  ttf-sourcecodepro-nerd ttf-roboto \
+  noto-fonts noto-fonts-cjk noto-fonts-emoji \
+  adw-gtk-theme
 
 yay -S bibata-cursor-theme-bin
 ```
