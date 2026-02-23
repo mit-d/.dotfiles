@@ -1,8 +1,116 @@
-# Personal abbreviations - added by user
-# This file is sourced after the built-in abbreviations
-# Use `abbr -a` to add new ones (they'll be appended here)
+# Abbreviations
+# This file is sourced by abbr.zsh and contains all abbreviation definitions.
+# Use `abbr -a` to add new ones (they'll be appended here).
 
+###############################################################################
+# General abbreviations
+###############################################################################
+
+# === Git (anywhere) ===
+abbrevs+=(
+    "gb"            "git branch"
+    "gc"            "git commit"
+    "gd"            "git diff"
+    "gf"            "git fetch --prune --tags"
+    "gl"            "git log"
+    "glg"           "git log --graph --oneline"
+    "glgl"          "git log --graph --oneline --all"
+    "gr"            "git reset --mixed"
+    "grh"           "git reset --hard"
+    "grs"           "git reset --soft"
+    "gs"            "git status -s"
+    "gss"           "git status"
+    "unstage"       "git restore --staged"
+    "gchanged"      "git diff --name-only \"\$(git merge-base HEAD origin/main)\"...HEAD"
+    "gblackchanged" 'black $(git diff --name-only "$(git merge-base HEAD origin/main)"...HEAD | grep -E "\.py$")'
+    "gblacknew"     'black $(git diff --name-only --diff-filter=A "$(git merge-base HEAD origin/main)"...HEAD | grep -E "\.py$")'
+    "wtf"           'gwt feat/dmitten/WARH-__CURSOR__'
+)
+
+# === Git context (after "git ") ===
+abbrevs+=(
+    "git:sw"        "switch"
+    "git:sw-"       "switch -"
+    "git:swc"       "switch -C"
+    "git:swm"       "switch main"
+    "git:co"        "checkout"
+    "git:cp"        "cherry-pick"
+    "git:rb"        "rebase"
+    "git:rbi"       "rebase -i"
+    "git:rbm"       "rebase origin/main"
+    "git:rba"       "rebase --abort"
+    "git:rbc"       "rebase --continue"
+    "git:rs"        "reset"
+    "git:rsh"       "reset --hard"
+    "git:rss"       "reset --soft"
+    "git:st"        "stash"
+    "git:stp"       "stash pop"
+    "git:stl"       "stash list"
+    "git:df"        "diff"
+    "git:dfc"       "diff --cached"
+    "git:lg"        "log --graph --oneline"
+    "git:lga"       "log --graph --oneline --all"
+    "git:aa"        "add -A"
+    "git:ap"        "add --patch"
+    "git:cm"        "commit -m"
+    "git:ca"        "commit --amend"
+    "git:can"       "commit --amend --no-edit"
+    "git:pf"        "push --force-with-lease"
+    "git:pl"        "pull"
+)
+
+# === Python/UV ===
+abbrevs+=(
+    "venv"          "uv venv"
+    "act"           "source .venv/bin/activate"
+    "deact"         "deactivate"
+    "req"           "uv pip install -r requirements.txt"
+    "freeze"        "uv pip freeze > requirements.txt"
+    "sync"          "uv sync"
+    "lock"          "uv lock"
+    "uvi"           "uv pip install"
+    "uvr"           "uv pip uninstall"
+    "uvl"           "uv pip list"
+    "uvadd"         "uv add"
+    "uvdev"         "uv venv && source .venv/bin/activate && uv pip install -e '.[dev]'"
+)
+
+# === System monitoring ===
+abbrevs+=(
+    "psa"           "ps aux"
+    "dfh"           "df -h"
+    "upt"           "uptime"
+    "whoa"          "who -a"
+)
+
+# === Networking ===
+abbrevs+=(
+    "curlh"         "curl -I"
+    "wgetr"         "wget -r"
+    "ping5"         "ping -c 5"
+    "tracer"        "traceroute"
+    "nslook"        "nslookup"
+    "digs"          "dig +short"
+)
+
+# === Misc ===
+abbrevs+=(
+    "eof"           "<<EOF"
+)
+
+# === Output redirection (anywhere) ===
+abbrevs+=(
+    "_NULL"         "&>/dev/null"
+    "_L"            "| less"
+    "_T"            "| tee -a"
+    "_C"            "| ${COPY_COMMAND:-pbcopy}"
+    "_G"            "| grep -ni"
+)
+
+###############################################################################
 # Command-position abbreviations (@key format)
+###############################################################################
+
 abbrevs[@t]="task __CURSOR__"
 abbrevs[@db]="echo \"export DB_NAME=__CURSOR__\" >~/.db-env && source ~/.db-env"
 abbrevs[@gd]="nvim -c ':DiffviewOpen'"
@@ -11,49 +119,136 @@ abbrevs[@clod]="claude"
 abbrevs[@c]="claude"
 abbrevs[@dot]="cd ~/.dotfiles"
 
-# === Pacman (anywhere - prefixed with 'pac') ===
-abbrevs[paci]="sudo pacman -S __CURSOR__"
-abbrevs[pacr]="sudo pacman -Rns __CURSOR__"
-abbrevs[pacs]="pacman -Ss __CURSOR__"
-abbrevs[pacq]="pacman -Qi __CURSOR__"
-abbrevs[pacl]="pacman -Ql __CURSOR__"
-abbrevs[pacu]="sudo pacman -Syu"
-abbrevs[pacf]="pacman -F __CURSOR__"
-abbrevs[paco]="pacman -Qdt"
-abbrevs[pacclean]="sudo pacman -Rns \$(pacman -Qdtq)"
-abbrevs[paclog]="pacman -Qe | sort"
-abbrevs[pacmir]="sudo pacman -Syy"
+###############################################################################
+# Pacman / AUR (Arch Linux)
+###############################################################################
+
+# === Pacman (anywhere) ===
+abbrevs+=(
+    "paci"          "sudo pacman -S __CURSOR__"
+    "pacr"          "sudo pacman -Rns __CURSOR__"
+    "pacs"          "pacman -Ss __CURSOR__"
+    "pacq"          "pacman -Qi __CURSOR__"
+    "pacl"          "pacman -Ql __CURSOR__"
+    "pacu"          "sudo pacman -Syu"
+    "pacf"          "pacman -F __CURSOR__"
+    "paco"          "pacman -Qdt"
+    "pacclean"      "sudo pacman -Rns \$(pacman -Qdtq)"
+    "paclog"        "pacman -Qe | sort"
+    "pacmir"        "sudo pacman -Syy"
+)
 
 # === Pacman context (after "pacman ") ===
-abbrevs[pacman:-S]="--needed --noconfirm -S"
-abbrevs[pacman:-Ss]="--color always -Ss"
-abbrevs[pacman:-Qi]="--color always -Qi"
-abbrevs[pacman:-Ql]="-Ql"
-abbrevs[pacman:-Qe]="-Qe"
-abbrevs[pacman:-Qdt]="-Qdt"
-abbrevs[pacman:-Rns]="-Rns"
-abbrevs[pacman:-Syu]="-Syu"
+abbrevs+=(
+    "pacman:-S"     "--needed --noconfirm -S"
+    "pacman:-Ss"    "--color always -Ss"
+    "pacman:-Qi"    "--color always -Qi"
+    "pacman:-Ql"    "-Ql"
+    "pacman:-Qe"    "-Qe"
+    "pacman:-Qdt"   "-Qdt"
+    "pacman:-Rns"   "-Rns"
+    "pacman:-Syu"   "-Syu"
+)
 
-# === Yay / AUR (anywhere - prefixed with 'ya') ===
-abbrevs[ya]="yay"
-abbrevs[yai]="yay -S __CURSOR__"
-abbrevs[yar]="yay -Rns __CURSOR__"
-abbrevs[yas]="yay -Ss __CURSOR__"
-abbrevs[yau]="yay -Syu"
-abbrevs[yaq]="yay -Qi __CURSOR__"
-abbrevs[yaclean]="yay -Sc"
-abbrevs[yastats]="yay -Ps"
+# === Yay / AUR (anywhere) ===
+abbrevs+=(
+    "ya"            "yay"
+    "yai"           "yay -S __CURSOR__"
+    "yar"           "yay -Rns __CURSOR__"
+    "yas"           "yay -Ss __CURSOR__"
+    "yau"           "yay -Syu"
+    "yaq"           "yay -Qi __CURSOR__"
+    "yaclean"       "yay -Sc"
+    "yastats"       "yay -Ps"
+)
 
 # === Yay context (after "yay ") ===
-abbrevs[yay:-S]="-S"
-abbrevs[yay:-Ss]="-Ss"
-abbrevs[yay:-Rns]="-Rns"
-abbrevs[yay:-Syu]="-Syu"
-abbrevs[yay:-Qi]="-Qi"
-abbrevs[yay:-Sc]="-Sc"
-abbrevs[yay:-Ps]="-Ps"
+abbrevs+=(
+    "yay:-S"        "-S"
+    "yay:-Ss"       "-Ss"
+    "yay:-Rns"      "-Rns"
+    "yay:-Syu"      "-Syu"
+    "yay:-Qi"       "-Qi"
+    "yay:-Sc"       "-Sc"
+    "yay:-Ps"       "-Ps"
+)
 
 # === Pacman cache / maintenance ===
-abbrevs[paccache]="sudo paccache -r"
-abbrevs[pacunlock]="sudo rm /var/lib/pacman/db.lck"
-abbrevs[packeys]="sudo pacman-key --refresh-keys"
+abbrevs+=(
+    "paccache"      "sudo paccache -r"
+    "pacunlock"     "sudo rm /var/lib/pacman/db.lck"
+    "packeys"       "sudo pacman-key --refresh-keys"
+)
+
+###############################################################################
+# Conditional abbreviations (only defined when tools are available)
+###############################################################################
+
+if command -v kubectl &>/dev/null; then
+    abbrevs+=(
+        "k"             "kubectl"
+        "kgp"           "kubectl get pods"
+        "kgn"           "kubectl get nodes"
+        "kga"           "kubectl get all"
+        "kdp"           "kubectl describe pod"
+        "kl"            "kubectl logs"
+        "kex"           "kubectl exec -it"
+        "kctx"          "kubectl config use-context"
+        "kns"           "kubectl config set-context --current --namespace"
+        "kubectl:g"     "get"
+        "kubectl:gp"    "get pods"
+        "kubectl:gn"    "get nodes"
+        "kubectl:gs"    "get svc"
+        "kubectl:gd"    "get deploy"
+        "kubectl:ga"    "get all"
+        "kubectl:d"     "describe"
+        "kubectl:dp"    "describe pod"
+        "kubectl:dn"    "describe node"
+        "kubectl:l"     "logs -f"
+        "kubectl:e"     "exec -it"
+        "kubectl:a"     "apply -f"
+        "kubectl:del"   "delete"
+    )
+fi
+
+if command -v docker &>/dev/null; then
+    abbrevs+=(
+        "dk"            "docker"
+        "dkr"           "docker run -it"
+        "dke"           "docker exec -it __CURSOR__ /bin/bash"
+        "dki"           "docker images"
+        "dkig"          "docker images | grep __CURSOR__ | awk '{print \$3}'"
+        "dkbd"          "docker build ."
+        "dkbt"          "docker build -t __CURSOR__ ."
+        "dkpa"          "docker system prune -a"
+        "drid"          "docker rmi -f \$(docker images -q -f \"dangling=true\")"
+        "dco"           "docker compose"
+        "dcou"          "docker compose up -d --remove-orphans"
+        "dcr"           "docker compose run -it __CURSOR__ --rm"
+        "docker:r"      "run -it"
+        "docker:e"      "exec -it"
+        "docker:b"      "build"
+        "docker:i"      "images"
+        "docker:ps"     "ps -a"
+        "docker:rm"     "rm -f"
+        "docker:rmi"    "rmi -f"
+        "docker:l"      "logs -f"
+        "docker:p"      "pull"
+        "docker:pa"     "system prune -a"
+        "docker compose:u"   "up -d"
+        "docker compose:d"   "down"
+        "docker compose:r"   "run --rm"
+        "docker compose:l"   "logs -f"
+        "docker compose:ps"  "ps -a"
+        "docker compose:b"   "build"
+        "docker compose:p"   "pull"
+    )
+fi
+
+if command -v fzf &>/dev/null; then
+    abbrevs+=(
+        "manz"          "apropos __CURSOR__ | fzf | cut -f1,2 -d' ' | xargs man"
+        "hz"            "history 1 | fzf"
+        "_Z"            "| fzf"
+    )
+fi

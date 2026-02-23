@@ -26,7 +26,7 @@ yarn-error.log*
 .yarn-integrity
 
 # Logs
-logs
+/logs
 *.log
 
 # Runtime data
@@ -132,4 +132,7 @@ mr_info.md
 *CLAUDE*
 *junie*
 *aiassistant*
-docs/plans/
+docs/plans
+
+# Pre-commit local override
+.pre-commit-config.local.yaml
