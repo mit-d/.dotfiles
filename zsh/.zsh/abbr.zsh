@@ -259,10 +259,14 @@ zle -N magic-abbrev-expand
 zle -N magic-abbrev-expand-and-execute
 zle -N no-magic-abbrev-expand
 
-# Key bindings
-bindkey " " magic-abbrev-expand
-bindkey "^M" magic-abbrev-expand-and-execute
-bindkey "^x " no-magic-abbrev-expand
+# Key bindings - bind to both viins and emacs so it works regardless of
+# whether set -o vi runs before or after this file is sourced
+for _abbr_km in viins emacs; do
+    bindkey -M $_abbr_km " " magic-abbrev-expand
+    bindkey -M $_abbr_km "^M" magic-abbrev-expand-and-execute
+    bindkey -M $_abbr_km "^x " no-magic-abbrev-expand
+done
+unset _abbr_km
 bindkey -M isearch " " self-insert
 
 ###############################################################################
