@@ -48,7 +48,8 @@
   "cpu": {
     "format": " {usage}%",
     "tooltip": true,
-    "interval": 5
+    "interval": 5,
+    "on-click": "ghostty -e btop -p 1"
   },
 
   "custom/memory": {
@@ -57,7 +58,7 @@
     "interval": 10,
     "format": " {}",
     "tooltip": true,
-    "on-click": "ghostty -e htop"
+    "on-click": "ghostty -e btop -p 3"
   },
 
   "custom/temperature": {
@@ -67,7 +68,7 @@
     "format": " {}",
     "format-critical": " {}",
     "tooltip": true,
-    "on-click": "ghostty -e btop"
+    "on-click": "ghostty -e btop -p 0"
   },
 
   "network": {
@@ -75,7 +76,8 @@
     "format-ethernet": " ETH",
     "format-disconnected": " offline",
     "tooltip-format-wifi": "{ifname}: {ipaddr}/{cidr}\n{signalStrength}% signal\n{bandwidthUpBits} up / {bandwidthDownBits} down",
-    "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr}\n{bandwidthUpBits} up / {bandwidthDownBits} down"
+    "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr}\n{bandwidthUpBits} up / {bandwidthDownBits} down",
+    "on-click": "ghostty -e btop"
   },
 
   "wireplumber": {
