@@ -66,20 +66,37 @@ button:hover {
 #cpu,
 #custom-memory,
 #custom-temperature,
-#network,
-#pulseaudio,
 #wireplumber,
-#pipewire-audio,
 #tray,
 #custom-power {
-  padding: 0 10px;
+  padding: 0 12px;
+  margin: 4px 0;
   color: #f6f6ef;
   background-color: transparent;
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease;
 }
 
 #window,
 #workspaces {
   margin: 0 4px;
+}
+
+/* Separators between module groups */
+#cpu {
+  border-left: 1px solid #343434;
+  padding-left: 14px;
+}
+
+#wireplumber {
+  border-left: 1px solid #343434;
+  padding-left: 14px;
+}
+
+#tray {
+  border-left: 1px solid #343434;
+  padding-left: 14px;
 }
 
 /* Clock */
