@@ -26,16 +26,8 @@ else
     NEW_WALL="${walls[$index]}"
 fi
 
-# Preload new wallpaper
-hyprctl hyprpaper preload "$NEW_WALL"
-
 # Set on all monitors
 hyprctl hyprpaper wallpaper ",$NEW_WALL"
-
-# Unload old wallpaper if different
-if [[ -n "$OLD_WALL" && "$OLD_WALL" != "$NEW_WALL" ]]; then
-    hyprctl hyprpaper unload "$OLD_WALL"
-fi
 
 # Save current
 echo "$NEW_WALL" >"$STATE_FILE"
