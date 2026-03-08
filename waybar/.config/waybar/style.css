@@ -38,9 +38,13 @@ button:hover {
 
 /* Workspaces */
 #workspaces button {
-  padding: 0 5px;
+  padding: 0 6px;
+  margin: 4px 1px;
   background-color: transparent;
   color: #625e4c;
+  border-radius: 2px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
 }
 
 #workspaces button:hover {
@@ -48,20 +52,13 @@ button:hover {
   color: #f6f6ef;
 }
 
-#workspaces button.focused,
 #workspaces button.active {
-  background-color: #343434;
   color: #f6f6ef;
-  box-shadow: inset 0 -3px #9d65ff;
+  border-bottom: 2px solid #9d65ff;
 }
 
 #workspaces button.empty {
-  color: #4a473a;
-}
-
-#workspaces button.urgent {
-  background-color: #f4005f;
-  color: #f6f6ef;
+  color: #3d3b30;
 }
 
 /* Shared module styling */
