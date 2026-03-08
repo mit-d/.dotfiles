@@ -104,6 +104,10 @@ button:hover {
   color: #e0d561;
 }
 
+#clock:hover {
+  background-color: rgba(224, 213, 97, 0.1);
+}
+
 /* System tray */
 #tray {
   color: #f6f6ef;
@@ -123,6 +127,10 @@ button:hover {
   color: #58d1eb;
 }
 
+#cpu:hover {
+  background-color: rgba(88, 209, 235, 0.1);
+}
+
 #cpu.warning {
   color: #fa8419;
 }
@@ -134,6 +142,10 @@ button:hover {
 /* Memory */
 #custom-memory {
   color: #9d65ff;
+}
+
+#custom-memory:hover {
+  background-color: rgba(157, 101, 255, 0.1);
 }
 
 #custom-memory.warning {
@@ -149,37 +161,34 @@ button:hover {
   color: #98e024;
 }
 
+#custom-temperature:hover {
+  background-color: rgba(152, 224, 36, 0.1);
+}
+
 #custom-temperature.critical {
   color: #f4005f;
 }
 
-/* Network */
-#network {
-  color: #58d1eb;
-}
-
-#network.disconnected {
-  color: #f4005f;
-}
-
 /* Audio */
-#pipewire-audio,
-#wireplumber,
-#pulseaudio {
+#wireplumber {
   color: #9d65ff;
 }
 
-#wireplumber.muted,
-#pulseaudio.muted {
+#wireplumber:hover {
+  background-color: rgba(157, 101, 255, 0.1);
+}
+
+#wireplumber.muted {
   color: #625e4c;
 }
 
-/* Power menu */
+/* Power */
 #custom-power {
   color: #f4005f;
-  padding: 0 12px;
+  padding: 0 14px;
 }
 
 #custom-power:hover {
-  background-color: rgba(244, 0, 95, 0.2);
+  background-color: rgba(244, 0, 95, 0.15);
+  border-radius: 2px;
 }
