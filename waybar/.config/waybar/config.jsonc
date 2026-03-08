@@ -6,7 +6,6 @@
   "modules-center": ["clock"],
   "modules-right": [
     "tray",
-    "network",
     "cpu",
     "custom/memory",
     "custom/temperature",
@@ -69,15 +68,6 @@
     "format-critical": " {}",
     "tooltip": true,
     "on-click": "ghostty -e btop -p 0"
-  },
-
-  "network": {
-    "format-wifi": " {essid}",
-    "format-ethernet": " ETH",
-    "format-disconnected": " offline",
-    "tooltip-format-wifi": "{ifname}: {ipaddr}/{cidr}\n{signalStrength}% signal\n{bandwidthUpBits} up / {bandwidthDownBits} down",
-    "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr}\n{bandwidthUpBits} up / {bandwidthDownBits} down",
-    "on-click": "ghostty -e btop"
   },
 
   "wireplumber": {
