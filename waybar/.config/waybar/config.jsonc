@@ -6,10 +6,10 @@
   "modules-center": ["clock"],
   "modules-right": [
     "tray",
+    "network",
     "cpu",
     "custom/memory",
     "custom/temperature",
-    "network",
     "wireplumber",
     "custom/power"
   ],
