@@ -61,6 +61,11 @@ button:hover {
   color: #3d3b30;
 }
 
+#workspaces button.urgent {
+  color: #f6f6ef;
+  border-bottom: 2px solid #f4005f;
+}
+
 /* Shared module styling */
 #clock,
 #cpu,
