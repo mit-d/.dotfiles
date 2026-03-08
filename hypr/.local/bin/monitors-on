@@ -1,0 +1,13 @@
+#!/bin/bash
+# Re-enable all monitors from saved state (counterpart to monitors-off)
+
+STATE_FILE="$XDG_RUNTIME_DIR/monitors-state"
+
+if [[ ! -f "$STATE_FILE" ]]; then
+    echo "No saved monitor state found" >&2
+    exit 1
+fi
+
+while IFS= read -r line; do
+    hyprctl keyword monitor "$line"
+done <"$STATE_FILE"

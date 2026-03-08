@@ -1,0 +1,12 @@
+#!/bin/bash
+# Disable all monitors (alternative to DPMS off, which crashes hyprlock)
+# Saves current monitor config so monitors-on can restore it.
+
+STATE_FILE="$XDG_RUNTIME_DIR/monitors-state"
+
+hyprctl -j monitors | jq -r '.[] | "\(.name),\(.width)x\(.height)@\(.refreshRate),\(.x)x\(.y),\(.scale)"' >"$STATE_FILE"
+
+while IFS= read -r line; do
+    name="${line%%,*}"
+    hyprctl keyword monitor "$name,disable"
+done <"$STATE_FILE"
