@@ -1,8 +1,13 @@
 # macOS-specific Ghostty settings
 
 # Bypass /usr/bin/login for faster startup
-command = tmux
+command = /opt/homebrew/bin/tmux
 
 # macOS integration
 macos-option-as-alt = true
 macos-titlebar-style = tabs
+window-decoration = true
+
+background-opacity = 0.80
+unfocused-split-opacity = 0.55
+background-blur = true

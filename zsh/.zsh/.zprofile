@@ -8,7 +8,7 @@
 #
 
 ## Source PATH (after path_helper runs in /etc/zprofile)
-. "$ZDOTDIR/posix/path.sh"
+. "$ZDOTDIR/posix/00-path.sh"
 
 ## Set up editor (first available wins)
 for _editor in nvim vim vi nano; do
