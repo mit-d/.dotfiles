@@ -52,6 +52,10 @@
 	ci = commit
 	st = status
 	config-override = "!git config --file ~/.gitconfig_overrides"
+	cb = rev-parse --abbrev-ref HEAD
+	ri = !git rebase -i origin/$(git rev-parse --abbrev-ref HEAD)
+	ocb = !echo origin/$(git rev-parse --abbrev-ref HEAD)
+	ocm = !echo origin/$(git remote show origin | sed -n \"s/.*HEAD branch: //p\")
 [include]
 	path = ~/.gitconfig_overrides
 [pager]
