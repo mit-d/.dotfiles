@@ -61,18 +61,19 @@ abbrevs+=(
 
 # === Python/UV ===
 abbrevs+=(
-    "venv"          "uv venv"
-    "act"           "source .venv/bin/activate"
-    "deact"         "deactivate"
-    "req"           "uv pip install -r requirements.txt"
-    "freeze"        "uv pip freeze > requirements.txt"
-    "sync"          "uv sync"
-    "lock"          "uv lock"
-    "uvi"           "uv pip install"
-    "uvr"           "uv pip uninstall"
-    "uvl"           "uv pip list"
-    "uvadd"         "uv add"
-    "uvdev"         "uv venv && source .venv/bin/activate && uv pip install -e '.[dev]'"
+    "@venv"          "uv venv"
+    "@act"           "source .venv/bin/activate"
+    "@deact"         "deactivate"
+    "@req"           "uv pip install -r requirements.txt"
+    "@freeze"        "uv pip freeze > requirements.txt"
+    "@sync"          "uv sync"
+    "@lock"          "uv lock"
+    "@uvi"           "uv pip install"
+    "@uvu"           "uv pip freeze | cut -d= -f1 | xargs uv pip install --upgrade"
+    "@uvr"           "uv pip uninstall"
+    "@uvl"           "uv pip list"
+    "@uvadd"         "uv add"
+    "@uvdev"         "uv venv && source .venv/bin/activate && uv pip install -e '.[dev]'"
 )
 
 # === System monitoring ===

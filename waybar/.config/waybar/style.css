@@ -21,8 +21,13 @@
 }
 
 window#waybar {
-  background-color: rgba(12, 12, 12, 0.9);
-  border-bottom: 1px solid #343434;
+  background: linear-gradient(
+      90deg,
+      rgba(157, 101, 255, 0.06),
+      rgba(244, 0, 95, 0.06)
+    ),
+    rgba(12, 12, 12, 0.9);
+  border-bottom: 1px solid rgba(157, 101, 255, 0.25);
   color: #f6f6ef;
 }
 
@@ -38,8 +43,8 @@ button:hover {
 
 /* Workspaces */
 #workspaces button {
-  padding: 0 6px;
-  margin: 4px 1px;
+  /* padding: 4px 6px; */
+  /* margin: 4px 1px; */
   background-color: transparent;
   color: #625e4c;
   border-radius: 2px;
@@ -74,8 +79,7 @@ button:hover {
 #wireplumber,
 #tray,
 #custom-power {
-  padding: 0 12px;
-  margin: 4px 0;
+  padding: 0 10px;
   color: #f6f6ef;
   background-color: transparent;
   transition:
@@ -85,23 +89,20 @@ button:hover {
 
 #window,
 #workspaces {
-  margin: 0 4px;
+  /* margin: 0 4px; */
 }
 
 /* Separators between module groups */
+#tray {
+  border-left: 1px solid rgba(246, 246, 239, 0.08);
+}
+
 #cpu {
-  border-left: 1px solid #343434;
-  padding-left: 14px;
+  border-left: 1px solid rgba(246, 246, 239, 0.08);
 }
 
 #wireplumber {
-  border-left: 1px solid #343434;
-  padding-left: 14px;
-}
-
-#tray {
-  border-left: 1px solid #343434;
-  padding-left: 14px;
+  border-left: 1px solid rgba(246, 246, 239, 0.08);
 }
 
 /* Clock */
@@ -190,7 +191,6 @@ button:hover {
 /* Power */
 #custom-power {
   color: #f4005f;
-  padding: 0 14px;
 }
 
 #custom-power:hover {
