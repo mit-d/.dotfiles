@@ -2,6 +2,9 @@
 {
   "layer": "top",
   "position": "top",
+  "margin-top": 5,
+  "margin-left": 5,
+  "margin-right": 5,
   "modules-left": ["hyprland/workspaces"],
   "modules-center": ["clock"],
   "modules-right": [
@@ -24,7 +27,7 @@
   },
 
   "clock": {
-    "format": "{:%H:%M  %a %b %d}",
+    "format": "{:%H:%M · %a %b %d}",
     "tooltip-format": "<tt><small>{calendar}</small></tt>",
     "calendar": {
       "mode": "month",

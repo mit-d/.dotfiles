@@ -1,33 +1,30 @@
-/* Monokai Dark Soda - source of truth: ~/.config/hypr/palettes/monokai-dark-soda.conf
- * bg:        #0c0c0c
- * fg:        #f6f6ef
- * red/pink:  #f4005f
- * green:     #98e024
- * orange:    #fa8419
- * purple:    #9d65ff
- * cyan:      #58d1eb
- * yellow:    #e0d561
- * dim gray:  #625e4c
- * selection: #343434
+/* Monokai Dark Soda - Floating Glass Bar
+ * source: ~/.config/hypr/palettes/monokai-dark-soda.conf
+ * bg:      #0c0c0c   fg:      #f6f6ef
+ * purple:  #9d65ff   pink:    #f4005f
+ * green:   #98e024   orange:  #fa8419
+ * cyan:    #58d1eb   yellow:  #e0d561
+ * dim:     #625e4c   base:    #343434
  */
 
 * {
-  font-family:
-    SauceCodePro Nerd Font,
-    FontAwesome,
-    sans-serif;
-  font-size: 14px;
+  font-family: "JetBrainsMono Nerd Font", "SauceCodePro Nerd Font", monospace;
+  font-size: 13px;
   min-height: 0;
 }
 
+/* === Bar === */
 window#waybar {
   background: linear-gradient(
-      90deg,
-      rgba(157, 101, 255, 0.06),
-      rgba(244, 0, 95, 0.06)
+      180deg,
+      rgba(255, 255, 255, 0.02),
+      transparent 50%
     ),
-    rgba(12, 12, 12, 0.9);
-  border-bottom: 1px solid rgba(157, 101, 255, 0.25);
+    linear-gradient(90deg, rgba(157, 101, 255, 0.06), rgba(244, 0, 95, 0.06)),
+    rgba(12, 12, 12, 0.82);
+  border: 1px solid rgba(157, 101, 255, 0.12);
+  border-bottom-color: rgba(244, 0, 95, 0.12);
+  border-radius: 8px;
   color: #f6f6ef;
 }
 
@@ -41,37 +38,36 @@ button:hover {
   background: inherit;
 }
 
-/* Workspaces */
+/* === Workspaces === */
 #workspaces button {
-  /* padding: 4px 6px; */
-  /* margin: 4px 1px; */
-  background-color: transparent;
-  color: #625e4c;
-  border-radius: 2px;
-  border-bottom: 2px solid transparent;
+  padding: 4px 7px;
+  margin: 3px 1px;
+  background: transparent;
+  color: #3d3b30;
+  border-radius: 6px;
   transition: all 0.2s ease;
 }
 
 #workspaces button:hover {
-  background: rgba(52, 52, 52, 0.5);
-  color: #f6f6ef;
+  background: rgba(157, 101, 255, 0.1);
+  color: #625e4c;
 }
 
 #workspaces button.active {
   color: #f6f6ef;
-  border-bottom: 2px solid #9d65ff;
+  background: rgba(157, 101, 255, 0.18);
 }
 
 #workspaces button.empty {
-  color: #3d3b30;
+  color: #2a2820;
 }
 
 #workspaces button.urgent {
-  color: #f6f6ef;
-  border-bottom: 2px solid #f4005f;
+  color: #f4005f;
+  background: rgba(244, 0, 95, 0.12);
 }
 
-/* Shared module styling */
+/* === Module defaults === */
 #clock,
 #cpu,
 #custom-memory,
@@ -79,42 +75,24 @@ button:hover {
 #wireplumber,
 #tray,
 #custom-power {
-  padding: 0 10px;
-  color: #f6f6ef;
-  background-color: transparent;
-  transition:
-    color 0.3s ease,
-    background-color 0.3s ease;
+  padding: 4px 10px;
+  margin: 3px 1px;
+  background: transparent;
+  border-radius: 6px;
+  transition: all 0.3s ease;
 }
 
-#window,
-#workspaces {
-  /* margin: 0 4px; */
-}
-
-/* Separators between module groups */
-#tray {
-  border-left: 1px solid rgba(246, 246, 239, 0.08);
-}
-
-#cpu {
-  border-left: 1px solid rgba(246, 246, 239, 0.08);
-}
-
-#wireplumber {
-  border-left: 1px solid rgba(246, 246, 239, 0.08);
-}
-
-/* Clock */
+/* === Clock === */
 #clock {
   color: #e0d561;
+  font-weight: bold;
 }
 
 #clock:hover {
-  background-color: rgba(224, 213, 97, 0.1);
+  background: rgba(224, 213, 97, 0.08);
 }
 
-/* System tray */
+/* === System tray === */
 #tray {
   color: #f6f6ef;
 }
@@ -125,16 +103,16 @@ button:hover {
 
 #tray > .needs-attention {
   -gtk-icon-effect: highlight;
-  background-color: #f4005f;
+  background: rgba(244, 0, 95, 0.15);
 }
 
-/* CPU */
+/* === CPU === */
 #cpu {
   color: #58d1eb;
 }
 
 #cpu:hover {
-  background-color: rgba(88, 209, 235, 0.1);
+  background: rgba(88, 209, 235, 0.08);
 }
 
 #cpu.warning {
@@ -145,13 +123,13 @@ button:hover {
   color: #f4005f;
 }
 
-/* Memory */
+/* === Memory === */
 #custom-memory {
   color: #9d65ff;
 }
 
 #custom-memory:hover {
-  background-color: rgba(157, 101, 255, 0.1);
+  background: rgba(157, 101, 255, 0.08);
 }
 
 #custom-memory.warning {
@@ -162,38 +140,38 @@ button:hover {
   color: #f4005f;
 }
 
-/* Temperature */
+/* === Temperature === */
 #custom-temperature {
   color: #98e024;
 }
 
 #custom-temperature:hover {
-  background-color: rgba(152, 224, 36, 0.1);
+  background: rgba(152, 224, 36, 0.08);
 }
 
 #custom-temperature.critical {
   color: #f4005f;
 }
 
-/* Audio */
+/* === Audio === */
 #wireplumber {
   color: #9d65ff;
 }
 
 #wireplumber:hover {
-  background-color: rgba(157, 101, 255, 0.1);
+  background: rgba(157, 101, 255, 0.08);
 }
 
 #wireplumber.muted {
-  color: #625e4c;
+  color: #3d3b30;
 }
 
-/* Power */
+/* === Power === */
 #custom-power {
   color: #f4005f;
+  margin-right: 2px;
 }
 
 #custom-power:hover {
-  background-color: rgba(244, 0, 95, 0.15);
-  border-radius: 2px;
+  background: rgba(244, 0, 95, 0.12);
 }
