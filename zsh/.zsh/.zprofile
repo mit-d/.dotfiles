@@ -72,21 +72,3 @@ case "$OSTYPE" in
         # Catch-all for unsupported OS types
         ;;
 esac
-
-export NVM_DIR="$HOME/.nvm"
-
-# Lazy-load NVM for faster shell startup (only if NVM is installed)
-if [ -d "$NVM_DIR" ] || [ -s "/opt/homebrew/opt/nvm/nvm.sh" ]; then
-    _nvm_lazy_load() {
-        unset -f nvm node npm npx ng 2>/dev/null
-        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-        [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
-        [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
-    }
-
-    nvm() { _nvm_lazy_load; nvm "$@"; }
-    node() { _nvm_lazy_load; node "$@"; }
-    npm() { _nvm_lazy_load; npm "$@"; }
-    npx() { _nvm_lazy_load; npx "$@"; }
-    ng() { _nvm_lazy_load; ng "$@"; }
-fi

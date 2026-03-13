@@ -55,23 +55,6 @@ build_env_prompt() {
 _cached_node_version=""
 _cached_node_dir=""
 
-npm_prompt() {
-    # Only show node version if nvm is actually loaded (not just the lazy wrapper)
-    if [[ -n "$NVM_BIN" ]]; then
-        # Refresh cache on directory change
-        if [[ "$PWD" != "$_cached_node_dir" ]]; then
-            _cached_node_dir="$PWD"
-            _cached_node_version=$(node --version 2>/dev/null)
-        fi
-        [[ -n "$_cached_node_version" ]] && echo "%F{yellow}node:${_cached_node_version}%f "
-    fi
-}
-
-
-
-
-
-
 
 precmd() {
     vcs_info
@@ -81,10 +64,17 @@ precmd() {
     PROMPT="%B%F{red}%#%b%f "
     PROMPT="%~ $PROMPT"
 
-    # Build rprompt
-    RPROMPT='%F{blue}${VCS_MSG:+${VCS_MSG}}%f'
-    RPROMPT="$(build_env_prompt)${RPROMPT}"
-    RPROMPT="$(npm_prompt)${RPROMPT}"
+    # Build rprompt pieces inline (avoids subshell overhead from $(...))
+    local env_part="" node_part=""
+    env_part="$(build_env_prompt)"
+    # Only call node if nvm has actually been loaded (NVM_BIN is set)
+    if [[ -n "$NVM_BIN" && "$PWD" != "$_cached_node_dir" ]]; then
+        _cached_node_dir="$PWD"
+        _cached_node_version=$(node --version 2>/dev/null)
+    fi
+    [[ -n "$NVM_BIN" && -n "$_cached_node_version" ]] && node_part="%F{yellow}node:${_cached_node_version}%f "
+
+    RPROMPT="${node_part}${env_part}%F{blue}${VCS_MSG:+${VCS_MSG}}%f"
 }
 
 setopt PROMPT_SUBST

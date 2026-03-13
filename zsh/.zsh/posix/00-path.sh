@@ -17,6 +17,7 @@ _add_to_path() {
 }
 
 # Directories to add to PATH (in reverse priority order - last added = highest priority)
+_add_to_path "/usr/local/bin"
 _add_to_path "$HOME/.npm_global/bin"
 _add_to_path "/opt/homebrew/opt/gnu-getopt/bin"
 _add_to_path "/opt/homebrew/opt/findutils/libexec/gnubin"
