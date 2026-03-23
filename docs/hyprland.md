@@ -22,36 +22,36 @@ one place to re-theme the whole desktop.
 
 ### Essentials
 
-| Keys             | Action                      |
-| ---------------- | --------------------------- |
-| `Super + Return` | Terminal (Ghostty)          |
-| `Super + D`      | App launcher (Hyprlauncher) |
-| `Super + Q`      | Close window                |
-| `Super + M`      | Exit Hyprland               |
-| `Super + V`      | Clipboard history           |
-| `Super + L`      | Lock screen                 |
-| `Print`          | Screenshot (region select)  |
+| Keys | Action |
+| -- | -- |
+| `Super + Return` | Terminal (Ghostty) |
+| `Super + D` | App launcher (Hyprlauncher) |
+| `Super + Q` | Close window |
+| `Super + M` | Exit Hyprland |
+| `Super + V` | Clipboard history |
+| `Super + L` | Lock screen |
+| `Print` | Screenshot (region select) |
 
 ### Window Management
 
-| Keys                      | Action                   |
-| ------------------------- | ------------------------ |
-| `Super + H/J/K/L`         | Focus left/down/up/right |
-| `Super + Shift + H/J/K/L` | Move window              |
-| `Super + 1-9`             | Switch workspace         |
-| `Super + Shift + 1-9`     | Move window to workspace |
-| `Super + F`               | Fullscreen               |
-| `Super + Space`           | Toggle floating          |
-| `Super + P`               | Pseudo-tile              |
-| `Super + S`               | Toggle split             |
+| Keys | Action |
+| -- | -- |
+| `Super + H/J/K/L` | Focus left/down/up/right |
+| `Super + Shift + H/J/K/L` | Move window |
+| `Super + 1-9` | Switch workspace |
+| `Super + Shift + 1-9` | Move window to workspace |
+| `Super + F` | Fullscreen |
+| `Super + Space` | Toggle floating |
+| `Super + P` | Pseudo-tile |
+| `Super + S` | Toggle split |
 
 ### Media
 
-| Keys            | Action           |
-| --------------- | ---------------- |
-| Volume keys     | wpctl (PipeWire) |
-| Brightness keys | brightnessctl    |
-| Media keys      | playerctl        |
+| Keys | Action |
+| -- | -- |
+| Volume keys | wpctl (PipeWire) |
+| Brightness keys | brightnessctl |
+| Media keys | playerctl |
 
 ## Autostart
 
@@ -67,11 +67,11 @@ Managed in `hyprland.conf`. Services launched on login:
 
 ## Scripts
 
-| Script              | What it does                                   |
-| ------------------- | ---------------------------------------------- |
+| Script | What it does |
+| -- | -- |
 | `wallpaper-shuffle` | Random wallpaper from `~/Pictures/wallpapers/` |
-| `scratchpad-pop`    | Pop a window from the scratchpad               |
-| `gamemode.sh`       | Toggle animations/blur off for performance     |
+| `scratchpad-pop` | Pop a window from the scratchpad |
+| `gamemode.sh` | Toggle animations/blur off for performance |
 
 ## References
 

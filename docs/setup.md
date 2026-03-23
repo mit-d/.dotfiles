@@ -23,14 +23,14 @@ hypr/.local/bin/wallpaper-shuffle -> ~/.local/bin/wallpaper-shuffle
 
 ### Commands
 
-| Command                                         | What it does                              |
-| ----------------------------------------------- | ----------------------------------------- |
-| `make stow`                                     | Symlink all packages                      |
-| `make restow`                                   | Refresh symlinks (use after adding files) |
-| `make delete`                                   | Remove all symlinks                       |
-| `make dry-run`                                  | Preview without changes                   |
-| `make list`                                     | Show active/ignored packages              |
-| `make adopt FILE=~/.config/foo/bar PACKAGE=foo` | Move an existing file into a package      |
+| Command | What it does |
+| -- | -- |
+| `make stow` | Symlink all packages |
+| `make restow` | Refresh symlinks (use after adding files) |
+| `make delete` | Remove all symlinks |
+| `make dry-run` | Preview without changes |
+| `make list` | Show active/ignored packages |
+| `make adopt FILE=~/.config/foo/bar PACKAGE=foo` | Move an existing file into a package |
 
 ### Adding a New Config
 
