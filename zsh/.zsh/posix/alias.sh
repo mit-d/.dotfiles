@@ -71,7 +71,15 @@ fi
 
 # OS-specific aliases
 case "$OSTYPE" in
-darwin*) ;;
+darwin*)
+    define() {
+        if [ -z "$1" ]; then
+            echo "Usage: define <word>"
+        else
+            open "dict://$1"
+        fi
+    }
+    ;;
 linux*)
     if command -v xdg-open >/dev/null 2>&1; then
         alias open='xdg-open'

@@ -124,15 +124,22 @@ out/
 # Configuration files with sensitive data
 config.local.*
 *.local.json
+*.local.yaml
+*.local.toml
 
-# Git pr script
-mr_info.md
-
-*claude*
-*CLAUDE*
-*junie*
-*aiassistant*
+# Agents, etc.
+.claude/**/*
+!.claude/hooks
+!.claude/commands
+!.claude/skills
+!.claude/settings.json
+!CLAUDE.md
+!.claude/CLAUDE.md
+.superpowers/
+docs/superpowers/
 docs/plans
 
-# Pre-commit local override
-.pre-commit-config.local.yaml
+# JetBrains IDEs
+.idea
+*junie*
+*aiassistant*

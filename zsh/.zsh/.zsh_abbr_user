@@ -61,18 +61,18 @@ abbrevs+=(
 
 # === Python/UV ===
 abbrevs+=(
-    "venv"          "uv venv"
-    "act"           "source .venv/bin/activate"
-    "deact"         "deactivate"
-    "req"           "uv pip install -r requirements.txt"
-    "freeze"        "uv pip freeze > requirements.txt"
-    "sync"          "uv sync"
-    "lock"          "uv lock"
-    "uvi"           "uv pip install"
-    "uvr"           "uv pip uninstall"
-    "uvl"           "uv pip list"
-    "uvadd"         "uv add"
-    "uvdev"         "uv venv && source .venv/bin/activate && uv pip install -e '.[dev]'"
+    "@venv"          "uv venv"
+    "@act"           "source .venv/bin/activate"
+    "@deact"         "deactivate"
+    "@req"           "uv pip install -r requirements.txt"
+    "@freeze"        "uv pip freeze > requirements.txt"
+    "@sync"          "uv sync"
+    "@lock"          "uv lock"
+    "@uvi"           "uv pip install"
+    "@uvr"           "uv pip uninstall"
+    "@uvl"           "uv pip list"
+    "@uva"         "uv add"
+    "@uvd"         "uv venv && source .venv/bin/activate && uv pip install -e '.[dev]'"
 )
 
 # === System monitoring ===
@@ -230,7 +230,7 @@ if command -v docker &>/dev/null; then
         "docker:b"      "build"
         "docker:i"      "images"
         "docker:ps"     "ps -a"
-        "docker:rm"     "rm -f"
+        # "docker:rm"     "rm -f"
         "docker:rmi"    "rmi -f"
         "docker:l"      "logs -f"
         "docker:p"      "pull"
