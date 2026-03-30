@@ -1,0 +1,53 @@
+# General
+auto-reload yes
+reload-time 30
+reload-threads 4
+prepopulate-query-feeds yes
+download-retries 2
+download-timeout 10
+
+# Display
+show-read-feeds yes
+show-read-articles yes
+feed-sort-order unreadarticlecount-asc
+article-sort-order date-asc
+text-width 80
+datetime-format "%Y-%m-%d"
+
+# Browser
+browser "xdg-open %u"
+confirm-mark-feed-read no
+
+# Keybindings (vim)
+bind-key j down
+bind-key k up
+bind-key j next articlelist
+bind-key k prev articlelist
+bind-key J next-feed articlelist
+bind-key K prev-feed articlelist
+bind-key G end
+bind-key g home
+bind-key ^D pagedown
+bind-key ^U pageup
+bind-key l open
+bind-key h quit
+bind-key a toggle-article-read
+bind-key n next-unread
+bind-key N prev-unread
+bind-key U show-urls
+
+# Colors
+color listnormal        white   default
+color listfocus         black   yellow  bold
+color listnormal_unread green   default bold
+color listfocus_unread  black   yellow  bold
+color info              black   yellow  bold
+color article           white   default
+
+# Formats
+feedlist-format     "%4i %n %11u %t"
+articlelist-format  "%4i %f %D  %?T?[%-17T]  ?%t"
+
+# Macros (,o = open in browser, ,y = yank URL to clipboard)
+macro o open-in-browser
+macro y set browser "wl-copy %u" ; open-in-browser-noninteractively ; set browser "xdg-open %u"

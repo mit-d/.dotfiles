@@ -133,6 +133,9 @@ mr_info.md
 *junie*
 *aiassistant*
 docs/plans
+docs/specs
+.worktrees/
+.superpowers/
 
 # Pre-commit local override
 .pre-commit-config.local.yaml

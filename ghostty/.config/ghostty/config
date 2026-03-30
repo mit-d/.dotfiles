@@ -13,7 +13,7 @@ window-save-state = always
 
 # Theme and Appearance
 theme = dark:Monokai Remastered,light:Monokai Pro Light Sun
-background-opacity = 0.70
+background-opacity = 0.81
 unfocused-split-opacity = 0.55
 
 # Font

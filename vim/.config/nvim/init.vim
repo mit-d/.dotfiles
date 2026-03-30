@@ -50,3 +50,41 @@ source ~/.vimrc
 
 """ Close diffview before quitting to avoid E21 on non-modifiable buffers
 autocmd QuitPre * if &filetype ==# 'DiffviewFiles' || &filetype ==# 'DiffviewFileHistory' | tabclose | endif
+
+""" :MarkdownFormat - run prettier + markdownlint-cli2 --fix on current file
+function! MarkdownFormat()
+  if &filetype !=# 'markdown'
+    echohl WarningMsg | echo 'MarkdownFormat: not a markdown file' | echohl None
+    return
+  endif
+
+  let l:has_prettier = executable('prettier')
+  let l:has_mdlint = executable('markdownlint-cli2')
+
+  if !l:has_prettier && !l:has_mdlint
+    echohl ErrorMsg | echo 'MarkdownFormat: neither prettier nor markdownlint-cli2 found' | echohl None
+    return
+  endif
+
+  update
+  let l:file = expand('%:p')
+  let l:ran = []
+
+  if l:has_prettier
+    call system('prettier -w --prose-wrap always --print-width 80 ' . shellescape(l:file))
+    call add(l:ran, 'prettier')
+  else
+    echohl WarningMsg | echo 'MarkdownFormat: prettier not found, skipping' | echohl None
+  endif
+
+  if l:has_mdlint
+    call system('markdownlint-cli2 --fix ' . shellescape(l:file))
+    call add(l:ran, 'markdownlint-cli2')
+  else
+    echohl WarningMsg | echo 'MarkdownFormat: markdownlint-cli2 not found, skipping' | echohl None
+  endif
+
+  edit!
+  echo 'MarkdownFormat: ran ' . join(l:ran, ' + ')
+endfunction
+command! MarkdownFormat call MarkdownFormat()
