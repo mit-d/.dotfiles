@@ -130,16 +130,28 @@ config.local.*
 # Agents, etc.
 .claude/**/*
 !.claude/hooks
-!.claude/commands
-!.claude/skills
+!.claude/hooks/*
+!.claude/commands/
+!.claude/commands/*/
+!.claude/commands/*/*.md
+!.claude/skills/
+!.claude/skills/*/
+!.claude/skills/*/SKILL.md
+!.claude/agents/
+!.claude/agents/*.md
+!.claude/rules/
+!.claude/rules/*.md
 !.claude/settings.json
 !CLAUDE.md
 !.claude/CLAUDE.md
 .superpowers/
-docs/superpowers/
-docs/plans
+.worktrees/
+.worktreeinclude
 
 # JetBrains IDEs
 .idea
 *junie*
 *aiassistant*
+
+# Local config
+.mrkeeper.toml

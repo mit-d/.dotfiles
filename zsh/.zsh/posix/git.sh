@@ -376,5 +376,5 @@ git_ignore_rev() {
 }
 
 gwt() {
-    git worktree add -B "$1" "../$1"
+    git worktree add -B "$1" ".worktrees/$1"
 }

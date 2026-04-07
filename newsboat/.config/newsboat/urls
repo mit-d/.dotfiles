@@ -1,0 +1,49 @@
+# Lab Blogs
+https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_anthropic_news.xml "~Anthropic News" "labs"
+https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_anthropic_research.xml "~Anthropic Research" "labs"
+https://openai.com/blog/rss.xml "~OpenAI" "labs"
+https://deepmind.google/blog/rss.xml "~Google DeepMind" "labs"
+https://huggingface.co/blog/feed.xml "~Hugging Face" "labs"
+https://www.microsoft.com/en-us/research/feed/ "~Microsoft Research" "labs"
+
+# Analysis & Newsletters
+https://thezvi.substack.com/feed "~Zvi Mowshowitz" "analysis"
+https://importai.substack.com/feed "~Import AI (Jack Clark)" "analysis"
+https://www.interconnects.ai/feed "~Interconnects (Nathan Lambert)" "analysis"
+https://magazine.sebastianraschka.com/feed "~Ahead of AI (Raschka)" "analysis"
+
+https://aisnakeoil.substack.com/feed "~AI Snake Oil" "analysis"
+https://lastweekin.ai/feed "~Last Week in AI" "analysis"
+https://chinai.substack.com/feed "~ChinAI (Jeff Ding)" "analysis"
+https://blog.eleuther.ai/index.xml "~EleutherAI" "analysis"
+
+# Deep Technical
+https://jalammar.github.io/feed.xml "~Jay Alammar" "technical"
+https://huyenchip.com/feed "~Chip Huyen" "technical"
+https://gwern.substack.com/feed "~Gwern" "technical"
+https://nicholas.carlini.com/writing/feed.xml "~Nicholas Carlini" "technical"
+
+# Applied & Practical
+https://simonwillison.net/atom/everything/ "~Simon Willison" "applied"
+https://karpathy.bearblog.dev/feed/ "~Andrej Karpathy" "applied"
+https://lilianweng.github.io/index.xml "~Lil'Log (Lilian Weng)" "applied"
+
+# News & Journalism
+https://www.technologyreview.com/topic/artificial-intelligence/feed "~MIT Tech Review AI" "news"
+https://arstechnica.com/ai/feed/ "~Ars Technica AI" "news"
+
+# Safety & Alignment
+https://www.alignmentforum.org/feed.xml "~AI Alignment Forum" "safety"
+https://www.lesswrong.com/feed.xml "~LessWrong" "safety"
+https://thegradient.pub/rss/ "~The Gradient" "safety"
+
+# Research (Berkeley)
+https://bair.berkeley.edu/blog/feed.xml "~BAIR Blog" "research"
+
+# Science Journalism
+https://api.quantamagazine.org/feed "~Quanta Magazine" "science"
+
+# arXiv (weekdays only)
+https://rss.arxiv.org/rss/cs.CL "~arXiv: Computation & Language" "arxiv"
+https://rss.arxiv.org/rss/cs.LG "~arXiv: Machine Learning" "arxiv"
+https://rss.arxiv.org/rss/cs.AI "~arXiv: Artificial Intelligence" "arxiv"
