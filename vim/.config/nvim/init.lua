@@ -58,11 +58,35 @@ require("lazy").setup({
         "javascript",
         "yaml",
         "typescript",
+        "html",
+        "scss",
+        "css",
+        "angular",
+        "csv",
       })
       vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "markdown", "python", "javascript", "typescript", "lua", "bash", "yaml" },
+        pattern = {
+          "markdown",
+          "python",
+          "javascript",
+          "typescript",
+          "lua",
+          "bash",
+          "yaml",
+          "html",
+          "htmlangular",
+          "scss",
+          "css",
+        },
         callback = function()
           vim.treesitter.start()
+        end,
+      })
+      -- Treat Angular component templates as htmlangular for Angular-aware parsing
+      vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+        pattern = "*.component.html",
+        callback = function()
+          vim.bo.filetype = "htmlangular"
         end,
       })
     end,
@@ -114,6 +138,16 @@ require("lazy").setup({
         ),
       })
     end,
+  },
+
+  -- csv viewer
+  {
+    "hat0uma/csvview.nvim",
+    cmd = { "CsvViewToggle", "CsvViewEnable", "CsvViewDisable" },
+    opts = { view = { display_mode = "highlight" } },
+    keys = {
+      { "<leader>cv", "<cmd>CsvViewToggle<cr>", desc = "Toggle CSV view" },
+    },
   },
 
   -- markdown rendering (visual-only, no file changes)
