@@ -16,9 +16,9 @@ zstyle ':vcs_info:git:*' formats '%u%c (%b)'
 
 # Environment variables to display in the prompt with optional labels
 ENV_VARS=(
-    "DB_NAME::"
-    "TEST_DB_NAME:::"
-    "VIRTUAL_ENV:py:"
+    # "DB_NAME::"
+    # "TEST_DB_NAME:::"
+    "VIRTUAL_ENV:py@"
     "BBP_TEST_ARGS:"
 )
 

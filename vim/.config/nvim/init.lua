@@ -36,17 +36,35 @@ require("lazy").setup({
   -- fuzzy finding
   {
     "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    },
     keys = {
       { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find files" },
       { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live grep" },
       { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
     },
+    config = function()
+      require("telescope").setup({
+        extensions = {
+          fzf = {
+            fuzzy = true,
+            override_generic_sorter = true,
+            override_file_sorter = true,
+            case_mode = "smart_case",
+          },
+        },
+      })
+      require("telescope").load_extension("fzf")
+    end,
   },
 
   -- treesitter (configs module removed in new API; install + built-in highlighting)
   {
-    "nvim-treesitter/nvim-treesitter",
+    "neovim-treesitter/nvim-treesitter",
+    dependencies = { "neovim-treesitter/treesitter-parser-registry" },
+    lazy = false,
     build = ":TSUpdate",
     config = function()
       require("nvim-treesitter").install({
@@ -97,14 +115,71 @@ require("lazy").setup({
     "neovim/nvim-lspconfig",
     dependencies = {
       { "williamboman/mason.nvim", opts = {} },
-      { "williamboman/mason-lspconfig.nvim", opts = { ensure_installed = { "ruff" } } },
+      {
+        "williamboman/mason-lspconfig.nvim",
+        opts = {
+          ensure_installed = {
+            "ruff",
+            "lua_ls",
+            "ts_ls",
+            "angularls",
+            "bashls",
+            "yamlls",
+            "html",
+            "cssls",
+          },
+        },
+      },
       "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
-      vim.lsp.config("ruff", {
-        capabilities = require("cmp_nvim_lsp").default_capabilities(),
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      local servers = {
+        ruff = {},
+        lua_ls = {
+          settings = {
+            Lua = {
+              diagnostics = { globals = { "vim" } },
+              workspace = { checkThirdParty = false },
+              telemetry = { enable = false },
+            },
+          },
+        },
+        ts_ls = {},
+        angularls = {},
+        bashls = {},
+        yamlls = {},
+        html = {},
+        cssls = {},
+      }
+      for name, cfg in pairs(servers) do
+        cfg.capabilities = capabilities
+        vim.lsp.config(name, cfg)
+        vim.lsp.enable(name)
+      end
+
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+          local map = function(lhs, rhs, desc)
+            vim.keymap.set("n", lhs, rhs, { buffer = args.buf, desc = desc })
+          end
+          map("gd", vim.lsp.buf.definition, "Go to definition")
+          map("gD", vim.lsp.buf.declaration, "Go to declaration")
+          map("gi", vim.lsp.buf.implementation, "Go to implementation")
+          map("gr", vim.lsp.buf.references, "References")
+          map("K", vim.lsp.buf.hover, "Hover")
+          map("<C-k>", vim.lsp.buf.signature_help, "Signature help")
+          map("<leader>rn", vim.lsp.buf.rename, "Rename")
+          map("<leader>ca", vim.lsp.buf.code_action, "Code action")
+          map("<leader>e", vim.diagnostic.open_float, "Line diagnostics")
+          map("[d", function()
+            vim.diagnostic.jump({ count = -1, float = true })
+          end, "Prev diagnostic")
+          map("]d", function()
+            vim.diagnostic.jump({ count = 1, float = true })
+          end, "Next diagnostic")
+        end,
       })
-      vim.lsp.enable("ruff")
     end,
   },
 
@@ -140,6 +215,19 @@ require("lazy").setup({
     end,
   },
 
+  -- file explorer (edit filesystem as a buffer)
+  {
+    "stevearc/oil.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    lazy = false,
+    opts = {
+      view_options = { show_hidden = true },
+    },
+    keys = {
+      { "-", "<cmd>Oil<cr>", desc = "Open parent directory" },
+    },
+  },
+
   -- csv viewer
   {
     "hat0uma/csvview.nvim",
@@ -153,7 +241,7 @@ require("lazy").setup({
   -- markdown rendering (visual-only, no file changes)
   {
     "MeanderingProgrammer/render-markdown.nvim",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    dependencies = { "neovim-treesitter/nvim-treesitter" },
     ft = { "markdown" },
     opts = {},
   },

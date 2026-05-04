@@ -155,3 +155,5 @@ config.local.*
 
 # Local config
 .mrkeeper.toml
+
+.obsidian
