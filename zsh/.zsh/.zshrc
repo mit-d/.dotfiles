@@ -27,13 +27,6 @@ done
 # Stop here for IntelliJ
 [[ -n "$INTELLIJ_ENVIRONMENT_READER" ]] && return 0
 
-## Plugins
-###############################################################################
-for plugin in zsh-autosuggestions zsh-syntax-highlighting; do
-    [[ -f "$ZSH_DIR/$plugin/$plugin.zsh" ]] && source "$ZSH_DIR/$plugin/$plugin.zsh"
-    [[ -f "/opt/homebrew/share/$plugin/$plugin.zsh" ]] && source "/opt/homebrew/share/$plugin/$plugin.zsh"
-done
-
 # Command-not-found plugin
 [[ -f "/etc/zsh_command_not_found" ]] && source /etc/zsh_command_not_found
 
@@ -45,18 +38,16 @@ zle -N edit-command-line
 bindkey "^X^E" edit-command-line
 
 # History settings
+# sharehistory implies incremental append; histignorealldups supersedes the
+# narrower dup options, so those flags are intentionally omitted here.
 export HISTSIZE=100000 SAVEHIST=100000 HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"
-setopt histignorealldups sharehistory APPEND_HISTORY EXTENDED_HISTORY INC_APPEND_HISTORY \
-    HIST_EXPIRE_DUPS_FIRST HIST_IGNORE_DUPS HIST_IGNORE_SPACE
+setopt histignorealldups sharehistory EXTENDED_HISTORY HIST_IGNORE_SPACE
 
 # Disable beeping
 setopt NO_BEEP
 
 # Enable extended globbing
 setopt EXTENDED_GLOB
-
-# Check mail every minute
-export MAILCHECK=60
 
 ## Functions
 ###############################################################################
@@ -129,9 +120,18 @@ fi
 # Activate python .venv if it exists
 [[ -e "$HOME/.venv/bin/activate" ]] && source "$HOME/.venv/bin/activate"
 
-## Docker CLI completions
-[[ -d "$HOME/.docker/completions" ]] && fpath=("$HOME/.docker/completions" $fpath)
-# compinit is already called in completion.zsh
-
 ## Bun completions
 [[ -s "$HOME/.bun/_bun" ]] && source "$HOME/.bun/_bun"
+
+## Plugins
+###############################################################################
+# Sourced last: zsh-syntax-highlighting must load after all custom ZLE widgets
+# are defined, and after zsh-autosuggestions. Prefer the vendored submodule;
+# fall back to the Homebrew copy so we never source the same plugin twice.
+for plugin in zsh-autosuggestions zsh-syntax-highlighting; do
+    if [[ -f "$ZSH_DIR/$plugin/$plugin.zsh" ]]; then
+        source "$ZSH_DIR/$plugin/$plugin.zsh"
+    elif [[ -f "/opt/homebrew/share/$plugin/$plugin.zsh" ]]; then
+        source "/opt/homebrew/share/$plugin/$plugin.zsh"
+    fi
+done

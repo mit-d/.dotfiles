@@ -55,7 +55,7 @@ case "$OSTYPE" in
         if [ "$XDG_SESSION_TYPE" = "x11" ] && command -v setxkbmap >/dev/null 2>&1; then
             # X11 environment
             setxkbmap -option caps:ctrl_modifier
-        elif [ "$XDG_SESSION_TYPE" = "wayland" ] && command -v gsettings >/dev/null 2 >&1; then
+        elif [ "$XDG_SESSION_TYPE" = "wayland" ] && command -v gsettings >/dev/null 2>&1; then
             # Wayland with GNOME
             gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier']"
         fi

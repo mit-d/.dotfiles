@@ -1,7 +1,10 @@
 
 # Set up local completions
-fpath+="$HOME/.zsh/completions"
+fpath+="$ZDOTDIR/completions"
 # fpath+="/home/linuxbrew/.linuxbrew/share/zsh/site-functions" ## Disabling for now, permission problems
+
+# Docker CLI completions (must be on fpath before compinit runs)
+[[ -d "$HOME/.docker/completions" ]] && fpath=("$HOME/.docker/completions" $fpath)
 
 # auto completion (use cached completions if fresh, regenerate daily)
 autoload -Uz compinit
