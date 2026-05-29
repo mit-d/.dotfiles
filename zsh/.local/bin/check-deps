@@ -23,11 +23,29 @@ check() {
     done
 }
 
+# Several aliases (ls --color, date --iso-8601) and GNU find syntax assume the
+# GNU coreutils/findutils. On macOS these come from Homebrew; without them the
+# BSD tools differ and break silently. Report when a tool isn't the GNU build.
+check_gnu() {
+    printf '\nGNU tools:\n'
+    for tool in ls find date; do
+        total=$((total + 1))
+        if command -v "$tool" >/dev/null 2>&1 && "$tool" --version 2>/dev/null | grep -q GNU; then
+            printf '  [ok] %s\n' "$tool"
+            pass=$((pass + 1))
+        else
+            printf '  [!!] %s (not GNU)\n' "$tool"
+            fail=$((fail + 1))
+        fi
+    done
+}
+
 missing_required=0
 
 check "Required" git stow zsh tmux nvim
 check "Expected" fzf bat curl jq rsync
 check "Optional" docker kubectl magick yt-dlp doas
+check_gnu
 
 printf '\n%s/%s found' "$pass" "$total"
 [ "$fail" -gt 0 ] && printf ', %s missing' "$fail"
