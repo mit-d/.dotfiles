@@ -9,10 +9,9 @@ autoload -Uz vcs_info
 zstyle ':vcs_info:git:*' formats '(%b)'
 zstyle ':vcs_info:git:*' actionformats '(%b|%a)'
 zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git:*' check-for-changes false  # Disable for speed (set true if you need staged/unstaged indicators)
-zstyle ':vcs_info:git:*' stagedstr '%F{green}●%F{blue}'
-zstyle ':vcs_info:git:*' unstagedstr '%F{red}●%F{blue}'
-zstyle ':vcs_info:git:*' formats '%u%c (%b)'
+# Disabled for speed. To show staged/unstaged indicators, set this to true and
+# add stagedstr/unstagedstr plus %u%c to the formats string above.
+zstyle ':vcs_info:git:*' check-for-changes false
 
 # Environment variables to display in the prompt with optional labels
 ENV_VARS=(
@@ -78,10 +77,6 @@ precmd() {
 }
 
 setopt PROMPT_SUBST
-
-# Export prompts
-export PROMPT
-export RPROMPT
 
 # PS2 for multiline commands
 PS2=" >> "
