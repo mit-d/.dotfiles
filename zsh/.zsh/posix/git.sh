@@ -376,5 +376,94 @@ git_ignore_rev() {
 }
 
 gwt() {
-    git worktree add -B "$1" ".worktrees/$1"
+    usage="usage: gwt [-f|--force] [-d|--detach] [--head[=<ref>]] <branch> [<commit-ish>]
+  <branch>        branch name; also the worktree dir under .worktrees/
+  <commit-ish>    start point (default HEAD; origin/<branch> if it exists)
+  --head[=<ref>]  start from HEAD, or <ref> if given (overrides origin auto-base)
+  -f, --force     reset an existing branch / override git guards (-f / -B)
+  -d, --detach    detached HEAD; create no branch
+  -h, --help      show this help"
+
+    force='' detach='' start='' have_start=0
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+        -f | --force) force=1 ;;
+        -d | --detach) detach=1 ;;
+        --head)
+            start=HEAD
+            have_start=1
+            ;;
+        --head=*)
+            start="${1#--head=}"
+            [ -z "$start" ] && start=HEAD
+            have_start=1
+            ;;
+        -h | --help)
+            printf '%s\n' "$usage"
+            return 0
+            ;;
+        --)
+            shift
+            break
+            ;;
+        -?*)
+            printf 'gwt: unknown option: %s\n' "$1" >&2
+            return 1
+            ;;
+        *) break ;;
+        esac
+        shift
+    done
+
+    branch=$1
+    [ -z "$branch" ] && {
+        printf '%s\n' "$usage" >&2
+        return 1
+    }
+    [ $# -gt 2 ] && {
+        echo "gwt: too many arguments" >&2
+        return 1
+    }
+
+    if [ "$have_start" -eq 1 ] && [ -n "$2" ]; then
+        echo "gwt: --head and a positional <commit-ish> are mutually exclusive" >&2
+        return 1
+    fi
+    [ -n "$2" ] && start=$2
+
+    newflag=-b
+    [ -n "$force" ] && newflag=-B
+
+    root=$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null) || {
+        echo "gwt: not inside a git repository" >&2
+        return 1
+    }
+    root=$(dirname "$root")
+    dir="$root/.worktrees/$(printf '%s' "$branch" | tr '/' '-')"
+
+    [ -e "$dir" ] && {
+        echo "gwt: $dir already exists" >&2
+        return 1
+    }
+
+    if [ -n "$detach" ]; then
+        git worktree add ${force:+-f} --detach "$dir" ${start:+"$start"} || return
+    elif git show-ref --verify --quiet "refs/heads/$branch"; then
+        if [ -n "$start" ] && [ -z "$force" ]; then
+            echo "gwt: branch '$branch' exists; pass --force to reset it to '$start'" >&2
+            return 1
+        fi
+        if [ -n "$start" ]; then
+            git worktree add ${force:+-f} -B "$branch" "$dir" "$start" || return
+        else
+            git worktree add ${force:+-f} "$dir" "$branch" || return
+        fi
+    elif git show-ref --verify --quiet "refs/remotes/origin/$branch"; then
+        git worktree add ${force:+-f} "$newflag" "$branch" "$dir" "${start:-origin/$branch}" || return
+    else
+        git worktree add ${force:+-f} "$newflag" "$branch" "$dir" ${start:+"$start"} || return
+    fi
+
+    cd "$dir" || return
 }
