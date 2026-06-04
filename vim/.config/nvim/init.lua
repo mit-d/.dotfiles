@@ -173,6 +173,9 @@ require("lazy").setup({
           map("<leader>rn", vim.lsp.buf.rename, "Rename")
           map("<leader>ca", vim.lsp.buf.code_action, "Code action")
           map("<leader>cf", function()
+            vim.lsp.buf.format({ async = true })
+          end, "Format buffer")
+          map("<leader>cF", function()
             vim.lsp.buf.code_action({
               context = { only = { "source.fixAll" }, diagnostics = {} },
               apply = true,
