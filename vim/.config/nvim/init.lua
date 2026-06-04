@@ -44,6 +44,7 @@ require("lazy").setup({
       { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find files" },
       { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live grep" },
       { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
+      { "<leader>d", "<cmd>Telescope diagnostics<cr>", desc = "All diagnostics" },
     },
     config = function()
       require("telescope").setup({
@@ -171,6 +172,12 @@ require("lazy").setup({
           map("<C-k>", vim.lsp.buf.signature_help, "Signature help")
           map("<leader>rn", vim.lsp.buf.rename, "Rename")
           map("<leader>ca", vim.lsp.buf.code_action, "Code action")
+          map("<leader>cf", function()
+            vim.lsp.buf.code_action({
+              context = { only = { "source.fixAll" }, diagnostics = {} },
+              apply = true,
+            })
+          end, "Fix all (LSP)")
           map("<leader>e", vim.diagnostic.open_float, "Line diagnostics")
           map("[d", function()
             vim.diagnostic.jump({ count = -1, float = true })
