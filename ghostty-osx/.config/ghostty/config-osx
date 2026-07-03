@@ -2,6 +2,7 @@
 
 # Bypass /usr/bin/login for faster startup
 command = /opt/homebrew/bin/tmux
+# command = /bin/zsh
 
 # macOS integration
 macos-option-as-alt = true

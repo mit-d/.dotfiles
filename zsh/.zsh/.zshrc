@@ -115,6 +115,7 @@ bindkey "^[\\" escape-cmd
 # Start tmux if not running (set ZSH_NO_TMUX=1 to disable)
 # Guard on an interactive shell attached to a real terminal so we never exec
 # tmux in IDE/automation shells that source .zshrc without a tty.
+ZSH_NO_TMUX=1
 if [[ -o interactive && -t 1 && -z "$TMUX" && -z "$ZSH_NO_TMUX" ]] && command -v tmux &>/dev/null; then
   exec tmux
 fi

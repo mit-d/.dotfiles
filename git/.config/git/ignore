@@ -135,8 +135,7 @@ config.local.*
 !.claude/commands/*/
 !.claude/commands/*/*.md
 !.claude/skills/
-!.claude/skills/*/
-!.claude/skills/*/SKILL.md
+!.claude/skills/**
 !.claude/agents/
 !.claude/agents/*.md
 !.claude/rules/
@@ -148,6 +147,8 @@ config.local.*
 .worktrees/
 .worktreeinclude
 
+.claude/skills/reporting
+
 # JetBrains IDEs
 .idea
 *junie*
@@ -157,3 +158,6 @@ config.local.*
 .mrkeeper.toml
 
 .obsidian
+
+# Nx cache
+.nx/
