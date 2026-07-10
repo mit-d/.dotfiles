@@ -95,7 +95,6 @@
       "1password"
       "1password-cli"
       "bruno"
-      "docker"
       "docker-desktop"
       "firefox@nightly"
       "font-noto-color-emoji"
