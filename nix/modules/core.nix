@@ -1,4 +1,4 @@
-{ self, config, lib, ... }:
+{ self, config, lib, pkgs, ... }:
 {
   # Necessary for using flakes on this system.
   nix.settings.experimental-features = "nix-command flakes";
@@ -14,8 +14,10 @@
 
   # Enable alternative shell support in nix-darwin.
   programs.zsh.enable = true;
-  # Installs fish and registers it in /etc/shells.
+  # Installs fish; environment.shells is what actually registers
+  # shells in /etc/shells (for chsh).
   programs.fish.enable = true;
+  environment.shells = [ pkgs.fish ];
 
   # User-scoped options (homebrew, system.defaults) apply to this user
   # now that activation always runs as root.
