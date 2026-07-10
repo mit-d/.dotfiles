@@ -6,6 +6,10 @@
   # Enable alternative shell support in nix-darwin.
   programs.zsh.enable = true;
 
+  # User-scoped options (homebrew, system.defaults) apply to this user
+  # now that activation always runs as root.
+  system.primaryUser = "derekmitten";
+
   # Set Git commit hash for darwin-version.
   system.configurationRevision = self.rev or self.dirtyRev or null;
 
