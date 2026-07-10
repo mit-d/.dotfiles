@@ -66,6 +66,16 @@
     pkgs.uv
     pkgs.whisper-cpp
 
+    # Rust toolchain (replaces the imperative rustup install in
+    # ~/.cargo + ~/.rustup). One pinned stable toolchain, declarative;
+    # no per-project toolchain switching. Add a target/nightly via an
+    # overlay (fenix/oxalica) if that's ever needed.
+    pkgs.cargo
+    pkgs.rustc
+    pkgs.clippy
+    pkgs.rustfmt
+    pkgs.rust-analyzer
+
     # Batch 3 survivors of the case-by-case review.
     pkgs.opencode
     # Test framework for the repo's zsh abbr suite (tests/abbr.zunit);
@@ -77,5 +87,7 @@
     # Was only a brew dependency (via opencode), but it's a daily
     # driver and must survive its dependent's migration.
     pkgs.ripgrep
+    # Was cargo-installed into ~/.cargo/bin; nixpkgs has it.
+    pkgs.zoxide
   ];
 }

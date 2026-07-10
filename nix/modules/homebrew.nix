@@ -13,7 +13,6 @@
 
     taps = [
       "hookdeck/hookdeck"
-      "schpet/tap"
     ];
 
     # Intentional holdouts. C++ libs stay until per-project nix dev
@@ -30,7 +29,6 @@
       "nvm"
       "ollama"
       "raylib"
-      "schpet/tap/linear"
       "spdlog"
     ];
 
