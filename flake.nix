@@ -16,6 +16,7 @@
         ./nix/modules/packages.nix
         ./nix/modules/homebrew.nix
         ./nix/modules/defaults.nix
+        ./nix/modules/fonts.nix
       ];
     };
   in
