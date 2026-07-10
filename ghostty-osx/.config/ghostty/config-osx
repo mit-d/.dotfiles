@@ -1,7 +1,7 @@
 # macOS-specific Ghostty settings
 
 # Bypass /usr/bin/login for faster startup
-command = /opt/homebrew/bin/tmux
+command = tmux
 # command = /bin/zsh
 
 # macOS integration
