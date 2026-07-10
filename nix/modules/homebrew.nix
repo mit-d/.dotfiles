@@ -20,42 +20,25 @@
 
     brews = [
       "catch2"
-      "clang-format"
       "cli11"
-      "cmake"
       "eigen"
       "fish"
-      "fonttools"
-      "go"
-      "gradle"
       # Now in homebrew/core; the installed keg identifies as core, so a
       # tap-qualified name here makes `cleanup` uninstall it.
       "hookdeck"
-      "imagemagick"
       "jupyterlab"
-      "lcov"
-      "lefthook"
+      # Keg-only toolchain holdout: nix clang in systemPackages would
+      # shadow /usr/bin/clang system-wide. Revisit with dev shells.
       "llvm"
-      "markdownlint-cli2"
-      "mpv"
-      "neovim"
-      "newsboat"
-      "ninja"
       "nlohmann-json"
       "nvm"
       "ollama"
       "opencode"
-      "openjdk@21"
       "postgresql@17"
-      "prettier"
       "python@3.12"
       "raylib"
-      "ruff"
       "schpet/tap/linear"
       "spdlog"
-      "tmux"
-      "uv"
-      "whisper-cpp"
       "zsh-autosuggestions"
     ];
 

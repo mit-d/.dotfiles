@@ -41,5 +41,29 @@
     pkgs.tree
     pkgs.tree-sitter
     pkgs.yq-go
+
+    # Batch 2: dev toolchains (migrated from homebrew).
+    # Renames vs brew: openjdk@21=jdk21, clang-format=clang-tools.
+    # llvm stays in brew (keg-only there; nix clang in systemPackages
+    # would shadow /usr/bin/clang).
+    pkgs.clang-tools
+    pkgs.cmake
+    pkgs.python3Packages.fonttools
+    pkgs.go
+    pkgs.gradle
+    pkgs.imagemagick
+    pkgs.jdk21
+    pkgs.lcov
+    pkgs.lefthook
+    pkgs.markdownlint-cli2
+    pkgs.mpv
+    pkgs.neovim
+    pkgs.newsboat
+    pkgs.ninja
+    pkgs.prettier
+    pkgs.ruff
+    pkgs.tmux
+    pkgs.uv
+    pkgs.whisper-cpp
   ];
 }
