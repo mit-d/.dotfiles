@@ -184,8 +184,8 @@ abbrevs+=(
 ###############################################################################
 
 abbrevs+=(
-    "drs"           "sudo darwin-rebuild switch --flake ~/.dotfiles"
-    "drb"           "darwin-rebuild build --flake ~/.dotfiles"
+    "@drs"           "sudo darwin-rebuild switch --flake ~."
+    "@drb"           "darwin-rebuild build --flake ~."
 )
 
 ###############################################################################

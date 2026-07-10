@@ -141,3 +141,14 @@ for plugin in zsh-autosuggestions zsh-syntax-highlighting; do
         source "/opt/homebrew/share/$plugin/$plugin.zsh"
     fi
 done
+
+
+## Named Dirs
+# Essentially creates a ~-prefixed alias for each
+
+# Named Dirs
+hash -d vg="${WH_VANGUARD_PROJECT_DIR:-~/Source/vanguard}"
+hash -d o=~/Documents/Obsidian
+hash -d nix=~/.config/nix
+hash -d zsh="${ZDOTDIR:-${HOME}}"
+hash -d .=~/.dotfiles
