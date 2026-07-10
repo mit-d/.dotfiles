@@ -7,7 +7,7 @@
 #
 # Function abbreviations are stored separately in abbrevs_func
 ###############################################################################
-setopt extendedglob
+setopt localoptions extendedglob
 
 # Main abbreviation store
 # Keys can be:

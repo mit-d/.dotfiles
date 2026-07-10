@@ -147,7 +147,9 @@ config.local.*
 .worktrees/
 .worktreeinclude
 
-.claude/skills/reporting
+# Skills still in testing/staging phase
+# .claude/skills/reporting # MERGED in vanguard
+.claude/skills/linear-cli
 
 # JetBrains IDEs
 .idea

@@ -9,3 +9,4 @@ vim/.config/nvim/autoload/plug.vim
 # Generated/binary
 hypr/.config/hypr/palettes/
 tests/_output/
+vim/.config/nvim/lazy-lock.json

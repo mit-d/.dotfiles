@@ -37,6 +37,9 @@ autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey "^X^E" edit-command-line
 
+## zmv for glob file manip
+autoload -Uz zmv
+
 # History settings
 # sharehistory implies incremental append; histignorealldups supersedes the
 # narrower dup options, so those flags are intentionally omitted here.
