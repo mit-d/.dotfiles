@@ -68,6 +68,9 @@
 
     # Batch 3 survivors of the case-by-case review.
     pkgs.opencode
+    # Test framework for the repo's zsh abbr suite (tests/abbr.zunit);
+    # replaces the zunit-zsh tap (and revolver, its only dependency).
+    pkgs.zunit
     # Was only a brew dependency (via opencode), but it's a daily
     # driver and must survive its dependent's migration.
     pkgs.ripgrep

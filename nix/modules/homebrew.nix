@@ -13,9 +13,7 @@
 
     taps = [
       "hookdeck/hookdeck"
-      "molovo/revolver"
       "schpet/tap"
-      "zunit-zsh/zunit"
     ];
 
     # Intentional holdouts. C++ toolchain/libs stay until per-project
