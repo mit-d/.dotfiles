@@ -71,6 +71,9 @@
     # Test framework for the repo's zsh abbr suite (tests/abbr.zunit);
     # replaces the zunit-zsh tap (and revolver, its only dependency).
     pkgs.zunit
+    # Client tools only (psql etc.) for dockerized instances; no local
+    # daemon. Replaces the brew postgresql@17 server install.
+    pkgs.postgresql_17
     # Was only a brew dependency (via opencode), but it's a daily
     # driver and must survive its dependent's migration.
     pkgs.ripgrep
