@@ -6,9 +6,9 @@
     onActivation = {
       autoUpdate = false;
       upgrade = false;
-      # "none" for the first verified switch. Flipped to "uninstall"
-      # in a later task AFTER Derek's KB review (hard gate).
-      cleanup = "none";
+      # The flake is the source of truth: brew packages not declared
+      # here are removed on the next switch.
+      cleanup = "uninstall";
     };
 
     taps = [
