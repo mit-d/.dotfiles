@@ -1,4 +1,4 @@
-{ self, config, ... }:
+{ self, config, lib, ... }:
 {
   # Necessary for using flakes on this system.
   nix.settings.experimental-features = "nix-command flakes";
@@ -6,8 +6,11 @@
   # GUI apps (Ghostty, etc.) inherit launchd's environment, not the
   # shell's, so give launchd the nix system PATH. Lets app configs use
   # bare command names (e.g. Ghostty `command = tmux`). Apps pick it
-  # up on next launch after activation.
-  launchd.user.envVariables.PATH = config.environment.systemPath;
+  # up on next launch after activation. launchd env vars are literal
+  # strings, so expand the $HOME systemPath placeholder ourselves.
+  launchd.user.envVariables.PATH =
+    lib.replaceStrings [ "$HOME" ] [ "/Users/derekmitten" ]
+      config.environment.systemPath;
 
   # Enable alternative shell support in nix-darwin.
   programs.zsh.enable = true;
