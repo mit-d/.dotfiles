@@ -65,5 +65,11 @@
     pkgs.tmux
     pkgs.uv
     pkgs.whisper-cpp
+
+    # Batch 3 survivors of the case-by-case review.
+    pkgs.opencode
+    # Was only a brew dependency (via opencode), but it's a daily
+    # driver and must survive its dependent's migration.
+    pkgs.ripgrep
   ];
 }

@@ -18,28 +18,26 @@
       "zunit-zsh/zunit"
     ];
 
+    # Intentional holdouts. C++ toolchain/libs stay until per-project
+    # nix dev shells exist; llvm is keg-only here, and nix clang in
+    # systemPackages would shadow /usr/bin/clang. postgres has data
+    # under /opt/homebrew/var; ollama is a launchd service; nvm is a
+    # deferred workflow decision; tap tools have no nixpkgs equivalent.
     brews = [
       "catch2"
       "cli11"
       "eigen"
-      "fish"
       # Now in homebrew/core; the installed keg identifies as core, so a
       # tap-qualified name here makes `cleanup` uninstall it.
       "hookdeck"
-      "jupyterlab"
-      # Keg-only toolchain holdout: nix clang in systemPackages would
-      # shadow /usr/bin/clang system-wide. Revisit with dev shells.
       "llvm"
       "nlohmann-json"
       "nvm"
       "ollama"
-      "opencode"
       "postgresql@17"
-      "python@3.12"
       "raylib"
       "schpet/tap/linear"
       "spdlog"
-      "zsh-autosuggestions"
     ];
 
     casks = [

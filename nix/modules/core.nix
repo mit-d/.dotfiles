@@ -11,6 +11,8 @@
 
   # Enable alternative shell support in nix-darwin.
   programs.zsh.enable = true;
+  # Installs fish and registers it in /etc/shells.
+  programs.fish.enable = true;
 
   # User-scoped options (homebrew, system.defaults) apply to this user
   # now that activation always runs as root.
