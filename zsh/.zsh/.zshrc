@@ -148,7 +148,10 @@ done
 
 # Named Dirs
 hash -d vg="${WH_VANGUARD_PROJECT_DIR:-~/Source/vanguard}"
+hash -d wt="${WH_VANGUARD_PROJECT_DIR:-~/Source/vanguard}/.worktrees"
+hash -d migrations="${WH_VANGUARD_PROJECT_DIR:-~/Source/vanguard}/jaguar/bbp/migrations"
 hash -d o=~/Documents/Obsidian
 hash -d nix=~/.config/nix
 hash -d zsh="${ZDOTDIR:-${HOME}}"
 hash -d .=~/.dotfiles
+hash -d remote-files=/opt/remote-files
