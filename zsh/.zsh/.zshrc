@@ -155,3 +155,4 @@ hash -d nix=~/.config/nix
 hash -d zsh="${ZDOTDIR:-${HOME}}"
 hash -d .=~/.dotfiles
 hash -d remote-files=/opt/remote-files
+hash -d projects=/opt/project-files

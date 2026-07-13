@@ -8,6 +8,11 @@
   # bare command names (e.g. Ghostty `command = tmux`). Apps pick it
   # up on next launch after activation. launchd env vars are literal
   # strings, so expand the $HOME systemPath placeholder ourselves.
+  #
+  # TODO: this seemed to work, but may be broken now. For Ghostty
+  #  specifically, `command = tmux` breaks it (seems to try to use
+  #  login shell). I've updated my conf there to use the absolute PATH
+  #  of `/run/current-system/sw/bin/tmux` + added another TODO there
   launchd.user.envVariables.PATH =
     lib.replaceStrings [ "$HOME" ] [ "/Users/derekmitten" ]
       config.environment.systemPath;
