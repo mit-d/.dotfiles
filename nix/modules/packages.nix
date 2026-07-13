@@ -33,6 +33,7 @@
     pkgs.lftp
     pkgs.most
     pkgs.ncdu
+    pkgs.neo
     pkgs.pv
     pkgs.shellcheck
     pkgs.shfmt
