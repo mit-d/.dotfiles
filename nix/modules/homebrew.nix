@@ -22,8 +22,6 @@
       "catch2"
       "cli11"
       "eigen"
-      # Now in homebrew/core; the installed keg identifies as core, so a
-      # tap-qualified name here makes `cleanup` uninstall it.
       "hookdeck"
       "nlohmann-json"
       "nvm"
