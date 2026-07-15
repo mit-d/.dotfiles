@@ -47,7 +47,6 @@
       "raycast"
       "slack"
       "slack-cli"
-      "standard-notes"
       "sublime-merge"
       "zoom"
     ];
