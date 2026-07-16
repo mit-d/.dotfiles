@@ -21,6 +21,7 @@
     pkgs.gh
     pkgs.git-quick-stats
     pkgs.glab
+    pkgs.gnupg
     pkgs.gnused
     pkgs.go
     pkgs.go-task
