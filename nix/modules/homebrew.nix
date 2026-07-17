@@ -16,8 +16,9 @@
     ];
 
     # Intentional holdouts. C++ libs stay until per-project nix dev
-    # shells exist; ollama is a launchd service; nvm is a deferred
-    # workflow decision; tap tools have no nixpkgs equivalent.
+    # shells exist; ollama is a launchd service; nvm serves node projects
+    # that don't yet have a dev shell (retires as each gets one; see the
+    # ~/.dotfiles_wh vanguard shell); tap tools have no nixpkgs equivalent.
     brews = [
       "catch2"
       "cli11"

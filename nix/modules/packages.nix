@@ -12,6 +12,7 @@
     pkgs.coreutils
     pkgs.cowsay
     pkgs.csvkit
+    pkgs.deadnix
     pkgs.fastfetch
     pkgs.fd
     pkgs.fx
@@ -43,6 +44,7 @@
     pkgs.neovim
     pkgs.newsboat
     pkgs.ninja
+    pkgs.nixfmt
     pkgs.opencode
     pkgs.postgresql_17
     pkgs.prettier
@@ -55,6 +57,7 @@
     pkgs.rustfmt
     pkgs.shellcheck
     pkgs.shfmt
+    pkgs.statix
     pkgs.stow
     pkgs.taplo
     pkgs.tmux

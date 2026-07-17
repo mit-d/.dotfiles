@@ -1,7 +1,25 @@
-{ self, config, lib, pkgs, ... }:
+{
+  self,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   # Necessary for using flakes on this system.
   nix.settings.experimental-features = "nix-command flakes";
+
+  # Deduplicate the store on write and prune it weekly.
+  nix.optimise.automatic = true;
+  nix.gc = {
+    automatic = true;
+    interval = {
+      Weekday = 0;
+      Hour = 3;
+      Minute = 0;
+    };
+    options = "--delete-older-than 30d";
+  };
 
   # GUI apps (Ghostty, etc.) inherit launchd's environment, not the
   # shell's, so give launchd the nix system PATH. Lets app configs use
@@ -14,11 +32,15 @@
   #  login shell). I've updated my conf there to use the absolute PATH
   #  of `/run/current-system/sw/bin/tmux` + added another TODO there
   launchd.user.envVariables.PATH =
-    lib.replaceStrings [ "$HOME" ] [ "/Users/derekmitten" ]
+    lib.replaceStrings [ "$HOME" ] [ "/Users/${config.system.primaryUser}" ]
       config.environment.systemPath;
 
   # Enable alternative shell support in nix-darwin.
   programs.zsh.enable = true;
+  # direnv + nix-direnv, wired via /etc/direnv/direnvrc from a real
+  # /nix/store path (the hand-rolled version sourced a path
+  # nix-darwin's pathsToLink never links).
+  programs.direnv.enable = true;
   # Installs fish; environment.shells is what actually registers
   # shells in /etc/shells (for chsh).
   programs.fish.enable = true;

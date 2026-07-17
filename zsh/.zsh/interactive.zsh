@@ -38,3 +38,6 @@ _git_update_mr_completion() {
 }
 
 compdef _git_update_mr_completion git_update_mr
+
+## direnv - auto-activate .envrc / dev shells on cd (ZSH-only hook)
+command -v direnv >/dev/null && eval "$(direnv hook zsh)"

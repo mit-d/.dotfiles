@@ -1,0 +1,5 @@
+# House style: keep flat, per-line-commented `nix.*`/`system.*` assignments
+# (more readable than forced nesting) and conventional `{ ... }:` module
+# signatures. Disable only the lints that fight that style; all other
+# statix lints stay on.
+disabled = ["empty_pattern", "repeated_keys"]
