@@ -50,9 +50,20 @@ build_env_prompt() {
     echo "$env_prompt"
 }
 
-# Cached node version for prompt (avoids slow nvm call on every prompt)
+# Nix dev-shell indicator glyph, defined below via a zsh ANSI-C
+# quote so this file stays pure ASCII (the check-unicode hook rejects
+# raw non-ASCII); it renders through the SauceCodePro Nerd Font.
+NIX_ICON=$'\ue843'
+
+# Cached node version for prompt (avoids slow nvm call on every prompt).
+# _from_nix tracks whether the resolved node came from a nix dev shell.
 _cached_node_version=""
 _cached_node_dir=""
+_cached_node_from_nix=0
+
+# Cached python version, populated only when python comes from a nix dev shell.
+_cached_py_version=""
+_cached_py_dir=""
 
 
 precmd() {
@@ -64,16 +75,42 @@ precmd() {
     PROMPT="%~ $PROMPT"
 
     # Build rprompt pieces inline (avoids subshell overhead from $(...))
-    local env_part="" node_part=""
+    local env_part="" node_part="" nix_part="" py_part=""
     env_part="$(build_env_prompt)"
-    # Only call node if nvm has actually been loaded (NVM_BIN is set)
-    if [[ -n "$NVM_BIN" && "$PWD" != "$_cached_node_dir" ]]; then
-        _cached_node_dir="$PWD"
-        _cached_node_version=$(node --version 2>/dev/null)
-    fi
-    [[ -n "$NVM_BIN" && -n "$_cached_node_version" ]] && node_part="%F{yellow}node:${_cached_node_version}%f "
 
-    RPROMPT="${node_part}${env_part}%F{blue}${VCS_MSG:+${VCS_MSG}}%f"
+    # Nix dev-shell indicator: glyph + pure/impure, only inside a shell.
+    [[ -n "$IN_NIX_SHELL" ]] && nix_part="%F{cyan}${NIX_ICON} ${IN_NIX_SHELL}%f "
+
+    # node: recompute only when the directory changes. Show it when it comes
+    # from a nix dev shell (cyan, signalling origin) or from nvm (yellow).
+    if [[ "$PWD" != "$_cached_node_dir" ]]; then
+        _cached_node_dir="$PWD"
+        _cached_node_version=""
+        _cached_node_from_nix=0
+        if [[ -n "$IN_NIX_SHELL" || -n "$NVM_BIN" ]] && (( $+commands[node] )); then
+            _cached_node_version=$(node --version 2>/dev/null)
+            [[ "${commands[node]}" == /nix/store/* ]] && _cached_node_from_nix=1
+        fi
+    fi
+    if [[ -n "$_cached_node_version" ]]; then
+        if (( _cached_node_from_nix )); then
+            node_part="%F{cyan}node:${_cached_node_version}%f "
+        elif [[ -n "$NVM_BIN" ]]; then
+            node_part="%F{yellow}node:${_cached_node_version}%f "
+        fi
+    fi
+
+    # python: shown only when provided by a nix dev shell (cyan), per-dir cache.
+    if [[ "$PWD" != "$_cached_py_dir" ]]; then
+        _cached_py_dir="$PWD"
+        _cached_py_version=""
+        if [[ -n "$IN_NIX_SHELL" && "${commands[python3]}" == /nix/store/* ]]; then
+            _cached_py_version="${${(z)$(python3 --version 2>&1)}[2]}"
+        fi
+    fi
+    [[ -n "$_cached_py_version" ]] && py_part="%F{cyan}py:${_cached_py_version}%f "
+
+    RPROMPT="${nix_part}${node_part}${py_part}${env_part}%F{blue}${VCS_MSG:+${VCS_MSG}}%f"
 }
 
 setopt PROMPT_SUBST
