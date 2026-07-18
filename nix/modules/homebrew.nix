@@ -35,7 +35,6 @@
       "1password"
       "1password-cli"
       "bruno"
-      "docker-desktop"
       "firefox@nightly"
       "ghostty"
       "google-chrome"
