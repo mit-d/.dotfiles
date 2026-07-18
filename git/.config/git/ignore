@@ -150,6 +150,8 @@ config.local.*
 # Skills still in testing/staging phase
 # .claude/skills/reporting # MERGED in vanguard
 .claude/skills/linear-cli
+pyproject.staging.toml
+uv.staging.lock
 
 # JetBrains IDEs
 .idea
