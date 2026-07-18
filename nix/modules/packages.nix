@@ -42,10 +42,13 @@
     pkgs.neo
 
     # Dev
-    ### vim
+    ## vim
     pkgs.neovim
     pkgs.tree-sitter
     pkgs.vim
+    ## Docker
+    pkgs.podman
+    pkgs.podman-compose
     ## C++
     pkgs.cmake
     pkgs.clang-tools
