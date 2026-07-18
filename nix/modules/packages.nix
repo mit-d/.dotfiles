@@ -94,6 +94,7 @@
     pkgs.lefthook
     ## AI
     pkgs.opencode
+    pkgs.pi-coding-agent
     pkgs.whisper-cpp
   ];
 }
