@@ -13,11 +13,18 @@ zstyle ':vcs_info:*' enable git
 # add stagedstr/unstagedstr plus %u%c to the formats string above.
 zstyle ':vcs_info:git:*' check-for-changes false
 
+# Nix dev-shell indicator glyph, defined below via a zsh ANSI-C
+# quote so this file stays pure ASCII (the check-unicode hook rejects
+# raw non-ASCII); it renders through the SauceCodePro Nerd Font.
+NIX_ICON=$'\ue843'
+NODE_ICON=$'\ued0d'
+PYTHON_ICON=$'\ue73c'
+
 # Environment variables to display in the prompt with optional labels
 ENV_VARS=(
     # "DB_NAME::"
     # "TEST_DB_NAME:::"
-    "VIRTUAL_ENV:py@"
+    "VIRTUAL_ENV:${PYTHON_ICON:-python} "
     "BBP_TEST_ARGS:"
 )
 
@@ -44,16 +51,11 @@ build_env_prompt() {
             value="${value/#$HOME/~}" # Replace HOME with '~'
             value="${value/#.\//}"
             local color="$(random_color $var)"
-            env_prompt+="%F{8}${label}%F{$color}${value}%f "
+            env_prompt+="%F{$color}${label}${value}%f "
         fi
     done
     echo "$env_prompt"
 }
-
-# Nix dev-shell indicator glyph, defined below via a zsh ANSI-C
-# quote so this file stays pure ASCII (the check-unicode hook rejects
-# raw non-ASCII); it renders through the SauceCodePro Nerd Font.
-NIX_ICON=$'\ue843'
 
 # Cached node version for prompt (avoids slow nvm call on every prompt).
 # _from_nix tracks whether the resolved node came from a nix dev shell.
@@ -94,9 +96,9 @@ precmd() {
     fi
     if [[ -n "$_cached_node_version" ]]; then
         if (( _cached_node_from_nix )); then
-            node_part="%F{cyan}node:${_cached_node_version}%f "
+            node_part="%F{cyan}${NODE_ICON:-node} ${_cached_node_version}%f "
         elif [[ -n "$NVM_BIN" ]]; then
-            node_part="%F{yellow}node:${_cached_node_version}%f "
+            node_part="%F{yellow}${NODE_ICON:-node} ${_cached_node_version}%f "
         fi
     fi
 
