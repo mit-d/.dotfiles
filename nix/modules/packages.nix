@@ -1,73 +1,96 @@
 { pkgs, ... }:
 {
   environment.systemPackages = [
-    pkgs.age
-    pkgs.bat
-    pkgs.cargo
-    pkgs.clang-tools
-    pkgs.clippy
-    pkgs.cmake
-    pkgs.cmatrix
-    pkgs.codespell
+    # Core
     pkgs.coreutils
-    pkgs.cowsay
+
+    # GUI
+    pkgs.mpv
+
+    # CLI
+    ## Utils
+    pkgs.bat
     pkgs.csvkit
-    pkgs.deadnix
-    pkgs.fastfetch
     pkgs.fd
     pkgs.fx
     pkgs.fzf
     pkgs.gawk
     pkgs.getopt
-    pkgs.gh
-    pkgs.git-quick-stats
-    pkgs.glab
-    pkgs.gnupg
     pkgs.gnused
-    pkgs.go
-    pkgs.go-task
-    pkgs.gradle
     pkgs.htop
     pkgs.imagemagick
-    pkgs.jdk21
-    pkgs.jira-cli-go
     pkgs.jq
     pkgs.k9s
-    pkgs.lcov
-    pkgs.lefthook
     pkgs.lftp
-    pkgs.markdownlint-cli2
     pkgs.most
-    pkgs.mpv
     pkgs.ncdu
-    pkgs.neo
-    pkgs.neovim
     pkgs.newsboat
-    pkgs.ninja
-    pkgs.nixfmt
-    pkgs.opencode
-    pkgs.postgresql_17
-    pkgs.prettier
     pkgs.pv
-    pkgs.python3Packages.fonttools
     pkgs.ripgrep
+    pkgs.stow
+    pkgs.tmux
+    pkgs.tree
+    pkgs.yq-go
+    pkgs.zoxide
+    ### security
+    pkgs.age
+    pkgs.gnupg
+    ### Fun
+    pkgs.cmatrix
+    pkgs.cowsay
+    pkgs.fastfetch
+    pkgs.neo
+
+    # Dev
+    ### vim
+    pkgs.neovim
+    pkgs.tree-sitter
+    pkgs.vim
+    ## C++
+    pkgs.cmake
+    pkgs.clang-tools
+    pkgs.ninja
+    ## Go
+    pkgs.go
+    pkgs.go-task
+    ## Java
+    pkgs.gradle
+    pkgs.jdk21
+    ## db/k8s
+    pkgs.postgresql_17
+    ## Python
+    pkgs.python3Packages.fonttools
     pkgs.ruff
+    pkgs.uv
+    ## Rust
+    pkgs.cargo
+    pkgs.clippy
     pkgs.rust-analyzer
     pkgs.rustc
     pkgs.rustfmt
+    ## shell
     pkgs.shellcheck
     pkgs.shfmt
-    pkgs.statix
-    pkgs.stow
-    pkgs.taplo
-    pkgs.tmux
-    pkgs.tree
-    pkgs.tree-sitter
-    pkgs.uv
-    pkgs.vim
-    pkgs.whisper-cpp
-    pkgs.yq-go
-    pkgs.zoxide
     pkgs.zunit
+    ## nix
+    pkgs.deadnix
+    pkgs.nixfmt
+    pkgs.statix
+    ## Toml
+    pkgs.taplo
+    ## Utils / Static Analysis
+    pkgs.codespell
+    pkgs.markdownlint-cli2
+    pkgs.prettier
+    pkgs.lcov
+    ## Version Control
+    pkgs.gh
+    pkgs.git-quick-stats
+    pkgs.glab
+    pkgs.jira-cli-go
+    pkgs.lefthook
+    ## AI
+    pkgs.opencode
+    pkgs.whisper-cpp
   ];
 }
