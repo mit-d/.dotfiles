@@ -12,6 +12,10 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Disable netrw (recommended by nvim-tree; must run before plugins load)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Base settings from .vimrc
 vim.cmd("source ~/.vimrc")
 vim.opt.laststatus = 2 -- lualine needs >=2
@@ -235,6 +239,22 @@ require("lazy").setup({
     },
     keys = {
       { "-", "<cmd>Oil<cr>", desc = "Open parent directory" },
+    },
+  },
+
+  -- file explorer (tree sidebar)
+  {
+    "nvim-tree/nvim-tree.lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    keys = {
+      { "<C-n>", "<cmd>NvimTreeToggle<cr>", desc = "Toggle file tree" },
+      { "<leader>fe", "<cmd>NvimTreeFindFileToggle<cr>", desc = "Reveal file in tree" },
+    },
+    opts = {
+      view = { width = 35 },
+      renderer = { group_empty = true },
+      filters = { dotfiles = false },
+      update_focused_file = { enable = true },
     },
   },
 
