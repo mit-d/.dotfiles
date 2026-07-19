@@ -82,17 +82,7 @@ fi
 
 # FZF history search
 if command -v fzf &>/dev/null; then
-    fzf-history-widget() {
-        local selected_command
-        selected_command="$(fc -lrn 1 | fzf --height=40% --reverse --prompt='History> ')"
-        if [[ -n "$selected_command" ]]; then
-            BUFFER="$selected_command"
-            CURSOR=${#BUFFER}
-        fi
-        zle reset-prompt
-    }
-    zle -N fzf-history-widget
-    bindkey '^R' fzf-history-widget
+    source <(fzf --zsh)
 fi
 
 # Run current line as root
@@ -124,7 +114,7 @@ if [[ -o interactive && -t 1 && -z "$TMUX" && -z "$ZSH_NO_TMUX" ]] && command -v
 fi
 
 # Activate python .venv if it exists
-[[ -e "$HOME/.venv/bin/activate" ]] && source "$HOME/.venv/bin/activate"
+# [[ -e "$HOME/.venv/bin/activate" ]] && source "$HOME/.venv/bin/activate"
 
 ## Bun completions
 [[ -s "$HOME/.bun/_bun" ]] && source "$HOME/.bun/_bun"

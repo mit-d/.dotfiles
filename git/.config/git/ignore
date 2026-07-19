@@ -146,6 +146,8 @@ config.local.*
 .superpowers/
 .worktrees/
 .worktreeinclude
+.pi/
+.pi-subagents/
 
 # Skills still in testing/staging phase
 # .claude/skills/reporting # MERGED in vanguard

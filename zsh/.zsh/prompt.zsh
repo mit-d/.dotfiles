@@ -110,7 +110,7 @@ precmd() {
             _cached_py_version="${${(z)$(python3 --version 2>&1)}[2]}"
         fi
     fi
-    [[ -n "$_cached_py_version" ]] && py_part="%F{cyan}py:${_cached_py_version}%f "
+    [[ -n "$_cached_py_version" ]] && py_part="%F{cyan}$PYTHON_ICON ${_cached_py_version}%f "
 
     RPROMPT="${nix_part}${node_part}${py_part}${env_part}%F{blue}${VCS_MSG:+${VCS_MSG}}%f"
 }
