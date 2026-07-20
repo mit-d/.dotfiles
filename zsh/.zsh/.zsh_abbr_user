@@ -184,8 +184,13 @@ abbrevs+=(
 ###############################################################################
 
 abbrevs+=(
-    "@drs"           "sudo darwin-rebuild switch --flake ~."
-    "@drb"           "darwin-rebuild build --flake ~."
+    "@drs" "sudo darwin-rebuild switch --flake ~."
+    "@drb" "darwin-rebuild build --flake ~."
+    "@drc" "darwin-rebuild check --flake ~."
+    "@flu" "nix flake update"
+    "@flc" "nix flake check"
+    "@flm" "nix flake metadata"
+    "@fls" "nix flake show"
 )
 
 ###############################################################################
