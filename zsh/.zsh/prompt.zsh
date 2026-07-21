@@ -1,125 +1,119 @@
 # Prompt
 ###############################################################################
-#
 
-autoload -Uz promptinit; promptinit
+autoload -Uz promptinit && promptinit
 autoload -Uz vcs_info
+autoload -Uz add-zsh-hook
+setopt PROMPT_SUBST
 
-# Configure git branch formats in vcs_info
+zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git:*' formats '(%b)'
 zstyle ':vcs_info:git:*' actionformats '(%b|%a)'
-zstyle ':vcs_info:*' enable git
 # Disabled for speed. To show staged/unstaged indicators, set this to true and
-# add stagedstr/unstagedstr plus %u%c to the formats string above.
+# add stagedstr/unstagedstr plus %u%c to the formats strings above.
 zstyle ':vcs_info:git:*' check-for-changes false
 
-# Nix dev-shell indicator glyph, defined below via a zsh ANSI-C
-# quote so this file stays pure ASCII (the check-unicode hook rejects
-# raw non-ASCII); it renders through the SauceCodePro Nerd Font.
+# Icons are written with zsh ANSI-C quoting ($'...') to keep this file pure
+# ASCII (the check-unicode hook rejects raw non-ASCII). They render through
+# the SauceCodePro Nerd Font.
 NIX_ICON=$'\ue843'
 NODE_ICON=$'\ued0d'
 PYTHON_ICON=$'\ue73c'
 
-# Environment variables to display in the prompt with optional labels
+# Environment badges shown in the right prompt, as "VAR:color:label" entries.
+# The label may be empty and may contain an icon; the value is appended after.
 ENV_VARS=(
-    # "DB_NAME::"
-    # "TEST_DB_NAME:::"
-    "VIRTUAL_ENV:${PYTHON_ICON:-python} "
-    "BBP_TEST_ARGS:"
+    "BBP_TEST_ARGS:magenta:"
 )
 
-random_color() {
-    local seed=${1:-$RANDOM}
-    local colors=(red green yellow blue magenta cyan)
-    # Use zsh's built-in string hashing instead of spawning cksum/awk
-    local hash=$(( ${#seed} * 31 + $(printf '%d' "'${seed[1]}") ))
-    echo "${colors[hash % ${#colors[@]} + 1]}"
+# Each builder sets REPLY to its rprompt segment (empty when not applicable),
+# so the hooks assemble the prompt without subshells. node/python shell out
+# for a version string, so they are recomputed only when their inputs change
+# (see _prompt_update_runtimes); the env badges read live vars and are rebuilt
+# every prompt.
+
+# Format a language-runtime badge, colored by origin: cyan when the binary
+# comes from a nix dev shell (/nix/store), yellow otherwise. Sets REPLY.
+_runtime_badge() {
+    local cmd=$1 icon=$2 version=$3 color=yellow
+    [[ "${commands[$cmd]}" == /nix/store/* ]] && color=cyan
+    REPLY="%F{$color}${icon} ${version}%f "
 }
 
-# Function to build prompt with environment variables
-build_env_prompt() {
-    local env_prompt=""
+# node: shown from a nix dev shell or from nvm.
+_build_node_segment() {
+    REPLY=""
+    (( $+commands[node] )) || return
+    [[ -n "$IN_NIX_SHELL" || -n "$NVM_BIN" ]] || return
+    local version=$(node --version 2>/dev/null)
+    [[ -n "$version" ]] && _runtime_badge node "$NODE_ICON" "$version"
+}
+
+# python: shown from a nix dev shell or an active virtualenv.
+_build_py_segment() {
+    REPLY=""
+    (( $+commands[python3] )) || return
+    [[ -n "$IN_NIX_SHELL" || -n "$VIRTUAL_ENV" ]] || return
+    local version="${${(z)$(python3 --version 2>&1)}[2]}"
+    [[ -n "$version" ]] && _runtime_badge python3 "$PYTHON_ICON" "$version"
+}
+
+# env badges: reads live env vars, so it runs every prompt (no caching).
+_build_env_segment() {
+    REPLY=""
+    local entry var rest color label value
     for entry in "${ENV_VARS[@]}"; do
-        local var="${entry%%:*}" # Variable name
-        local label="${entry#*:}" # Label or fallback to variable name
-        [[ "$label" == "$var" ]] && label="$var"
-        if [[ -n "${(P)var}" ]]; then
-            local value="${(P)var}"
-            if [[ "$PWD" != "/" && "$value" == "$PWD"* ]]; then
-                value="${value/#$PWD/.}" # Replace PWD with '.'
-            fi
-            value="${value/#$HOME/~}" # Replace HOME with '~'
-            value="${value/#.\//}"
-            local color="$(random_color $var)"
-            env_prompt+="%F{$color}${label}${value}%f "
+        var=${entry%%:*}
+        rest=${entry#*:}
+        color=${rest%%:*}
+        label=${rest#*:}
+
+        value=${(P)var}
+        [[ -n "$value" ]] || continue
+
+        # Shorten paths: drop a leading $PWD, then collapse $HOME to ~.
+        if [[ "$PWD" != "/" && "$value" == "$PWD"/* ]]; then
+            value=${value#$PWD/}
+        elif [[ "$value" == "$PWD" ]]; then
+            value="."
         fi
+        value=${value/#$HOME/\~}
+
+        REPLY+="%F{$color}${label}${value}%f "
     done
-    echo "$env_prompt"
 }
 
-# Cached node version for prompt (avoids slow nvm call on every prompt).
-# _from_nix tracks whether the resolved node came from a nix dev shell.
-_cached_node_version=""
-_cached_node_dir=""
-_cached_node_from_nix=0
+typeset -g PROMPT_NODE_SEG="" PROMPT_PY_SEG="" _prompt_runtime_sig=""
 
-# Cached python version, populated only when python comes from a nix dev shell.
-_cached_py_version=""
-_cached_py_dir=""
+# Recompute the runtime segments only when their inputs change (cwd or the
+# env vars that gate them), so node/python are forked on cd and on in-place
+# venv/nvm/nix activation, but not on every prompt.
+_prompt_update_runtimes() {
+    local sig="$PWD|$IN_NIX_SHELL|$NVM_BIN|$VIRTUAL_ENV"
+    [[ "$sig" == "$_prompt_runtime_sig" ]] && return
+    _prompt_runtime_sig=$sig
+    _build_node_segment; PROMPT_NODE_SEG=$REPLY
+    _build_py_segment;   PROMPT_PY_SEG=$REPLY
+}
 
-
-precmd() {
+_prompt_precmd() {
     vcs_info
-    VCS_MSG="${vcs_info_msg_0_}"
+    _prompt_update_runtimes
 
-    # Build the main prompt
-    PROMPT="%B%F{red}%#%b%f "
-    PROMPT="%~ $PROMPT"
+    PROMPT="%~ %B%F{red}%#%b%f "
 
-    # Build rprompt pieces inline (avoids subshell overhead from $(...))
-    local env_part="" node_part="" nix_part="" py_part=""
-    env_part="$(build_env_prompt)"
-
-    # Nix dev-shell indicator: glyph + pure/impure, only inside a shell.
+    local nix_part="" env_part vcs_part=""
     [[ -n "$IN_NIX_SHELL" ]] && nix_part="%F{cyan}${NIX_ICON} ${IN_NIX_SHELL}%f "
+    _build_env_segment; env_part=$REPLY
+    [[ -n "$vcs_info_msg_0_" ]] && vcs_part="%F{blue}${vcs_info_msg_0_}%f"
 
-    # node: recompute only when the directory changes. Show it when it comes
-    # from a nix dev shell (cyan, signalling origin) or from nvm (yellow).
-    if [[ "$PWD" != "$_cached_node_dir" ]]; then
-        _cached_node_dir="$PWD"
-        _cached_node_version=""
-        _cached_node_from_nix=0
-        if [[ -n "$IN_NIX_SHELL" || -n "$NVM_BIN" ]] && (( $+commands[node] )); then
-            _cached_node_version=$(node --version 2>/dev/null)
-            [[ "${commands[node]}" == /nix/store/* ]] && _cached_node_from_nix=1
-        fi
-    fi
-    if [[ -n "$_cached_node_version" ]]; then
-        if (( _cached_node_from_nix )); then
-            node_part="%F{cyan}${NODE_ICON:-node} ${_cached_node_version}%f "
-        elif [[ -n "$NVM_BIN" ]]; then
-            node_part="%F{yellow}${NODE_ICON:-node} ${_cached_node_version}%f "
-        fi
-    fi
-
-    # python: shown only when provided by a nix dev shell (cyan), per-dir cache.
-    if [[ "$PWD" != "$_cached_py_dir" ]]; then
-        _cached_py_dir="$PWD"
-        _cached_py_version=""
-        if [[ -n "$IN_NIX_SHELL" && "${commands[python3]}" == /nix/store/* ]]; then
-            _cached_py_version="${${(z)$(python3 --version 2>&1)}[2]}"
-        fi
-    fi
-    [[ -n "$_cached_py_version" ]] && py_part="%F{cyan}$PYTHON_ICON ${_cached_py_version}%f "
-
-    RPROMPT="${nix_part}${node_part}${py_part}${env_part}%F{blue}${VCS_MSG:+${VCS_MSG}}%f"
+    RPROMPT="${nix_part}${PROMPT_NODE_SEG}${PROMPT_PY_SEG}${env_part}${vcs_part}"
 }
 
-setopt PROMPT_SUBST
+add-zsh-hook precmd _prompt_precmd
 
-# PS2 for multiline commands
-PS2=" >> "
-export PS2
+# PS2 for multiline commands.
+export PS2=" >> "
 
-# DOAS prompt customization
+# doas prompt.
 export DOAS_PROMPT="%/ %B%F{yellow}%#%b%f "
