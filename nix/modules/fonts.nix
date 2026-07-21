@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   # Replaces the font-* casks; noto-fonts covers the Sans/Serif/Math/
   # Mono/Symbols variants that were separate casks. Installed to
   # /Library/Fonts/Nix Fonts by nix-darwin.

@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ ... }: {
   homebrew = {
     enable = true;
 
@@ -11,9 +10,7 @@
       cleanup = "uninstall";
     };
 
-    taps = [
-      "hookdeck/hookdeck"
-    ];
+    taps = [ "hookdeck/hookdeck" ];
 
     # Intentional holdouts. C++ libs stay until per-project nix dev
     # shells exist; ollama is a launchd service; nvm serves node projects
