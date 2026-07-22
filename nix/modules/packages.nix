@@ -9,6 +9,7 @@
     # CLI
     ## Utils
     pkgs.bat
+    pkgs.btop
     pkgs.csvkit
     pkgs.fd
     pkgs.fx
@@ -45,9 +46,6 @@
     pkgs.neovim
     pkgs.tree-sitter
     pkgs.vim
-    ## Docker
-    pkgs.podman
-    pkgs.podman-compose
     ## C++
     pkgs.cmake
     pkgs.clang-tools
