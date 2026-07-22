@@ -108,24 +108,31 @@ let
     '';
   };
 
-  # `docker`/`docker-compose` as thin shims over podman so the docker CLI
-  # (and its abbreviations) transparently drive podman -- no DOCKER_HOST
-  # needed, since podman uses its own default machine connection. Shadows
-  # any stale /usr/local/bin/docker as long as the nix profile precedes it
-  # on PATH (it does).
-  dockerCompat = pkgs.runCommand "docker-podman-compat" { } ''
-    mkdir -p "$out/bin"
-    ln -s ${pkgs.podman}/bin/podman "$out/bin/docker"
-    ln -s ${pkgs.podman-compose}/bin/podman-compose "$out/bin/docker-compose"
-  '';
+  # Real Docker CLI + Compose v2 + buildx from nixpkgs (no daemon). The
+  # client talks to the Podman machine's Docker-compatible socket via a
+  # `docker context` (set up once; see docs/Code/podman.md). This replaces
+  # the earlier podman-as-docker shim: `./stack` and the podman docs drive
+  # `docker` / `docker compose`, which need the genuine CLI -- context
+  # support and faithful compose networking/CMD that podman-compose lacks.
+  # docker-client bundles no plugins, so compose + buildx are wired into
+  # ~/.docker/cli-plugins by the activation script below.
+  dockerCompose = pkgs.docker-compose;
+  dockerBuildx = pkgs.docker-buildx;
 in
 {
   environment.systemPackages = [
     pkgs.podman
     pkgs.podman-compose
     reconcile
-    dockerCompat
+    pkgs.docker-client
+    dockerCompose
+    dockerBuildx
   ];
+
+  # Podman's Docker-compat API has no BuildKit, but the modern docker CLI
+  # defaults to it; force the classic builder (buildah underneath) so
+  # `docker build` / `docker compose build` work against the podman socket.
+  environment.variables.DOCKER_BUILDKIT = "0";
 
   # Materialize containers.conf into the primary user's home. macOS podman
   # reads ~/.config, not /etc. nix-darwin only runs the fixed-name
@@ -134,12 +141,21 @@ in
   # Activation runs as root, so install with the user's ownership.
   system.activationScripts.postActivation.text =
     let
-      dir = "/Users/${config.system.primaryUser}/.config/containers";
+      user = config.system.primaryUser;
+      home = "/Users/${user}";
     in
     ''
-      echo "installing containers.conf for ${config.system.primaryUser}..." >&2
-      /usr/bin/install -d -o ${config.system.primaryUser} -m 0755 "${dir}"
-      /usr/bin/install -o ${config.system.primaryUser} -m 0644 \
-        ${containersConf} "${dir}/containers.conf"
+      echo "installing containers.conf for ${user}..." >&2
+      /usr/bin/install -d -o ${user} -m 0755 "${home}/.config/containers"
+      /usr/bin/install -o ${user} -m 0644 \
+        ${containersConf} "${home}/.config/containers/containers.conf"
+
+      echo "wiring docker cli-plugins (compose, buildx) for ${user}..." >&2
+      /usr/bin/install -d -o ${user} -m 0755 "${home}/.docker" "${home}/.docker/cli-plugins"
+      /bin/ln -sfn ${dockerCompose}/bin/docker-compose "${home}/.docker/cli-plugins/docker-compose"
+      /bin/ln -sfn ${dockerBuildx}/bin/docker-buildx "${home}/.docker/cli-plugins/docker-buildx"
+      /usr/sbin/chown -h ${user} \
+        "${home}/.docker/cli-plugins/docker-compose" \
+        "${home}/.docker/cli-plugins/docker-buildx"
     '';
 }
