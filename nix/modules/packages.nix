@@ -1,4 +1,24 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  # nixpkgs' whisper-cpp postPatch has a bug: its `grep -q install(` guard
+  # omits the filename, so it reads empty stdin and fires for every example
+  # target, appending `install(TARGETS whisper.coreml LIBRARY)` to
+  # src/CMakeLists.txt seven times unconditionally. With CoreML enabled that
+  # target links -framework CoreML, which segfaults `ld` on this pin; with it
+  # disabled the target is missing and configure fails. So: disable CoreML
+  # (Metal GPU accel is unaffected) and supply a corrected postPatch that
+  # only installs the example binaries. Drop this once nixpkgs fixes the guard.
+  whisper-cpp = (pkgs.whisper-cpp.override { coreMLSupport = false; }).overrideAttrs (_: {
+    postPatch = ''
+      for target in examples/{bench,command,cli,quantize,server,stream,talk-llama}/CMakeLists.txt; do
+        if ! grep -q -F 'install(' "$target"; then
+          echo 'install(TARGETS ''${TARGET} RUNTIME)' >> "$target"
+        fi
+      done
+    '';
+  });
+in
+{
   environment.systemPackages = [
     # Core
     pkgs.coreutils
@@ -92,6 +112,6 @@
     ## AI
     pkgs.opencode
     pkgs.pi-coding-agent
-    pkgs.whisper-cpp
+    whisper-cpp
   ];
 }
