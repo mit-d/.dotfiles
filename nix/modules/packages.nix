@@ -37,6 +37,7 @@ in
     pkgs.gawk
     pkgs.getopt
     pkgs.gnused
+    pkgs.grex
     pkgs.htop
     pkgs.imagemagick
     pkgs.jq

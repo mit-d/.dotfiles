@@ -143,6 +143,7 @@ config.local.*
 !.claude/settings.json
 !CLAUDE.md
 !.claude/CLAUDE.md
+.claude/skills/modernize
 .superpowers/
 .worktrees/
 .worktreeinclude
