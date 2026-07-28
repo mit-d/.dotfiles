@@ -1,0 +1,150 @@
+"""Turn a live profile tree into the two committed source files.
+
+The inverse of ffbm_model.generate, plus the metadata inference that makes
+bootstrapping possible without hand-writing 22 envs.
+"""
+
+import copy
+import re
+
+import ffbm_model
+
+# The normalization target. Deliberately constants rather than inferred from
+# the live profile: the live URLs have drifted, and inferring would encode
+# the very drift this pipeline exists to fix.
+DEFAULT_APPS = {
+    "warranty": {
+        "url": "https://warranty-{env}.bidboxpro.com/",
+        "keyword": "{env}",
+        "tag": "warranty",
+    },
+    "affiliate": {
+        "url": "https://affiliate-{env}.bidboxpro.com/",
+        "keyword": "{env}:affiliate",
+        "tag": "affiliate",
+    },
+    "core": {
+        "url": "https://core-{env}.bidboxpro.com/admin/login/?next=/admin/",
+        "keyword": "{env}:core",
+        "tag": "core",
+    },
+    "product": {
+        "url": "https://product-{env}.bidboxpro.com/",
+        "keyword": "{env}:product",
+        "tag": "product",
+    },
+}
+
+APP_NAMES = tuple(DEFAULT_APPS)
+APP_TAGS = {a["tag"] for a in DEFAULT_APPS.values()}
+
+# Observed verticals. Anything else that is not an app tag or a c1: tag
+# falls through to the env's plain `tags` list.
+VERTICALS = {
+    "homewarranty", "automotive", "boat", "builder",
+    "firearm", "manufacture", "multi",
+}
+
+# Its children look canonical (warranty-local, ...) but localhost URLs do not
+# fit the {env} template, so this folder stays static.
+STATIC_DASHBOARD_FOLDERS = {"Local"}
+
+DASHBOARDS = "Dashboards"
+CANONICAL = re.compile(r"^(%s)-(.+)$" % "|".join(APP_NAMES))
+
+
+def split(tree: dict) -> tuple:
+    """Return (static_tree, envs_cfg)."""
+    static = copy.deepcopy(tree)
+    toolbar = ffbm_model.find_root(static, "toolbarFolder")
+    dashboards = next(
+        (c for c in toolbar["children"] if c["title"] == DASHBOARDS), None
+    )
+    groups = []
+    if dashboards is not None:
+        _collect(dashboards, [], groups)
+        _prune(dashboards)
+    ffbm_model.reindex(static)
+    return static, {"apps": dict(DEFAULT_APPS), "groups": groups}
+
+
+def _is_env_folder(node: dict) -> bool:
+    if node.get("typeCode") != 2 or node["title"] in STATIC_DASHBOARD_FOLDERS:
+        return False
+    slug = node["title"]
+    return any(
+        c.get("typeCode") == 1 and _canonical_app(c["title"], slug)
+        for c in node.get("children", [])
+    )
+
+
+def _canonical_app(title: str, slug: str):
+    """The app name if `title` is `<app>-<slug>`, else None."""
+    match = CANONICAL.match(title or "")
+    if match and match.group(2).lower() == slug.lower():
+        return match.group(1)
+    return None
+
+
+def _collect(node: dict, path: list, groups: list) -> None:
+    """Walk Dashboards, recording env folders grouped by their folder path."""
+    envs = [c for c in node.get("children", []) if _is_env_folder(c)]
+    if envs:
+        groups.append({"path": list(path), "envs": [_env_entry(e) for e in envs]})
+    for child in node.get("children", []):
+        if child.get("typeCode") == 2 and not _is_env_folder(child):
+            if child["title"] in STATIC_DASHBOARD_FOLDERS:
+                continue
+            _collect(child, path + [child["title"]], groups)
+
+
+def _env_entry(folder: dict) -> dict:
+    slug = folder["title"]
+    entry = {"slug": slug}
+
+    tags, extras = set(), []
+    for child in folder.get("children", []):
+        if child.get("typeCode") == 1 and _canonical_app(child["title"], slug):
+            tags.update(t for t in child.get("tags", "").split(",") if t)
+        else:
+            extras.append(_extra_entry(child))
+
+    client = next((t[3:] for t in sorted(tags) if t.startswith("c1:")), None)
+    vertical = next((t for t in sorted(tags) if t in VERTICALS), None)
+    plain = sorted(
+        t for t in tags
+        if t not in APP_TAGS and t not in VERTICALS and not t.startswith("c1:")
+    )
+
+    if client:
+        entry["client"] = client
+    if vertical:
+        entry["vertical"] = vertical
+    if plain:
+        entry["tags"] = plain
+    if extras:
+        entry["extras"] = extras
+    return entry
+
+
+def _extra_entry(node: dict) -> dict:
+    extra = {"title": node.get("title", ""), "url": node.get("uri", "")}
+    if node.get("keyword"):
+        extra["keyword"] = node["keyword"]
+    if node.get("tags"):
+        extra["tags"] = [t for t in node["tags"].split(",") if t]
+    return extra
+
+
+def _prune(node: dict) -> None:
+    """Drop env folders, then any group folder left empty by that removal."""
+    kept = []
+    for child in node.get("children", []):
+        if _is_env_folder(child):
+            continue
+        if child.get("typeCode") == 2 and child["title"] not in STATIC_DASHBOARD_FOLDERS:
+            _prune(child)
+            if not child["children"]:
+                continue
+        kept.append(child)
+    node["children"] = kept
