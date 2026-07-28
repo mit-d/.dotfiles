@@ -37,6 +37,9 @@ autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey "^X^E" edit-command-line
 
+## zmv for glob file manip
+autoload -Uz zmv
+
 # History settings
 # sharehistory implies incremental append; histignorealldups supersedes the
 # narrower dup options, so those flags are intentionally omitted here.
@@ -79,17 +82,7 @@ fi
 
 # FZF history search
 if command -v fzf &>/dev/null; then
-    fzf-history-widget() {
-        local selected_command
-        selected_command="$(fc -lrn 1 | fzf --height=40% --reverse --prompt='History> ')"
-        if [[ -n "$selected_command" ]]; then
-            BUFFER="$selected_command"
-            CURSOR=${#BUFFER}
-        fi
-        zle reset-prompt
-    }
-    zle -N fzf-history-widget
-    bindkey '^R' fzf-history-widget
+    source <(fzf --zsh)
 fi
 
 # Run current line as root
@@ -121,7 +114,7 @@ if [[ -o interactive && -t 1 && -z "$TMUX" && -z "$ZSH_NO_TMUX" ]] && command -v
 fi
 
 # Activate python .venv if it exists
-[[ -e "$HOME/.venv/bin/activate" ]] && source "$HOME/.venv/bin/activate"
+# [[ -e "$HOME/.venv/bin/activate" ]] && source "$HOME/.venv/bin/activate"
 
 ## Bun completions
 [[ -s "$HOME/.bun/_bun" ]] && source "$HOME/.bun/_bun"
@@ -138,3 +131,18 @@ for plugin in zsh-autosuggestions zsh-syntax-highlighting; do
         source "/opt/homebrew/share/$plugin/$plugin.zsh"
     fi
 done
+
+
+## Named Dirs
+# Essentially creates a ~-prefixed alias for each
+
+# Named Dirs
+hash -d vg="${WH_VANGUARD_PROJECT_DIR:-~/Source/vanguard}"
+hash -d wt="${WH_VANGUARD_PROJECT_DIR:-~/Source/vanguard}/.worktrees"
+hash -d migrations="${WH_VANGUARD_PROJECT_DIR:-~/Source/vanguard}/jaguar/bbp/migrations"
+hash -d o=~/Documents/Obsidian
+hash -d nix=~/.config/nix
+hash -d zsh="${ZDOTDIR:-${HOME}}"
+hash -d .=~/.dotfiles
+hash -d remote-files=/opt/remote-files
+hash -d projects=/opt/project-files

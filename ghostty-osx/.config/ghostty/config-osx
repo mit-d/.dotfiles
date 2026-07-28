@@ -1,7 +1,9 @@
 # macOS-specific Ghostty settings
 
 # Bypass /usr/bin/login for faster startup
-command = /opt/homebrew/bin/tmux
+command = /run/current-system/sw/bin/tmux
+## TODO: figure out why this doesn't work on reboot w/ nix
+# command = tmux
 # command = /bin/zsh
 
 # macOS integration

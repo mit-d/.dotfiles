@@ -119,6 +119,25 @@ repos:
     hooks:
       - id: pyproject-fmt
 
+  - repo: local
+    hooks:
+      - id: nixfmt
+        name: nixfmt
+        entry: nixfmt
+        language: system
+        types: [nix]
+      - id: deadnix
+        name: deadnix
+        entry: deadnix --fail
+        language: system
+        types: [nix]
+      - id: statix
+        name: statix
+        entry: statix check
+        language: system
+        types: [nix]
+        pass_filenames: false
+
   - repo: https://github.com/mit-d/check-unicode
     rev: v0.3.2
     hooks:

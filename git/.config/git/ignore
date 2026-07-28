@@ -143,11 +143,18 @@ config.local.*
 !.claude/settings.json
 !CLAUDE.md
 !.claude/CLAUDE.md
+.claude/skills/modernize
 .superpowers/
 .worktrees/
 .worktreeinclude
+.pi/
+.pi-subagents/
 
-.claude/skills/reporting
+# Skills still in testing/staging phase
+# .claude/skills/reporting # MERGED in vanguard
+.claude/skills/linear-cli
+pyproject.staging.toml
+uv.staging.lock
 
 # JetBrains IDEs
 .idea

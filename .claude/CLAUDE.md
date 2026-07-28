@@ -29,6 +29,29 @@ Options:
 - `FILE=<path>` - File to adopt (for adopt command)
 - `PACKAGE=<name>` - Target package (for adopt command)
 
+## Nix / nix-darwin
+
+The repo root is a nix flake (`flake.nix`) providing the nix-darwin system
+config for this Mac (`darwinConfigurations.warrantyhub`, with a hostname
+alias so `--flake ~/.dotfiles` needs no attr). Modules live in
+`nix/modules/`:
+
+- `core.nix` - nix settings, shell enablement, primaryUser, stateVersion
+- `packages.nix` - CLI packages (`environment.systemPackages`)
+- `homebrew.nix` - declarative Homebrew (taps/brews/casks). Enforcing:
+  `cleanup = "uninstall"` removes anything not declared on next switch
+- `defaults.nix` - curated macOS `system.defaults`
+- `fonts.nix` - fonts via `fonts.packages` (installed to
+  `/Library/Fonts/Nix Fonts`)
+
+Rebuild: `sudo darwin-rebuild switch --flake ~/.dotfiles`.
+Build-only check: `darwin-rebuild build --flake ~/.dotfiles`.
+New software goes in `packages.nix` (nix, preferred) or `homebrew.nix`
+(casks/taps/holdouts); ad-hoc `brew install`s are removed at the next
+switch. `nix/` is NOT a stow package (not listed in any flavor file).
+The flake only sees git-tracked files: `git add` new .nix files before
+building.
+
 ## Architecture
 
 **Stow Package Structure**: Each directory (bash/, zsh/, vim/, etc.) is a stow
@@ -36,9 +59,10 @@ package. Files inside are symlinked relative to `$HOME`. For example,
 `zsh/.zshenv` becomes `~/.zshenv` and `vim/.config/nvim/` becomes
 `~/.config/nvim/`.
 
-**Ignored Packages**: The `IGNORE_DIRS` variable in `Makefile` excludes certain
-packages from stowing (currently Linux-specific configs like dwm/, polybar/,
-etc.).
+**Package Selection**: Stow packages are selected per-platform by
+`flavors/<flavor>.conf` (auto-detected from the OS; override with
+`FLAVOR=<name>`). Directories not listed in the active flavor file are
+ignored.
 
 **Submodules**: The repo includes git submodules for zsh plugins:
 

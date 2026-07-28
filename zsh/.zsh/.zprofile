@@ -23,8 +23,12 @@ unset _editor
 ## Detect and set COPY and PASTE commands based on OS (avoids unnecessary command -v calls)
 case "$OSTYPE" in
     darwin*)
-        export COPY_COMMAND="pbcopy"
-        export PASTE_COMMAND="pbpaste"
+        if command -v pbcopy &>/dev/null; then
+            export COPY_COMMAND="pbcopy"
+        fi
+        if command -v pbpaste &>/dev/null; then
+            export PASTE_COMMAND="pbpaste"
+        fi
         ;;
     linux*)
         if command -v wl-copy &>/dev/null; then

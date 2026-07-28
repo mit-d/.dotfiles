@@ -31,6 +31,8 @@ jobs:
           sudo apt-get install -y fish
 
       - uses: pre-commit/action@v3.0.1
+        env:
+          SKIP: nixfmt,deadnix,statix
 
   zunit:
     name: Zunit tests
@@ -61,3 +63,19 @@ jobs:
 
       - name: Run tests
         run: zunit
+
+  nix-build:
+    name: Nix flake check + darwin build
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - uses: DeterminateSystems/nix-installer-action@v22
+
+      - name: flake check (nixfmt/deadnix/statix)
+        run: nix flake check --accept-flake-config
+
+      - name: build darwin system
+        run: nix build .#darwinConfigurations.warrantyhub.system
