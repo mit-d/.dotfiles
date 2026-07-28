@@ -101,3 +101,56 @@ def test_format_report_is_readable():
     assert "toolbar/rc/warranty-rc" in text
     assert "keyword" in text
     assert "1 changed" in text
+
+
+def test_colliding_paths_are_disambiguated_not_dropped():
+    tree = tree_with(
+        [
+            ("Docs", "Dup", "https://a/", "", ""),
+            ("Docs", "Dup", "https://b/", "", ""),
+            ("Docs", "Dup", "https://c/", "", ""),
+        ]
+    )
+    flat = ffbm_compare.flatten(tree)
+    keys = [k for k in flat if k.startswith("toolbar/Docs/Dup")]
+    assert len(keys) == 3
+    uris = {flat[k]["uri"] for k in keys}
+    assert uris == {"https://a/", "https://b/", "https://c/"}
+    for key in keys:
+        assert flat[key]["uri"] in key
+
+
+def test_format_report_renders_added_and_removed_lines():
+    left = tree_with([("rc", "core-rc", "https://c/", "", "")])
+    right = tree_with([("rc", "new-thing", "https://n/", "", "")])
+    text = ffbm_compare.format_report(ffbm_compare.diff(left, right))
+    assert "toolbar/rc/core-rc" in text
+    assert "toolbar/rc/new-thing" in text
+    assert text.index("toolbar/rc/core-rc") < text.index("toolbar/rc/new-thing")
+
+
+def test_diff_reports_moved_when_uri_unchanged():
+    left = tree_with([("rc", "warranty-rc", "https://w/", "", "")])
+    right = tree_with([("archive", "warranty-rc", "https://w/", "", "")])
+    result = ffbm_compare.diff(left, right)
+    assert result["added"] == []
+    assert result["removed"] == []
+    assert result["moved"] == [
+        {
+            "uri": "https://w/",
+            "from": "toolbar/rc/warranty-rc",
+            "to": "toolbar/archive/warranty-rc",
+        }
+    ]
+    assert not ffbm_compare.is_clean(result)
+
+
+def test_is_clean_false_when_only_moved():
+    left = tree_with([("rc", "warranty-rc", "https://w/", "", "")])
+    right = tree_with([("archive", "warranty-rc", "https://w/", "", "")])
+    result = ffbm_compare.diff(left, right)
+    assert result["added"] == []
+    assert result["removed"] == []
+    assert result["changed"] == []
+    assert result["moved"]
+    assert ffbm_compare.is_clean(result) is False
