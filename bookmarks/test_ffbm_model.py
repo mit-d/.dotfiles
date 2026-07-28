@@ -73,3 +73,121 @@ def test_serialize_is_ascii_and_newline_terminated():
     assert text.isascii()
     assert "\\u2013" in text
     assert json.loads(text)["title"] == "Framework – Sourcery"
+
+
+def minimal_static():
+    """A four-root tree whose Dashboards folder holds only static Local."""
+    return {
+        "guid": "root________",
+        "title": "",
+        "index": 0,
+        "dateAdded": 1,
+        "lastModified": 1,
+        "typeCode": 2,
+        "type": ffbm_model.CONTAINER,
+        "root": "placesRoot",
+        "children": [
+            {
+                "guid": "menu________",
+                "title": "menu",
+                "index": 0,
+                "dateAdded": 1,
+                "lastModified": 1,
+                "typeCode": 2,
+                "type": ffbm_model.CONTAINER,
+                "root": "bookmarksMenuFolder",
+                "children": [],
+            },
+            {
+                "guid": "toolbar_____",
+                "title": "toolbar",
+                "index": 1,
+                "dateAdded": 1,
+                "lastModified": 1,
+                "typeCode": 2,
+                "type": ffbm_model.CONTAINER,
+                "root": "toolbarFolder",
+                "children": [
+                    ffbm_model.folder("DashGuid0001", "Dashboards", [
+                        ffbm_model.folder("LocalGuid001", "Local", []),
+                    ]),
+                ],
+            },
+            {
+                "guid": "unfiled_____",
+                "title": "unfiled",
+                "index": 2,
+                "dateAdded": 1,
+                "lastModified": 1,
+                "typeCode": 2,
+                "type": ffbm_model.CONTAINER,
+                "root": "unfiledBookmarksFolder",
+                "children": [],
+            },
+            {
+                "guid": "mobile______",
+                "title": "mobile",
+                "index": 3,
+                "dateAdded": 1,
+                "lastModified": 1,
+                "typeCode": 2,
+                "type": ffbm_model.CONTAINER,
+                "root": "mobileFolder",
+                "children": [],
+            },
+        ],
+    }
+
+
+ENVS_CFG = {
+    "apps": APPS,
+    "groups": [
+        {"path": ["Prod"], "envs": [{"slug": "rc", "tags": ["prod"]}]},
+        {"path": ["Prod", "Other"], "envs": [{"slug": "devlag"}]},
+        {"path": ["C1 Prod"], "envs": [{"slug": "gsa", "client": "gsa"}]},
+    ],
+}
+
+
+def dashboards_of(tree):
+    toolbar = ffbm_model.find_root(tree, "toolbarFolder")
+    return next(c for c in toolbar["children"] if c["title"] == "Dashboards")
+
+
+def test_generate_merges_overlapping_group_paths():
+    tree = ffbm_model.generate(ENVS_CFG, minimal_static())
+    dash = dashboards_of(tree)
+
+    titles = [c["title"] for c in dash["children"]]
+    # one Prod folder, not two, and static Local is preserved
+    assert titles == ["Local", "Prod", "C1 Prod"]
+
+    prod = next(c for c in dash["children"] if c["title"] == "Prod")
+    assert [c["title"] for c in prod["children"]] == ["rc", "Other"]
+
+    other = next(c for c in prod["children"] if c["title"] == "Other")
+    assert [c["title"] for c in other["children"]] == ["devlag"]
+
+
+def test_generate_emits_one_bookmark_per_app():
+    tree = ffbm_model.generate(ENVS_CFG, minimal_static())
+    dash = dashboards_of(tree)
+    prod = next(c for c in dash["children"] if c["title"] == "Prod")
+    rc = next(c for c in prod["children"] if c["title"] == "rc")
+
+    assert [c["title"] for c in rc["children"]] == ["warranty-rc", "core-rc"]
+    assert [c["keyword"] for c in rc["children"]] == ["rc", "rc:core"]
+    assert [c["index"] for c in rc["children"]] == [0, 1]
+
+
+def test_generate_does_not_mutate_static_input():
+    static = minimal_static()
+    before = ffbm_model.dumps(static)
+    ffbm_model.generate(ENVS_CFG, static)
+    assert ffbm_model.dumps(static) == before
+
+
+def test_generate_is_byte_identical_across_runs():
+    first = ffbm_model.dumps(ffbm_model.generate(ENVS_CFG, minimal_static()))
+    second = ffbm_model.dumps(ffbm_model.generate(ENVS_CFG, minimal_static()))
+    assert first == second
