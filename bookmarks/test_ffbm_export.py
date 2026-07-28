@@ -112,3 +112,77 @@ def test_export_writes_app_templates():
     assert set(envs["apps"]) == {"warranty", "affiliate", "core", "product"}
     assert envs["apps"]["core"]["url"].endswith("/admin/login/?next=/admin/")
     assert envs["apps"]["warranty"]["keyword"] == "{env}"
+
+
+def _dashboards_tree(children):
+    """Toolbar/Dashboards containing exactly the given children."""
+    dash = ffbm_model.folder("gd", "Dashboards", children)
+    return {
+        "guid": "root________",
+        "title": "",
+        "index": 0,
+        "dateAdded": 1,
+        "lastModified": 1,
+        "typeCode": 2,
+        "type": ffbm_model.CONTAINER,
+        "root": "placesRoot",
+        "children": [
+            {
+                "guid": "toolbar_____",
+                "title": "toolbar",
+                "index": 0,
+                "dateAdded": 1,
+                "lastModified": 1,
+                "typeCode": 2,
+                "type": ffbm_model.CONTAINER,
+                "root": "toolbarFolder",
+                "children": [dash],
+            }
+        ],
+    }
+
+
+def test_env_folder_with_annotated_title_yields_folder_override():
+    vscdemo = ffbm_model.folder("g1", "vscdemo (DEPRECATED)", [
+        bookmark("warranty-vscdemo", "https://warranty-vscdemo.bidboxpro.com/"),
+        bookmark("affiliate-vscdemo", "https://affiliate-vscdemo.bidboxpro.com/"),
+        bookmark("core-devlag", "https://core-devlag.bidboxpro.com/admin/login/"),
+    ])
+    tree = _dashboards_tree([ffbm_model.folder("g2", "Prod", [vscdemo])])
+    _static, envs = ffbm_export.split(tree)
+
+    prod = next(g for g in envs["groups"] if g["path"] == ["Prod"])
+    entry = prod["envs"][0]
+    assert entry["slug"] == "vscdemo"
+    assert entry["folder"] == "vscdemo (DEPRECATED)"
+    assert [e["title"] for e in entry["extras"]] == ["core-devlag"]
+
+
+def test_extra_verticals_are_kept_as_tags():
+    demo = ffbm_model.folder("g1", "automotivedemo", [
+        bookmark("warranty-automotivedemo",
+                 "https://warranty-automotivedemo.bidboxpro.com/",
+                 None, "warranty,automotive,manufacture,prod"),
+    ])
+    tree = _dashboards_tree([ffbm_model.folder("g2", "Prod", [demo])])
+    _static, envs = ffbm_export.split(tree)
+
+    entry = next(g for g in envs["groups"] if g["path"] == ["Prod"])["envs"][0]
+    assert entry["vertical"] == "automotive"
+    assert entry["tags"] == ["manufacture", "prod"]
+
+
+def test_group_folder_with_loose_bookmark_is_not_an_env():
+    acclhw = ffbm_model.folder("g1", "acclhw", [
+        bookmark("warranty-acclhw", "https://warranty-acclhw.bidboxpro.com/"),
+    ])
+    c1prod = ffbm_model.folder("g2", "C1 Prod", [
+        acclhw,
+        bookmark("Portal", "https://portal.example/"),
+    ])
+    tree = _dashboards_tree([c1prod])
+    _static, envs = ffbm_export.split(tree)
+
+    paths = [g["path"] for g in envs["groups"]]
+    assert paths == [["C1 Prod"]]
+    assert [e["slug"] for e in envs["groups"][0]["envs"]] == ["acclhw"]

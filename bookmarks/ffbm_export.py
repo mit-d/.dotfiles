@@ -4,6 +4,7 @@ The inverse of ffbm_model.generate, plus the metadata inference that makes
 bootstrapping possible without hand-writing 22 envs.
 """
 
+import collections
 import copy
 import re
 
@@ -71,11 +72,43 @@ def split(tree: dict) -> tuple:
 def _is_env_folder(node: dict) -> bool:
     if node.get("typeCode") != 2 or node["title"] in STATIC_DASHBOARD_FOLDERS:
         return False
-    slug = node["title"]
-    return any(
-        c.get("typeCode") == 1 and _canonical_app(c["title"], slug)
-        for c in node.get("children", [])
-    )
+    slug = _derive_slug(node, _candidate_slugs(node))
+    if slug is None:
+        return False
+    title = node["title"]
+    return title == slug or title.startswith(slug)
+
+
+def _candidate_slugs(node: dict) -> list:
+    """Slug candidates read from each canonical-looking child's title.
+
+    The folder title itself is not trusted: an annotation like
+    " (DEPRECATED)" would otherwise make every canonical child look
+    non-canonical, since none of them carry the annotation.
+    """
+    slugs = []
+    for child in node.get("children", []):
+        if child.get("typeCode") != 1:
+            continue
+        match = CANONICAL.match(child.get("title") or "")
+        if match:
+            slugs.append(match.group(2))
+    return slugs
+
+
+def _derive_slug(node: dict, candidates: list):
+    """The most common candidate slug, deterministically tie-broken.
+
+    Ties prefer a candidate equal to the folder title (the common case),
+    then fall back to alphabetically first so the result never depends on
+    child order.
+    """
+    if not candidates:
+        return None
+    counts = collections.Counter(candidates)
+    top = max(counts.values())
+    tied = sorted(s for s, n in counts.items() if n == top)
+    return node["title"] if node["title"] in tied else tied[0]
 
 
 def _canonical_app(title: str, slug: str):
@@ -99,8 +132,10 @@ def _collect(node: dict, path: list, groups: list) -> None:
 
 
 def _env_entry(folder: dict) -> dict:
-    slug = folder["title"]
+    slug = _derive_slug(folder, _candidate_slugs(folder))
     entry = {"slug": slug}
+    if folder["title"] != slug:
+        entry["folder"] = folder["title"]
 
     tags, extras = set(), []
     for child in folder.get("children", []):
@@ -111,9 +146,11 @@ def _env_entry(folder: dict) -> dict:
 
     client = next((t[3:] for t in sorted(tags) if t.startswith("c1:")), None)
     vertical = next((t for t in sorted(tags) if t in VERTICALS), None)
+    # Only the chosen vertical is stripped; any others fall through to plain
+    # tags rather than being silently dropped.
     plain = sorted(
         t for t in tags
-        if t not in APP_TAGS and t not in VERTICALS and not t.startswith("c1:")
+        if t not in APP_TAGS and t != vertical and not t.startswith("c1:")
     )
 
     if client:
