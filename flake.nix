@@ -25,6 +25,7 @@
           ./nix/modules/homebrew.nix
           ./nix/modules/defaults.nix
           ./nix/modules/fonts.nix
+          ./nix/modules/obsidian-sync.nix
         ];
       };
     in
