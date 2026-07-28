@@ -1,0 +1,92 @@
+{
+  "guid": "root________",
+  "title": "",
+  "index": 0,
+  "dateAdded": 1785196800000000,
+  "lastModified": 1785196800000000,
+  "typeCode": 2,
+  "type": "text/x-moz-place-container",
+  "root": "placesRoot",
+  "children": [
+    {
+      "guid": "menu________",
+      "title": "menu",
+      "index": 0,
+      "dateAdded": 1785196800000000,
+      "lastModified": 1785196800000000,
+      "typeCode": 2,
+      "type": "text/x-moz-place-container",
+      "root": "bookmarksMenuFolder",
+      "children": []
+    },
+    {
+      "guid": "toolbar_____",
+      "title": "toolbar",
+      "index": 1,
+      "dateAdded": 1785196800000000,
+      "lastModified": 1785196800000000,
+      "typeCode": 2,
+      "type": "text/x-moz-place-container",
+      "root": "toolbarFolder",
+      "children": [
+        {
+          "guid": "SpikeFolder1",
+          "title": "SpikeEnv",
+          "index": 0,
+          "dateAdded": 1785196800000000,
+          "lastModified": 1785196800000000,
+          "typeCode": 2,
+          "type": "text/x-moz-place-container",
+          "children": [
+            {
+              "guid": "SpikeBmark01",
+              "title": "warranty-spike",
+              "index": 0,
+              "dateAdded": 1785196800000000,
+              "lastModified": 1785196800000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://warranty-spike.example.com/",
+              "keyword": "spikekw",
+              "tags": "alpha,beta"
+            },
+            {
+              "guid": "SpikeBmark02",
+              "title": "core-spike",
+              "index": 1,
+              "dateAdded": 1785196800000000,
+              "lastModified": 1785196800000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://core-spike.example.com/admin/login/?next=/admin/",
+              "keyword": "spikekw:core",
+              "tags": "alpha,gamma"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "guid": "unfiled_____",
+      "title": "unfiled",
+      "index": 2,
+      "dateAdded": 1785196800000000,
+      "lastModified": 1785196800000000,
+      "typeCode": 2,
+      "type": "text/x-moz-place-container",
+      "root": "unfiledBookmarksFolder",
+      "children": []
+    },
+    {
+      "guid": "mobile______",
+      "title": "mobile",
+      "index": 3,
+      "dateAdded": 1785196800000000,
+      "lastModified": 1785196800000000,
+      "typeCode": 2,
+      "type": "text/x-moz-place-container",
+      "root": "mobileFolder",
+      "children": []
+    }
+  ]
+}
