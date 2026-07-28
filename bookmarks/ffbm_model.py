@@ -49,6 +49,21 @@ def folder(guid: str, title: str, children: list) -> dict:
     }
 
 
+def join_tags(tags: list) -> str:
+    """Comma-join tags, refusing any tag that itself contains a comma.
+
+    Firefox splits this field on commas, so an embedded comma would
+    silently become two tags -- and the exporter would then read back
+    something different from what was written.
+    """
+    for tag in tags:
+        if "," in tag:
+            raise ValueError(
+                f"tag contains a comma, which Firefox would split: {tag!r}"
+            )
+    return ",".join(tags)
+
+
 def env_tags(app: dict, env: dict) -> list:
     """app tag, then vertical, then env tags, then the client tag."""
     tags = []
@@ -70,7 +85,7 @@ def env_tags(app: dict, env: dict) -> list:
 def env_bookmark(app_name: str, app: dict, env: dict) -> dict:
     slug = env["slug"]
     node = {
-        "guid": derive_guid(f"{slug}:{app_name}"),
+        "guid": derive_guid(f"bookmark:{slug}:{app_name}"),
         "title": f"{app_name}-{slug}",
         "index": 0,
         "dateAdded": GENERATED_USEC,
@@ -82,7 +97,7 @@ def env_bookmark(app_name: str, app: dict, env: dict) -> dict:
     }
     tags = env_tags(app, env)
     if tags:
-        node["tags"] = ",".join(tags)
+        node["tags"] = join_tags(tags)
     return node
 
 
@@ -101,7 +116,7 @@ def extra_bookmark(extra: dict) -> dict:
     if extra.get("keyword"):
         node["keyword"] = extra["keyword"]
     if extra.get("tags"):
-        node["tags"] = ",".join(extra["tags"])
+        node["tags"] = join_tags(extra["tags"])
     return node
 
 
@@ -143,6 +158,30 @@ def ensure_child_folder(parent: dict, title: str, guid_seed: str) -> dict:
     return node
 
 
+def _assert_unique_guids(tree) -> None:
+    """Guard against duplicate GUIDs, whose usual cause is a repeated slug.
+
+    Firefox's moz_bookmarks.guid is UNIQUE NOT NULL, so a duplicate makes
+    Restore fail or silently drop a node.
+    """
+    seen, dupes = set(), set()
+
+    def walk(node):
+        guid = node.get("guid")
+        if guid is not None:
+            if guid in seen:
+                dupes.add(guid)
+            seen.add(guid)
+        for child in node.get("children", []):
+            walk(child)
+
+    walk(tree)
+    if dupes:
+        raise ValueError(
+            f"duplicate guid(s), likely a repeated slug: {sorted(dupes)}"
+        )
+
+
 def generate(envs_cfg: dict, static_tree: dict) -> dict:
     """static.json plus the generated env folders, spliced under Dashboards."""
     tree = copy.deepcopy(static_tree)
@@ -159,4 +198,5 @@ def generate(envs_cfg: dict, static_tree: dict) -> dict:
             node["children"].append(env_folder(env, apps))
 
     reindex(tree)
+    _assert_unique_guids(tree)
     return tree

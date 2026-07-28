@@ -1,6 +1,8 @@
 import json
 import re
 
+import pytest
+
 import ffbm_model
 
 APPS = {
@@ -64,6 +66,18 @@ def test_extra_bookmark_passes_keyword_and_tags_through():
     assert node["title"] == "Portal"
     assert node["keyword"] == "portal"
     assert node["tags"] == "prod,homewarranty"
+
+
+def test_tag_containing_comma_is_rejected():
+    env = {"slug": "rc", "tags": ["prod, staging"]}
+    with pytest.raises(ValueError, match=re.escape("prod, staging")):
+        ffbm_model.env_bookmark("warranty", APPS["warranty"], env)
+
+
+def test_env_tags_dedups_preserving_first_occurrence():
+    env = {"slug": "rc", "vertical": "homewarranty", "tags": ["homewarranty", "prod"]}
+    tags = ffbm_model.env_tags(APPS["warranty"], env)
+    assert tags == ["warranty", "homewarranty", "prod"]
 
 
 def test_serialize_is_ascii_and_newline_terminated():
@@ -191,3 +205,16 @@ def test_generate_is_byte_identical_across_runs():
     first = ffbm_model.dumps(ffbm_model.generate(ENVS_CFG, minimal_static()))
     second = ffbm_model.dumps(ffbm_model.generate(ENVS_CFG, minimal_static()))
     assert first == second
+
+
+def test_generate_rejects_duplicate_slugs():
+    cfg = {
+        "apps": APPS,
+        "groups": [
+            {"path": ["Prod"], "envs": [{"slug": "rc"}]},
+            {"path": ["C1 Prod"], "envs": [{"slug": "rc"}]},
+        ],
+    }
+    duplicate_guid = ffbm_model.derive_guid("folder:rc")
+    with pytest.raises(ValueError, match=re.escape(duplicate_guid)):
+        ffbm_model.generate(cfg, minimal_static())
