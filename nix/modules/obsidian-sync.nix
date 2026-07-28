@@ -31,17 +31,17 @@ let
       hours,
       logName,
       envFile ? null,
-      extraPaths ? [ ],
     }:
     {
       # These scripts resolve `glab` / `linear-cli` with shutil.which(), so
       # PATH is load-bearing. This is why the jobs moved off cron: cron runs
       # them with /usr/gnu/bin:/usr/local/bin:/bin:/usr/bin, which contains
       # no nix profile, so resolution failed once glab came from nix instead
-      # of homebrew. HOME is explicit because linear-cli reads its API key
-      # from ~/.config/linear/credentials.toml.
+      # of homebrew. Both tools are in environment.systemPackages, so
+      # systemPath covers them. HOME is explicit because linear-cli reads its
+      # API key from ~/.config/linear/credentials.toml.
       environment = {
-        PATH = lib.concatStringsSep ":" (extraPaths ++ [ syncPath ]);
+        PATH = syncPath;
         HOME = home;
       };
 
@@ -77,13 +77,8 @@ in
   # environment variables, and linear-cli authenticates from its own config
   # under ~/.config/linear. (The old crontab sourced jira-cli.env, which has
   # been vestigial since the script migrated from Jira to Linear.)
-  #
-  # linear-cli is `cargo install`ed rather than packaged in nixpkgs, so its
-  # bin dir is not part of environment.systemPath and has to be named here.
-  # Package it in nix and this line goes away.
   launchd.user.agents.linear-sync-obsidian = syncAgent {
     pyScript = "jira-sync-obsidian.py";
-    extraPaths = [ "${home}/.cargo/bin" ];
     hours = [
       8
       10
