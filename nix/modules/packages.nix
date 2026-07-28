@@ -127,6 +127,7 @@ in
     pkgs.markdownlint-cli2
     pkgs.prettier
     pkgs.lcov
+    pkgs.pre-commit
     ## Version Control
     pkgs.gh
     pkgs.git-quick-stats
