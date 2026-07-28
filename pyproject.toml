@@ -14,4 +14,5 @@ allow-codepoints = [
   "U+E0A1", # vim/.config/nvim/init.vim U+E0A1 [Co]
   "U+26A1", # vim/.config/nvim/init.vim HIGH VOLTAGE SIGN [So]
   "U+00B0", # waybar/.config/waybar/temps.sh U+00B0 DEGREE SIGN [So]
+  "U+2013", # bookmarks/test_ffbm_model.py EN DASH, proves ensure_ascii works
 ]
