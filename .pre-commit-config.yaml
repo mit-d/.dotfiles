@@ -78,6 +78,7 @@ repos:
     hooks:
       - id: prettier
         types_or: [json, yaml, css]
+        exclude: ^bookmarks/.*\.json$
 
   - repo: https://github.com/hukkin/mdformat
     rev: 0.7.22
