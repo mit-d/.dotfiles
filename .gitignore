@@ -13,3 +13,6 @@ tests/_output/*
 
 # nix build output symlink
 /result
+
+# python bytecode cache
+__pycache__/
