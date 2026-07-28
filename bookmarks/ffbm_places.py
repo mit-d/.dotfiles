@@ -25,16 +25,26 @@ def snapshot(profile: Path, dest: Path) -> Path:
 
     Firefox holds the originals open in WAL mode, so the -wal file must come
     along or recent writes are invisible. The originals are only ever read.
+
+    Sidecars are copied BEFORE the base file, not after. Firefox can
+    checkpoint between our two copies, flushing WAL frames into the base
+    file and resetting the live WAL. Copy base-then-wal and a checkpoint in
+    that window silently drops committed pages: gone from the base copy
+    (predates the flush) and gone from the wal copy (postdates the reset).
+    Copy wal-then-base instead and the same checkpoint just makes the base
+    copy already contain what the wal copy has -- replaying those frames
+    over it is a no-op, since they're identical page images. Worst case is
+    staleness (missing frames written after our wal copy), never loss.
     """
     src = Path(profile) / "places.sqlite"
     if not src.exists():
         raise FileNotFoundError(f"no places.sqlite in {profile}")
     out = Path(dest) / "places.sqlite"
-    shutil.copy2(src, out)
     for suffix in ("-wal", "-shm"):
         sidecar = src.with_name(src.name + suffix)
         if sidecar.exists():
             shutil.copy2(sidecar, out.with_name(out.name + suffix))
+    shutil.copy2(src, out)
     return out
 
 

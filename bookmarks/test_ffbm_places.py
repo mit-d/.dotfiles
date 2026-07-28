@@ -69,6 +69,50 @@ def test_read_tree_shape_and_metadata(tmp_path):
     assert bookmark["dateAdded"] == 30
 
 
+def build_gapped_db(path: Path) -> Path:
+    """A toolbar with two folders at gapped/out-of-order positions (5, 2),
+    one of which holds two bookmarks at gapped/out-of-order positions (7, 3).
+    """
+    con = sqlite3.connect(path)
+    con.executescript(SCHEMA)
+    con.execute("INSERT INTO moz_places VALUES (100, 'https://w-rc.example/')")
+    rows = [
+        # id, type, fk,   parent, pos, title,      added, mod,  guid
+        (1, 2, None, 0, 0, "", 10, 10, "root________"),
+        (2, 2, None, 1, 0, "menu", 10, 10, "menu________"),
+        (3, 2, None, 1, 1, "toolbar", 10, 10, "toolbar_____"),
+        (4, 2, None, 1, 2, "tags", 10, 10, "tags________"),
+        (5, 2, None, 1, 3, "unfiled", 10, 10, "unfiled_____"),
+        (6, 2, None, 1, 4, "mobile", 10, 10, "mobile______"),
+        (7, 2, None, 3, 5, "folderA", 10, 10, "FolderAAAAA1"),
+        (8, 2, None, 3, 2, "folderB", 10, 10, "FolderBBBBB1"),
+        (9, 1, 100, 7, 7, "bmA", 10, 10, "BmarkAAAAAA1"),
+        (10, 1, 100, 7, 3, "bmB", 10, 10, "BmarkBBBBBB1"),
+    ]
+    con.executemany("INSERT INTO moz_bookmarks VALUES (?,?,?,?,?,?,?,?,?)", rows)
+    con.commit()
+    con.close()
+    return path
+
+
+def test_reindex_makes_positions_contiguous(tmp_path):
+    db = build_gapped_db(tmp_path / "places.sqlite")
+    tree = ffbm_places.read_tree(db)
+
+    toolbar = tree["children"][1]
+    # sibling order follows ascending source position (2 before 5) ...
+    assert [c["title"] for c in toolbar["children"]] == ["folderB", "folderA"]
+    # ... but the recomputed index is contiguous 0-based, not the raw position
+    assert [c["index"] for c in toolbar["children"]] == [0, 1]
+
+    folder_a = toolbar["children"][1]
+    assert folder_a["title"] == "folderA"
+    # nested level: source position order (3 before 7) preserved ...
+    assert [c["title"] for c in folder_a["children"]] == ["bmB", "bmA"]
+    # ... with index recomputed as contiguous 0-based here too
+    assert [c["index"] for c in folder_a["children"]] == [0, 1]
+
+
 def test_snapshot_copies_wal_and_leaves_original(tmp_path):
     profile = tmp_path / "profile"
     profile.mkdir()
