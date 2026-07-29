@@ -3,7 +3,7 @@
   "title": "",
   "index": 0,
   "dateAdded": 1750369304961000,
-  "lastModified": 1782228082713000,
+  "lastModified": 1785288386028000,
   "typeCode": 2,
   "type": "text/x-moz-place-container",
   "children": [
@@ -107,7 +107,7 @@
       "title": "toolbar",
       "index": 1,
       "dateAdded": 1750369304961000,
-      "lastModified": 1782228082713000,
+      "lastModified": 1785288386028000,
       "typeCode": 2,
       "type": "text/x-moz-place-container",
       "children": [
@@ -393,7 +393,7 @@
           "title": "Dashboards",
           "index": 5,
           "dateAdded": 1720027615000000,
-          "lastModified": 1767983647870000,
+          "lastModified": 1785288386028000,
           "typeCode": 2,
           "type": "text/x-moz-place-container",
           "children": [
@@ -471,94 +471,6 @@
                   "type": "text/x-moz-place",
                   "uri": "file:///Users/derekmitten/Source/vanguard/jaguar/htmlcov/diff-cover-report.html",
                   "keyword": "htmlcov"
-                }
-              ]
-            },
-            {
-              "guid": "X7R23J1fUVOQ",
-              "title": "Prod",
-              "index": 1,
-              "dateAdded": 1720027622000000,
-              "lastModified": 1759526592219000,
-              "typeCode": 2,
-              "type": "text/x-moz-place-container",
-              "children": [
-                {
-                  "guid": "JOKrv394zB7L",
-                  "title": "Other",
-                  "index": 0,
-                  "dateAdded": 1753128798021000,
-                  "lastModified": 1753128804755000,
-                  "typeCode": 2,
-                  "type": "text/x-moz-place-container",
-                  "children": [
-                    {
-                      "guid": "fYQT-mRMYNSw",
-                      "title": "vscdemo (DEPRECATED)",
-                      "index": 0,
-                      "dateAdded": 1741198768147000,
-                      "lastModified": 1753128804755000,
-                      "typeCode": 2,
-                      "type": "text/x-moz-place-container",
-                      "children": [
-                        {
-                          "guid": "uKCdijzMplZ2",
-                          "title": "warranty-vscdemo",
-                          "index": 0,
-                          "dateAdded": 1741198293623000,
-                          "lastModified": 1753127847901000,
-                          "typeCode": 1,
-                          "type": "text/x-moz-place",
-                          "uri": "https://warranty-vscdemo.bidboxpro.com/",
-                          "tags": "boat,rc,vscdemo"
-                        },
-                        {
-                          "guid": "HEpgYe4hQjUK",
-                          "title": "affiliate-vscdemo",
-                          "index": 1,
-                          "dateAdded": 1753127842290000,
-                          "lastModified": 1753127855752000,
-                          "typeCode": 1,
-                          "type": "text/x-moz-place",
-                          "uri": "https://affiliate-vscdemo.bidboxpro.dev/",
-                          "tags": "boat,rc,vscdemo"
-                        },
-                        {
-                          "guid": "PwzPEaoeXev6",
-                          "title": "core-devlag",
-                          "index": 2,
-                          "dateAdded": 1753127842293000,
-                          "lastModified": 1753127842293000,
-                          "typeCode": 1,
-                          "type": "text/x-moz-place",
-                          "uri": "https://core-devlag.bidboxpro.com/admin/login/?next=/admin/",
-                          "tags": "devlag,homewarranty,rc,vscdemo"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "guid": "LvQG91GXXf_p",
-              "title": "C1 Prod",
-              "index": 2,
-              "dateAdded": 1730826482000000,
-              "lastModified": 1767983647870000,
-              "typeCode": 2,
-              "type": "text/x-moz-place-container",
-              "children": [
-                {
-                  "guid": "kxlxfPE7XqcM",
-                  "title": "Portal",
-                  "index": 0,
-                  "dateAdded": 1742580918806000,
-                  "lastModified": 1753128216559000,
-                  "typeCode": 1,
-                  "type": "text/x-moz-place",
-                  "uri": "https://affiliate-acclhw.bidboxpro.com/w/bbp/a/dash/warranty/list",
-                  "tags": "c1:homewi,homewarranty,prod"
                 }
               ]
             }
@@ -965,7 +877,7 @@
       "title": "unfiled",
       "index": 2,
       "dateAdded": 1750369304961000,
-      "lastModified": 1750369304993000,
+      "lastModified": 1785288360305000,
       "typeCode": 2,
       "type": "text/x-moz-place-container",
       "children": [],
@@ -976,7 +888,7 @@
       "title": "mobile",
       "index": 3,
       "dateAdded": 1750369304967000,
-      "lastModified": 1750369304993000,
+      "lastModified": 1785288360305000,
       "typeCode": 2,
       "type": "text/x-moz-place-container",
       "children": [],
