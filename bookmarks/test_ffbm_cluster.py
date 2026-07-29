@@ -78,7 +78,7 @@ def test_merge_extras_grafts_onto_matching_slug(fake_cluster_dir):
         "alpha": [{"title": "Portal", "url": "https://portal.example/"}],
         "nonexistent": [{"title": "Ghost", "url": "https://ghost.example/"}],
     }
-    merged = K.merge_extras(config, harvested)
+    merged, dropped = K.merge_extras(config, harvested)
 
     prod_group = next(g for g in merged["groups"] if g["path"] == ["prod"])
     alpha = next(e for e in prod_group["envs"] if e["slug"] == "alpha")
@@ -92,5 +92,50 @@ def test_merge_extras_grafts_onto_matching_slug(fake_cluster_dir):
         for e in g["envs"]
         if e["slug"] not in ("alpha",)
     )
+    assert dropped == []
     # input config untouched
     assert config == before
+
+
+def test_merge_extras_drops_canonical_duplicates():
+    config = {
+        "apps": dict(K.APPS),
+        "groups": [
+            {"path": ["prod"], "envs": [
+                {"slug": "bhmptraining", "host": "bidboxpro.com", "tags": ["prod"]},
+                {"slug": "oemrc", "host": "bidboxpro.com", "tags": ["prod"]},
+            ]},
+        ],
+    }
+    harvested = {
+        "bhmptraining": [
+            {"title": "warranty-bhmptraining", "url": "https://warranty-bhmptraining.example/"},
+        ],
+        "oemrc": [
+            {"title": "oemrc-core", "url": "https://core-oemrc.example/"},
+        ],
+    }
+    merged, dropped = K.merge_extras(config, harvested)
+
+    assert not any("extras" in e for g in merged["groups"] for e in g["envs"])
+    assert dropped == ["oemrc-core", "warranty-bhmptraining"]
+
+
+def test_merge_extras_keeps_non_canonical_extras(fake_cluster_dir):
+    envs = K.read_envs(fake_cluster_dir)
+    config = K.build_config(envs)
+
+    harvested = {
+        "alpha": [
+            {"title": "Portal", "url": "https://portal.example/"},
+            {"title": "Home Page | Acclaimed Home Warranty", "url": "https://acclaimed.example/"},
+            {"title": "warranty-stgacclaimed", "url": "https://warranty-stgacclaimed.example/"},
+        ],
+    }
+    merged, dropped = K.merge_extras(config, harvested)
+
+    prod_group = next(g for g in merged["groups"] if g["path"] == ["prod"])
+    alpha = next(e for e in prod_group["envs"] if e["slug"] == "alpha")
+
+    assert alpha["extras"] == harvested["alpha"]
+    assert dropped == []

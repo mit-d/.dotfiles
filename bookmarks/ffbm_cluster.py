@@ -6,6 +6,7 @@ side effects, so sourcing is safe, and bash parses its own array syntax far
 more reliably than a regex could.
 """
 
+import re
 import subprocess
 from pathlib import Path
 
@@ -101,7 +102,27 @@ def build_config(envs: list) -> dict:
     return {"apps": dict(APPS), "groups": groups}
 
 
-def merge_extras(config: dict, harvested: dict) -> dict:
+_APP_ALTERNATION = "|".join(re.escape(app) for app in APPS)
+_APP_SLUG = re.compile(r"^(?:%s)-(.+)$" % _APP_ALTERNATION)
+_SLUG_APP = re.compile(r"^(.+)-(?:%s)$" % _APP_ALTERNATION)
+
+
+def _is_canonical_duplicate(title: str, slugs: set) -> bool:
+    """Whether `title` looks like `<app>-<slug>` or `<slug>-<app>`.
+
+    `app` is any of `APPS`, `slug` any cluster-managed slug (matched
+    case-insensitively, as `ffbm_export._canonical_app` does). Both
+    orderings matter: `<slug>-<app>` (e.g. `oemrc-core`) is the inverted,
+    copy-pasted title this pipeline exists to fix.
+    """
+    for pattern in (_APP_SLUG, _SLUG_APP):
+        match = pattern.match(title or "")
+        if match and match.group(1).lower() in slugs:
+            return True
+    return False
+
+
+def merge_extras(config: dict, harvested: dict) -> tuple:
     """Graft profile-harvested extras onto the cluster-derived env matrix.
 
     The cluster config is authoritative for which envs exist and what their
@@ -114,15 +135,30 @@ def merge_extras(config: dict, harvested: dict) -> dict:
     -- that env isn't in the cluster config, so there is nowhere to graft
     them onto; a retired env's bookmarks are instead kept static by
     `ffbm_export.split`'s `known_slugs` parameter. Does not mutate `config`.
+
+    Extras whose title is itself a canonical `<app>-<slug>` (or inverted
+    `<slug>-<app>`) bookmark for a cluster-managed slug are stale
+    copy-paste duplicates of an env the cluster config already generates,
+    so they are dropped rather than grafted. Returns `(config, dropped)`
+    where `dropped` is the sorted list of dropped titles -- silent removal
+    is exactly the failure mode this pipeline guards against.
     """
+    slugs = {env["slug"].lower() for group in config["groups"] for env in group["envs"]}
+    dropped = []
     groups = []
     for group in config["groups"]:
         envs = []
         for env in group["envs"]:
             env = dict(env)
-            extras = harvested.get(env["slug"])
-            if extras:
-                env["extras"] = extras
+            extras = harvested.get(env["slug"]) or []
+            kept = []
+            for extra in extras:
+                if _is_canonical_duplicate(extra.get("title"), slugs):
+                    dropped.append(extra["title"])
+                else:
+                    kept.append(extra)
+            if kept:
+                env["extras"] = kept
             envs.append(env)
         groups.append({**group, "envs": envs})
-    return {**config, "groups": groups}
+    return {**config, "groups": groups}, sorted(dropped)
