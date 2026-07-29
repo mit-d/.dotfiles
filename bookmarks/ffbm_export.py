@@ -2,6 +2,15 @@
 
 The inverse of ffbm_model.generate, plus the metadata inference that makes
 bootstrapping possible without hand-writing 22 envs.
+
+Post-pivot leftover: `_env_entry` below still infers `client`, `vertical`,
+plain `tags` and a `folder` override from the profile. Since the pivot to
+cluster config as the source of truth for envs (ffbm_cluster.py), only the
+`extras` this function derives are actually merged onto that cluster config
+by `ffbm.cmd_export` -- the rest is computed but discarded for any env the
+cluster config already knows about. Left in place (and tested) because it is
+still the only source for these fields when bootstrapping an env the cluster
+config doesn't cover.
 """
 
 import collections
@@ -13,6 +22,12 @@ import ffbm_model
 # The normalization target. Deliberately constants rather than inferred from
 # the live profile: the live URLs have drifted, and inferring would encode
 # the very drift this pipeline exists to fix.
+#
+# Note: these url/keyword templates are no longer read by anything -- the
+# exporter's harvested config is merged onto ffbm_cluster's {host}-bearing
+# templates before it reaches generate(), so only this dict's *keys* still
+# matter (as the CANONICAL pattern's app alternation). Kept as-is, templates
+# and all, rather than stripped down, per the plan for this change.
 DEFAULT_APPS = {
     "warranty": {
         "url": "https://warranty-{env}.bidboxpro.com/",
@@ -36,7 +51,13 @@ DEFAULT_APPS = {
     },
 }
 
-APP_NAMES = tuple(DEFAULT_APPS)
+# Derived from ffbm_model.APP_NAMES, the single source of truth, so this
+# module's canonical-title detection cannot silently diverge from
+# ffbm_cluster's url templates.
+APP_NAMES = ffbm_model.APP_NAMES
+assert set(DEFAULT_APPS) == set(APP_NAMES), (
+    "DEFAULT_APPS keys must match ffbm_model.APP_NAMES exactly"
+)
 APP_TAGS = {a["tag"] for a in DEFAULT_APPS.values()}
 
 # Observed verticals. Anything else that is not an app tag or a c1: tag

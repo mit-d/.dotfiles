@@ -10,6 +10,8 @@ import re
 import subprocess
 from pathlib import Path
 
+import ffbm_model
+
 CLUSTER_DIR = Path("/Users/derekmitten/Source/vanguard/cluster")
 DEFAULT_HOST = "bidboxpro.com"
 
@@ -38,6 +40,12 @@ APPS = {
         "tag": "product",
     },
 }
+# Loud rather than silent: if this ever drifts from ffbm_model.APP_NAMES
+# (the single source of truth), the exporter's canonical-title detection and
+# this module's url templates would quietly disagree on which apps exist.
+assert set(APPS) == set(ffbm_model.APP_NAMES), (
+    "ffbm_cluster.APPS keys must match ffbm_model.APP_NAMES exactly"
+)
 
 # Folder order, most-stable channel first. Unknown channels sort last.
 CHANNEL_ORDER = ("prod", "rc", "staging", "dev")

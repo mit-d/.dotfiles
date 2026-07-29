@@ -61,6 +61,11 @@ def cmd_export(profile: Path, source_dir: Path, cluster_dir: Path) -> int:
     config = ffbm_cluster.build_config(ffbm_cluster.read_envs(cluster_dir))
     slugs = {e["slug"] for g in config["groups"] for e in g["envs"]}
     static, harvested = ffbm_export.split(profile_tree(profile), known_slugs=slugs)
+    # ffbm_export._env_entry also infers client/vertical/tags/folder for each
+    # harvested env, but only `extras` survives this merge -- the cluster
+    # config (`config` above) is authoritative for everything else once an
+    # env is known to it. Those other fields still matter for envs the
+    # cluster config doesn't cover; see ffbm_export.split's known_slugs.
     extras = {
         e["slug"]: e["extras"]
         for g in harvested["groups"]

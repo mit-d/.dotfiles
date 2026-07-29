@@ -7,7 +7,15 @@ profile differs there legitimately, and including them would bury the
 signal.
 """
 
+import re
+
+import ffbm_model
+
 COMPARED_FIELDS = ("uri", "keyword", "tags")
+
+# Only a canonical `<app>-<slug>` title is safe for the tail-correlation pass
+# in `diff` below: see the comment there for why.
+_CANONICAL_TITLE = re.compile(r"^(%s)-(.+)$" % "|".join(ffbm_model.APP_NAMES))
 
 
 def flatten(tree: dict) -> dict:
@@ -100,12 +108,26 @@ def diff(left: dict, right: dict) -> dict:
     # moved. This is a modest correlation heuristic, not a rename-detection
     # engine: it pairs at most once per tail, deterministically, and leaves
     # anything it can't match alone in added/removed.
+    #
+    # Restricted to canonical `<app>-<slug>` titles: for those the title
+    # itself embeds the slug, so two different envs can never produce the
+    # same tail -- pairing on tail alone is provably safe. `extra_bookmark`
+    # titles are arbitrary human text with no slug in them, so two unrelated
+    # extras filed under the same env folder could share a generic title
+    # (e.g. "Portal") and get mis-paired into a single "path"-reason move,
+    # masking a real deletion behind a line that reads like a relocation.
+    # Non-canonical entries are left for the coarser uri-only pass above, and
+    # otherwise surface honestly as an addition or a deletion.
     removed_by_tail = {}
     for path in removed:
-        removed_by_tail.setdefault(_tail(path), []).append(path)
+        tail = _tail(path)
+        if _CANONICAL_TITLE.match(tail[-1]):
+            removed_by_tail.setdefault(tail, []).append(path)
     added_by_tail = {}
     for path in added:
-        added_by_tail.setdefault(_tail(path), []).append(path)
+        tail = _tail(path)
+        if _CANONICAL_TITLE.match(tail[-1]):
+            added_by_tail.setdefault(tail, []).append(path)
 
     for tail in sorted(set(removed_by_tail) & set(added_by_tail)):
         from_paths = sorted(removed_by_tail[tail])

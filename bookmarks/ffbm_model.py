@@ -15,6 +15,11 @@ GENERATED_USEC = 1785196800000000
 PLACE = "text/x-moz-place"
 CONTAINER = "text/x-moz-place-container"
 
+# The canonical app names, single source of truth. Both the exporter (for
+# recognising `<app>-<slug>` bookmark titles) and the cluster reader (for
+# building url templates) derive from this, so they cannot drift apart.
+APP_NAMES = ("warranty", "affiliate", "core", "product")
+
 
 def derive_guid(seed: str) -> str:
     """A stable 12-char base64url GUID, matching Firefox's format.
@@ -166,6 +171,13 @@ def ensure_child_folder(parent: dict, title: str, guid_seed: str) -> dict:
 
     Get-or-create matters because group paths overlap: ["Prod"] and
     ["Prod", "Other"] must share one "Prod" folder, not create two.
+
+    The title match is exact and case-sensitive on purpose: it is why the
+    legacy `Prod` / `C1 Prod` folders (hand-created, static) coexist
+    alongside the generated lowercase `prod` / `rc` / `staging` / `dev`
+    channel folders instead of merging into them. That split is intentional
+    and historical -- do not loosen this to a case-insensitive match, or the
+    static and generated trees will collapse into each other.
     """
     for child in parent["children"]:
         if child["typeCode"] == 2 and child["title"] == title:
