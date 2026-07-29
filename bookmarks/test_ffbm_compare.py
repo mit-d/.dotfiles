@@ -316,3 +316,26 @@ def test_moved_reason_distinguishes_uri_from_path():
     reasons = {m["from"]: m["reason"] for m in result["moved"]}
     assert reasons["toolbar/rc/warranty-rc"] == "uri"
     assert reasons["toolbar/C1 Prod/gsa/warranty-gsa"] == "path"
+
+
+def test_tags_compare_order_insensitively():
+    """Tag order is meaningless -- Firefox stores tags as a set of folders.
+
+    The profile reader returns them alphabetically while the generator emits
+    them semantically (app, vertical, channel), so a raw string comparison
+    reported every tagged bookmark as changed and `verify` could never pass.
+    """
+    left = tree_with([("rc", "warranty-rc", "https://w/", "rc", "warranty,homewarranty,prod")])
+    right = tree_with([("rc", "warranty-rc", "https://w/", "rc", "homewarranty,prod,warranty")])
+
+    assert ffbm_compare.is_clean(ffbm_compare.diff(left, right))
+
+
+def test_tags_differing_in_content_still_reported():
+    """Order-insensitivity must not mask a real tag change."""
+    left = tree_with([("rc", "warranty-rc", "https://w/", "rc", "warranty,prod")])
+    right = tree_with([("rc", "warranty-rc", "https://w/", "rc", "warranty,rc")])
+
+    result = ffbm_compare.diff(left, right)
+    assert not ffbm_compare.is_clean(result)
+    assert result["changed"][0]["fields"]["tags"] == ("prod,warranty", "rc,warranty")

@@ -40,7 +40,27 @@ def flatten(tree: dict) -> dict:
     for path, nodes in groups.items():
         for node in nodes:
             key = path if len(nodes) == 1 else f"{path}#{node.get('uri', '')}"
-            out[key] = {f: node.get(f, "") for f in COMPARED_FIELDS}
+            out[key] = _comparable(node)
+    return out
+
+
+def _comparable(node: dict) -> dict:
+    """The comparable field view of a bookmark, with tags order-normalized.
+
+    Tag ORDER carries no meaning: in Firefox a tag is a folder and a bookmark
+    is tagged by being its child, so `tags` is a set that merely happens to
+    serialize as a comma-joined string. The two sides of a comparison order it
+    differently by construction -- `ffbm_places` reads tags back
+    alphabetically, while `ffbm_model` emits them semantically as
+    app, vertical, channel -- so comparing the raw strings reported every
+    tagged bookmark as changed and made `verify` impossible to pass.
+    """
+    out = {}
+    for field in COMPARED_FIELDS:
+        value = node.get(field, "")
+        if field == "tags" and value:
+            value = ",".join(sorted(value.split(",")))
+        out[field] = value
     return out
 
 
