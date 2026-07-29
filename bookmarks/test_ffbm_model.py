@@ -54,6 +54,28 @@ def test_app_without_tag_key_omits_app_tag():
     assert "tags" not in node
 
 
+def test_env_bookmark_substitutes_host():
+    app = {
+        "url": "https://warranty-{env}.{host}/",
+        "keyword": "{env}",
+        "tag": "warranty",
+    }
+    env = {"slug": "devlag", "host": "bidboxpro.dev"}
+    node = ffbm_model.env_bookmark("warranty", app, env)
+    assert node["uri"] == "https://warranty-devlag.bidboxpro.dev/"
+
+
+def test_env_bookmark_without_host_raises():
+    app = {
+        "url": "https://warranty-{env}.{host}/",
+        "keyword": "{env}",
+        "tag": "warranty",
+    }
+    env = {"slug": "devlag"}
+    with pytest.raises(ValueError, match="devlag"):
+        ffbm_model.env_bookmark("warranty", app, env)
+
+
 def test_extra_bookmark_passes_keyword_and_tags_through():
     node = ffbm_model.extra_bookmark(
         {

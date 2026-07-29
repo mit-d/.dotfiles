@@ -82,6 +82,23 @@ def env_tags(app: dict, env: dict) -> list:
     return out
 
 
+def fill(template: str, env: dict) -> str:
+    """Substitute {env} and {host} in an app template.
+
+    Raises rather than silently emitting a broken URL: a wrong host is a
+    bookmark that quietly points at the wrong deployment.
+    """
+    text = template.replace("{env}", env["slug"])
+    if "{host}" in text:
+        host = env.get("host")
+        if not host:
+            raise ValueError(
+                f"template needs a host but env {env['slug']!r} has none: {template!r}"
+            )
+        text = text.replace("{host}", host)
+    return text
+
+
 def env_bookmark(app_name: str, app: dict, env: dict) -> dict:
     slug = env["slug"]
     node = {
@@ -92,8 +109,8 @@ def env_bookmark(app_name: str, app: dict, env: dict) -> dict:
         "lastModified": GENERATED_USEC,
         "typeCode": 1,
         "type": PLACE,
-        "uri": app["url"].replace("{env}", slug),
-        "keyword": app["keyword"].replace("{env}", slug),
+        "uri": fill(app["url"], env),
+        "keyword": fill(app["keyword"], env),
     }
     tags = env_tags(app, env)
     if tags:
