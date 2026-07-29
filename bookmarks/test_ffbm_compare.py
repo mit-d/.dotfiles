@@ -137,6 +137,7 @@ def test_diff_reports_moved_when_uri_unchanged():
     assert result["removed"] == []
     assert result["moved"] == [
         {
+            "reason": "uri",
             "uri": "https://w/",
             "from": "toolbar/rc/warranty-rc",
             "to": "toolbar/archive/warranty-rc",
@@ -154,3 +155,101 @@ def test_is_clean_false_when_only_moved():
     assert result["changed"] == []
     assert result["moved"]
     assert ffbm_compare.is_clean(result) is False
+
+
+def _bookmark(title, uri):
+    return {
+        "guid": ffbm_model.derive_guid(title + uri),
+        "title": title,
+        "index": 0,
+        "dateAdded": 1,
+        "lastModified": 1,
+        "typeCode": 1,
+        "type": ffbm_model.PLACE,
+        "uri": uri,
+    }
+
+
+def _toolbar_tree(children):
+    return {
+        "guid": "root________",
+        "title": "",
+        "index": 0,
+        "dateAdded": 1,
+        "lastModified": 1,
+        "typeCode": 2,
+        "type": ffbm_model.CONTAINER,
+        "root": "placesRoot",
+        "children": [
+            {
+                "guid": "toolbar_____",
+                "title": "toolbar",
+                "index": 0,
+                "dateAdded": 1,
+                "lastModified": 1,
+                "typeCode": 2,
+                "type": ffbm_model.CONTAINER,
+                "root": "toolbarFolder",
+                "children": children,
+            }
+        ],
+    }
+
+
+def test_diff_correlates_relocated_bookmarks_by_path():
+    left = _toolbar_tree([
+        ffbm_model.folder("g1", "C1 Prod", [
+            ffbm_model.folder("g2", "gsa", [
+                _bookmark("warranty-gsa",
+                          "https://warranty-gsa.bidboxpro.com/w/bbp/auth/password"),
+            ]),
+        ]),
+    ])
+    right = _toolbar_tree([
+        ffbm_model.folder("g3", "prod", [
+            ffbm_model.folder("g4", "gsa", [
+                _bookmark("warranty-gsa", "https://warranty-gsa.bidboxpro.com/"),
+            ]),
+        ]),
+    ])
+    result = ffbm_compare.diff(left, right)
+
+    assert result["added"] == []
+    assert result["removed"] == []
+    assert len(result["moved"]) == 1
+    move = result["moved"][0]
+    assert move["reason"] == "path"
+    assert move["from"] == "toolbar/C1 Prod/gsa/warranty-gsa"
+    assert move["to"] == "toolbar/prod/gsa/warranty-gsa"
+    assert move["from_uri"] == "https://warranty-gsa.bidboxpro.com/w/bbp/auth/password"
+    assert move["to_uri"] == "https://warranty-gsa.bidboxpro.com/"
+
+
+def test_moved_reason_distinguishes_uri_from_path():
+    left = _toolbar_tree([
+        ffbm_model.folder("g1", "rc", [
+            _bookmark("warranty-rc", "https://w/"),
+        ]),
+        ffbm_model.folder("g2", "C1 Prod", [
+            ffbm_model.folder("g3", "gsa", [
+                _bookmark("warranty-gsa", "https://old/"),
+            ]),
+        ]),
+    ])
+    right = _toolbar_tree([
+        ffbm_model.folder("g4", "archive", [
+            _bookmark("warranty-rc", "https://w/"),
+        ]),
+        ffbm_model.folder("g5", "prod", [
+            ffbm_model.folder("g6", "gsa", [
+                _bookmark("warranty-gsa", "https://new/"),
+            ]),
+        ]),
+    ])
+    result = ffbm_compare.diff(left, right)
+
+    assert result["added"] == []
+    assert result["removed"] == []
+    reasons = {m["from"]: m["reason"] for m in result["moved"]}
+    assert reasons["toolbar/rc/warranty-rc"] == "uri"
+    assert reasons["toolbar/C1 Prod/gsa/warranty-gsa"] == "path"

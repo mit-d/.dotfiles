@@ -172,6 +172,34 @@ def test_extra_verticals_are_kept_as_tags():
     assert entry["tags"] == ["manufacture", "prod"]
 
 
+def test_split_keeps_unknown_env_folders_static():
+    rc = ffbm_model.folder("g1", "rc", [
+        bookmark("warranty-rc", "https://warranty-rc.bidboxpro.com/"),
+    ])
+    vscdemo = ffbm_model.folder("g2", "vscdemo (DEPRECATED)", [
+        bookmark("warranty-vscdemo", "https://warranty-vscdemo.bidboxpro.com/"),
+        bookmark("affiliate-vscdemo", "https://affiliate-vscdemo.bidboxpro.com/"),
+    ])
+    tree = _dashboards_tree([ffbm_model.folder("g3", "Prod", [rc, vscdemo])])
+
+    static, envs = ffbm_export.split(tree, known_slugs={"rc"})
+
+    paths = [g["path"] for g in envs["groups"]]
+    assert paths == [["Prod"]]
+    assert [e["slug"] for e in envs["groups"][0]["envs"]] == ["rc"]
+
+    toolbar = ffbm_model.find_root(static, "toolbarFolder")
+    dash = next(c for c in toolbar["children"] if c["title"] == "Dashboards")
+    prod = next(c for c in dash["children"] if c["title"] == "Prod")
+
+    # rc was stripped (regenerable); vscdemo stayed, bookmarks intact
+    assert [c["title"] for c in prod["children"]] == ["vscdemo (DEPRECATED)"]
+    kept = prod["children"][0]
+    assert [b["title"] for b in kept["children"]] == [
+        "warranty-vscdemo", "affiliate-vscdemo",
+    ]
+
+
 def test_group_folder_with_loose_bookmark_is_not_an_env():
     acclhw = ffbm_model.folder("g1", "acclhw", [
         bookmark("warranty-acclhw", "https://warranty-acclhw.bidboxpro.com/"),

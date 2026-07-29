@@ -99,3 +99,30 @@ def build_config(envs: list) -> dict:
             entries.append(entry)
         groups.append({"path": [channel], "envs": entries})
     return {"apps": dict(APPS), "groups": groups}
+
+
+def merge_extras(config: dict, harvested: dict) -> dict:
+    """Graft profile-harvested extras onto the cluster-derived env matrix.
+
+    The cluster config is authoritative for which envs exist and what their
+    urls are; only the profile knows about one-off bookmarks a human filed
+    inside an env folder. Without this they would be stripped from
+    static.json and never regenerated -- silent deletion.
+
+    `harvested` maps slug -> list of extra dicts, as gathered from
+    `ffbm_export.split`. Extras for a slug absent from `config` are ignored
+    -- that env isn't in the cluster config, so there is nowhere to graft
+    them onto; a retired env's bookmarks are instead kept static by
+    `ffbm_export.split`'s `known_slugs` parameter. Does not mutate `config`.
+    """
+    groups = []
+    for group in config["groups"]:
+        envs = []
+        for env in group["envs"]:
+            env = dict(env)
+            extras = harvested.get(env["slug"])
+            if extras:
+                env["extras"] = extras
+            envs.append(env)
+        groups.append({**group, "envs": envs})
+    return {**config, "groups": groups}

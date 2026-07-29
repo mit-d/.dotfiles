@@ -67,3 +67,30 @@ def test_read_envs_raises_when_cluster_dir_missing(tmp_path):
     empty_dir.mkdir()
     with pytest.raises(FileNotFoundError):
         K.read_envs(empty_dir)
+
+
+def test_merge_extras_grafts_onto_matching_slug(fake_cluster_dir):
+    envs = K.read_envs(fake_cluster_dir)
+    config = K.build_config(envs)
+    before = K.build_config(envs)
+
+    harvested = {
+        "alpha": [{"title": "Portal", "url": "https://portal.example/"}],
+        "nonexistent": [{"title": "Ghost", "url": "https://ghost.example/"}],
+    }
+    merged = K.merge_extras(config, harvested)
+
+    prod_group = next(g for g in merged["groups"] if g["path"] == ["prod"])
+    alpha = next(e for e in prod_group["envs"] if e["slug"] == "alpha")
+    zeta = next(e for e in prod_group["envs"] if e["slug"] == "zeta")
+
+    assert alpha["extras"] == [{"title": "Portal", "url": "https://portal.example/"}]
+    assert "extras" not in zeta
+    assert not any(
+        "extras" in e
+        for g in merged["groups"]
+        for e in g["envs"]
+        if e["slug"] not in ("alpha",)
+    )
+    # input config untouched
+    assert config == before

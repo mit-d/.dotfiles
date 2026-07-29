@@ -54,8 +54,16 @@ DASHBOARDS = "Dashboards"
 CANONICAL = re.compile(r"^(%s)-(.+)$" % "|".join(APP_NAMES))
 
 
-def split(tree: dict) -> tuple:
-    """Return (static_tree, envs_cfg)."""
+def split(tree: dict, known_slugs=None) -> tuple:
+    """Return (static_tree, envs_cfg).
+
+    `known_slugs`, if given, restricts takeover to envs the cluster config
+    can actually regenerate: a folder is only treated as an env folder (and
+    therefore only stripped from static.json) if its derived slug is in
+    `known_slugs`. A retired env absent from the cluster config is left in
+    static.json, bookmarks intact, instead of being silently dropped.
+    Default `None` preserves the old behaviour -- every candidate is taken.
+    """
     static = copy.deepcopy(tree)
     toolbar = ffbm_model.find_root(static, "toolbarFolder")
     dashboards = next(
@@ -63,17 +71,19 @@ def split(tree: dict) -> tuple:
     )
     groups = []
     if dashboards is not None:
-        _collect(dashboards, [], groups)
-        _prune(dashboards)
+        _collect(dashboards, [], groups, known_slugs)
+        _prune(dashboards, known_slugs)
     ffbm_model.reindex(static)
     return static, {"apps": dict(DEFAULT_APPS), "groups": groups}
 
 
-def _is_env_folder(node: dict) -> bool:
+def _is_env_folder(node: dict, known_slugs=None) -> bool:
     if node.get("typeCode") != 2 or node["title"] in STATIC_DASHBOARD_FOLDERS:
         return False
     slug = _derive_slug(node, _candidate_slugs(node))
     if slug is None:
+        return False
+    if known_slugs is not None and slug not in known_slugs:
         return False
     title = node["title"]
     return title == slug or title.startswith(slug)
@@ -119,16 +129,16 @@ def _canonical_app(title: str, slug: str):
     return None
 
 
-def _collect(node: dict, path: list, groups: list) -> None:
+def _collect(node: dict, path: list, groups: list, known_slugs=None) -> None:
     """Walk Dashboards, recording env folders grouped by their folder path."""
-    envs = [c for c in node.get("children", []) if _is_env_folder(c)]
+    envs = [c for c in node.get("children", []) if _is_env_folder(c, known_slugs)]
     if envs:
         groups.append({"path": list(path), "envs": [_env_entry(e) for e in envs]})
     for child in node.get("children", []):
-        if child.get("typeCode") == 2 and not _is_env_folder(child):
+        if child.get("typeCode") == 2 and not _is_env_folder(child, known_slugs):
             if child["title"] in STATIC_DASHBOARD_FOLDERS:
                 continue
-            _collect(child, path + [child["title"]], groups)
+            _collect(child, path + [child["title"]], groups, known_slugs)
 
 
 def _env_entry(folder: dict) -> dict:
@@ -173,14 +183,14 @@ def _extra_entry(node: dict) -> dict:
     return extra
 
 
-def _prune(node: dict) -> None:
+def _prune(node: dict, known_slugs=None) -> None:
     """Drop env folders, then any group folder left empty by that removal."""
     kept = []
     for child in node.get("children", []):
-        if _is_env_folder(child):
+        if _is_env_folder(child, known_slugs):
             continue
         if child.get("typeCode") == 2 and child["title"] not in STATIC_DASHBOARD_FOLDERS:
-            _prune(child)
+            _prune(child, known_slugs)
             if not child["children"]:
                 continue
         kept.append(child)

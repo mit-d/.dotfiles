@@ -51,6 +51,17 @@ def _walk(node, prefix, pairs) -> None:
     pairs.append((path, node))
 
 
+def _tail(path: str) -> tuple:
+    """The final two path segments: `<env folder>/<title>`.
+
+    A disambiguation suffix (`#uri`, added by `flatten` for colliding
+    titles) is stripped first since it can itself contain slashes and
+    would otherwise corrupt the split.
+    """
+    bare = path.split("#", 1)[0]
+    return tuple(bare.split("/")[-2:])
+
+
 def diff(left: dict, right: dict) -> dict:
     """What changes going from left to right."""
     a, b = flatten(left), flatten(right)
@@ -79,9 +90,37 @@ def diff(left: dict, right: dict) -> dict:
         from_paths = sorted(removed_by_uri[uri])
         to_paths = sorted(added_by_uri[uri])
         for from_path, to_path in zip(from_paths, to_paths):
-            moved.append({"uri": uri, "from": from_path, "to": to_path})
+            moved.append({"reason": "uri", "uri": uri, "from": from_path, "to": to_path})
             removed.remove(from_path)
             added.remove(to_path)
+
+    # Second pass, over whatever is left: a bookmark whose folder AND uri
+    # both changed is missed by the uri pass above, but usually keeps the
+    # same trailing "<env folder>/<title>" -- only an ancestor group folder
+    # moved. This is a modest correlation heuristic, not a rename-detection
+    # engine: it pairs at most once per tail, deterministically, and leaves
+    # anything it can't match alone in added/removed.
+    removed_by_tail = {}
+    for path in removed:
+        removed_by_tail.setdefault(_tail(path), []).append(path)
+    added_by_tail = {}
+    for path in added:
+        added_by_tail.setdefault(_tail(path), []).append(path)
+
+    for tail in sorted(set(removed_by_tail) & set(added_by_tail)):
+        from_paths = sorted(removed_by_tail[tail])
+        to_paths = sorted(added_by_tail[tail])
+        for from_path, to_path in zip(from_paths, to_paths):
+            moved.append({
+                "reason": "path",
+                "from": from_path,
+                "to": to_path,
+                "from_uri": a[from_path]["uri"],
+                "to_uri": b[to_path]["uri"],
+            })
+            removed.remove(from_path)
+            added.remove(to_path)
+
     moved.sort(key=lambda m: (m["from"], m["to"]))
 
     return {"added": added, "removed": removed, "changed": changed, "moved": moved}
@@ -116,7 +155,15 @@ def format_report(result: dict) -> str:
     if result["moved"]:
         lines.append("MOVED:")
         for move in result["moved"]:
-            lines.append(f"  ~ {move['from']} -> {move['to']}")
+            if move.get("reason") == "path":
+                # Same folder/title, different uri -- more scrutiny-worthy
+                # than a pure relocation, so show both uris.
+                lines.append(
+                    f"  ~ {move['from']} -> {move['to']} "
+                    f"(uri: {move['from_uri']!r} -> {move['to_uri']!r})"
+                )
+            else:
+                lines.append(f"  ~ {move['from']} -> {move['to']}")
         lines.append("")
 
     if result["added"]:
