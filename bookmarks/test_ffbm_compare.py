@@ -225,6 +225,69 @@ def test_diff_correlates_relocated_bookmarks_by_path():
     assert move["to_uri"] == "https://warranty-gsa.bidboxpro.com/"
 
 
+def test_tail_pass_does_not_pair_non_canonical_titles():
+    """Two unrelated extras sharing a generic title must not be paired.
+
+    `Portal` is not a canonical `<app>-<slug>` title, so a genuinely deleted
+    one and a genuinely, unrelatedly added one -- filed under different
+    ancestor groups but landing on the same env-folder leaf name -- must
+    surface honestly as an addition and a deletion, not get masked behind a
+    single "path"-reason move.
+    """
+    left = _toolbar_tree([
+        ffbm_model.folder("g0", "oldgroup", [
+            ffbm_model.folder("g1", "rc", [
+                _bookmark("Portal", "https://old-portal.example/"),
+            ]),
+        ]),
+    ])
+    right = _toolbar_tree([
+        ffbm_model.folder("g2", "newgroup", [
+            ffbm_model.folder("g3", "rc", [
+                _bookmark("Portal", "https://new-portal.example/"),
+            ]),
+        ]),
+    ])
+    result = ffbm_compare.diff(left, right)
+
+    assert result["added"] == ["toolbar/newgroup/rc/Portal"]
+    assert result["removed"] == ["toolbar/oldgroup/rc/Portal"]
+    assert result["moved"] == []
+
+
+def test_tail_pass_still_pairs_canonical_titles():
+    """Canonical `<app>-<slug>` titles remain safe to pair by tail.
+
+    Unlike a generic extra title, the slug is embedded in the title itself,
+    so two different envs cannot produce a colliding tail -- this pins the
+    positive case (the real-world "C1 Prod -> prod" regrouping) so a future
+    change can't "fix" the blind spot above by disabling the tail pass
+    entirely and keep the suite green.
+    """
+    left = _toolbar_tree([
+        ffbm_model.folder("g0", "oldgroup", [
+            ffbm_model.folder("g1", "gsa", [
+                _bookmark("warranty-gsa", "https://old.example/"),
+            ]),
+        ]),
+    ])
+    right = _toolbar_tree([
+        ffbm_model.folder("g2", "newgroup", [
+            ffbm_model.folder("g3", "gsa", [
+                _bookmark("warranty-gsa", "https://new.example/"),
+            ]),
+        ]),
+    ])
+    result = ffbm_compare.diff(left, right)
+
+    assert result["added"] == []
+    assert result["removed"] == []
+    assert len(result["moved"]) == 1
+    assert result["moved"][0]["reason"] == "path"
+    assert result["moved"][0]["from"] == "toolbar/oldgroup/gsa/warranty-gsa"
+    assert result["moved"][0]["to"] == "toolbar/newgroup/gsa/warranty-gsa"
+
+
 def test_moved_reason_distinguishes_uri_from_path():
     left = _toolbar_tree([
         ffbm_model.folder("g1", "rc", [
