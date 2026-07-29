@@ -1,0 +1,987 @@
+{
+  "guid": "root________",
+  "title": "",
+  "index": 0,
+  "dateAdded": 1750369304961000,
+  "lastModified": 1782228082713000,
+  "typeCode": 2,
+  "type": "text/x-moz-place-container",
+  "children": [
+    {
+      "guid": "menu________",
+      "title": "menu",
+      "index": 0,
+      "dateAdded": 1750369304961000,
+      "lastModified": 1750369304994000,
+      "typeCode": 2,
+      "type": "text/x-moz-place-container",
+      "children": [
+        {
+          "guid": "oB5l9ro6kvob",
+          "title": "Firefox Nightly Resources",
+          "index": 0,
+          "dateAdded": 1750369304994000,
+          "lastModified": 1750369304994000,
+          "typeCode": 2,
+          "type": "text/x-moz-place-container",
+          "children": [
+            {
+              "guid": "PyrvRI0Jqg1d",
+              "title": "Get Involved",
+              "index": 0,
+              "dateAdded": 1750369304994000,
+              "lastModified": 1750369304994000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://www.mozilla.org/contribute/?utm_medium=firefox-desktop&utm_source=bookmarks-toolbar&utm_campaign=new-users-nightly&utm_content=-global"
+            },
+            {
+              "guid": "ceLpr0HMYFq1",
+              "title": "Firefox Nightly blog",
+              "index": 1,
+              "dateAdded": 1750369304994000,
+              "lastModified": 1750369304994000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://blog.nightly.mozilla.org/"
+            },
+            {
+              "guid": "OcVG-4fE0I6S",
+              "title": "Mozilla Bug Tracker",
+              "index": 2,
+              "dateAdded": 1750369304994000,
+              "lastModified": 1750369304994000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://bugzilla.mozilla.org/",
+              "keyword": "bz"
+            },
+            {
+              "guid": "J0w6b7Rbns77",
+              "title": "Mozilla Developer Network",
+              "index": 3,
+              "dateAdded": 1750369304994000,
+              "lastModified": 1750369304994000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://developer.mozilla.org/",
+              "keyword": "mdn"
+            },
+            {
+              "guid": "iUL8tXLn1xKo",
+              "title": "Nightly Tester Tools",
+              "index": 4,
+              "dateAdded": 1750369304994000,
+              "lastModified": 1750369304994000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://addons.mozilla.org/firefox/addon/nightly-tester-tools/"
+            },
+            {
+              "guid": "bpVBAyVgdJCu",
+              "title": "All your crashes",
+              "index": 5,
+              "dateAdded": 1750369304994000,
+              "lastModified": 1750369304994000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "about:crashes"
+            },
+            {
+              "guid": "wKHuTd_8ROPa",
+              "title": "Planet Mozilla",
+              "index": 6,
+              "dateAdded": 1750369304994000,
+              "lastModified": 1750369304994000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://planet.mozilla.org/"
+            }
+          ]
+        }
+      ],
+      "root": "bookmarksMenuFolder"
+    },
+    {
+      "guid": "toolbar_____",
+      "title": "toolbar",
+      "index": 1,
+      "dateAdded": 1750369304961000,
+      "lastModified": 1782228082713000,
+      "typeCode": 2,
+      "type": "text/x-moz-place-container",
+      "children": [
+        {
+          "guid": "AMlnVHn-uEel",
+          "title": "1Password - mit.d",
+          "index": 0,
+          "dateAdded": 1739572260758000,
+          "lastModified": 1750437279000000,
+          "typeCode": 1,
+          "type": "text/x-moz-place",
+          "uri": "https://my.1password.com/signin?landing-page=%2Fhome"
+        },
+        {
+          "guid": "uNu8iD53k5oo",
+          "title": "Jira",
+          "index": 1,
+          "dateAdded": 1718899336000000,
+          "lastModified": 1768928147938000,
+          "typeCode": 1,
+          "type": "text/x-moz-place",
+          "uri": "https://bidboxpro.atlassian.net/jira/software/c/projects/WARH/boards/5",
+          "keyword": "jira"
+        },
+        {
+          "guid": "Um_bMRT3VjSm",
+          "title": "Slack",
+          "index": 2,
+          "dateAdded": 1739647758374000,
+          "lastModified": 1759252929619000,
+          "typeCode": 1,
+          "type": "text/x-moz-place",
+          "uri": "https://app.slack.com/client/T01841X4LS0",
+          "keyword": "slack"
+        },
+        {
+          "guid": "i1vpjeW_o1WS",
+          "title": "Accounts",
+          "index": 3,
+          "dateAdded": 1720711559000000,
+          "lastModified": 1782228082713000,
+          "typeCode": 2,
+          "type": "text/x-moz-place-container",
+          "children": [
+            {
+              "guid": "plg6fTMA2inx",
+              "title": "WarrantyHub Mail",
+              "index": 0,
+              "dateAdded": 1718818322000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://mail.google.com/mail/u/0/#inbox",
+              "keyword": "gmail"
+            },
+            {
+              "guid": "L9yULgN7mWfP",
+              "title": "[L24] Work item search - Jira",
+              "index": 1,
+              "dateAdded": 1759252913622000,
+              "lastModified": 1759252924194000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://bidboxpro.atlassian.net/issues/?filter=10221"
+            },
+            {
+              "guid": "p_uIKrdH38E-",
+              "title": "Linear",
+              "index": 2,
+              "dateAdded": 1782166887461000,
+              "lastModified": 1782228082713000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://linear.app/warrantyhub/team/WARH/active"
+            },
+            {
+              "guid": "zcoCcNzvU4MD",
+              "title": "bidboxpro \u00b7 GitLab",
+              "index": 3,
+              "dateAdded": 1718818401000000,
+              "lastModified": 1759252928389000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://gitlab.com/bidboxpro/",
+              "keyword": "glab"
+            }
+          ]
+        },
+        {
+          "guid": "aB4OI7SiZMoi",
+          "title": "Docs",
+          "index": 4,
+          "dateAdded": 1741197748191000,
+          "lastModified": 1769648666739000,
+          "typeCode": 2,
+          "type": "text/x-moz-place-container",
+          "children": [
+            {
+              "guid": "_qkjswefhxC9",
+              "title": "Angular API Reference",
+              "index": 0,
+              "dateAdded": 1718897126000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://angular.dev/api"
+            },
+            {
+              "guid": "iAxCYTVReD0D",
+              "title": "Functions & Directives - Tailwind CSS",
+              "index": 1,
+              "dateAdded": 1718907997000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://tailwindcss.com/docs/functions-and-directives"
+            },
+            {
+              "guid": "jUkzc7pr8aJp",
+              "title": "Fuse Angular",
+              "index": 2,
+              "dateAdded": 1718902503000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://angular-material.fusetheme.com/sign-in?redirectURL=%2Fdashboards%2Fproject"
+            },
+            {
+              "guid": "d61skWziIVVS",
+              "title": "Heroicons",
+              "index": 3,
+              "dateAdded": 1720711689000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://heroicons.com/"
+            },
+            {
+              "guid": "8EK9IsJdDUen",
+              "title": "Heroicons v1",
+              "index": 4,
+              "dateAdded": 1720711700000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://v1.heroicons.com/"
+            },
+            {
+              "guid": "fGTetW-tA8IP",
+              "title": "3 Approaches for Implementing Nested Forms in Angular - DotNetSurfers",
+              "index": 5,
+              "dateAdded": 1723067492000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://www.dotnetsurfers.com/blog/2020/10/11/3-approaches-for-implementing-nested-forms-in-angular/"
+            },
+            {
+              "guid": "BiAKfD5Gqg1w",
+              "title": "Angular ControlValueAccessor and markAsTouched - Stack Overflow",
+              "index": 6,
+              "dateAdded": 1726510241000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://stackoverflow.com/questions/61566769/angular-controlvalueaccessor-and-markastouched"
+            },
+            {
+              "guid": "oPwIaFsJW3wr",
+              "title": "Form statusChanges with async validators doesn't leave PENDING state \u00b7 Issue #41519 \u00b7 angular/angular \u00b7 GitHub",
+              "index": 7,
+              "dateAdded": 1726613029000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://github.com/angular/angular/issues/41519"
+            },
+            {
+              "guid": "C-BG-J0VLAw9",
+              "title": "Django models and encapsulation - DabApps",
+              "index": 8,
+              "dateAdded": 1726770824000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://www.dabapps.com/insights/django-models-and-encapsulation/"
+            },
+            {
+              "guid": "HgcrnpKbuCZp",
+              "title": "What Is Attribute-Based Access Control (ABAC)? | Okta",
+              "index": 9,
+              "dateAdded": 1732574619000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://www.okta.com/blog/2020/09/attribute-based-access-control-abac/"
+            },
+            {
+              "guid": "khmj4w2-63te",
+              "title": "TypeScript: Documentation - Utility Types",
+              "index": 10,
+              "dateAdded": 1732769560000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://www.typescriptlang.org/docs/handbook/utility-types.html"
+            },
+            {
+              "guid": "JNnv3LHOaz4_",
+              "title": "Django documentation | Django documentation | Django",
+              "index": 11,
+              "dateAdded": 1745724192204000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://docs.djangoproject.com/en/5.2/"
+            },
+            {
+              "guid": "fflm-_KQXgMl",
+              "title": "How Request-Response Cycle works in Django REST Framework \u2013 Sourcery",
+              "index": 12,
+              "dateAdded": 1754604572255000,
+              "lastModified": 1754604572255000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "about:reader?url=https%3A%2F%2Fsourcery.blog%2Fhow-request-response-cycle-works-in-django-rest-framework%2F"
+            },
+            {
+              "guid": "XzVEzA3OKZfO",
+              "title": "address PR",
+              "index": 13,
+              "dateAdded": 1757103775901000,
+              "lastModified": 1757103775901000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://gitlab.com/bidboxpro/vanguard/-/merge_requests/949/diffs#123e61987ebaf1c9ec396058fa649f6625e62923"
+            },
+            {
+              "guid": "VmSPjaFPmPXE",
+              "title": "Find the Elements | Shape Up",
+              "index": 14,
+              "dateAdded": 1760125884363000,
+              "lastModified": 1760125884363000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://basecamp.com/shapeup/1.3-chapter-04"
+            },
+            {
+              "guid": "-PkiP6j05XW2",
+              "title": "WarrantyHub Dashboard - powered by Bid Box Pro",
+              "index": 15,
+              "dateAdded": 1760564432571000,
+              "lastModified": 1760564432571000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "http://localhost:4200/w/bbp/a/dash/policy/home"
+            },
+            {
+              "guid": "vB5eYWLnZlBD",
+              "title": "WarrantyHub Dashboard - powered by Bid Box Pro",
+              "index": 16,
+              "dateAdded": 1765328448408000,
+              "lastModified": 1765328448408000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "http://localhost:4200/w/bbp/a/dash/claims/determination/714752",
+              "tags": "as"
+            },
+            {
+              "guid": "vo-U_mby0cf3",
+              "title": "WarrantyHub Dashboard - powered by Bid Box Pro",
+              "index": 17,
+              "dateAdded": 1769648666739000,
+              "lastModified": 1769648666739000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "http://localhost:4200/w/bbp/a/dash/claims/determination/700187"
+            }
+          ]
+        },
+        {
+          "guid": "38QoWLbxft7U",
+          "title": "Dashboards",
+          "index": 5,
+          "dateAdded": 1720027615000000,
+          "lastModified": 1767983647870000,
+          "typeCode": 2,
+          "type": "text/x-moz-place-container",
+          "children": [
+            {
+              "guid": "DL7mxnbc4vnq",
+              "title": "Local",
+              "index": 0,
+              "dateAdded": 1720027635000000,
+              "lastModified": 1759518704057000,
+              "typeCode": 2,
+              "type": "text/x-moz-place-container",
+              "children": [
+                {
+                  "guid": "vQXpTx5LI3PE",
+                  "title": "warranty-local",
+                  "index": 0,
+                  "dateAdded": 1718837918000000,
+                  "lastModified": 1750696174797000,
+                  "typeCode": 1,
+                  "type": "text/x-moz-place",
+                  "uri": "http://localhost:4200/",
+                  "keyword": "warranty"
+                },
+                {
+                  "guid": "1-UW8GyuGgOz",
+                  "title": "affiliate-local",
+                  "index": 1,
+                  "dateAdded": 1720028502000000,
+                  "lastModified": 1750696173182000,
+                  "typeCode": 1,
+                  "type": "text/x-moz-place",
+                  "uri": "http://localhost:4400/",
+                  "keyword": "affiliate"
+                },
+                {
+                  "guid": "Q0KVTYaunFBi",
+                  "title": "product-local",
+                  "index": 2,
+                  "dateAdded": 1720027922000000,
+                  "lastModified": 1750437279000000,
+                  "typeCode": 1,
+                  "type": "text/x-moz-place",
+                  "uri": "http://localhost:4300/",
+                  "keyword": "product"
+                },
+                {
+                  "guid": "R7_zGMrnRGGF",
+                  "title": "core-local",
+                  "index": 3,
+                  "dateAdded": 1719328580000000,
+                  "lastModified": 1750437279000000,
+                  "typeCode": 1,
+                  "type": "text/x-moz-place",
+                  "uri": "http://localhost:8000/admin/login/?next=/admin/",
+                  "keyword": "core"
+                },
+                {
+                  "guid": "voBHxwQ1tJ9u",
+                  "title": "swagger-local",
+                  "index": 4,
+                  "dateAdded": 1729027306000000,
+                  "lastModified": 1750437279000000,
+                  "typeCode": 1,
+                  "type": "text/x-moz-place",
+                  "uri": "http://localhost:8000/swagger/",
+                  "keyword": "swagger"
+                },
+                {
+                  "guid": "I94jlyWgsjkq",
+                  "title": "Diff Coverage",
+                  "index": 5,
+                  "dateAdded": 1759518685322000,
+                  "lastModified": 1759518704057000,
+                  "typeCode": 1,
+                  "type": "text/x-moz-place",
+                  "uri": "file:///Users/derekmitten/Source/vanguard/jaguar/htmlcov/diff-cover-report.html",
+                  "keyword": "htmlcov"
+                }
+              ]
+            },
+            {
+              "guid": "X7R23J1fUVOQ",
+              "title": "Prod",
+              "index": 1,
+              "dateAdded": 1720027622000000,
+              "lastModified": 1759526592219000,
+              "typeCode": 2,
+              "type": "text/x-moz-place-container",
+              "children": [
+                {
+                  "guid": "JOKrv394zB7L",
+                  "title": "Other",
+                  "index": 0,
+                  "dateAdded": 1753128798021000,
+                  "lastModified": 1753128804755000,
+                  "typeCode": 2,
+                  "type": "text/x-moz-place-container",
+                  "children": [
+                    {
+                      "guid": "fYQT-mRMYNSw",
+                      "title": "vscdemo (DEPRECATED)",
+                      "index": 0,
+                      "dateAdded": 1741198768147000,
+                      "lastModified": 1753128804755000,
+                      "typeCode": 2,
+                      "type": "text/x-moz-place-container",
+                      "children": [
+                        {
+                          "guid": "uKCdijzMplZ2",
+                          "title": "warranty-vscdemo",
+                          "index": 0,
+                          "dateAdded": 1741198293623000,
+                          "lastModified": 1753127847901000,
+                          "typeCode": 1,
+                          "type": "text/x-moz-place",
+                          "uri": "https://warranty-vscdemo.bidboxpro.com/",
+                          "tags": "boat,rc,vscdemo"
+                        },
+                        {
+                          "guid": "HEpgYe4hQjUK",
+                          "title": "affiliate-vscdemo",
+                          "index": 1,
+                          "dateAdded": 1753127842290000,
+                          "lastModified": 1753127855752000,
+                          "typeCode": 1,
+                          "type": "text/x-moz-place",
+                          "uri": "https://affiliate-vscdemo.bidboxpro.dev/",
+                          "tags": "boat,rc,vscdemo"
+                        },
+                        {
+                          "guid": "PwzPEaoeXev6",
+                          "title": "core-devlag",
+                          "index": 2,
+                          "dateAdded": 1753127842293000,
+                          "lastModified": 1753127842293000,
+                          "typeCode": 1,
+                          "type": "text/x-moz-place",
+                          "uri": "https://core-devlag.bidboxpro.com/admin/login/?next=/admin/",
+                          "tags": "devlag,homewarranty,rc,vscdemo"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "guid": "LvQG91GXXf_p",
+              "title": "C1 Prod",
+              "index": 2,
+              "dateAdded": 1730826482000000,
+              "lastModified": 1767983647870000,
+              "typeCode": 2,
+              "type": "text/x-moz-place-container",
+              "children": [
+                {
+                  "guid": "kxlxfPE7XqcM",
+                  "title": "Portal",
+                  "index": 0,
+                  "dateAdded": 1742580918806000,
+                  "lastModified": 1753128216559000,
+                  "typeCode": 1,
+                  "type": "text/x-moz-place",
+                  "uri": "https://affiliate-acclhw.bidboxpro.com/w/bbp/a/dash/warranty/list",
+                  "tags": "c1:homewi,homewarranty,prod"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "guid": "jgHPzzAa6qFR",
+          "title": "Status Pages",
+          "index": 6,
+          "dateAdded": 1736357668000000,
+          "lastModified": 1750437279000000,
+          "typeCode": 2,
+          "type": "text/x-moz-place-container",
+          "children": [
+            {
+              "guid": "vIMNtj2l1n0U",
+              "title": "DigitalOcean Status",
+              "index": 0,
+              "dateAdded": 1736357674000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://status.digitalocean.com/"
+            },
+            {
+              "guid": "e-_xnMkh9z_Z",
+              "title": "Mixpanel Status",
+              "index": 1,
+              "dateAdded": 1736357684000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://www.mixpanelstatus.com/"
+            },
+            {
+              "guid": "X8lZsVZBAGG4",
+              "title": "ShipStation Status",
+              "index": 2,
+              "dateAdded": 1736357691000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://status.shipstation.com/"
+            },
+            {
+              "guid": "TGNWMQ9TW1gs",
+              "title": "SendGrid Status",
+              "index": 3,
+              "dateAdded": 1736357701000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://status.sendgrid.com/"
+            },
+            {
+              "guid": "dtINqwKOKx9K",
+              "title": "Twilio Status",
+              "index": 4,
+              "dateAdded": 1736357713000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://status.twilio.com/"
+            },
+            {
+              "guid": "iTl8TIba_MVq",
+              "title": "Slack System Status",
+              "index": 5,
+              "dateAdded": 1736357722000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://slack-status.com/"
+            },
+            {
+              "guid": "qrKUvlFRoIET",
+              "title": "Stripe system status",
+              "index": 6,
+              "dateAdded": 1736357730000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://status.stripe.com/"
+            },
+            {
+              "guid": "MrOGWqk4Clga",
+              "title": "Authorize.net Status",
+              "index": 7,
+              "dateAdded": 1736357743000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://status.authorize.net/"
+            },
+            {
+              "guid": "O2BI003FUVOI",
+              "title": "Sentry Status",
+              "index": 8,
+              "dateAdded": 1736357755000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://status.sentry.io/"
+            },
+            {
+              "guid": "FyjoWuJ5CN2z",
+              "title": "Option Reference - Configuration",
+              "index": 9,
+              "dateAdded": 1736528390000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://ghostty.org/docs/config/reference#gtk-titlebar"
+            }
+          ]
+        },
+        {
+          "guid": "77dy18s5IP_Q",
+          "title": "Onboarding",
+          "index": 7,
+          "dateAdded": 1720711571000000,
+          "lastModified": 1750437279000000,
+          "typeCode": 2,
+          "type": "text/x-moz-place-container",
+          "children": [
+            {
+              "guid": "y19cd0n_bCWv",
+              "title": "Onboarding Doc",
+              "index": 0,
+              "dateAdded": 1718818421000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://docs.google.com/document/d/10PtecPvbPHEE_eyr2r1DosCdltplaQYQsWGFmatijx8/edit#heading=h.ilga393kjnhd"
+            },
+            {
+              "guid": "UMELeawTGTfK",
+              "title": "WarrantyHub: The Only Warranty Management System You'll Need",
+              "index": 1,
+              "dateAdded": 1718835464000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://warrantyhub.com/"
+            },
+            {
+              "guid": "w-c7W-_jp-OA",
+              "title": "WarrantyHub Knowledge Base: Expert Support & Solutions for Warranty Management",
+              "index": 2,
+              "dateAdded": 1718835481000000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://help.warrantyhub.com/portal/en/kb?_gl=1*15f2c49*_ga*MjEwMDk0MTQxMC4xNzE4ODM1NDYy*_ga_YEM54526ND*MTcxODgzNTQ2MS4xLjAuMTcxODgzNTQ2MS42MC4wLjA."
+            },
+            {
+              "guid": "7BMMernrdXLW",
+              "title": "Draft: Builder MVP Processes (!493) \u00b7 Merge requests \u00b7 bidboxpro / Vanguard \u00b7 GitLab",
+              "index": 3,
+              "dateAdded": 1743636600274000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://gitlab.com/bidboxpro/vanguard/-/merge_requests/493/diffs#3920fd9def84a2c1c7372addf45abdc3ac81a6a5"
+            },
+            {
+              "guid": "VFBs7ov33OFa",
+              "title": "Design Doc - Steinel - Mfg claim flow - Google Docs",
+              "index": 4,
+              "dateAdded": 1743698241132000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://docs.google.com/document/d/1v_T7SSfu3JYCxCYKqBICGRKvOc7D9tpIB1qRioR58EQ/edit?tab=t.0#heading=h.j835voz3lwyf"
+            },
+            {
+              "guid": "4TSpDWiJ8u2K",
+              "title": "Steinel Wireframe: Lucidchart",
+              "index": 5,
+              "dateAdded": 1743698263744000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://lucid.app/lucidchart/da63f2c1-f0a7-4c92-a966-541a4083dc49/edit?invitationId=inv_c7a76494-d9af-4079-905c-c4251cc24bb9"
+            },
+            {
+              "guid": "z_sglyRC7mLi",
+              "title": "Storybook for Angular | Storybook docs",
+              "index": 6,
+              "dateAdded": 1741899315891000,
+              "lastModified": 1750437279000000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://storybook.js.org/docs/get-started/frameworks/angular"
+            }
+          ]
+        },
+        {
+          "guid": "Mta7DnROfxxI",
+          "title": "Smoke Testing",
+          "index": 8,
+          "dateAdded": 1758643791763000,
+          "lastModified": 1773949448178000,
+          "typeCode": 2,
+          "type": "text/x-moz-place-container",
+          "children": [
+            {
+              "guid": "dlvvUTZ6zF83",
+              "title": "Smoke Testing the Product Lines after an RC Deploy - Google Docs",
+              "index": 0,
+              "dateAdded": 1758648182860000,
+              "lastModified": 1758648187933000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://docs.google.com/document/d/1jzIyXWT4MIa6yXuAG7DyRdFRvgbBfA4llNLtU19tbjQ/edit?tab=t.0#heading=h.8prn48jd7xf7"
+            },
+            {
+              "guid": "Xmc-riQe3Yms",
+              "title": "rc contracts/add",
+              "index": 1,
+              "dateAdded": 1758643812027000,
+              "lastModified": 1758643812027000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://warranty-rc.bidboxpro.com/w/bbp/a/dash/contracts/add"
+            },
+            {
+              "guid": "iGkglvDvsEWU",
+              "title": "rc:affiliate contracts/add",
+              "index": 2,
+              "dateAdded": 1758643836840000,
+              "lastModified": 1758643836840000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://affiliate-rc.bidboxpro.com/w/bbp/a/dash/warranty/add"
+            },
+            {
+              "guid": "M7c00e5u-4Zm",
+              "title": "automotivedemo checkout",
+              "index": 3,
+              "dateAdded": 1758643875612000,
+              "lastModified": 1758643875612000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://warranty-automotivedemo.bidboxpro.com/w/bbp/a/dash/checkout/automotive/contract"
+            },
+            {
+              "guid": "Iw7pTeGGBvs-",
+              "title": "automotivedemo:affiliate checkout",
+              "index": 4,
+              "dateAdded": 1758643895559000,
+              "lastModified": 1758643895559000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://affiliate-automotivedemo.bidboxpro.com/w/bbp/a/dash/checkout/automotive/contract"
+            },
+            {
+              "guid": "61bRZF_jKruB",
+              "title": "boatdemo contracts/add",
+              "index": 5,
+              "dateAdded": 1758643918957000,
+              "lastModified": 1758643918957000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://warranty-boatdemo.bidboxpro.com/w/bbp/a/dash/contracts/add?quote=67"
+            },
+            {
+              "guid": "Nhj8Y1Gwci13",
+              "title": "boatdemo:affiliate warranty/add",
+              "index": 6,
+              "dateAdded": 1758643939599000,
+              "lastModified": 1758643939599000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://affiliate-boatdemo.bidboxpro.com/w/bbp/a/dash/warranty/add?quote=68"
+            },
+            {
+              "guid": "QiMbh_WQKRRj",
+              "title": "builderdemo contracts/add",
+              "index": 7,
+              "dateAdded": 1758643960198000,
+              "lastModified": 1758643960198000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://warranty-builderdemo.bidboxpro.com/w/bbp/a/dash/contracts/add"
+            },
+            {
+              "guid": "yX_zzXzuGQxW",
+              "title": "builderdemo:affiliate contracts/add",
+              "index": 8,
+              "dateAdded": 1758643983953000,
+              "lastModified": 1758643983953000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://affiliate-builderdemo.bidboxpro.com/w/bbp/a/dash/contracts/add"
+            },
+            {
+              "guid": "LqN9j0ZqRWg9",
+              "title": "oemdemo checkout",
+              "index": 9,
+              "dateAdded": 1758644008060000,
+              "lastModified": 1758644008060000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://warranty-oemdemo.bidboxpro.com/w/bbp/a/dash/checkout/manufacturer/register"
+            },
+            {
+              "guid": "PSEEfYiGQsEX",
+              "title": "oemdemo:affiliate checkout",
+              "index": 10,
+              "dateAdded": 1758644072806000,
+              "lastModified": 1758644072806000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://affiliate-oemdemo.bidboxpro.com/w/bbp/a/dash/checkout/manufacturer/register"
+            },
+            {
+              "guid": "PUMspLNt3Nyv",
+              "title": "Portal",
+              "index": 11,
+              "dateAdded": 1758743500402000,
+              "lastModified": 1758743500402000,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "http://localhost:4400/w/bbp/a/dash/contracts/view/10265"
+            }
+          ]
+        },
+        {
+          "guid": "S6akFD922p3F",
+          "title": "Design Doc - TrustPoint Administrators (Capital Auto) - Google Docs",
+          "index": 9,
+          "dateAdded": 1749569157461000,
+          "lastModified": 1750437279000000,
+          "typeCode": 1,
+          "type": "text/x-moz-place",
+          "uri": "https://docs.google.com/document/d/1IkwWAu0Cb4bp1o1a0_hAyWFVU1LB7pM42Cxu8yuQu0U/edit?tab=t.0#heading=h.j835voz3lwyf"
+        },
+        {
+          "guid": "XlElgqF778Gn",
+          "title": "High-level ERD for WarrantyHub: Lucidchart",
+          "index": 10,
+          "dateAdded": 1750277250067000,
+          "lastModified": 1750437279000000,
+          "typeCode": 1,
+          "type": "text/x-moz-place",
+          "uri": "https://lucid.app/lucidchart/0060c6b1-2777-433f-bce8-a7183725977d/edit?invitationId=inv_ed1c9270-2854-44a3-b0bf-8af8ecf4d663&page=Efmz~n4.nqFh#"
+        },
+        {
+          "guid": "te6fneM3yS54",
+          "title": "WarrantyHub - Calendar - Week of July 6, 2025",
+          "index": 11,
+          "dateAdded": 1751997501583000,
+          "lastModified": 1751997501583000,
+          "typeCode": 1,
+          "type": "text/x-moz-place",
+          "uri": "https://calendar.google.com/calendar/u/0/r"
+        },
+        {
+          "guid": "as3B3R3AxYA0",
+          "title": "Lexington - Box",
+          "index": 12,
+          "dateAdded": 1770412913953000,
+          "lastModified": 1770412913953000,
+          "typeCode": 1,
+          "type": "text/x-moz-place",
+          "uri": "https://lexingtonnational.app.box.com/s/beekf2xsehwqc0s0b404co53phobiap6/folder/352677956492"
+        },
+        {
+          "guid": "P8Z4VK19h0z4",
+          "title": "Gusto",
+          "index": 13,
+          "dateAdded": 1776048461954000,
+          "lastModified": 1776048461954000,
+          "typeCode": 1,
+          "type": "text/x-moz-place",
+          "uri": "https://login.gusto.com/realms/zenpayroll/protocol/openid-connect/auth?alert=&client_id=zenpayroll&device_uuid=a502131b-2f8f-4c25-82d3-81a444a9d298&redirect_to_partner=false&redirect_uri=https%3A%2F%2Fapp.gusto.com%2Fuser%2Fauth%2Fkeycloak_openid%2Fcallback&response_type=code&scope=openid&session_key=V%2FXfE7hJXrv%2FvhCrhmVNOAqFPiTBlKnqTkmpwATzKYk%3D&state=8a5ed23f55b355bd5bbde2d9d63feea04f26d832d7961bb9"
+        },
+        {
+          "guid": "2F7WI_xGVlQe",
+          "title": "Lucid",
+          "index": 14,
+          "dateAdded": 1780347545505000,
+          "lastModified": 1780347545505000,
+          "typeCode": 1,
+          "type": "text/x-moz-place",
+          "uri": "https://lucid.app/documents/#/home?folder_id=recent"
+        },
+        {
+          "guid": "jBaFbxJLiY1a",
+          "title": "@clickup/ngx-esbuild - npm",
+          "index": 15,
+          "dateAdded": 1781764486113000,
+          "lastModified": 1781764486113000,
+          "typeCode": 1,
+          "type": "text/x-moz-place",
+          "uri": "https://www.npmjs.com/package/@clickup/ngx-esbuild"
+        }
+      ],
+      "root": "toolbarFolder"
+    },
+    {
+      "guid": "unfiled_____",
+      "title": "unfiled",
+      "index": 2,
+      "dateAdded": 1750369304961000,
+      "lastModified": 1750369304993000,
+      "typeCode": 2,
+      "type": "text/x-moz-place-container",
+      "children": [],
+      "root": "unfiledBookmarksFolder"
+    },
+    {
+      "guid": "mobile______",
+      "title": "mobile",
+      "index": 3,
+      "dateAdded": 1750369304967000,
+      "lastModified": 1750369304993000,
+      "typeCode": 2,
+      "type": "text/x-moz-place-container",
+      "children": [],
+      "root": "mobileFolder"
+    }
+  ],
+  "root": "placesRoot"
+}

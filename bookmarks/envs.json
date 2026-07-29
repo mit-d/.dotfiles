@@ -1,0 +1,443 @@
+{
+  "apps": {
+    "warranty": {
+      "url": "https://warranty-{env}.{host}/",
+      "keyword": "{env}",
+      "tag": "warranty"
+    },
+    "affiliate": {
+      "url": "https://affiliate-{env}.{host}/",
+      "keyword": "{env}:affiliate",
+      "tag": "affiliate"
+    },
+    "core": {
+      "url": "https://core-{env}.{host}/admin/login/?next=/admin/",
+      "keyword": "{env}:core",
+      "tag": "core"
+    },
+    "product": {
+      "url": "https://product-{env}.{host}/",
+      "keyword": "{env}:product",
+      "tag": "product"
+    }
+  },
+  "groups": [
+    {
+      "path": [
+        "prod"
+      ],
+      "envs": [
+        {
+          "slug": "acclhw",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "homewarranty",
+          "extras": [
+            {
+              "title": "warranty-stgacclaimed",
+              "url": "https://warranty-stgacclaimed.bidboxpro.dev/",
+              "tags": [
+                "affiliate",
+                "c1:acclaimed",
+                "homewarranty",
+                "prod"
+              ]
+            },
+            {
+              "title": "Home Page | Acclaimed Home Warranty",
+              "url": "https://www.acclaimedhw.com/",
+              "tags": [
+                "c1:acclaimed",
+                "homewarranty",
+                "prod"
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "advantagehw",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "homewarranty"
+        },
+        {
+          "slug": "bbp",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "homewarranty"
+        },
+        {
+          "slug": "bestday",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "homewarranty"
+        },
+        {
+          "slug": "bhmp",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "boat"
+        },
+        {
+          "slug": "bhmptraining",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "boat"
+        },
+        {
+          "slug": "bighorn",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "homewarranty"
+        },
+        {
+          "slug": "everdry",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "homewarranty"
+        },
+        {
+          "slug": "gforce",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "firearm"
+        },
+        {
+          "slug": "gsa",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "manufacturer"
+        },
+        {
+          "slug": "homewi",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "homewarranty"
+        },
+        {
+          "slug": "innohw",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "homewarranty"
+        },
+        {
+          "slug": "lmcconstruction",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "builder"
+        },
+        {
+          "slug": "lmcctraining",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "builder"
+        },
+        {
+          "slug": "lnic",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "automotive"
+        },
+        {
+          "slug": "nrac",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "manufacturer"
+        },
+        {
+          "slug": "nractraining",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "manufacturer"
+        },
+        {
+          "slug": "s001",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "automotive"
+        },
+        {
+          "slug": "s002",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "automotive"
+        },
+        {
+          "slug": "safepro",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "homewarranty"
+        },
+        {
+          "slug": "sandbox1317",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "manufacturer"
+        },
+        {
+          "slug": "sandboxjaimem",
+          "host": "bidboxpro.dev",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "homewarranty"
+        },
+        {
+          "slug": "sandboxkialas",
+          "host": "bidboxpro.dev",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "homewarranty"
+        },
+        {
+          "slug": "steinel",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "manufacturer"
+        },
+        {
+          "slug": "stronghouse",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "builder"
+        },
+        {
+          "slug": "tpanalytics",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "automotive"
+        },
+        {
+          "slug": "trustpoint",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "automotive"
+        },
+        {
+          "slug": "trustpointtraining",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "automotive"
+        },
+        {
+          "slug": "yourextendedservices",
+          "host": "bidboxpro.com",
+          "tags": [
+            "prod"
+          ],
+          "vertical": "homewarranty"
+        }
+      ]
+    },
+    {
+      "path": [
+        "rc"
+      ],
+      "envs": [
+        {
+          "slug": "automotivedemo",
+          "host": "bidboxpro.com",
+          "tags": [
+            "rc"
+          ],
+          "vertical": "automotive"
+        },
+        {
+          "slug": "boatdemo",
+          "host": "bidboxpro.com",
+          "tags": [
+            "rc"
+          ],
+          "vertical": "boat"
+        },
+        {
+          "slug": "builderdemo",
+          "host": "bidboxpro.com",
+          "tags": [
+            "rc"
+          ],
+          "vertical": "builder"
+        },
+        {
+          "slug": "d001",
+          "host": "bidboxpro.dev",
+          "tags": [
+            "rc"
+          ],
+          "vertical": "automotive"
+        },
+        {
+          "slug": "firearmdemo",
+          "host": "bidboxpro.com",
+          "tags": [
+            "rc"
+          ],
+          "vertical": "firearm"
+        },
+        {
+          "slug": "oemdemo",
+          "host": "bidboxpro.com",
+          "tags": [
+            "rc"
+          ],
+          "vertical": "manufacturer"
+        },
+        {
+          "slug": "oemrc",
+          "host": "bidboxpro.com",
+          "tags": [
+            "rc"
+          ],
+          "vertical": "manufacturer"
+        },
+        {
+          "slug": "rc",
+          "host": "bidboxpro.com",
+          "tags": [
+            "rc"
+          ],
+          "vertical": "homewarranty"
+        },
+        {
+          "slug": "smokeautomotive",
+          "host": "bidboxpro.dev",
+          "tags": [
+            "rc"
+          ],
+          "vertical": "automotive"
+        },
+        {
+          "slug": "smokeboat",
+          "host": "bidboxpro.dev",
+          "tags": [
+            "rc"
+          ],
+          "vertical": "boat"
+        },
+        {
+          "slug": "smokebuilder",
+          "host": "bidboxpro.dev",
+          "tags": [
+            "rc"
+          ],
+          "vertical": "builder"
+        },
+        {
+          "slug": "smokefirearm",
+          "host": "bidboxpro.dev",
+          "tags": [
+            "rc"
+          ],
+          "vertical": "firearm"
+        },
+        {
+          "slug": "smokehomewarranty",
+          "host": "bidboxpro.dev",
+          "tags": [
+            "rc"
+          ],
+          "vertical": "homewarranty"
+        },
+        {
+          "slug": "smokemanufacturer",
+          "host": "bidboxpro.dev",
+          "tags": [
+            "rc"
+          ],
+          "vertical": "manufacturer"
+        }
+      ]
+    },
+    {
+      "path": [
+        "staging"
+      ],
+      "envs": [
+        {
+          "slug": "advantagetest",
+          "host": "bidboxpro.dev",
+          "tags": [
+            "staging"
+          ],
+          "vertical": "homewarranty"
+        },
+        {
+          "slug": "devhomewarrantyinc",
+          "host": "bidboxpro.dev",
+          "tags": [
+            "staging"
+          ],
+          "vertical": "homewarranty"
+        }
+      ]
+    },
+    {
+      "path": [
+        "dev"
+      ],
+      "envs": [
+        {
+          "slug": "devlag",
+          "host": "bidboxpro.dev",
+          "tags": [
+            "dev"
+          ],
+          "vertical": "homewarranty"
+        }
+      ]
+    }
+  ]
+}
