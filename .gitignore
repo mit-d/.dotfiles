@@ -16,3 +16,11 @@ tests/_output/*
 
 # python bytecode cache
 __pycache__/
+
+# The generated bookmark tree is committed on purpose: it doubles as a
+# versioned backup, and `git diff` on it previews what a Firefox Restore
+# would change. Overrides the global `build/` rule in ~/.config/git/ignore.
+# The directory must be re-included first -- git will not descend into an
+# excluded directory, so negating only the file would have no effect.
+!bookmarks/build/
+!bookmarks/build/bookmarks.json
