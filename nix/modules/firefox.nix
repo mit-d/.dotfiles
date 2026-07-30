@@ -1,6 +1,14 @@
 { config, ... }:
 let
   user = config.system.primaryUser;
+
+  # AMO's "latest" endpoint per add-on slug. Policies pin the *set* of
+  # extensions, not their versions, so add-ons keep auto-updating and
+  # security fixes do not wait on a flake update.
+  forceInstalled = slug: {
+    installation_mode = "force_installed";
+    install_url = "https://addons.mozilla.org/firefox/downloads/latest/${slug}/latest.xpi";
+  };
 in
 {
   # home-manager's nix-darwin integration resolves the home directory from
@@ -215,5 +223,32 @@ in
         };
       };
     };
+  };
+
+  # On macOS, Firefox reads enterprise policies through CFPreferences from
+  # its own bundle-id domain, so a per-key `defaults write` is sufficient --
+  # no MDM configuration profile and no writable app bundle needed. This is
+  # what makes the cask-installed Nightly policy-configurable from nix.
+  #
+  # nix-darwin emits one `defaults write` per key. home-manager's equivalent
+  # (darwinDefaultsId, disabled above) uses `defaults import`, which replaces
+  # the whole domain and would wipe Nightly's own Cocoa state every switch.
+  system.defaults.CustomUserPreferences."org.mozilla.nightly" = {
+    EnterprisePoliciesEnabled = true;
+
+    ExtensionSettings = {
+      "uBlock0@raymondhill.net" = forceInstalled "ublock-origin";
+      "@testpilot-containers" = forceInstalled "multi-account-containers";
+    };
+
+    DisableTelemetry = true;
+    DisableFirefoxStudies = true;
+    DisablePocket = true;
+
+    # 1Password owns credentials. Firefox Accounts stays enabled on purpose:
+    # Sync still carries bookmarks, tabs, and addresses.
+    PasswordManagerEnabled = false;
+    OfferToSaveLogins = false;
+    DisableFormHistory = true;
   };
 }
