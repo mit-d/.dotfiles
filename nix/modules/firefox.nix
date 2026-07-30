@@ -104,6 +104,36 @@ in
             "services.sync.engine.prefs" = false;
             "services.sync.engine.passwords" = false;
           };
+
+          # containers.json already exists, so writing it needs force.
+          containersForce = true;
+
+          # The ids are the live userContextIds. Preserving them preserves
+          # each container's existing cookie jar and sessions. These were
+          # built-in localized entries, so the labels become fixed English
+          # strings -- cosmetic, and the only visible change.
+          containers = {
+            Personal = {
+              id = 1;
+              icon = "fingerprint";
+              color = "blue";
+            };
+            Work = {
+              id = 2;
+              icon = "briefcase";
+              color = "orange";
+            };
+            Banking = {
+              id = 3;
+              icon = "dollar";
+              color = "green";
+            };
+            Shopping = {
+              id = 4;
+              icon = "cart";
+              color = "pink";
+            };
+          };
         };
       };
     };
