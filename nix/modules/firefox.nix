@@ -28,6 +28,20 @@ in
     users.${user} = {
       home.stateVersion = "26.05";
 
+      # Firefox rewrites profiles.ini *in place* at startup, so it cannot be
+      # a read-only store symlink: doing so makes startup fail outright with
+      # "Your Firefox profile cannot be loaded. It may be missing or
+      # inaccessible." Verified the hard way. Firefox keeps ownership of this
+      # file, and nix has nothing to add to it anyway -- the profile already
+      # exists, and installs.ini (which home-manager never manages) is what
+      # pins this install to it.
+      #
+      # The other managed files are fine: Firefox never writes user.js or
+      # userChrome.css, and for containers.json and search.json.mozlz4 it
+      # *replaces* the symlink rather than writing through it, which is what
+      # the `force` options below are for.
+      home.file."Library/Application Support/Firefox/profiles.ini".enable = false;
+
       programs.firefox = {
         enable = true;
 

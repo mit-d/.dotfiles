@@ -20,7 +20,8 @@ config without installing a browser. It writes these as symlinks into
 | `containers.json` | `profiles.default-nightly.containers` |
 | `search.json.mozlz4` | `profiles.default-nightly.search` |
 | `chrome/userChrome.css` | `nix/firefox/userChrome.css` |
-| `../../profiles.ini` | derived from the `profiles` attrset |
+
+`profiles.ini` is deliberately **not** managed -- see below.
 
 To change a preference, edit `settings` and
 `sudo darwin-rebuild switch --flake ~/.dotfiles`. Quit Firefox first -- the
@@ -36,9 +37,30 @@ the on-disk directory. The option defaults to the attribute name, which would
 point Firefox at a directory that does not exist. home-manager prepends
 `Profiles/` itself on darwin.
 
-home-manager's generated `profiles.ini` omits the `[Install<hash>]` section.
-That is safe: Firefox resolves the per-install default from `installs.ini`,
-which home-manager does not manage.
+**Firefox owns `profiles.ini`, and nix must not.** It is switched off with:
+
+```nix
+home.file."Library/Application Support/Firefox/profiles.ini".enable = false;
+```
+
+Firefox rewrites `profiles.ini` *in place* at startup. If it is a read-only
+store symlink, startup fails outright with "Your Firefox profile cannot be
+loaded. It may be missing or inaccessible." This was verified the hard way.
+Recovery is to replace the symlink with a real file:
+
+```bash
+cd ~/Library/Application\ Support/Firefox
+rm profiles.ini && cp profiles.ini.hm-bak profiles.ini
+```
+
+nix has nothing to add to that file anyway: the profile already exists, and
+`installs.ini` -- which home-manager never manages -- is what pins this
+install to it.
+
+The distinction that matters: Firefox *replaces* `containers.json` and
+`search.json.mozlz4` (unlinks, then writes a fresh file), which is why the
+`force` options work for those. It *writes through* `profiles.ini`, which a
+store symlink cannot satisfy.
 
 `storeId` also emits a `toolkit.profiles.storeID` pref into `user.js`
 automatically -- that is home-manager, not a stray setting.
@@ -89,12 +111,15 @@ Expect `200 application/x-xpinstall`.
 
 ## Known rough edges
 
-- **`containers.json` format version.** home-manager emits `version: 5` with
-  the internal thumbnail identity at `4294967294`; Firefox Nightly writes
-  `version: 6` with it at `5`. The four real containers are read correctly
-  either way, but Firefox may attempt a format migration and find the file is
-  a read-only store symlink. If containers misbehave, drop `containers` and
-  `containersForce` and let Firefox own the file -- containers change rarely.
+- **`containers.json` format version.** home-manager emits `version: 5`;
+  Firefox Nightly wants `version: 6`. This is fine in practice -- verified:
+  Firefox replaces the symlink and migrates 5 -> 6 on first launch, preserving
+  the declared containers and their `userContextId`s. Expect the on-disk file
+  to be a real file, not a symlink, after any launch.
+- **Container and search edits made in the UI are reverted** on the next
+  `darwin-rebuild switch`, since home-manager re-links both files with
+  `force`. That is the declarative intent; make such changes in
+  `nix/modules/firefox.nix`.
 - **`nix fmt` with no arguments fails** in this repo (nixfmt 1.4 does not
   recurse directories, so it reads empty stdin). Pass paths explicitly, or
   rely on `nix flake check`, which runs `nixfmt --check` across the tree.
