@@ -213,7 +213,7 @@ in
 
             # UI. legacyUserProfileCustomizations is what makes userChrome.css
             # load at all.
-            "browser.uidensity" = 1;
+            "browser.uidensity" = 1.2;
             "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
 
             # Theme. Installing a theme does not select it, so the active one

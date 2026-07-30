@@ -10,7 +10,7 @@
 
 /* Tighter tab strip, complementing browser.uidensity = 1. */
 #tabbrowser-tabs {
-  --tab-min-height: 28px !important;
+  --tab-min-height: 32px !important;
 }
 
 /* Hide the tab strip when there is only one tab: nothing to switch to.
