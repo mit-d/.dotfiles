@@ -25,12 +25,13 @@
           ./nix/modules/core.nix
           ./nix/modules/packages.nix
           ./nix/modules/podman.nix
-          ./nix/modules/homebrew.nix
-          ./nix/modules/defaults.nix
-          ./nix/modules/fonts.nix
-          ./nix/modules/obsidian-sync.nix
+          ./nix/darwin/homebrew.nix
+          ./nix/darwin/defaults.nix
+          ./nix/darwin/fonts.nix
+          ./nix/darwin/obsidian-sync.nix
           home-manager.darwinModules.home-manager
-          ./nix/modules/firefox.nix
+          ./nix/home.nix
+          ./nix/darwin/firefox.nix
         ];
       };
     in
