@@ -39,6 +39,16 @@ let
     preCheck = ''
       export HOME=$(mktemp -d)
     '';
+
+    # tests::test_stdout_redirect_guard_restores_previous_stdout dup2()s a pipe
+    # over fd 1 to prove the pager guard restores stdout afterwards. fd 1 is
+    # process-global, so under the default parallel harness libtest's own
+    # progress writes land in that test's pipe and eventually fail with EPIPE,
+    # surfacing as "error: io error when listing tests: ... BrokenPipe" (libtest
+    # mislabels its run path with the listing message). One test thread keeps
+    # every harness write outside the redirect window; it costs ~1s and keeps
+    # the test, unlike --skip.
+    checkFlags = [ "--test-threads=1" ];
   };
 in
 {
