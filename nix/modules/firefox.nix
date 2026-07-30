@@ -208,6 +208,10 @@ in
               };
             };
           };
+
+          # Kept as a real .css file rather than a nix string so editors
+          # treat it as CSS.
+          userChrome = builtins.readFile ../firefox/userChrome.css;
         };
       };
     };

@@ -1,0 +1,32 @@
+/*
+ * Loaded by nix/modules/firefox.nix via programs.firefox userChrome.
+ * Requires toolkit.legacyUserProfileCustomizations.stylesheets = true,
+ * which that module sets.
+ *
+ * Nightly changes chrome internals often, so keep this small and expect
+ * selectors to need occasional repair. A stale selector fails silently
+ * rather than breaking the browser.
+ */
+
+/* Tighter tab strip, complementing browser.uidensity = 1. */
+#tabbrowser-tabs {
+  --tab-min-height: 28px !important;
+}
+
+/* Hide the tab strip when there is only one tab: nothing to switch to.
+   Collapsing min-height as well is required, or an empty strip is left
+   behind. This is the most fragile rule in this file -- if the strip
+   misbehaves after a Nightly update, delete this block first. */
+#tabbrowser-tabs .tabbrowser-tab:only-of-type {
+  display: none !important;
+}
+
+#tabbrowser-tabs:has(.tabbrowser-tab:only-of-type) {
+  min-height: 0 !important;
+}
+
+/* The Pocket button. The DisablePocket policy already disables the feature;
+   this removes the leftover toolbar affordance. */
+#save-to-pocket-button {
+  display: none !important;
+}
