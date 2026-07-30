@@ -43,6 +43,9 @@ alias so `--flake ~/.dotfiles` needs no attr). Modules live in
 - `defaults.nix` - curated macOS `system.defaults`
 - `fonts.nix` - fonts via `fonts.packages` (installed to
   `/Library/Fonts/Nix Fonts`)
+- `firefox.nix` - Firefox Nightly config: home-manager `programs.firefox`
+  for profile files, plus enterprise policies via `CustomUserPreferences`.
+  The browser itself is a cask; see `docs/firefox.md`
 
 Rebuild: `sudo darwin-rebuild switch --flake ~/.dotfiles`.
 Build-only check: `darwin-rebuild build --flake ~/.dotfiles`.
