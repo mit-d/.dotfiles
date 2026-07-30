@@ -50,6 +50,60 @@ in
           path = "hszus8yz.default-nightly";
 
           storeId = "489c2007";
+
+          settings = {
+            # AI and ML surfaces off. "blocked" is the browser.ai.control
+            # vocabulary; these are not booleans.
+            "browser.ai.control.default" = "blocked";
+            "browser.ai.control.linkPreviewKeyPoints" = "blocked";
+            "browser.ai.control.pdfjsAltText" = "blocked";
+            "browser.ai.control.sidebarChatbot" = "blocked";
+            "browser.ai.control.smartTabGroups" = "blocked";
+            "browser.ai.control.smartWindow" = "blocked";
+            "browser.ai.control.translations" = "blocked";
+            "browser.ml.chat.enabled" = false;
+            "browser.ml.chat.page" = false;
+            "browser.ml.linkPreview.enabled" = false;
+
+            # Telemetry.
+            "app.shield.optoutstudies.enabled" = false;
+            "datareporting.healthreport.uploadEnabled" = false;
+
+            # New-tab and urlbar noise.
+            "browser.newtabpage.activity-stream.showSponsored" = false;
+            "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+            "browser.newtabpage.activity-stream.showWeather" = false;
+            "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
+            "browser.search.suggest.enabled" = false;
+
+            # Hardening. Set the contentblocking *category* rather than the
+            # individual privacy.trackingprotection.* prefs: Firefox derives
+            # those from the category, so setting them directly flips the
+            # category to "custom" and matches no UI radio button.
+            "browser.contentblocking.category" = "strict";
+            "dom.security.https_only_mode" = true;
+            "network.dns.disablePrefetch" = true;
+            "network.trr.mode" = 3;
+            "network.trr.uri" = "https://firefox.dns.nextdns.io/";
+            "privacy.donottrackheader.enabled" = true;
+            "privacy.globalprivacycontrol.enabled" = true;
+
+            # UI. legacyUserProfileCustomizations is what makes userChrome.css
+            # load at all.
+            "browser.uidensity" = 1;
+            "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+
+            # Bookmarks behaviour. The tree itself stays owned by ffbm.
+            "browser.bookmarks.defaultLocation" = "toolbar_____";
+            "browser.bookmarks.restore_default_bookmarks" = false;
+            "browser.bookmarks.showMobileBookmarks" = false;
+
+            # Nix owns preferences; Sync keeps bookmarks, tabs, and
+            # addresses. The passwords engine is off for coherence with the
+            # PasswordManagerEnabled policy.
+            "services.sync.engine.prefs" = false;
+            "services.sync.engine.passwords" = false;
+          };
         };
       };
     };
