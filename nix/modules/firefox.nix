@@ -134,6 +134,80 @@ in
               color = "pink";
             };
           };
+
+          search = {
+            # search.json.mozlz4 already exists, and Firefox rewrites it on
+            # every launch, so taking it over requires force.
+            force = true;
+
+            # Preserves the current default. This is an engine id, not a
+            # display name.
+            default = "ddg";
+
+            # Keyword engines: the urlbar becomes a launcher, complementing
+            # the bookmark keywords ffbm already generates.
+            engines = {
+              nix-packages = {
+                name = "Nix Packages";
+                urls = [
+                  {
+                    template = "https://search.nixos.org/packages";
+                    params = [
+                      {
+                        name = "type";
+                        value = "packages";
+                      }
+                      {
+                        name = "query";
+                        value = "{searchTerms}";
+                      }
+                    ];
+                  }
+                ];
+                definedAliases = [ "@np" ];
+              };
+
+              nix-options = {
+                name = "Nix Options";
+                urls = [
+                  {
+                    template = "https://search.nixos.org/options";
+                    params = [
+                      {
+                        name = "channel";
+                        value = "unstable";
+                      }
+                      {
+                        name = "query";
+                        value = "{searchTerms}";
+                      }
+                    ];
+                  }
+                ];
+                definedAliases = [ "@no" ];
+              };
+
+              noogle = {
+                name = "Noogle";
+                urls = [ { template = "https://noogle.dev/q?term={searchTerms}"; } ];
+                definedAliases = [ "@noogle" ];
+              };
+
+              mdn = {
+                name = "MDN";
+                urls = [
+                  { template = "https://developer.mozilla.org/en-US/search?q={searchTerms}"; }
+                ];
+                definedAliases = [ "@mdn" ];
+              };
+
+              github = {
+                name = "GitHub";
+                urls = [ { template = "https://github.com/search?q={searchTerms}"; } ];
+                definedAliases = [ "@gh" ];
+              };
+            };
+          };
         };
       };
     };
