@@ -81,6 +81,44 @@ own Cocoa window state on every switch. `darwinDefaultsId` is therefore set to
 `null`, and nix-darwin writes the keys one at a time instead. Verify with
 `defaults read org.mozilla.nightly` and `about:policies#active`.
 
+## Theme
+
+Gruvbox Dark Hard is rolled here, not taken from AMO. The previous add-on was
+a third-party upload with ~18 daily users and no updates since 2021.
+
+`nix/firefox/gruvbox-dark-hard.nix` is the single source of truth for colours.
+`nix/modules/firefox.nix` feeds it into two places:
+
+1. A **static-theme manifest**, zipped into an `.xpi` by a `runCommand`
+   derivation and force-installed by policy from a `file://` store path.
+1. **CSS custom properties** (`--gruv-*`) prepended to `userChrome.css`, so
+   hand-written rules can use gruvbox colours without repeating hex values.
+
+To change a colour, edit the palette file -- and **bump `version` in it**.
+Firefox decides whether to reinstall a policy-installed theme by comparing the
+manifest `version`, not by noticing `install_url` points at a new store path.
+A colour edit without a version bump silently does nothing in an existing
+profile.
+
+`extensions.activeThemeID` is pinned to the theme's id, because installing a
+theme does not select it.
+
+### Signing, and why this is Nightly-only
+
+A locally built `.xpi` is unsigned, so this needs:
+
+```nix
+"xpinstall.signatures.required" = false;
+```
+
+That pref is honoured on **Nightly** and Developer Edition, and **ignored on
+Release and Beta**. If this profile ever moves to Release, the self-built theme
+will refuse to install and the AMO route (`forceInstalled "gruvbox-d-h"`)
+becomes the fallback.
+
+The two old AMO gruvbox themes remain installed but inactive. To have Firefox
+remove them, add their ids with `installation_mode = "blocked"`.
+
 ## What is not managed here
 
 - **Bookmarks** -- owned by the `ffbm` toolchain in `bookmarks/`. See

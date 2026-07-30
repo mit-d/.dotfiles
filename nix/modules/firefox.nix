@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 let
   user = config.system.primaryUser;
 
@@ -9,6 +9,107 @@ let
     installation_mode = "force_installed";
     install_url = "https://addons.mozilla.org/firefox/downloads/latest/${slug}/latest.xpi";
   };
+
+  # Gruvbox Dark Hard, rolled here rather than taken from AMO: the add-on
+  # previously in use was a third-party upload with ~18 daily users and no
+  # updates since 2021, and its colours were not ours to change.
+  palette = import ../firefox/gruvbox-dark-hard.nix;
+
+  themeId = "gruvbox-dark-hard@dotfiles.derek";
+
+  # A Firefox "static theme" is just a manifest -- no code, no background
+  # page. Every key below is a documented theme colour; anything omitted falls
+  # back to Firefox's built-in dark theme, which color_scheme selects.
+  themeManifest = {
+    manifest_version = 2;
+    name = "Gruvbox Dark Hard (dotfiles)";
+    inherit (palette) version;
+    browser_specific_settings.gecko.id = themeId;
+
+    theme = {
+      colors = {
+        frame = palette.bg0_hard;
+        frame_inactive = palette.bg0_hard;
+
+        tab_selected = palette.bg1;
+        tab_text = palette.fg1;
+        tab_background_text = palette.fg4;
+        tab_line = palette.brightYellow;
+        tab_loading = palette.brightBlue;
+
+        toolbar = palette.bg0;
+        toolbar_text = palette.fg1;
+        toolbar_top_separator = palette.bg0_hard;
+        toolbar_bottom_separator = palette.bg2;
+        toolbar_vertical_separator = palette.bg2;
+
+        toolbar_field = palette.bg1;
+        toolbar_field_text = palette.fg1;
+        toolbar_field_border = palette.bg3;
+        toolbar_field_focus = palette.bg2;
+        toolbar_field_text_focus = palette.fg0;
+        toolbar_field_border_focus = palette.brightYellow;
+
+        popup = palette.bg0;
+        popup_text = palette.fg1;
+        popup_border = palette.bg3;
+        popup_highlight = palette.bg2;
+        popup_highlight_text = palette.fg0;
+
+        sidebar = palette.bg0;
+        sidebar_text = palette.fg1;
+        sidebar_border = palette.bg3;
+        sidebar_highlight = palette.bg2;
+        sidebar_highlight_text = palette.fg0;
+
+        ntp_background = palette.bg0_hard;
+        ntp_text = palette.fg1;
+
+        button_background_hover = palette.bg2;
+        button_background_active = palette.bg3;
+        icons = palette.fg2;
+        icons_attention = palette.brightYellow;
+      };
+
+      properties = {
+        color_scheme = "dark";
+        content_color_scheme = "dark";
+      };
+    };
+  };
+
+  # An .xpi is a zip. -X drops extra file attributes so the archive is
+  # reproducible.
+  themeXpi =
+    pkgs.runCommand "firefox-gruvbox-dark-hard-${palette.version}.xpi"
+      { nativeBuildInputs = [ pkgs.zip ]; }
+      ''
+        mkdir build
+        cp ${pkgs.writeText "manifest.json" (builtins.toJSON themeManifest)} build/manifest.json
+        cd build
+        zip -q -X "$out" manifest.json
+      '';
+
+  # CSS custom properties generated from the same palette, so userChrome.css
+  # can reference gruvbox colours without repeating hex values.
+  paletteCss = ''
+    /* Generated from nix/firefox/gruvbox-dark-hard.nix -- edit the palette
+       there, never here. */
+    :root {
+      --gruv-bg0-hard: ${palette.bg0_hard};
+      --gruv-bg0: ${palette.bg0};
+      --gruv-bg1: ${palette.bg1};
+      --gruv-bg2: ${palette.bg2};
+      --gruv-bg3: ${palette.bg3};
+      --gruv-fg0: ${palette.fg0};
+      --gruv-fg1: ${palette.fg1};
+      --gruv-fg2: ${palette.fg2};
+      --gruv-gray: ${palette.gray};
+      --gruv-bright-yellow: ${palette.brightYellow};
+      --gruv-bright-blue: ${palette.brightBlue};
+      --gruv-bright-red: ${palette.brightRed};
+    }
+  '';
 in
 {
   # home-manager's nix-darwin integration resolves the home directory from
@@ -114,6 +215,16 @@ in
             # load at all.
             "browser.uidensity" = 1;
             "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+
+            # Theme. Installing a theme does not select it, so the active one
+            # is pinned here or a fresh profile would sit on Firefox's
+            # default.
+            "extensions.activeThemeID" = themeId;
+
+            # The theme is built here and therefore unsigned. This pref is
+            # honoured on Nightly (and Developer Edition) and ignored on
+            # Release/Beta, so this whole approach is channel-dependent.
+            "xpinstall.signatures.required" = false;
 
             # Bookmarks behaviour. The tree itself stays owned by ffbm.
             "browser.bookmarks.defaultLocation" = "toolbar_____";
@@ -231,9 +342,10 @@ in
             };
           };
 
-          # Kept as a real .css file rather than a nix string so editors
-          # treat it as CSS.
-          userChrome = builtins.readFile ../firefox/userChrome.css;
+          # Palette vars first, then the hand-written rules. The CSS stays a
+          # real .css file so editors treat it as CSS; only the generated
+          # custom properties are spliced in front of it.
+          userChrome = paletteCss + builtins.readFile ../firefox/userChrome.css;
         };
       };
     };
@@ -253,6 +365,16 @@ in
     ExtensionSettings = {
       "uBlock0@raymondhill.net" = forceInstalled "ublock-origin";
       "@testpilot-containers" = forceInstalled "multi-account-containers";
+
+      # Firefox's own password manager is disabled below, so without this
+      # there is no autofill at all.
+      "{d634138d-c276-4fc8-924b-40a0ea21d284}" = forceInstalled "1password-x-password-manager";
+
+      # The locally built theme, installed from the store rather than AMO.
+      "${themeId}" = {
+        installation_mode = "force_installed";
+        install_url = "file://${themeXpi}";
+      };
     };
 
     DisableTelemetry = true;
