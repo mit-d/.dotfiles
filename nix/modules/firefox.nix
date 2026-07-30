@@ -370,6 +370,15 @@ in
       # there is no autofill at all.
       "{d634138d-c276-4fc8-924b-40a0ea21d284}" = forceInstalled "1password-x-password-manager";
 
+      # Clips pages into the vault that obsidian-sync.nix already feeds.
+      # Note the official add-on is the one with this id -- AMO also carries
+      # an unofficial clone under a similar name.
+      "clipper@obsidian.md" = forceInstalled "web-clipper-obsidian";
+
+      # Keyboard-driven browsing. Expect to tune its exclusion list before it
+      # stops fighting Firefox's own shortcuts.
+      "{d7742d87-e61d-4b78-b8a1-b469842139fa}" = forceInstalled "vimium-ff";
+
       # The locally built theme, installed from the store rather than AMO.
       "${themeId}" = {
         installation_mode = "force_installed";
