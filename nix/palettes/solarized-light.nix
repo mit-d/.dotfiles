@@ -11,7 +11,7 @@
 {
   name = "solarized-light";
   variant = "light";
-  version = "1.0.1";
+  version = "1.1.0";
 
   # Bump on ANY change that reaches Firefox's theme manifest, not just colours.
   # Firefox compares this version to decide whether to reinstall a

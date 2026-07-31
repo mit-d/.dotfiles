@@ -32,48 +32,90 @@ let
     browser_specific_settings.gecko.id = themeId;
 
     theme = {
+      # All 39 colour keys the WebExtension theme API accepts, per
+      # https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/theme
+      #
+      # Every key is set deliberately. An omitted key does not inherit a
+      # neighbouring colour -- Firefox substitutes its own default, which is
+      # chosen for its built-in light/dark themes and lands arbitrarily against a
+      # custom palette. Six were previously omitted, and ntp_card_background was
+      # why the new tab page kept dark tiles and a dark search field on a pale
+      # background.
+      #
+      # Roles follow Material 3 semantics rather than picking whatever looked
+      # close:
+      #
+      #   surface / surfaceContainer*  backgrounds, by elevation
+      #   onSurface / onSurfaceVariant text and icons, primary vs secondary
+      #   outline / outlineVariant     borders and dividers
+      #   primary / onPrimary          active indicators, focus, selection
+      #   primaryContainer            filled selection backgrounds
+      #   error                       attention states
+      #
+      # Nothing here reads palette.ansi.*. Those 16 slots are terminal indices,
+      # and in solarized the "bright" half are base *tones*, not brighter
+      # accents -- brightYellow is #657b83, a grey. Using them for UI accents is
+      # why the active-tab line and focus ring turned grey under solarized.
       colors = {
+        # Window frame. The titlebar area behind the tabs.
         frame = palette.surface;
-        frame_inactive = palette.surface;
+        frame_inactive = palette.surfaceDim;
 
+        # Tabs. The selected tab is a raised container; unselected labels are
+        # secondary text, not the faintest step, or they read as disabled.
         tab_selected = palette.surfaceContainer;
         tab_text = palette.onSurface;
-        tab_background_text = palette.onSurfaceFaint;
-        tab_line = palette.ansi.brightYellow;
-        tab_loading = palette.ansi.brightBlue;
+        tab_background_text = palette.onSurfaceVariant;
+        tab_background_separator = palette.outlineVariant;
+        tab_line = palette.primary;
+        tab_loading = palette.primary;
 
+        # Toolbar. One elevation step above the frame.
         toolbar = palette.surfaceContainerLow;
         toolbar_text = palette.onSurface;
-        toolbar_top_separator = palette.surface;
-        toolbar_bottom_separator = palette.surfaceContainerHigh;
-        toolbar_vertical_separator = palette.surfaceContainerHigh;
+        bookmark_text = palette.onSurface;
+        toolbar_top_separator = palette.outlineVariant;
+        toolbar_bottom_separator = palette.outlineVariant;
+        toolbar_vertical_separator = palette.outlineVariant;
 
+        # Address bar. Focus uses primary, matching M3's focus indicator; the
+        # highlight pair is the filled-selection role.
         toolbar_field = palette.surfaceContainer;
         toolbar_field_text = palette.onSurface;
-        toolbar_field_border = palette.surfaceContainerHighest;
+        toolbar_field_border = palette.outline;
         toolbar_field_focus = palette.surfaceContainerHigh;
         toolbar_field_text_focus = palette.onSurfaceStrong;
-        toolbar_field_border_focus = palette.ansi.brightYellow;
+        toolbar_field_border_focus = palette.primary;
+        toolbar_field_highlight = palette.primaryContainer;
+        toolbar_field_highlight_text = palette.onPrimaryContainer;
+        toolbar_field_separator = palette.outlineVariant;
 
+        # Menus and panels.
         popup = palette.surfaceContainerLow;
         popup_text = palette.onSurface;
-        popup_border = palette.surfaceContainerHighest;
-        popup_highlight = palette.surfaceContainerHigh;
-        popup_highlight_text = palette.onSurfaceStrong;
+        popup_border = palette.outline;
+        popup_highlight = palette.primaryContainer;
+        popup_highlight_text = palette.onPrimaryContainer;
 
         sidebar = palette.surfaceContainerLow;
         sidebar_text = palette.onSurface;
-        sidebar_border = palette.surfaceContainerHighest;
-        sidebar_highlight = palette.surfaceContainerHigh;
-        sidebar_highlight_text = palette.onSurfaceStrong;
+        sidebar_border = palette.outline;
+        sidebar_highlight = palette.primaryContainer;
+        sidebar_highlight_text = palette.onPrimaryContainer;
 
+        # New tab page. ntp_card_background covers the shortcut tiles and the
+        # search field, which is why omitting it left them dark.
         ntp_background = palette.surface;
+        ntp_card_background = palette.surfaceContainerLow;
         ntp_text = palette.onSurface;
 
+        # Buttons and icons. Toolbar icons are primary affordances, so onSurface
+        # rather than a muted step -- onSurfaceMuted here was a real contributor
+        # to the washed-out look.
         button_background_hover = palette.surfaceContainerHigh;
         button_background_active = palette.surfaceContainerHighest;
-        icons = palette.onSurfaceMuted;
-        icons_attention = palette.ansi.brightYellow;
+        icons = palette.onSurface;
+        icons_attention = palette.error;
       };
 
       # These two decide how Firefox renders everything the theme does *not*

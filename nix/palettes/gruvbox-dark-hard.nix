@@ -17,7 +17,7 @@
   # theme; it does not notice that install_url points at a new store path. Bump
   # it whenever a colour below changes, or the edit will not take effect in an
   # already-installed profile.
-  version = "2.0.0";
+  version = "2.1.0";
 
   # Bump on ANY change that reaches Firefox's theme manifest, not just colours.
   # Firefox compares this version to decide whether to reinstall a
