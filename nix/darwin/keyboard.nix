@@ -62,11 +62,17 @@
   # declarative and to actually survive a restart -- launchd keeps the agent
   # alive, whereas the built-in mechanism is what has been dropping the binding.
   #
-  # `open -na Ghostty` is the launch method Ghostty documents for macOS: its CLI
-  # refuses to start the emulator directly there and only supports `+action`
-  # subcommands. Resolving by name rather than by path means this keeps working
-  # wherever the bundle lives, which matters because it moved out of
-  # /Applications when it stopped being a Homebrew cask.
+  # `open -a` deliberately, NOT `open -na`. The -n flag means "open a new
+  # instance even if one is already running", which would spawn a fresh window
+  # on every press. Without it the hotkey focuses the existing Ghostty and only
+  # launches one when none is running -- the behaviour the previous Shortcuts
+  # binding had, and the right one when windows are really tmux clients.
+  #
+  # open(1) rather than the ghostty binary because Ghostty's CLI refuses to
+  # start the emulator on macOS and only supports `+action` subcommands.
+  # Resolving by name rather than path keeps this working wherever the bundle
+  # lives, which matters because it moved out of /Applications when it stopped
+  # being a Homebrew cask.
   #
   # CAVEAT: skhd captures keys through an event tap, so macOS will prompt for
   # Accessibility permission on first run. That grant is bound to the binary's
@@ -76,9 +82,10 @@
   services.skhd = {
     enable = true;
     skhdConfig = ''
-      # Spawn a Ghostty window. Absolute path to open(1) because the agent's
-      # environment is not a login shell.
-      ctrl + cmd - t : /usr/bin/open -na Ghostty
+      # Focus Ghostty, launching it only if it is not already running.
+      # Absolute path to open(1) because the agent's environment is not a
+      # login shell.
+      ctrl + cmd - t : /usr/bin/open -a Ghostty
     '';
   };
 }

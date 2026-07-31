@@ -1,8 +1,13 @@
 # Canonical Gruvbox Dark Hard palette.
 #
-# Single source of truth for the Firefox theme: nix/darwin/firefox.nix feeds
-# it into both the generated static-theme manifest and the CSS custom
-# properties prepended to userChrome.css, so no hex value is written twice.
+# Single source of truth for every gruvbox surface in this config, which is why
+# it lives under nix/palettes/ rather than beside any one consumer:
+#
+#   - nix/darwin/firefox.nix feeds it into both the generated static-theme
+#     manifest and the CSS custom properties prepended to userChrome.css
+#   - nix/home/ghostty.nix generates the terminal theme from it
+#
+# so no hex value is written twice and retheming happens in one place.
 #
 # Note this is the *canonical* gruvbox mapping, which differs slightly from
 # hypr/.config/hypr/palettes/gruvbox-dark-hard.conf -- that file is a partial

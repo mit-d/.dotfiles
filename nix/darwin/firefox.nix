@@ -13,7 +13,7 @@ let
   # Gruvbox Dark Hard, rolled here rather than taken from AMO: the add-on
   # previously in use was a third-party upload with ~18 daily users and no
   # updates since 2021, and its colours were not ours to change.
-  palette = import ../firefox/gruvbox-dark-hard.nix;
+  palette = import ../palettes/gruvbox-dark-hard.nix;
 
   themeId = "gruvbox-dark-hard@dotfiles.derek";
 
@@ -93,7 +93,7 @@ let
   # CSS custom properties generated from the same palette, so userChrome.css
   # can reference gruvbox colours without repeating hex values.
   paletteCss = ''
-    /* Generated from nix/firefox/gruvbox-dark-hard.nix -- edit the palette
+    /* Generated from nix/palettes/gruvbox-dark-hard.nix -- edit the palette
        there, never here. */
     :root {
       --gruv-bg0-hard: ${palette.bg0_hard};

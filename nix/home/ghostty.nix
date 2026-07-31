@@ -1,4 +1,12 @@
 { lib, pkgs, ... }:
+let
+  # The same palette Firefox is themed from, so the terminal and the browser
+  # cannot drift apart. Ghostty does ship a builtin "Gruvbox Dark Hard" whose
+  # values happen to match this file exactly today -- generating the theme
+  # instead means a future edit to the palette reaches every surface at once,
+  # rather than silently leaving the terminal behind.
+  palette = import ../palettes/gruvbox-dark-hard.nix;
+in
 {
   # Nothing needed to surface the .app: at home.stateVersion >= 25.11
   # targets.darwin.copyApps is enabled by default and copies bundles from the
@@ -39,8 +47,10 @@
       window-theme = "dark";
       window-save-state = "always";
 
-      # Theme and Appearance
-      theme = "dark:Monokai Remastered,light:Monokai Pro Light Sun";
+      # Theme and Appearance. Generated below from the shared palette rather
+      # than naming Ghostty's builtin, and dark-only: the palette file has no
+      # light variant, and window-theme plus AppleInterfaceStyle are both dark.
+      theme = "gruvbox-dark-hard";
 
       # Font. Repeated keys become a list -- programs.ghostty sets
       # listsAsDuplicateKeys, so each element emits its own font-family line.
@@ -69,10 +79,12 @@
         "super+zero=reset_font_size"
       ];
 
-      # Cursor
+      # Cursor. Deliberately overrides the theme's cursor colour with gruvbox
+      # bright orange, which reads far better against bg0_hard than the theme's
+      # default of plain foreground.
       cursor-style = "block";
       cursor-opacity = 1.0;
-      cursor-color = "#fe8019";
+      cursor-color = palette.brightOrange;
 
       # Copy/paste
       copy-on-select = false;
@@ -111,32 +123,39 @@
       macos-titlebar-style = "hidden";
     };
 
-    # From ghostty/.config/ghostty/themes/DerekMinimal.
-    themes.DerekMinimal = {
+    # Generated from nix/palettes/gruvbox-dark-hard.nix. The ANSI slots follow
+    # the canonical gruvbox mapping: 0-7 are the normal colours (with 7 as fg4,
+    # the dimmest foreground) and 8-15 the bright ones (with 15 as fg1).
+    #
+    # The previous DerekMinimal theme was removed rather than kept: it was a
+    # Dracula-derived palette that nothing referenced -- `theme` pointed at
+    # Monokai -- so it was dead config, and it contradicts standardising on
+    # gruvbox. It is in git history if it is ever wanted back.
+    themes.gruvbox-dark-hard = {
       palette = [
-        "0=#21222C"
-        "1=#FF5555"
-        "2=#50FA7B"
-        "3=#F1FA8C"
-        "4=#BD93F9"
-        "5=#FF79C6"
-        "6=#8BE9FD"
-        "7=#F8F8F2"
-        "8=#21222C"
-        "9=#FF5555"
-        "10=#50FA7B"
-        "11=#F1FA8C"
-        "12=#BD93F9"
-        "13=#FF79C6"
-        "14=#8BE9FD"
-        "15=#F8F8F2"
+        "0=${palette.bg0_hard}"
+        "1=${palette.red}"
+        "2=${palette.green}"
+        "3=${palette.yellow}"
+        "4=${palette.blue}"
+        "5=${palette.purple}"
+        "6=${palette.aqua}"
+        "7=${palette.fg4}"
+        "8=${palette.gray}"
+        "9=${palette.brightRed}"
+        "10=${palette.brightGreen}"
+        "11=${palette.brightYellow}"
+        "12=${palette.brightBlue}"
+        "13=${palette.brightPurple}"
+        "14=${palette.brightAqua}"
+        "15=${palette.fg1}"
       ];
-      background = "#282A36";
-      foreground = "#F8F8F2";
-      cursor-color = "#f2d5cf";
-      cursor-text = "#c6d0f5";
-      selection-background = "#626880";
-      selection-foreground = "#c6d0f5";
+      background = palette.bg0_hard;
+      foreground = palette.fg1;
+      cursor-color = palette.fg1;
+      cursor-text = palette.bg0_hard;
+      selection-background = palette.bg3;
+      selection-foreground = palette.fg1;
     };
   };
 }
