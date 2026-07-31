@@ -37,22 +37,35 @@
     # unset would run compinit twice.
     completionInit = "";
 
-    initContent = lib.mkMerge [
-      # Slot 1000 (the default). Everything the hand-written rc did, in its
-      # original order -- including the ~/.dotfiles_wh overlay source, which
-      # must stay inside this file because the named-dir block at the end
-      # depends on WH_VANGUARD_PROJECT_DIR that the overlay sets.
-      (lib.mkOrder 1000 ''
-        source "${config.home.homeDirectory}/.zsh/rc.zsh"
-      '')
-    ];
+    # The hand-written rc, inlined at slot 1000 (the default) rather than
+    # linked out and sourced. Three reasons this beats a separate file:
+    #
+    #  - The repo file keeps its original `.zshrc` name. Renaming it would
+    #    dangle the live stow symlink at ~/.zsh/.zshrc, and $ZDOTDIR would
+    #    find a broken link and load no rc at all -- breaking every new shell
+    #    before a switch ever happens. Inlining makes that class of breakage
+    #    structurally impossible.
+    #  - builtins.readFile reads bytes verbatim, with no Nix interpolation, so
+    #    the rc's own ${BUFFER:1}, ${ZDOTDIR:-...} and friends need no escaping.
+    #  - One generated file instead of a file that sources another file.
+    #
+    # Safe to inline because the rc locates its siblings via a hardcoded
+    # ZSH_DIR="$HOME/.zsh", not from $0 -- so it does not care where it lives.
+    #
+    # Ordering: this lands at 1000 and plugins at 1200, which preserves the
+    # requirement that zsh-syntax-highlighting load after all custom ZLE
+    # widgets are defined. The ~/.dotfiles_wh overlay source also stays at its
+    # original position *within* this content, before the named-dir block that
+    # depends on the WH_VANGUARD_PROJECT_DIR it sets.
+    initContent = lib.mkOrder 1000 (builtins.readFile ../../zsh/.zsh/.zshrc);
   };
 
   # Machinery linked individually, never as a directory: ~/.dotfiles_wh
   # stows vg.zsh into ~/.zsh and _vg into ~/.zsh/completions, and a
   # whole-directory store symlink would leave them nowhere to go.
   home.file = {
-    ".zsh/rc.zsh".source = ../../zsh/.zsh/rc.zsh;
+    # No entry for the rc itself -- its content is inlined into the generated
+    # ~/.zsh/.zshrc via initContent above.
     ".zsh/abbr.zsh".source = ../../zsh/.zsh/abbr.zsh;
     ".zsh/completion.zsh".source = ../../zsh/.zsh/completion.zsh;
     ".zsh/prompt.zsh".source = ../../zsh/.zsh/prompt.zsh;
