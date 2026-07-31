@@ -23,6 +23,7 @@ in
       # standalone home-manager configuration can import the same list.
       imports = [
         ./home/bash.nix
+        ./home/tmux.nix
       ];
     };
   };
