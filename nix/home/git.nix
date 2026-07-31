@@ -3,27 +3,38 @@
   programs.git = {
     enable = true;
 
-    userName = "mit-d";
-    userEmail = "derekmttn@gmail.com";
-
-    aliases = {
-      co = "checkout";
-      sw = "switch";
-      br = "branch";
-      ci = "commit";
-      st = "status";
-      config-override = "!git config --file ~/.gitconfig_overrides";
-      cb = "rev-parse --abbrev-ref HEAD";
-      ri = "!git rebase -i origin/$(git rev-parse --abbrev-ref HEAD)";
-      ocb = "!echo origin/$(git rev-parse --abbrev-ref HEAD)";
-      ocm = "!echo origin/$(git remote show origin | sed -n \"s/.*HEAD branch: //p\")";
-    };
-
-    # Work identity and any machine-local overrides. Sourced from
-    # ~/.dotfiles_wh, which stays on stow -- this must keep winning.
+    # Work identity and any machine-local overrides, from ~/.dotfiles_wh, which
+    # stays on stow. This must keep winning: `includes` is emitted with
+    # lib.mkAfter, so [include] lands last in the generated config and its
+    # values override everything declared below.
+    #
+    # Note `includes` is deliberately NOT part of `settings` -- it is still its
+    # own option and was not renamed.
     includes = [ { path = "~/.gitconfig_overrides"; } ];
 
-    extraConfig = {
+    # One structured attrset for the whole gitconfig. The older split options
+    # (userName, userEmail, aliases, extraConfig) still work via renames but
+    # emit deprecation warnings on every evaluation, so they are consolidated
+    # here: user.* and alias.* are just ordinary sections.
+    settings = {
+      user = {
+        name = "mit-d";
+        email = "derekmttn@gmail.com";
+      };
+
+      alias = {
+        co = "checkout";
+        sw = "switch";
+        br = "branch";
+        ci = "commit";
+        st = "status";
+        config-override = "!git config --file ~/.gitconfig_overrides";
+        cb = "rev-parse --abbrev-ref HEAD";
+        ri = "!git rebase -i origin/$(git rev-parse --abbrev-ref HEAD)";
+        ocb = "!echo origin/$(git rev-parse --abbrev-ref HEAD)";
+        ocm = "!echo origin/$(git remote show origin | sed -n \"s/.*HEAD branch: //p\")";
+      };
+
       push = {
         default = "simple";
         autoSetupRemote = true;

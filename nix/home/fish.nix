@@ -1,5 +1,17 @@
 { pkgs, ... }:
 {
+  # home-manager's fish module sets `programs.man.generateCaches = mkDefault
+  # true`, because fish builds its completions from man pages. But
+  # programs.man.package defaults to null on darwin once home.stateVersion is
+  # >= 26.05 -- deliberately, since macOS ships its own man and home-manager
+  # declines to shadow it with GNU man-db. That darwin check comes first in the
+  # option's if-chain, so enabling man-db would not change it either.
+  #
+  # The result is a contradiction home-manager correctly warns about: caches
+  # requested, no man package to build them from. Turning it off resolves the
+  # warning without changing behaviour, since it was already a no-op.
+  programs.man.generateCaches = false;
+
   programs.fish = {
     enable = true;
 
