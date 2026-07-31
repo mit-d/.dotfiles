@@ -8,26 +8,43 @@ let
   # Obsidian's own rules instead of invented here.
   accent = colors.hexToHsl palette.primary;
 
-  # Vaults to write the snippet into. Guarded at activation time, so listing a
+  # Vaults to write the theme into. Guarded at activation time, so listing a
   # vault that does not exist on this machine is harmless.
   vaults = [ "Documents/Obsidian/Notes" ];
 
-  snippet = pkgs.writeText "obsidian-${palette.name}.css" ''
+  themeName = "dotfiles";
+
+  # Obsidian resolves a theme by the `name` in its manifest, so this has to match
+  # both the directory and what appearance.json's cssTheme is set to.
+  manifest = pkgs.writeText "obsidian-manifest.json" (
+    builtins.toJSON {
+      name = themeName;
+      inherit (palette) version;
+      minAppVersion = "1.0.0";
+      author = "generated from nix/palettes";
+    }
+  );
+
+  theme = pkgs.writeText "obsidian-${palette.name}.css" ''
     /* ${palette.displayName or palette.name}, generated from nix/palettes by
        nix/home/obsidian.nix. Do not edit: rewritten on every switch.
 
-       Enable once in Settings -> Appearance -> CSS snippets. Obsidian records
-       that in .obsidian/appearance.json, which it rewrites itself and this
-       config therefore leaves alone.
+       This is a colour-only theme, which is a complete one: Obsidian's app.css
+       supplies the whole layout and derives its visuals from the variables
+       below, so replacing them is all a theme has to do.
 
-       Selector notes: the same values are set for both base colour schemes, so
-       it does not matter which one Obsidian is in -- the palette has exactly one
-       variant. `body.theme-dark` rather than `.theme-dark` because community
-       themes set the primitives at that specificity (the Things theme sets
-       --color-base-* under `.theme-dark`), and a bare `body` would lose. */
+       It is a theme rather than a CSS snippet on purpose. A snippet layers over
+       whichever community theme is active, which means it has to out-specify a
+       third party to be correct, and cannot win at all against a theme that
+       paints literal hex outside any variable -- Minimal has 436 such values,
+       Things 32. Owning the whole colour surface is deterministic instead.
 
-    body.theme-dark,
-    body.theme-light {
+       Both base colour schemes get identical values, so it does not matter which
+       one Obsidian is set to: the palette has exactly one variant. Specificity
+       matches app.css's own `.theme-dark`, and this file loads after it. */
+
+    .theme-dark,
+    .theme-light {
       /* --- Neutral ramp -----------------------------------------------------
          Obsidian's base scale runs from the primary background at 00 to the
          strongest text at 100. Community themes that only touch the primitives
@@ -121,10 +138,46 @@ in
   # every other device, so the bytes have to actually be there.
   home.activation.obsidianPalette = lib.hm.dag.entryAfter [ "writeBoundary" ] (
     lib.concatMapStrings (vault: ''
-      snippets="$HOME/${vault}/.obsidian/snippets"
-      if [ -d "$HOME/${vault}/.obsidian" ]; then
-        run mkdir -p "$snippets"
-        run install -m 644 ${snippet} "$snippets/palette.css"
+      obsidian="$HOME/${vault}/.obsidian"
+      if [ -d "$obsidian" ]; then
+        run mkdir -p "$obsidian/themes/${themeName}"
+        run install -m 644 ${theme} "$obsidian/themes/${themeName}/theme.css"
+        run install -m 644 ${manifest} "$obsidian/themes/${themeName}/manifest.json"
+
+        # Select it, and drop the CSS snippet an earlier version of this module
+        # used instead. Both applying at once would be two mechanisms setting the
+        # same variables.
+        #
+        # appearance.json is Obsidian's to rewrite, so it is patched in place
+        # rather than managed as a read-only symlink -- through a temp file and a
+        # move, so a running Obsidian never reads a half-written config.
+        #
+        # cssTheme is set on every switch, not just when unset. That does mean
+        # picking a different theme in Obsidian's UI is reverted on the next
+        # switch, which is the same bargain as the rest of this config: the
+        # declared value wins. Comment out this module to choose in the UI.
+        appearance="$obsidian/appearance.json"
+        if [ -f "$appearance" ]; then
+          tmp=$(mktemp)
+          if ${pkgs.jq}/bin/jq \
+               --arg theme "${themeName}" \
+               '.cssTheme = $theme
+                | if has("enabledCssSnippets")
+                  then .enabledCssSnippets -= ["palette"]
+                  else . end' \
+               "$appearance" >"$tmp"; then
+            if ! ${pkgs.jq}/bin/jq -e --arg t "${themeName}" '.cssTheme == $t' \
+                 "$appearance" >/dev/null; then
+              echo "obsidian: cssTheme -> ${themeName} (restart Obsidian to load it)"
+            fi
+            run mv "$tmp" "$appearance"
+          else
+            rm -f "$tmp"
+            echo "obsidian: could not patch $appearance; set the theme to" \
+                 "'${themeName}' in Settings -> Appearance" >&2
+          fi
+        fi
+        run rm -f "$obsidian/snippets/palette.css"
       fi
     '') vaults
   );

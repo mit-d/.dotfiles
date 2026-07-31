@@ -12,37 +12,46 @@ Then `sudo darwin-rebuild switch --flake ~/.dotfiles`. Everything that reads the
 palette follows: terminal, browser chrome, desktop background, k9s, tmux status,
 fish and zsh colours, bat, fzf, btop, Obsidian.
 
-Two need a manual step, because the application offers nowhere to write:
-
-| App | Step |
-| -- | -- |
-| Obsidian | Enable the `palette` CSS snippet once, in Settings -> Appearance |
-| Slack | `nix run .#slack-theme`, paste into Preferences -> Appearance |
+Slack needs a manual step, because it offers nowhere to write:
+`nix run .#slack-theme`, then paste into Preferences -> Appearance.
 
 ### Obsidian
 
-A switch writes `<vault>/.obsidian/snippets/palette.css`, and Obsidian hot-reloads
-it. Enabling a snippet is recorded in `.obsidian/appearance.json`, which Obsidian
-rewrites itself, so that file stays unmanaged and the toggle is one-time.
+A switch writes a complete theme to `<vault>/.obsidian/themes/dotfiles/` and
+points `appearance.json`'s `cssTheme` at it. Restart Obsidian to pick it up.
 
-The snippet is written as a real file rather than a store symlink, unlike
-everything else here: the vault is a git repository that tracks `.obsidian` and
-syncs to iOS, where a `/nix/store` path would dangle. It will show up in the
-vault's `git status` after each palette switch -- gitignore it there if that is
-noise.
+**This replaces whatever community theme was selected.** A colour-only theme is
+still a complete one -- `app.css` supplies the entire layout and derives its
+visuals from these variables -- so the result is Obsidian's default design in the
+palette's colours. Things' or Minimal's *design* is not kept. Comment the module
+out of `../home.nix` to choose a theme in the UI instead.
 
-It sets Obsidian's neutral ramp, accent and eight extended colours, *and* every
-documented semantic variable. The primitives alone would be tidier, but the
-base-NN to semantic mapping is not part of the documented API. Setting both means
-community themes that only read the primitives keep their design and pick up the
-palette -- the Things theme sets `--color-base-*` and never
-`--background-primary`, so it restyles cleanly.
+It is a theme rather than a CSS snippet on purpose. A snippet layers over the
+active community theme, so it has to out-specify a third party to be correct, and
+cannot win at all against one that paints literal hex outside any variable --
+Minimal has 436 such values, Things 32. Owning the whole colour surface is
+deterministic; piggybacking is only as good as the theme underneath.
+
+`cssTheme` is set on every switch, not just when unset, so picking a different
+theme in the UI is reverted next time. Same bargain as the rest of this config:
+the declared value wins.
+
+The theme sets Obsidian's neutral ramp, accent and eight extended colours, *and*
+every documented semantic variable. The primitives alone would be tidier, but the
+base-NN to semantic mapping is not part of the documented API, so depending on it
+would tie correctness to an implementation detail.
 
 Accent is handed over as `--accent-h/s/l` rather than a hex, so Obsidian derives
 `--color-accent-1` and `-2` by its own rules instead of this config inventing
 hover shades. That conversion happens in `lib.nix` at read time, not in the
 generated palettes: an override that changes `primary` would otherwise leave a
 precomputed HSL describing the colour it replaced.
+
+Written as real files rather than store symlinks, unlike everything else here:
+the vault is a git repository that tracks `.obsidian` and syncs to iOS, where a
+`/nix/store` path would dangle. They show up in the vault's `git status` after
+each palette switch -- gitignore them there if that is noise. `appearance.json`
+is patched in place rather than managed, because Obsidian rewrites it itself.
 
 ### Slack
 
