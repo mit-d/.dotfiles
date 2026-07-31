@@ -29,6 +29,7 @@
           ./nix/darwin/defaults.nix
           ./nix/darwin/fonts.nix
           ./nix/darwin/keyboard.nix
+          ./nix/darwin/wallpaper.nix
           ./nix/darwin/obsidian-sync.nix
           home-manager.darwinModules.home-manager
           ./nix/home.nix
