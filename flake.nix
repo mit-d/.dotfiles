@@ -141,7 +141,7 @@
                     --ansi \
                     --expect=ctrl-a \
                     --preview "python3 $preview $data {}" \
-                    --preview-window 'right,64%,border-left' \
+                    --preview-window 'right,64%,border-none' \
                     --query "" \
                     --header "enter: print   ctrl-a: set active.nix''${active:+   (now: $active)}" \
                     --prompt 'palette> '

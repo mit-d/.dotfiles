@@ -11,9 +11,56 @@ what the system would actually use, overrides included.
 from __future__ import annotations
 
 import json
+import os
+import re
 import sys
 
 RESET = "\x1b[0m"
+
+def _size(name: str, fallback_name: str, default: int) -> int:
+    """Pane dimension from the environment, defensively.
+
+    A crash here would render as a traceback filling the preview pane, which is
+    a poor trade for trusting an environment variable.
+    """
+    for value in (os.environ.get(name), os.environ.get(fallback_name)):
+        try:
+            if value and int(value) > 0:
+                return int(value)
+        except ValueError:
+            pass
+    return default
+
+
+# fzf exports the preview pane's inner size, border already accounted for.
+# The fallbacks only matter when running this by hand.
+WIDTH = _size("FZF_PREVIEW_COLUMNS", "COLUMNS", 60)
+HEIGHT = _size("FZF_PREVIEW_LINES", "LINES", 40)
+
+ANSI = re.compile(r"\x1b\[[0-9;]*m")
+
+
+def fit(text: str, width: int) -> tuple[str, int]:
+    """Trim to `width` visible columns, keeping every escape sequence.
+
+    Escapes have to survive trimming even past the cut, or a dropped reset
+    leaks a background colour into the rest of the pane. So they are copied
+    verbatim while only printing characters count toward the width.
+    """
+    out: list[str] = []
+    columns = 0
+    i = 0
+    while i < len(text):
+        match = ANSI.match(text, i)
+        if match:
+            out.append(match.group())
+            i = match.end()
+            continue
+        if columns < width:
+            out.append(text[i])
+            columns += 1
+        i += 1
+    return "".join(out), columns
 
 
 def rgb(hex_color: str) -> tuple[int, int, int]:
@@ -80,12 +127,13 @@ def main() -> int:
         f"{bg(surface)}{fg(strong)} {p['displayName']}{RESET}"
         f"{bg(surface)}{fg(p['onSurfaceFaint'])}  {p['variant']}  {RESET}"
     )
-    line(f"{bg(surface)}{fg(p['onSurfaceVariant'])} {p['author'][:56]:<56}{RESET}")
+    # No explicit width: fit() trims to the pane and the fill pads the remainder.
+    line(f"{bg(surface)}{fg(p['onSurfaceVariant'])} {p['author']}{RESET}")
     line()
 
     line(onsurface(" surfaces  dim -> bright"))
     line(
-        " "
+        f"{bg(surface)} "
         + swatch(
             [
                 p["surfaceContainerLowest"],
@@ -140,7 +188,7 @@ def main() -> int:
                 f"{bg(p[role])}{fg(on)} Aa {role:<16}{ratio:4.1f}:1 {RESET}"
                 f"{bg(surface)} {RESET}"
             )
-        line(f" {chips}")
+        line(f"{bg(surface)} {chips}")
     line()
 
     # What the tmux status line and Firefox tab strip will look like, since those
@@ -161,9 +209,10 @@ def main() -> int:
     ansi = p["ansi"]
     normal = ["black", "red", "green", "yellow", "blue", "magenta", "cyan", "white"]
     line(onsurface(" ansi     normal / bright"))
-    line(" " + swatch([ansi[k] for k in normal], width=5))
+    line(f"{bg(surface)} " + swatch([ansi[k] for k in normal], width=5))
     line(
-        " " + swatch([ansi["bright" + k[0].upper() + k[1:]] for k in normal], width=5)
+        f"{bg(surface)} "
+        + swatch([ansi["bright" + k[0].upper() + k[1:]] for k in normal], width=5)
     )
     line()
 
@@ -172,7 +221,20 @@ def main() -> int:
         f"   cursor {fg(p['cursor'])}block{fg(p['onSurfaceFaint'])}"
         f"   v{p['version']} {RESET}"
     )
-    print("\n".join(out))
+
+    # Extend every line to the full pane width and add blank ones underneath, so
+    # the palette's own surface covers the preview rather than sitting in a
+    # rectangle on the enclosing terminal's background.
+    blank = f"{bg(surface)}{' ' * WIDTH}{RESET}"
+    filled = []
+    for text in out[:HEIGHT]:
+        trimmed, columns = fit(text, WIDTH)
+        pad = WIDTH - columns
+        filled.append(f"{trimmed}{bg(surface)}{' ' * pad}{RESET}" if pad else trimmed)
+    filled += [blank] * (HEIGHT - len(filled))
+
+    # No trailing newline: exactly HEIGHT lines, so fzf has nothing to scroll.
+    sys.stdout.write("\n".join(filled))
     return 0
 
 
