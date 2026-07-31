@@ -10,17 +10,40 @@ let
     install_url = "https://addons.mozilla.org/firefox/downloads/latest/${slug}/latest.xpi";
   };
 
-  # Gruvbox Dark Hard, rolled here rather than taken from AMO: the add-on
-  # previously in use was a third-party upload with ~18 daily users and no
-  # updates since 2021, and its colours were not ours to change.
+  # The theme is rolled here rather than taken from AMO: the add-on previously in
+  # use was a third-party upload with ~18 daily users and no updates since 2021,
+  # and its colours were not ours to change.
   palette = import ../palettes/active.nix;
 
-  # Deliberately palette-neutral and stable. The id is referenced by the theme
-  # manifest, the extensions.activeThemeID pref and the ExtensionSettings policy,
-  # and Firefox keys the installed extension off it -- so if it tracked
-  # palette.name, swapping palettes would install a *second* theme and orphan the
-  # first rather than replacing it.
-  themeId = "theme@dotfiles.derek";
+  # One extension id per palette.
+  #
+  # A single shared id looks tidier but cannot work, because Firefox refuses to
+  # *downgrade* an extension. Each palette carries its own independent version,
+  # so swapping gruvbox (2.1.0) for nord (1.0.0) asked Firefox to go backwards and
+  # it simply kept the old theme -- the policy pointed at the nord xpi while the
+  # browser still rendered gruvbox. Per-palette ids sidestep version ordering
+  # entirely: a swap is a fresh install of a different extension.
+  #
+  # The non-active palettes are then blocked below so exactly one theme exists at
+  # a time, rather than accumulating one per palette ever tried.
+  idFor = paletteName: "${paletteName}@dotfiles.derek";
+  themeId = idFor palette.name;
+
+  # Every palette in nix/palettes/, discovered rather than listed, so adding a
+  # palette does not also require remembering to register its id here.
+  allPaletteNames = map (f: (import (../palettes + "/${f}")).name) (
+    builtins.filter (f: f != "active.nix" && f != "README.md" && builtins.match ".*\\.nix" f != null) (
+      builtins.attrNames (builtins.readDir ../palettes)
+    )
+  );
+
+  # Ids to force off: every palette that is not active, plus the short-lived
+  # shared id this replaced. Safe to drop "theme@dotfiles.derek" once every
+  # machine that had it has switched past this commit.
+  staleThemeIds = [
+    "theme@dotfiles.derek"
+  ]
+  ++ map idFor (builtins.filter (n: n != palette.name) allPaletteNames);
 
   # A Firefox "static theme" is just a manifest -- no code, no background
   # page. Every key below is a documented theme colour; anything omitted falls
@@ -388,17 +411,6 @@ in
     EnterprisePoliciesEnabled = true;
 
     ExtensionSettings = {
-      # The theme id used to be palette-specific. Renaming it to the stable
-      # `theme@dotfiles.derek` left the old extension installed *and still
-      # active*, so Firefox kept rendering gruvbox no matter which palette was
-      # built. Policy does not clean up ids it no longer lists, so block this one
-      # explicitly to have Firefox uninstall it rather than leaving it to a manual
-      # trip through about:addons.
-      #
-      # Safe to delete once it has been applied on every machine that ever had
-      # the old id.
-      "gruvbox-dark-hard@dotfiles.derek".installation_mode = "blocked";
-
       "uBlock0@raymondhill.net" = forceInstalled "ublock-origin";
       "@testpilot-containers" = forceInstalled "multi-account-containers";
 
@@ -420,7 +432,17 @@ in
         installation_mode = "force_installed";
         install_url = "file://${themeXpi}";
       };
-    };
+    }
+    # Force off every theme id this config has ever used other than the active
+    # one. Policy does not clean up ids it stops listing, so without this a
+    # previously-tried palette stays installed -- and, being a theme, can stay
+    # *selected*, which is how gruvbox kept rendering after the palette changed.
+    // builtins.listToAttrs (
+      map (id: {
+        name = id;
+        value.installation_mode = "blocked";
+      }) staleThemeIds
+    );
 
     DisableTelemetry = true;
     DisableFirefoxStudies = true;
