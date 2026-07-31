@@ -84,7 +84,6 @@
     ".zsh/posix/git.sh".source = ../../zsh/.zsh/posix/git.sh;
     ".zsh/posix/git_update_mr.sh".source = ../../zsh/.zsh/posix/git_update_mr.sh;
     ".zsh/posix/ipsum.sh".source = ../../zsh/.zsh/posix/ipsum.sh;
-    ".zsh/posix/nvm.sh".source = ../../zsh/.zsh/posix/nvm.sh;
     ".zsh/posix/utils.sh".source = ../../zsh/.zsh/posix/utils.sh;
 
     ".local/bin/check-deps".source = ../../zsh/.local/bin/check-deps;
