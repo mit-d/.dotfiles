@@ -15,14 +15,19 @@ let
   # updates since 2021, and its colours were not ours to change.
   palette = import ../palettes/active.nix;
 
-  themeId = "gruvbox-dark-hard@dotfiles.derek";
+  # Deliberately palette-neutral and stable. The id is referenced by the theme
+  # manifest, the extensions.activeThemeID pref and the ExtensionSettings policy,
+  # and Firefox keys the installed extension off it -- so if it tracked
+  # palette.name, swapping palettes would install a *second* theme and orphan the
+  # first rather than replacing it.
+  themeId = "theme@dotfiles.derek";
 
   # A Firefox "static theme" is just a manifest -- no code, no background
   # page. Every key below is a documented theme colour; anything omitted falls
   # back to Firefox's built-in dark theme, which color_scheme selects.
   themeManifest = {
     manifest_version = 2;
-    name = "Gruvbox Dark Hard (dotfiles)";
+    name = "${palette.name} (dotfiles)";
     inherit (palette) version;
     browser_specific_settings.gecko.id = themeId;
 
@@ -81,7 +86,7 @@ let
   # An .xpi is a zip. -X drops extra file attributes so the archive is
   # reproducible.
   themeXpi =
-    pkgs.runCommand "firefox-gruvbox-dark-hard-${palette.version}.xpi"
+    pkgs.runCommand "firefox-${palette.name}-${palette.version}.xpi"
       { nativeBuildInputs = [ pkgs.zip ]; }
       ''
         mkdir build
@@ -91,25 +96,6 @@ let
       '';
 
   # CSS custom properties generated from the same palette, so userChrome.css
-  # can reference gruvbox colours without repeating hex values.
-  paletteCss = ''
-    /* Generated from nix/palettes/gruvbox-dark-hard.nix -- edit the palette
-       there, never here. */
-    :root {
-      --gruv-bg0-hard: ${palette.surface};
-      --gruv-bg0: ${palette.surfaceContainerLow};
-      --gruv-bg1: ${palette.surfaceContainer};
-      --gruv-bg2: ${palette.surfaceContainerHigh};
-      --gruv-bg3: ${palette.surfaceContainerHighest};
-      --gruv-fg0: ${palette.onSurfaceStrong};
-      --gruv-fg1: ${palette.onSurface};
-      --gruv-fg2: ${palette.onSurfaceMuted};
-      --gruv-gray: ${palette.outline};
-      --gruv-bright-yellow: ${palette.ansi.brightYellow};
-      --gruv-bright-blue: ${palette.ansi.brightBlue};
-      --gruv-bright-red: ${palette.ansi.brightRed};
-    }
-  '';
 in
 {
   home-manager.users.${user} = {
@@ -329,7 +315,12 @@ in
         # Palette vars first, then the hand-written rules. The CSS stays a
         # real .css file so editors treat it as CSS; only the generated
         # custom properties are spliced in front of it.
-        userChrome = paletteCss + builtins.readFile ../firefox/userChrome.css;
+        # userChrome.css is layout only -- tab-strip height, hiding a lone tab,
+        # hiding the Pocket button. Every colour comes from the static theme
+        # manifest above, so no palette CSS is prepended: a generator here
+        # previously emitted 12 --gruv-* custom properties that the stylesheet
+        # never referenced.
+        userChrome = builtins.readFile ../firefox/userChrome.css;
       };
     };
   };
