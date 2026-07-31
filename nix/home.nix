@@ -25,6 +25,7 @@ in
         ./home/bash.nix
         ./home/tmux.nix
         ./home/git.nix
+        ./home/mpv.nix
       ];
     };
   };
