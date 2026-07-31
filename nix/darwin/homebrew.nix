@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   homebrew = {
     enable = true;
 
@@ -12,22 +13,40 @@
 
     taps = [ "hookdeck/hookdeck" ];
 
-    # Intentional holdouts. C++ libs stay until per-project nix dev
-    # shells exist; ollama is a launchd service; nvm serves node projects
-    # that don't yet have a dev shell (retires as each gets one; see the
-    # ~/.dotfiles_wh vanguard shell); tap tools have no nixpkgs equivalent.
+    # Only genuine holdouts remain.
+    #
+    # The C++ libraries (catch2, cli11, eigen, nlohmann-json, raylib, spdlog)
+    # and nvm are gone: per-project nix dev shells are how those dependencies
+    # get provided now. All six libraries were leaves -- `brew uses --installed`
+    # reported no consumers -- so removing them broke nothing, and all six are
+    # in nixpkgs with darwin support when a dev shell needs them.
+    #
+    # ollama moved to nix/modules/packages.nix. The old comment here claimed it
+    # was a launchd service, but `brew services list` reported it as `none`, so
+    # there was no service to preserve.
     brews = [
-      "catch2"
-      "cli11"
-      "eigen"
+      # Not in nixpkgs under any name; comes from the tap above.
       "hookdeck"
-      "nlohmann-json"
-      "nvm"
-      "ollama"
-      "raylib"
-      "spdlog"
     ];
 
+    # Casks stay on Homebrew deliberately, even though nixpkgs has darwin builds
+    # for most of them. Two reasons outweigh the tidiness of moving them:
+    #
+    #  - They self-update. Pinning them to nixpkgs means security fixes for a
+    #    browser, a password manager and a conferencing client arrive only when
+    #    someone runs `nix flake update`. That is a worse posture, not a better
+    #    one.
+    #  - macOS binds TCC grants (Accessibility, Camera, Microphone, Screen
+    #    Recording, Full Disk Access) to an app's path and signature, so moving a
+    #    bundle into the nix store resets them. Ghostty made this concrete:
+    #    replacing its cask relocated the bundle and invalidated a ZDOTDIR that a
+    #    long-lived tmux server had captured, which silently stopped every new
+    #    shell from loading its config. Raycast, 1Password and Zoom depend on
+    #    those permissions far more than Ghostty did.
+    #
+    # sublime-merge and firefox@nightly have no usable darwin build in nixpkgs
+    # regardless. slack-cli moved to packages.nix -- it is a plain CLI, so
+    # neither reason above applies to it.
     casks = [
       "1password"
       "1password-cli"
@@ -40,7 +59,6 @@
       "obsidian"
       "raycast"
       "slack"
-      "slack-cli"
       "sublime-merge"
       "zoom"
     ];

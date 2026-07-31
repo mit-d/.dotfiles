@@ -151,9 +151,20 @@ in
     pkgs.jira-cli-go
     linear-cli
     pkgs.lefthook
+    ## Chat / SaaS CLIs
+    # Was a Homebrew cask, which it never needed to be -- it is a plain CLI, so
+    # neither the self-update nor the TCC-permission argument for keeping casks
+    # on brew applies.
+    pkgs.slack-cli
     ## AI
     pkgs.opencode
     pkgs.pi-coding-agent
     whisper-cpp
+    # Moved off Homebrew. The brew entry claimed it was a launchd service, but
+    # `brew services list` reported `none`, so there was nothing to preserve.
+    # Worth confirming Metal acceleration still works after the swap: nixpkgs
+    # builds this against the Apple SDK, but this config has not verified GPU
+    # offload, and a CPU-only fallback would be a large slowdown.
+    pkgs.ollama
   ];
 }
