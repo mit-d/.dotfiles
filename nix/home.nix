@@ -26,6 +26,7 @@ in
         ./home/tmux.nix
         ./home/git.nix
         ./home/mpv.nix
+        ./home/ghostty.nix
       ];
     };
   };
