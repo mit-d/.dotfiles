@@ -14,4 +14,7 @@
 #
 # To tweak one without editing generated files, add ./overrides/<name>.nix.
 # See ./README.md.
-import ./load.nix "outrun-dark"
+#
+#import ./load.nix "outrun-dark"
+#import ./load.nix "gruvbox-dark-hard"
+import ./load.nix "monokai"

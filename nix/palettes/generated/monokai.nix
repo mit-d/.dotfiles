@@ -16,7 +16,7 @@
   displayName = "Monokai";
   author = "Wimer Hazenberg (http://www.monokai.nl)";
   variant = "dark";
-  version = "3.2.0";
+  version = "3.2.1";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#272822";
