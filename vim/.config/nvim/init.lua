@@ -285,8 +285,18 @@ require("lazy").setup({
   },
 })
 
--- colorscheme (local lua/monokai_remastered.lua)
-require("monokai_remastered").setup()
+-- colorscheme
+--
+-- lua/palette.lua is generated from nix/palettes by nix/home/nvim.nix, so nvim
+-- follows the same palette as the terminal, browser and IDEs. It only exists on
+-- hosts built with nix; the Arch box stows this file without it, so fall back to
+-- the checked-in module there rather than erroring at startup.
+local ok_palette, palette_scheme = pcall(require, "palette")
+if ok_palette then
+  palette_scheme.setup()
+else
+  require("monokai_remastered").setup()
+end
 vim.cmd("highlight Normal guibg=none")
 vim.cmd("highlight NonText guibg=none")
 
