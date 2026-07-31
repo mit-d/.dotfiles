@@ -54,8 +54,14 @@
       eof = "<<EOF";
       freeze = "uv pip freeze > requirements.txt";
       gb = "git branch";
-      gblackchanged = "black $(git diff --name-only \"$(git merge-base HEAD origin/main)\"...HEAD | grep -E \"\\.py$\")";
-      gblacknew = "black $(git diff --name-only --diff-filter=A \"$(git merge-base HEAD origin/main)\"...HEAD | grep -E \"\\.py$\")";
+      # NOTE: `.py$` is unescaped here on purpose, matching what the fish
+      # abbreviation actually expanded to before the migration. `\.py$` would be
+      # the better regex -- `.py$` also matches e.g. "apy" -- but changing it
+      # here would be a silent behaviour change smuggled in under a migration,
+      # and would leave a permanent diff that future verification could not
+      # distinguish from a real error. Tighten it as its own deliberate commit.
+      gblackchanged = "black $(git diff --name-only \"$(git merge-base HEAD origin/main)\"...HEAD | grep -E \".py$\")";
+      gblacknew = "black $(git diff --name-only --diff-filter=A \"$(git merge-base HEAD origin/main)\"...HEAD | grep -E \".py$\")";
       gc = "git commit";
       gchanged = "git diff --name-only \"$(git merge-base HEAD origin/main)\"...HEAD";
       gd = "git diff";
