@@ -13,6 +13,37 @@ done
 function expand-alias() { zle _expand_alias }
 zle -N expand-alias && bindkey '^ ' expand-alias
 
+## Cursor shape per vi mode (ZSH-only)
+# Ghostty's shell-integration `cursor` feature is switched off (`no-cursor` in
+# nix/home/ghostty.nix) because it hardcodes a *blinking* block for normal
+# mode. `cursor-style-blink = false` cannot override it -- Ghostty documents
+# that as "just the default state; running programs may override the cursor
+# style using DECSCUSR" -- and `cursor:steady` is rejected by the config parser.
+#
+# DECSCUSR (CSI Ps SP q): 0 default, 1 blinking block, 2 steady block,
+# 3 blinking underline, 4 steady underline, 5 blinking bar, 6 steady bar.
+_cursor_shape() {
+    case ${KEYMAP-} in
+        vicmd | visual) print -n '\e[2 q' ;; # steady block: normal mode
+        *) print -n '\e[5 q' ;;              # blinking bar: insert mode
+    esac
+}
+zle -N _cursor_shape
+
+# add-zle-hook-widget rather than defining zle-line-init/zle-keymap-select
+# outright: zsh-autosuggestions wraps those widgets, and clobbering them breaks
+# suggestions.
+autoload -Uz add-zle-hook-widget
+add-zle-hook-widget line-init _cursor_shape
+add-zle-hook-widget keymap-select _cursor_shape
+
+# Hand the terminal default back before running an external command, so vim,
+# fzf and friends are not stuck with whatever shape the prompt left behind.
+# autoload explicitly rather than relying on prompt.zsh having run first.
+_cursor_reset() { print -n '\e[0 q' }
+autoload -Uz add-zsh-hook
+add-zsh-hook preexec _cursor_reset
+
 ## git_update_mr completion (ZSH-only)
 # Helper function for git branch completion
 _git_branch_names() {

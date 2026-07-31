@@ -67,9 +67,23 @@ in
 
       # Shell integration
       shell-integration = "zsh";
-      # `cursor` is what gives the per-vi-mode cursor shape -- see the
-      # cursor-style note below before changing this.
-      shell-integration-features = "cursor,sudo,title";
+      # NOTE `no-cursor`: the per-vi-mode cursor shape is driven by
+      # zsh/.zsh/interactive.zsh instead, not by Ghostty's integration.
+      #
+      # Ghostty's `cursor` feature hardcodes a *blinking* block for
+      # vicmd/visual, which is disorienting in normal mode -- the eye loses the
+      # caret mid-motion. Neither built-in escape works:
+      #
+      #   - `cursor:steady` is syntax the integration *script* understands in
+      #     $GHOSTTY_SHELL_FEATURES, but Ghostty's config parser rejects it
+      #     outright: `shell-integration-features: invalid value`.
+      #   - `cursor-style-blink = false` is documented as "just the default
+      #     state; running programs may override the cursor style using
+      #     DECSCUSR", and the integration does exactly that -- so it loses.
+      #
+      # Doing it in zsh also gives per-mode control the feature never had:
+      # steady block in normal, blinking bar left alone in insert.
+      shell-integration-features = "no-cursor,sudo,title";
 
       # Keybindings
       keybind = [
