@@ -11,7 +11,15 @@
 {
   name = "solarized-light";
   variant = "light";
-  version = "1.0.0";
+  version = "1.0.1";
+
+  # Bump on ANY change that reaches Firefox's theme manifest, not just colours.
+  # Firefox compares this version to decide whether to reinstall a
+  # policy-installed theme and ignores install_url pointing at a new store path,
+  # so an unbumped change is silently not applied. This bit once already: fixing
+  # content_color_scheme from "dark" to "light" left the version alone, Firefox
+  # kept the previously-installed 1.0.0, and the new tab page stayed dark on a
+  # light frame.
 
   # Surfaces. base3 (#fdf6e3) is the paper; the ramp darkens from there.
   surface = "#fdf6e3"; # base3

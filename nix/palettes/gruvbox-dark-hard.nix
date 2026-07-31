@@ -19,6 +19,14 @@
   # already-installed profile.
   version = "2.0.0";
 
+  # Bump on ANY change that reaches Firefox's theme manifest, not just colours.
+  # Firefox compares this version to decide whether to reinstall a
+  # policy-installed theme and ignores install_url pointing at a new store path,
+  # so an unbumped change is silently not applied. This bit once already: fixing
+  # content_color_scheme from "dark" to "light" left the version alone, Firefox
+  # kept the previously-installed 1.0.0, and the new tab page stayed dark on a
+  # light frame.
+
   # --- Material 3 semantic roles ---------------------------------------------
   #
   # Surfaces. "hard" refers to `surface` being darker than gruvbox's medium

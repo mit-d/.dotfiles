@@ -27,7 +27,7 @@ is loaded.
 | -- | -- |
 | `name` | File-safe identifier, e.g. `gruvbox-dark-hard` |
 | `variant` | `"dark"` or `"light"`. Consumers branch on this for things that are not colours -- macOS `AppleInterfaceStyle`, Ghostty `window-theme`, Firefox `color_scheme`, bat's theme name |
-| `version` | Bump on any colour change. Firefox decides whether to reinstall a policy-installed theme by comparing this, **not** by noticing the store path changed |
+| `version` | Bump on **any** change reaching Firefox's theme manifest -- colours, `color_scheme`, `content_color_scheme`. Firefox compares this to decide whether to reinstall a policy-installed theme and ignores `install_url` pointing at a new store path, so an unbumped change is silently not applied |
 
 ### Surfaces
 
