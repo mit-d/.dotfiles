@@ -38,6 +38,21 @@ let
   pair = s: i: 16 * digit (builtins.substring i 1 s) + digit (builtins.substring (i + 1) 1 s);
 
   round = x: builtins.floor (x + 0.5);
+
+  hexChars = "0123456789abcdef";
+
+  byte =
+    n:
+    let
+      v =
+        if n < 0 then
+          0
+        else if n > 255 then
+          255
+        else
+          round n;
+    in
+    builtins.substring (v / 16) 1 hexChars + builtins.substring (v - 16 * (v / 16)) 1 hexChars;
 in
 rec {
   # "#rrggbb" -> { r, g, b } as floats in 0..1.
@@ -99,4 +114,20 @@ rec {
       s = round (s * 100);
       l = round (l * 100);
     };
+
+  # Blend two colours, `t` of the way from a to b. Plain sRGB rather than the
+  # OKLab the generator uses: this only exists for subtle tints -- a diff line
+  # that should read as "green, but barely" -- where being perceptually exact
+  # matters less than not pulling a colour-science implementation into nix.
+  mix =
+    a: b: t:
+    let
+      x = hexToRgb a;
+      y = hexToRgb b;
+      chan = p: q: byte (255 * (p + (q - p) * t));
+    in
+    "#" + chan x.r y.r + chan x.g y.g + chan x.b y.b;
+
+  # IntelliJ colour scheme values are bare hex, with no leading '#'.
+  noHash = hex: if builtins.substring 0 1 hex == "#" then builtins.substring 1 6 hex else hex;
 }

@@ -36,6 +36,7 @@ in
         ./home/btop.nix
         ./home/bat.nix
         ./home/obsidian.nix
+        ./home/jetbrains.nix
       ];
     };
   };

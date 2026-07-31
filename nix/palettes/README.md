@@ -10,7 +10,7 @@ import ./load.nix "nord"
 
 Then `sudo darwin-rebuild switch --flake ~/.dotfiles`. Everything that reads the
 palette follows: terminal, browser chrome, desktop background, k9s, tmux status,
-fish and zsh colours, bat, fzf, btop, Obsidian.
+fish and zsh colours, bat, fzf, btop, Obsidian, JetBrains editors.
 
 Slack needs a manual step, because it offers nowhere to write:
 `nix run .#slack-theme`, then paste into Preferences -> Appearance.
@@ -52,6 +52,36 @@ the vault is a git repository that tracks `.obsidian` and syncs to iOS, where a
 `/nix/store` path would dangle. They show up in the vault's `git status` after
 each palette switch -- gitignore them there if that is noise. `appearance.json`
 is patched in place rather than managed, because Obsidian rewrites it itself.
+
+### JetBrains IDEs
+
+A switch writes a `dotfiles` editor colour scheme into every IDE config found
+under `~/Library/Application Support/JetBrains`, and points each one's
+`colors.scheme.xml` at it. **Restart the IDE**: it reads schemes at startup and
+rewrites these files on exit, so a running instance will clobber the change.
+
+Directories are discovered, not listed -- there are six IDE families here across
+a dozen versions and Toolbox adds another on every major upgrade. The pattern
+requires a trailing version, which skips the siblings that are not IDEs
+(`Toolbox`, `Fleet`, `consentOptions`) and the `_bak` and `-backup` copies left
+by upgrades.
+
+The scheme sets `parent_scheme` to `Darcula` or `Default` by `variant` and
+overrides only what it names, so it stays legible at ~110 options instead of the
+~3700 a fully explicit scheme needs. Syntax roles come straight from base16's
+documented meanings, which carry over to an IDE almost exactly: `base0E` keywords,
+`base0B` strings, `base09` numbers, `base0D` functions, `base0A` classes, `base08`
+variables. Console ANSI is wired to the palette's sixteen slots, so a program's
+output looks the same in the IDE as in the terminal.
+
+`colors.scheme.xml` is patched element-wise rather than replaced, because some
+versions also keep font settings in it.
+
+**Only the editor is themed, not the IDE chrome.** That needs a `*.theme.json`,
+which JetBrains loads only from a plugin, and a malformed plugin can stop an IDE
+from starting -- not a risk worth taking unattended across 17 config directories.
+The New UI's "Sync with OS" already tracks `variant` through
+`nix/darwin/defaults.nix`, so the chrome at least follows the palette's polarity.
 
 ### Slack
 
