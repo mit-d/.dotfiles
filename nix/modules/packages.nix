@@ -57,7 +57,12 @@ in
     pkgs.coreutils
 
     # GUI
-    pkgs.mpv
+    # mpv intentionally absent: nix/home/mpv.nix enables programs.mpv, which
+    # installs an mpv-with-scripts wrapper (carrying --script=...mpv-cut) into
+    # the home-manager profile. systemPackages lands in
+    # /run/current-system/sw/bin, which precedes ~/.nix-profile/bin on PATH, so
+    # listing pkgs.mpv here would shadow the wrapper and mpv-cut would silently
+    # never load -- with no error, since an unloaded script cannot fail.
 
     # CLI
     ## Utils
