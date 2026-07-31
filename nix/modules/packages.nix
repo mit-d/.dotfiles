@@ -151,11 +151,6 @@ in
     pkgs.jira-cli-go
     linear-cli
     pkgs.lefthook
-    ## Chat / SaaS CLIs
-    # Was a Homebrew cask, which it never needed to be -- it is a plain CLI, so
-    # neither the self-update nor the TCC-permission argument for keeping casks
-    # on brew applies.
-    pkgs.slack-cli
     ## AI
     pkgs.opencode
     pkgs.pi-coding-agent
