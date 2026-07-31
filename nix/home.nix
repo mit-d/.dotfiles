@@ -21,7 +21,9 @@ in
 
       # Per-tool modules. Kept platform-agnostic so a future NixOS or
       # standalone home-manager configuration can import the same list.
-      imports = [ ];
+      imports = [
+        ./home/bash.nix
+      ];
     };
   };
 }
