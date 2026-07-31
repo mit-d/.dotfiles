@@ -3,16 +3,13 @@ let
   palette = import ../palettes/active.nix;
 in
 {
-  # bat ships gruvbox-dark and gruvbox-light builtin, so the theme is selected by
-  # name rather than generated. Which one depends on the palette's variant, so a
-  # swap to a light theme does not leave bat dark.
-  #
-  # This is the one themed surface that cannot follow an *arbitrary* palette: bat
-  # themes are compiled Sublime colour schemes, not a list of hex values, so a
-  # palette with no matching builtin needs `themes` populated with a real
-  # .tmTheme. Named builtins are the honest trade for now.
+  # bat themes are compiled Sublime colour schemes, not a list of hex values, so
+  # this selects a builtin by name. The name comes from the palette rather than
+  # being guessed here: branching on palette.variant alone produced
+  # "gruvbox-light" under a solarized palette, which is the wrong theme rather
+  # than merely the wrong lightness.
   programs.bat = {
     enable = true;
-    config.theme = if palette.variant == "light" then "gruvbox-light" else "gruvbox-dark";
+    config.theme = palette.tools.bat;
   };
 }

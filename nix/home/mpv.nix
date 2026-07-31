@@ -1,5 +1,8 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 let
+  palette = import ../palettes/active.nix;
+  # mpv wants #AARRGGBB, so the palette hex is spliced in after an alpha byte.
+  argb = a: colour: "#" + a + lib.removePrefix "#" colour;
   mpv-cut = pkgs.callPackage ../pkgs/mpv-cut.nix { };
 in
 {
@@ -17,8 +20,10 @@ in
       osd-bar-align-y = 0;
       osd-bar-h = 4;
       osd-border-size = 0.4;
-      osd-color = "#CCFFFFFF";
-      osd-border-color = "#99000000";
+      # Was #CCFFFFFF / #99000000 -- plain white on black. Now the palette, with
+      # the original alpha bytes preserved so the OSD keeps its translucency.
+      osd-color = argb "CC" palette.onSurface;
+      osd-border-color = argb "99" palette.surface;
       osd-font = "Hiragino Maru Gothic Pro";
       # \${filename} is an mpv property reference, escaped so Nix does not
       # try to interpolate it.

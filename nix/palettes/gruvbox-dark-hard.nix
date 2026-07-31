@@ -100,4 +100,16 @@
   brightOrange = "#fe8019";
 
   cursor = "#fe8019";
+
+  # --- Per-tool builtin theme names ------------------------------------------
+  #
+  # Some tools will not accept a list of hex values: bat themes are compiled
+  # Sublime colour schemes and btop themes are their own file format. Both ship
+  # builtins for common palettes, so the palette states its own name in each
+  # tool's vocabulary rather than a consumer guessing. A palette with no builtin
+  # would have to generate a real theme file instead.
+  tools = {
+    bat = "gruvbox-dark"; # `bat --list-themes`
+    btop = "gruvbox_dark_v2"; # $out/share/btop/themes
+  };
 }

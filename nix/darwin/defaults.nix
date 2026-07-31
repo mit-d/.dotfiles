@@ -1,4 +1,8 @@
-{ ... }: {
+{ ... }:
+let
+  palette = import ../palettes/active.nix;
+in
+{
   system.defaults = {
     dock = {
       autohide = true;
@@ -16,7 +20,9 @@
       KeyRepeat = 2;
       InitialKeyRepeat = 25;
       ApplePressAndHoldEnabled = false;
-      AppleInterfaceStyle = "Dark";
+      # Follows the palette. The option is nullOr (enum ["Dark"]), so null is how
+      # light mode is expressed -- nix-darwin deletes the key.
+      AppleInterfaceStyle = if palette.variant == "dark" then "Dark" else null;
 
       # Ctrl-Cmd-drag anywhere inside a window to move it, rather than having to
       # grab the title bar. Undocumented in System Settings but a real, supported
