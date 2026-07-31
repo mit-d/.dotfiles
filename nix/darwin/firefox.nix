@@ -76,9 +76,18 @@ let
         icons_attention = palette.ansi.brightYellow;
       };
 
+      # These two decide how Firefox renders everything the theme does *not*
+      # explicitly colour -- chrome text it derives itself, icon fills, form
+      # controls, and in-content pages that respect prefers-color-scheme. Getting
+      # them wrong is what makes a light theme look washed out: Firefox picks
+      # foregrounds suited to a dark frame and paints them on a pale one.
+      #
+      # They were hardcoded "dark", so they had to follow palette.variant. The
+      # accepted values are "light" | "dark" | "auto" | "system", which the
+      # variant vocabulary already matches.
       properties = {
-        color_scheme = "dark";
-        content_color_scheme = "dark";
+        color_scheme = palette.variant;
+        content_color_scheme = palette.variant;
       };
     };
   };

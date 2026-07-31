@@ -4,20 +4,23 @@ let
 
   # k9s ships a gruvbox-dark-hard skin, but 8 of its 11 colour anchors have
   # drifted from canonical gruvbox -- #989719 for green instead of #98971a,
-  # #b16185 for purple instead of #b16286, #cc231c for red instead of #cc241d,
-  # and so on. They look hand-transcribed.
+  # #b16185 for magenta instead of #b16286, #cc231c for red instead of #cc241d.
+  # They look hand-transcribed.
   #
   # Rather than hand-write a skin (k9s skins are long: body, prompt, info,
-  # dialog, frame, menu, crumbs, views, xray, charts...) or accept colours that
-  # are almost-but-not-quite the terminal's, take upstream's file and rewrite
-  # only the anchor definitions from the shared palette. Every section mapping
-  # stays upstream-maintained; only the values become ours, so k9s matches
-  # Ghostty, Firefox and the desktop exactly.
+  # dialog, frame, menu, crumbs, views, xray, charts...), take upstream's file
+  # and rewrite its anchor definitions from the palette. Every section mapping
+  # stays upstream-maintained; only the values become ours.
   #
-  # Note `orange` is deliberately mapped to palette.ansi.yellow: upstream's value
-  # (~#d79921) *is* canonical gruvbox yellow despite the anchor's name, and
-  # remapping it to a true orange would change their design rather than correct
-  # its transcription.
+  # All 11 anchors are substituted, not just the drifted ones. An earlier version
+  # rewrote only the 8 that disagreed with canonical gruvbox and left foreground,
+  # background and current_line alone because they already matched -- correct for
+  # gruvbox purely by luck, and it produced a gruvbox-dark background under a
+  # solarized-light palette.
+  #
+  # `orange` maps to the palette's orange rather than its yellow. Upstream's value
+  # (~#d79921) is canonical gruvbox *yellow* despite the anchor's name, the same
+  # class of slip as the other eight, so it is corrected rather than perpetuated.
   skin =
     pkgs.runCommand "k9s-${palette.name}.yaml"
       {
@@ -25,15 +28,31 @@ let
       }
       ''
         sed -E \
+          -e 's|^(foreground: &foreground ")[^"]*|\1${palette.onSurface}|' \
+          -e 's|^(background: &background ")[^"]*|\1${palette.surface}|' \
+          -e 's|^(current_line: &current_line ")[^"]*|\1${palette.onSurface}|' \
           -e 's|^(selection: &selection ")[^"]*|\1${palette.surfaceContainer}|' \
           -e 's|^(comment: &comment ")[^"]*|\1${palette.onSurfaceVariant}|' \
           -e 's|^(cyan: &cyan ")[^"]*|\1${palette.ansi.cyan}|' \
           -e 's|^(green: &green ")[^"]*|\1${palette.ansi.green}|' \
-          -e 's|^(orange: &orange ")[^"]*|\1${palette.ansi.yellow}|' \
+          -e 's|^(orange: &orange ")[^"]*|\1${palette.orange}|' \
           -e 's|^(magenta: &magenta ")[^"]*|\1${palette.ansi.magenta}|' \
           -e 's|^(blue: &blue ")[^"]*|\1${palette.ansi.blue}|' \
           -e 's|^(red: &red ")[^"]*|\1${palette.ansi.red}|' \
           "$src" > "$out"
+
+        # Fail the build rather than ship a half-themed skin. If upstream renames
+        # or adds an anchor, the sed above silently leaves it at gruvbox's value,
+        # which is exactly the bug this replaced.
+        anchors=$(grep -cE '^[a-z_]+: &' "$out")
+        if [ "$anchors" -ne 11 ]; then
+          echo "k9s skin: expected 11 colour anchors, found $anchors; upstream changed the skin" >&2
+          exit 1
+        fi
+        if grep -qE '"#(1d2021|ebdbb2|3c3735|bdad93|689d69|989719|d79920|b16185|448488|cc231c)"' "$out"; then
+          echo "k9s skin: an anchor still holds an upstream gruvbox value; a substitution did not match" >&2
+          exit 1
+        fi
       '';
 in
 {
@@ -52,7 +71,7 @@ in
     #
     # CAVEAT: config.yaml is now read-only. k9s does not appear to rewrite it
     # during normal use (the live copy was untouched for a year while k9s.log
-    # updated today), but a future k9s release that wants to migrate the schema
+    # updated daily), but a future k9s release that wants to migrate the schema
     # will fail against a store symlink rather than silently upgrading. That
     # surfaces as a visible k9s error, and the fix is to update this attrset.
     settings.k9s = {
