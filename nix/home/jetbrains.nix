@@ -241,6 +241,375 @@ let
     </scheme>
   '';
 
+  # --- UI theme -------------------------------------------------------------
+  #
+  # The editor scheme above covers the editor. The IDE's own chrome comes from a
+  # *.theme.json, which the platform only loads from a plugin, so this builds one.
+  #
+  # A theme plugin carries no code: it is a jar holding plugin.xml, the theme
+  # json, and the editor scheme it references. A malformed one is disabled with a
+  # notification rather than breaking the IDE.
+
+  # Stable, because laf.xml refers to the theme by this id. Regenerating it per
+  # palette would leave every IDE pointing at a theme that no longer exists.
+  themeId = "b7c1e0a4-5d2f-4a63-9c18-3e6f0d5a9b47";
+  pluginId = "dotfiles.palette.theme";
+
+  withAlpha = a: color: "#" + c color + a;
+
+  themeJson = pkgs.writeText "dotfiles.theme.json" (
+    builtins.toJSON {
+      name = schemeName;
+      inherit dark;
+      author = "generated from nix/palettes";
+      # Folds the editor scheme into the theme, so selecting it sets both the
+      # chrome and the editor in one go.
+      editorScheme = "/${schemeName}.xml";
+
+      ui = {
+        # The platform matches this against any component key ending in these
+        # names, which is what covers most of the chrome without naming every
+        # widget. Everything below it is a correction, not a foundation.
+        "*" = {
+          background = "#${c palette.surface}";
+          foreground = "#${c palette.onSurface}";
+          infoForeground = "#${c palette.onSurfaceVariant}";
+          disabledForeground = "#${c palette.onSurfaceFaint}";
+          inactiveForeground = "#${c palette.onSurfaceVariant}";
+          acceleratorForeground = "#${c palette.onSurfaceVariant}";
+          errorForeground = "#${c palette.error}";
+
+          selectionBackground = "#${c palette.surfaceContainerHighest}";
+          selectionForeground = "#${c palette.onSurfaceStrong}";
+          selectionInactiveBackground = "#${c palette.surfaceContainerHigh}";
+          selectionBackgroundInactive = "#${c palette.surfaceContainerHigh}";
+          selectedBackground = "#${c palette.surfaceContainerHigh}";
+          selectedForeground = "#${c palette.onSurfaceStrong}";
+          selectedInactiveBackground = "#${c palette.surfaceContainer}";
+          selectedBackgroundInactive = "#${c palette.surfaceContainer}";
+          lightSelectionBackground = "#${c palette.surfaceContainerHigh}";
+          hoverBackground = "#${c palette.surfaceContainer}";
+
+          borderColor = "#${c palette.outlineVariant}";
+          disabledBorderColor = "#${c palette.outlineVariant}";
+          focusedBorderColor = "#${c palette.primary}";
+          separatorColor = "#${c palette.outlineVariant}";
+          modifiedItemForeground = "#${c palette.ansi.blue}";
+        };
+
+        ActionButton = {
+          hoverBackground = "#${c palette.surfaceContainerHigh}";
+          pressedBackground = "#${c palette.surfaceContainerHighest}";
+        };
+
+        Button = {
+          startBackground = "#${c palette.surfaceContainer}";
+          endBackground = "#${c palette.surfaceContainer}";
+          startBorderColor = "#${c palette.outlineVariant}";
+          endBorderColor = "#${c palette.outlineVariant}";
+          focusedBorderColor = "#${c palette.primary}";
+          default = {
+            foreground = "#${c palette.onPrimary}";
+            startBackground = "#${c palette.primary}";
+            endBackground = "#${c palette.primary}";
+            startBorderColor = "#${c palette.primary}";
+            endBorderColor = "#${c palette.primary}";
+            focusedBorderColor = "#${c palette.primaryContainer}";
+          };
+        };
+
+        ComboBox = {
+          nonEditableBackground = "#${c palette.surfaceContainer}";
+          ArrowButton = {
+            background = "#${c palette.surfaceContainer}";
+            nonEditableBackground = "#${c palette.surfaceContainer}";
+            iconColor = "#${c palette.onSurfaceVariant}";
+            disabledIconColor = "#${c palette.onSurfaceFaint}";
+          };
+        };
+
+        Component = {
+          focusedBorderColor = "#${c palette.primary}";
+          focusColor = "#${c palette.primary}";
+          errorFocusColor = "#${c palette.error}";
+          inactiveErrorFocusColor = "#${c palette.error}";
+          warningFocusColor = "#${c palette.ansi.yellow}";
+          inactiveWarningFocusColor = "#${c palette.ansi.yellow}";
+        };
+
+        # Named explicitly because the wildcard leaves the completion popup and
+        # the run widget looking like the old theme, which is the first thing you
+        # notice.
+        CompletionPopup = {
+          background = "#${c palette.surfaceContainer}";
+          foreground = "#${c palette.onSurface}";
+          selectionBackground = "#${c palette.surfaceContainerHighest}";
+          selectionInactiveBackground = "#${c palette.surfaceContainerHigh}";
+          matchForeground = "#${c palette.primary}";
+        };
+
+        Editor.background = "#${c palette.surface}";
+
+        EditorTabs = {
+          background = "#${c palette.surfaceContainer}";
+          selectedBackground = "#${c palette.surface}";
+          selectedForeground = "#${c palette.onSurfaceStrong}";
+          underlinedTabBackground = "#${c palette.surface}";
+          underlinedTabForeground = "#${c palette.onSurfaceStrong}";
+          underlineColor = "#${c palette.primary}";
+          inactiveUnderlineColor = "#${c palette.outline}";
+          hoverBackground = "#${c palette.surfaceContainerHigh}";
+          borderColor = "#${c palette.outlineVariant}";
+        };
+
+        Link = {
+          activeForeground = "#${c palette.primary}";
+          hoverForeground = "#${c palette.primary}";
+          pressedForeground = "#${c palette.primary}";
+          visitedForeground = "#${c palette.tertiary}";
+        };
+
+        MainToolbar = {
+          background = "#${c palette.surfaceContainer}";
+          inactiveBackground = "#${c palette.surfaceContainer}";
+          Dropdown.hoverBackground = "#${c palette.surfaceContainerHigh}";
+          Icon.hoverBackground = "#${c palette.surfaceContainerHigh}";
+        };
+
+        NewClass.Panel.background = "#${c palette.surfaceContainer}";
+
+        Notification = {
+          background = "#${c palette.surfaceContainer}";
+          borderColor = "#${c palette.outlineVariant}";
+          errorBackground = "#${c palette.surfaceContainer}";
+          errorBorderColor = "#${c palette.error}";
+          MoreButton.background = "#${c palette.surfaceContainerHigh}";
+          ToolWindow = {
+            informativeBackground = "#${c palette.surfaceContainer}";
+            informativeBorderColor = "#${c palette.outlineVariant}";
+            warningBackground = "#${c palette.surfaceContainer}";
+            warningBorderColor = "#${c palette.ansi.yellow}";
+            errorBackground = "#${c palette.surfaceContainer}";
+            errorBorderColor = "#${c palette.error}";
+          };
+        };
+
+        Popup = {
+          background = "#${c palette.surfaceContainer}";
+          borderColor = "#${c palette.outline}";
+          separatorColor = "#${c palette.outlineVariant}";
+          Header = {
+            activeBackground = "#${c palette.surfaceContainerHigh}";
+            inactiveBackground = "#${c palette.surfaceContainer}";
+          };
+          Toolbar.background = "#${c palette.surfaceContainer}";
+          Advertiser = {
+            background = "#${c palette.surfaceContainer}";
+            foreground = "#${c palette.onSurfaceFaint}";
+          };
+        };
+
+        ProgressBar = {
+          progressColor = "#${c palette.primary}";
+          indeterminateStartColor = "#${c palette.primary}";
+          indeterminateEndColor = "#${c palette.primaryContainer}";
+          trackColor = "#${c palette.surfaceContainerHigh}";
+          passedColor = "#${c palette.ansi.green}";
+          failedColor = "#${c palette.error}";
+        };
+
+        RunWidget = {
+          background = "#${c palette.primary}";
+          foreground = "#${c palette.onPrimary}";
+          hoverBackground = "#${c palette.primaryContainer}";
+          pressedBackground = "#${c palette.primaryContainer}";
+          separatorColor = "#${c palette.outlineVariant}";
+        };
+
+        ScrollBar = {
+          background = "#${c palette.surface}";
+          track = "#${c palette.surface}";
+          thumb = "#${c palette.outlineVariant}";
+          thumbColor = "#${c palette.outlineVariant}";
+          thumbBorderColor = "#${c palette.outlineVariant}";
+          hoverThumbColor = "#${c palette.outline}";
+          hoverThumbBorderColor = "#${c palette.outline}";
+          hoverTrackColor = "#${c palette.surfaceContainer}";
+          Transparent = {
+            thumbColor = "#${c palette.outlineVariant}";
+            thumbBorderColor = "#${c palette.outlineVariant}";
+            hoverThumbColor = "#${c palette.outline}";
+            hoverThumbBorderColor = "#${c palette.outline}";
+          };
+        };
+
+        SearchEverywhere = {
+          Header.background = "#${c palette.surfaceContainer}";
+          SearchField = {
+            background = "#${c palette.surfaceContainerLow}";
+            borderColor = "#${c palette.outlineVariant}";
+            infoForeground = "#${c palette.onSurfaceFaint}";
+          };
+          Tab = {
+            selectedBackground = "#${c palette.surfaceContainerHigh}";
+            selectedForeground = "#${c palette.onSurfaceStrong}";
+          };
+          Advertiser.background = "#${c palette.surfaceContainer}";
+        };
+
+        SearchMatch = {
+          startBackground = "#${c palette.primaryContainer}";
+          endBackground = "#${c palette.primaryContainer}";
+        };
+
+        StatusBar = {
+          background = "#${c palette.surfaceContainer}";
+          borderColor = "#${c palette.outlineVariant}";
+          hoverBackground = "#${c palette.surfaceContainerHigh}";
+        };
+
+        TabbedPane = {
+          underlineColor = "#${c palette.primary}";
+          contentAreaColor = "#${c palette.outlineVariant}";
+          focusColor = "#${c palette.surfaceContainerHigh}";
+          hoverColor = "#${c palette.surfaceContainerHigh}";
+        };
+
+        Table = {
+          background = "#${c palette.surface}";
+          stripeColor = "#${c palette.surfaceContainerLow}";
+          gridColor = "#${c palette.outlineVariant}";
+          lightSelectionBackground = "#${c palette.surfaceContainerHigh}";
+          lightSelectionForeground = "#${c palette.onSurfaceStrong}";
+          lightSelectionInactiveBackground = "#${c palette.surfaceContainer}";
+          lightSelectionInactiveForeground = "#${c palette.onSurfaceVariant}";
+          TableHeader = {
+            background = "#${c palette.surfaceContainer}";
+            bottomSeparatorColor = "#${c palette.outlineVariant}";
+          };
+        };
+
+        ToolBar = {
+          background = "#${c palette.surfaceContainer}";
+          borderHandleColor = "#${c palette.outline}";
+        };
+
+        ToolWindow = {
+          background = "#${c palette.surfaceContainer}";
+          Header = {
+            background = "#${c palette.surfaceContainer}";
+            inactiveBackground = "#${c palette.surfaceContainer}";
+            borderColor = "#${c palette.outlineVariant}";
+          };
+          HeaderTab = {
+            selectedInactiveBackground = "#${c palette.surfaceContainerHigh}";
+            selectedBackground = "#${c palette.surfaceContainerHigh}";
+            hoverBackground = "#${c palette.surfaceContainerHigh}";
+            hoverInactiveBackground = "#${c palette.surfaceContainer}";
+            underlineColor = "#${c palette.primary}";
+            inactiveUnderlineColor = "#${c palette.outline}";
+          };
+          Button = {
+            hoverBackground = "#${c palette.surfaceContainerHigh}";
+            selectedBackground = "#${c palette.surfaceContainerHighest}";
+            selectedForeground = "#${c palette.onSurfaceStrong}";
+          };
+        };
+
+        Tree = {
+          background = "#${c palette.surface}";
+          foreground = "#${c palette.onSurface}";
+          selectionBackground = "#${c palette.surfaceContainerHighest}";
+          selectionForeground = "#${c palette.onSurfaceStrong}";
+          selectionInactiveBackground = "#${c palette.surfaceContainerHigh}";
+          hoverBackground = "#${c palette.surfaceContainer}";
+          modifiedItemForeground = "#${c palette.ansi.blue}";
+          rowHeight = 22;
+        };
+
+        ValidationTooltip = {
+          errorBackground = "#${c palette.surfaceContainer}";
+          errorBorderColor = "#${c palette.error}";
+          warningBackground = "#${c palette.surfaceContainer}";
+          warningBorderColor = "#${c palette.ansi.yellow}";
+        };
+
+        VersionControl.RefLabel = {
+          backgroundBase = "#${c palette.surfaceContainerHigh}";
+          foreground = "#${c palette.onSurfaceVariant}";
+        };
+
+        # Faint washes, so a coloured file in the tree stays readable. The alpha
+        # suffix is the platform's own convention for these.
+        FileColor = {
+          Blue = withAlpha "22" palette.ansi.blue;
+          Green = withAlpha "22" palette.ansi.green;
+          Orange = withAlpha "22" palette.orange;
+          Rose = withAlpha "22" palette.error;
+          Violet = withAlpha "22" palette.ansi.magenta;
+          Yellow = withAlpha "22" palette.ansi.yellow;
+        };
+      };
+
+      # Recolours the platform's own icons, which otherwise keep the previous
+      # theme's accents and are the last thing to look out of place.
+      icons.ColorPalette = {
+        "Actions.Red" = "#${c palette.error}";
+        "Actions.Yellow" = "#${c palette.ansi.yellow}";
+        "Actions.Green" = "#${c palette.ansi.green}";
+        "Actions.Blue" = "#${c palette.ansi.blue}";
+        "Actions.Grey" = "#${c palette.onSurfaceVariant}";
+        "Actions.GreyInline" = "#${c palette.onSurfaceVariant}";
+        "Actions.GreyInline.Dark" = "#${c palette.onSurfaceVariant}";
+        "Objects.Grey" = "#${c palette.onSurfaceVariant}";
+        "Objects.RedStatus" = "#${c palette.error}";
+        "Objects.Red" = "#${c palette.error}";
+        "Objects.Pink" = "#${c palette.ansi.magenta}";
+        "Objects.Yellow" = "#${c palette.ansi.yellow}";
+        "Objects.Green" = "#${c palette.ansi.green}";
+        "Objects.Blue" = "#${c palette.ansi.blue}";
+        "Objects.Purple" = "#${c palette.ansi.magenta}";
+        "Objects.BlackText" = "#${c palette.onSurface}";
+        "Objects.YellowDark" = "#${c palette.ansi.yellow}";
+        "Objects.GreenAndroid" = "#${c palette.ansi.green}";
+        "Checkbox.Background.Default" = "#${c palette.surfaceContainer}";
+        "Checkbox.Border.Default" = "#${c palette.outline}";
+        "Checkbox.Foreground.Selected" = "#${c palette.onPrimary}";
+        "Checkbox.Background.Selected" = "#${c palette.primary}";
+        "Checkbox.Focus.Wide" = "#${c palette.primary}";
+      };
+    }
+  );
+
+  # since-build only, with no until-build: an upper bound is what makes a theme
+  # silently vanish after an IDE upgrade. Depends on modules.platform rather than
+  # modules.lang so DataGrip and the other non-language IDEs load it too.
+  pluginXml = pkgs.writeText "plugin.xml" ''
+    <idea-plugin>
+      <id>${pluginId}</id>
+      <name>${schemeName} palette</name>
+      <version>${palette.version}</version>
+      <vendor>generated from nix/palettes</vendor>
+      <description>Generated from nix/palettes. Follows the active palette.</description>
+      <idea-version since-build="223" />
+      <depends>com.intellij.modules.platform</depends>
+      <extensions defaultExtensionNs="com.intellij">
+        <themeProvider id="${themeId}" path="/${schemeName}.theme.json" />
+      </extensions>
+    </idea-plugin>
+  '';
+
+  themePlugin =
+    pkgs.runCommand "jetbrains-${palette.name}-theme.jar" { nativeBuildInputs = [ pkgs.zip ]; }
+      ''
+        mkdir -p build/META-INF
+        cp ${pluginXml} build/META-INF/plugin.xml
+        cp ${themeJson} build/${schemeName}.theme.json
+        cp ${scheme} build/${schemeName}.xml
+        cd build
+        zip -q -r -X "$out" META-INF ${schemeName}.theme.json ${schemeName}.xml
+      '';
+
   # Selecting the scheme means editing a file the IDE owns and rewrites, so the
   # one element is patched rather than the file replaced -- colors.scheme.xml also
   # carries font settings in some versions, and writing it wholesale would drop
@@ -278,6 +647,70 @@ let
     scheme.set("name", name)
     tree.write(path, encoding="UTF-8", xml_declaration=False)
   '';
+
+  # laf.xml is the same shape of problem as colors.scheme.xml, so the same
+  # element-wise approach.
+  #
+  # Both preferred-*-laf entries are set as well as <laf>, because which one the
+  # IDE reads depends on whether "Sync with OS" is on and this config does not
+  # own that choice. The palette has a single variant, so pointing both at it is
+  # correct either way -- and macOS light/dark already follows `variant` through
+  # nix/darwin/defaults.nix.
+  selectLaf = pkgs.writeText "jetbrains-select-laf.py" ''
+    import sys
+    import xml.etree.ElementTree as ET
+
+    path, theme_id, class_name = sys.argv[1], sys.argv[2], sys.argv[3]
+
+    try:
+        tree = ET.parse(path)
+        root = tree.getroot()
+    except (OSError, ET.ParseError):
+        root = ET.Element("application")
+        tree = ET.ElementTree(root)
+
+    if root.tag != "application":
+        sys.exit(0)
+
+    component = None
+    for candidate in root.findall("component"):
+        if candidate.get("name") == "LafManager":
+            component = candidate
+            break
+    if component is None:
+        component = ET.SubElement(root, "component", {"name": "LafManager"})
+
+    changed = False
+    for tag in ("laf", "preferred-light-laf", "preferred-dark-laf"):
+        element = component.find(tag)
+        if element is None:
+            element = ET.SubElement(component, tag)
+        if element.get("themeId") != theme_id or element.get("class-name") != class_name:
+            element.set("class-name", class_name)
+            element.set("themeId", theme_id)
+            changed = True
+
+    if changed:
+        tree.write(path, encoding="UTF-8", xml_declaration=False)
+  '';
+
+  # A custom theme still declares one of the two built-in base LaFs.
+  lafClass =
+    if dark then
+      "com.intellij.ide.ui.laf.darcula.DarculaLaf"
+    else
+      "com.intellij.ide.ui.laf.IntelliJLaf";
+
+  # IDE configs to install the UI theme plugin into, by directory name.
+  #
+  # Deliberately one to start with: the chrome needs looking at, and a wrong
+  # colour found after installing everywhere costs a restart of every IDE. Widen
+  # this list once it looks right.
+  #
+  # An IDE listed here gets the editor scheme from inside the plugin, via the
+  # theme's editorScheme, and must therefore NOT also get the standalone .icls --
+  # two schemes both named "dotfiles" is ambiguous.
+  themePluginIdes = [ "PyCharm2026.1" ];
 in
 {
   # Every JetBrains IDE reads schemes from <config>/colors, so one generated file
@@ -303,12 +736,33 @@ in
         esac
 
         run mkdir -p "$dir/colors" "$dir/options"
-        run install -m 644 ${scheme} "$dir/colors/${schemeName}.icls"
+
+        case " ${lib.concatStringsSep " " themePluginIdes} " in
+          *" $(basename "$dir") "*)
+            # UI theme plugin, which carries the editor scheme with it.
+            run mkdir -p "$dir/plugins"
+            run install -m 644 ${themePlugin} \
+              "$dir/plugins/${schemeName}-palette-theme.jar"
+            run ${pkgs.python3}/bin/python3 ${selectLaf} \
+              "$dir/options/laf.xml" "${themeId}" "${lafClass}"
+            # Would otherwise collide with the copy inside the plugin.
+            run rm -f "$dir/colors/${schemeName}.icls"
+            ;;
+          *)
+            # Editor scheme only. Also clears the plugin, so narrowing the list
+            # above actually removes it rather than leaving it installed.
+            run install -m 644 ${scheme} "$dir/colors/${schemeName}.icls"
+            run rm -f "$dir/plugins/${schemeName}-palette-theme.jar"
+            ;;
+        esac
+
         run ${pkgs.python3}/bin/python3 ${selectScheme} \
           "$dir/options/colors.scheme.xml" "${schemeName}"
       done
-      echo "jetbrains: editor scheme '${schemeName}' installed; restart any" \
-           "running IDE, which rewrites these files on exit"
+      echo "jetbrains: '${schemeName}' installed; restart any running IDE," \
+           "which rewrites these files on exit"
+      echo "jetbrains: UI theme in ${lib.concatStringsSep ", " themePluginIdes};" \
+           "editor scheme only elsewhere"
     fi
   '';
 }

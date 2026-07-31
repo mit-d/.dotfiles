@@ -77,11 +77,41 @@ output looks the same in the IDE as in the terminal.
 `colors.scheme.xml` is patched element-wise rather than replaced, because some
 versions also keep font settings in it.
 
-**Only the editor is themed, not the IDE chrome.** That needs a `*.theme.json`,
-which JetBrains loads only from a plugin, and a malformed plugin can stop an IDE
-from starting -- not a risk worth taking unattended across 17 config directories.
-The New UI's "Sync with OS" already tracks `variant` through
-`nix/darwin/defaults.nix`, so the chrome at least follows the palette's polarity.
+#### IDE chrome
+
+The chrome needs a `*.theme.json`, which the platform loads only from a plugin,
+so one is generated: a jar holding `plugin.xml`, the theme json, and the editor
+scheme it references. Theme plugins carry no code, so a malformed one is disabled
+with a notification rather than breaking the IDE.
+
+`themePluginIdes` in `../home/jetbrains.nix` lists which configs get it. It is
+deliberately short to begin with, because UI keys need looking at and a wrong
+colour found after installing everywhere costs a restart of every IDE. Configs
+not listed get the editor scheme only.
+
+An IDE with the plugin takes its editor scheme from *inside* it, through the
+theme's `editorScheme` field, and the standalone `.icls` is removed there -- two
+schemes both named `dotfiles` would be ambiguous. Narrowing the list removes the
+plugin again rather than leaving it behind.
+
+Most of the chrome comes from the theme's `"*"` block: the platform matches those
+keys against any component key ending in the same name, so 22 entries cover the
+bulk of it and the 26 named groups after it are corrections. `icons.ColorPalette`
+recolours the platform's own icons, which otherwise keep the previous theme's
+accents.
+
+`laf.xml` selects it, and gets `laf`, `preferred-light-laf` and
+`preferred-dark-laf` all pointed at the same theme id: which one the IDE reads
+depends on whether "Sync with OS" is on, and this config does not own that
+choice. A palette has one variant, so pointing all three at it is right either
+way. The theme id is a fixed UUID -- `laf.xml` refers to the theme by it, so
+generating one per palette would leave every IDE pointing at a theme that no
+longer exists.
+
+`plugin.xml` sets `since-build` with no `until-build`: an upper bound is what
+makes a theme silently vanish after an IDE upgrade. It depends on
+`com.intellij.modules.platform` rather than `modules.lang`, so DataGrip and the
+other non-language IDEs load it too.
 
 ### Slack
 
