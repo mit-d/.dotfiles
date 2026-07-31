@@ -388,6 +388,17 @@ in
     EnterprisePoliciesEnabled = true;
 
     ExtensionSettings = {
+      # The theme id used to be palette-specific. Renaming it to the stable
+      # `theme@dotfiles.derek` left the old extension installed *and still
+      # active*, so Firefox kept rendering gruvbox no matter which palette was
+      # built. Policy does not clean up ids it no longer lists, so block this one
+      # explicitly to have Firefox uninstall it rather than leaving it to a manual
+      # trip through about:addons.
+      #
+      # Safe to delete once it has been applied on every machine that ever had
+      # the old id.
+      "gruvbox-dark-hard@dotfiles.derek".installation_mode = "blocked";
+
       "uBlock0@raymondhill.net" = forceInstalled "ublock-origin";
       "@testpilot-containers" = forceInstalled "multi-account-containers";
 

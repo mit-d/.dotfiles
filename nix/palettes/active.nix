@@ -6,6 +6,9 @@
 # colours, bat, fzf, btop.
 #
 # Available palettes live alongside this file; see ./README.md for the schema
-# a new one has to satisfy.
-import ./solarized-light.nix
-## import ./solarized-light.nix
+# a new one has to satisfy. Uncomment exactly one:
+#
+#   import ./gruvbox-dark-hard.nix
+#   import ./solarized-light.nix
+#
+import ./nord.nix
