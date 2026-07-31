@@ -90,7 +90,8 @@ in
     pkgs.tmux
     pkgs.tree
     pkgs.yq-go
-    pkgs.zoxide
+    # zoxide comes from nix/home/zoxide.nix, which also generates its shell
+    # integration -- listing it here too would just be a second copy.
     ### security
     pkgs.age
     pkgs.gnupg

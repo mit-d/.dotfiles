@@ -30,6 +30,7 @@ in
         ./home/nvim.nix
         ./home/fish.nix
         ./home/zsh.nix
+        ./home/zoxide.nix
       ];
     };
   };

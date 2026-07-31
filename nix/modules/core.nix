@@ -37,6 +37,29 @@
 
   # Enable alternative shell support in nix-darwin.
   programs.zsh.enable = true;
+
+  # Trim /etc/zshrc down to what we actually use. Measured on this machine, the
+  # generated /etc/zshrc accounted for ~75ms of a ~130ms interactive startup,
+  # almost all of it work that ~/.zsh then overrides.
+  #
+  # Global compinit is the big one, and it is not merely redundant but wrong
+  # here: /etc/zshrc runs it before ~/.zsh/completion.zsh has added
+  # $ZDOTDIR/completions to fpath, so it never sees our completions and our own
+  # compinit has to redo the work anyway. nix-darwin's own option docs describe
+  # exactly this case -- "can be disabled if the user wants to extend its fpath
+  # and a custom compinit call in the local config is required". Ours also has a
+  # 24-hour cache-freshness check that the global call lacks. ~30ms warm,
+  # ~220ms cold.
+  programs.zsh.enableGlobalCompInit = false;
+
+  # `promptinit && prompt suse` loads a theme that ~/.zsh/prompt.zsh replaces on
+  # the first precmd. ~10ms.
+  programs.zsh.promptInit = "";
+
+  # bashcompinit exists to register bash-style completions. Nothing here does:
+  # no `complete -F/-o/-C` anywhere in ~/.zsh, the work overlay, or the docker
+  # completions (which are zsh-native). ~10ms.
+  programs.zsh.enableBashCompletion = false;
   # direnv + nix-direnv, wired via /etc/direnv/direnvrc from a real
   # /nix/store path (the hand-rolled version sourced a path
   # nix-darwin's pathsToLink never links).
