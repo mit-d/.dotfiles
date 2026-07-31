@@ -66,12 +66,15 @@ in
 
     # CLI
     ## Utils
-    pkgs.bat
-    pkgs.btop
+    # bat comes from nix/home/bat.nix (programs.bat), which themes it from the
+    # shared palette. Listing it here would shadow that with an unthemed copy.
+    # btop comes from nix/home/btop.nix (programs.btop), which themes it from the
+    # shared palette. Listing it here would shadow that with an unthemed copy.
     pkgs.csvkit
     pkgs.fd
     pkgs.fx
-    pkgs.fzf
+    # fzf comes from nix/home/fzf.nix (programs.fzf), which themes it from the
+    # shared palette. Listing it here would shadow that with an unthemed copy.
     pkgs.gawk
     pkgs.getopt
     pkgs.gnused

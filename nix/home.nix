@@ -32,6 +32,9 @@ in
         ./home/zsh.nix
         ./home/zoxide.nix
         ./home/k9s.nix
+        ./home/fzf.nix
+        ./home/btop.nix
+        ./home/bat.nix
       ];
     };
   };

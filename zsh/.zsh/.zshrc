@@ -74,10 +74,9 @@ if command -v rsync &>/dev/null; then
     }
 fi
 
-# FZF history search
-if command -v fzf &>/dev/null; then
-    source <(fzf --zsh)
-fi
+# FZF history search is wired by programs.fzf (nix/home/fzf.nix), which also
+# themes it from the shared palette. It used to be sourced here with
+# `source <(fzf --zsh)`; keeping both would load the integration twice.
 
 # Run current line as root
 run-as-root() {

@@ -1,4 +1,9 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
+let
+  palette = import ../palettes/active.nix;
+  # fish takes bare hex without the leading '#', so every value is stripped.
+  c = colour: lib.removePrefix "#" colour;
+in
 {
   # home-manager's fish module sets `programs.man.generateCaches = mkDefault
   # true`, because fish builds its completions from man pages. But
@@ -29,35 +34,39 @@
     interactiveShellInit = ''
       set --global fish_key_bindings fish_vi_key_bindings
 
-      set --global fish_color_autosuggestion 555 brblack
+      # Colours generated from nix/palettes/active.nix. The previous values were
+      # fish's own defaults (a #005fd7 blue command, #990000 red comments) that
+      # were carried into nix verbatim during the migration -- they were never
+      # chosen, and never matched the terminal.
+      set --global fish_color_autosuggestion ${c palette.onSurfaceVariant}
       set --global fish_color_cancel -r
-      set --global fish_color_command 005fd7
-      set --global fish_color_comment 990000
-      set --global fish_color_cwd green
-      set --global fish_color_cwd_root red
-      set --global fish_color_end 009900
-      set --global fish_color_error ff0000
-      set --global fish_color_escape 00a6b2
+      set --global fish_color_command ${c palette.ansi.brightBlue}
+      set --global fish_color_comment ${c palette.onSurfaceVariant}
+      set --global fish_color_cwd ${c palette.ansi.brightGreen}
+      set --global fish_color_cwd_root ${c palette.ansi.brightRed}
+      set --global fish_color_end ${c palette.ansi.brightMagenta}
+      set --global fish_color_error ${c palette.error}
+      set --global fish_color_escape ${c palette.ansi.brightCyan}
       set --global fish_color_history_current --bold
-      set --global fish_color_host normal
-      set --global fish_color_host_remote yellow
-      set --global fish_color_match --background=brblue
-      set --global fish_color_normal normal
-      set --global fish_color_operator 00a6b2
-      set --global fish_color_param 00afff
-      set --global fish_color_quote 999900
-      set --global fish_color_redirection 00afff
-      set --global fish_color_search_match bryellow --background=brblack
-      set --global fish_color_selection white --bold --background=brblack
-      set --global fish_color_status red
-      set --global fish_color_user brgreen
+      set --global fish_color_host ${c palette.ansi.brightBlue}
+      set --global fish_color_host_remote ${c palette.ansi.brightYellow}
+      set --global fish_color_match --background=${c palette.surfaceContainerHigh}
+      set --global fish_color_normal ${c palette.onSurface}
+      set --global fish_color_operator ${c palette.ansi.brightCyan}
+      set --global fish_color_param ${c palette.onSurface}
+      set --global fish_color_quote ${c palette.ansi.brightGreen}
+      set --global fish_color_redirection ${c palette.ansi.brightYellow}
+      set --global fish_color_search_match ${c palette.primary} --background=${c palette.surfaceContainer}
+      set --global fish_color_selection ${c palette.onSurface} --bold --background=${c palette.surfaceContainer}
+      set --global fish_color_status ${c palette.error}
+      set --global fish_color_user ${c palette.ansi.brightGreen}
       set --global fish_color_valid_path --underline
 
       # Intentionally empty, matching the original.
       set --global fish_pager_color_completion
-      set --global fish_pager_color_description B3A06D yellow
-      set --global fish_pager_color_prefix white --bold --underline
-      set --global fish_pager_color_progress brwhite --background=cyan
+      set --global fish_pager_color_description ${c palette.onSurfaceVariant}
+      set --global fish_pager_color_prefix ${c palette.primary} --bold --underline
+      set --global fish_pager_color_progress ${c palette.onSurface} --background=${c palette.surfaceContainer}
       set --global fish_pager_color_selected_background -r
     '';
 

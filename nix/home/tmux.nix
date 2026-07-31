@@ -1,4 +1,7 @@
 { ... }:
+let
+  palette = import ../palettes/active.nix;
+in
 {
   programs.tmux = {
     enable = true;
@@ -54,11 +57,13 @@
       setw -g pane-base-index 1
       set -g renumber-windows on
 
-      # Status Bar
+      # Status Bar. Was a hardcoded `status-bg magenta` / `status-fg black`;
+      # now the palette's primary accent with its matching on-colour, which
+      # preserves the loud-accent-bar intent while following a palette swap.
+      # tmux takes #rrggbb directly given the Tc terminal-overrides above.
       set -g status-left "[#S] "
       set -g status-right "%Y-%m-%d %H:%M | #H"
-      set -g status-bg magenta
-      set -g status-fg black
+      set -g status-style "bg=${palette.primary},fg=${palette.onPrimary}"
 
       # Hide status if only 1 window, show otherwise
       if -F "#{==:#{session_windows},1}" "set -g status off" "set -g status on"
