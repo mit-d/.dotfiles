@@ -173,6 +173,66 @@
           + "/bin/palettes";
       };
 
+      # Print the active palette as a Slack sidebar theme:
+      #
+      #   nix run .#slack-theme            # active palette
+      #   nix run .#slack-theme -- nord    # any palette in the library
+      #
+      # Slack has no config file worth writing to: the theme lives in
+      # account-synced preferences, so this is a paste-once-per-palette step
+      # rather than something a switch can do. Paste into Preferences ->
+      # Appearance -> Custom theme, in the box under "Copy and paste these
+      # values". Slack's message pane follows the OS light/dark setting, which
+      # nix/darwin/defaults.nix already drives from the palette variant.
+      apps.aarch64-darwin.slack-theme = {
+        type = "app";
+        program =
+          builtins.toString (
+            pkgs.writeShellApplication {
+              name = "slack-theme";
+              runtimeInputs = [ pkgs.jq ];
+              text = ''
+                data=${self.packages.aarch64-darwin.palette-data}
+                name="''${1:-}"
+                if [ -z "$name" ]; then
+                  name=$(sed -n 's/^import \.\/load\.nix "\(.*\)"$/\1/p' \
+                    "$PWD/nix/palettes/active.nix" 2>/dev/null) || true
+                fi
+                if [ -z "$name" ]; then
+                  echo "slack-theme: pass a palette name, or run from the repo" >&2
+                  exit 1
+                fi
+                if [ "$(jq -r --arg n "$name" 'has($n)' "$data")" != "true" ]; then
+                  echo "slack-theme: no palette named '$name'" >&2
+                  exit 1
+                fi
+
+                # The eight slots Slack's custom theme accepts, in its order:
+                # Column BG, Menu BG Hover, Active Item, Active Item Text,
+                # Hover Item, Text Color, Active Presence, Mention Badge.
+                theme=$(jq -r --arg n "$name" '.[$n] |
+                  [ .surfaceContainer,
+                    .surfaceContainerHigh,
+                    .primary,
+                    .onPrimary,
+                    .surfaceContainerHighest,
+                    .onSurface,
+                    .ansi.green,
+                    .error
+                  ] | join(",")' "$data")
+
+                echo "$theme"
+                if command -v pbcopy >/dev/null 2>&1; then
+                  printf '%s' "$theme" | pbcopy
+                  echo "(copied to clipboard)" >&2
+                fi
+                echo "paste into Slack: Preferences -> Appearance -> Custom theme" >&2
+              '';
+            }
+          )
+          + "/bin/slack-theme";
+      };
+
       # Enforce the guarantees nix/palettes/README.md documents -- contrast
       # floors, text-ramp ordering, legible accent pairs -- across all 335.
       checks.aarch64-darwin.palettes =

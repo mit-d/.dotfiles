@@ -35,6 +35,7 @@ in
         ./home/fzf.nix
         ./home/btop.nix
         ./home/bat.nix
+        ./home/obsidian.nix
       ];
     };
   };

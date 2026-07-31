@@ -10,7 +10,50 @@ import ./load.nix "nord"
 
 Then `sudo darwin-rebuild switch --flake ~/.dotfiles`. Everything that reads the
 palette follows: terminal, browser chrome, desktop background, k9s, tmux status,
-fish and zsh colours, bat, fzf, btop.
+fish and zsh colours, bat, fzf, btop, Obsidian.
+
+Two need a manual step, because the application offers nowhere to write:
+
+| App | Step |
+| -- | -- |
+| Obsidian | Enable the `palette` CSS snippet once, in Settings -> Appearance |
+| Slack | `nix run .#slack-theme`, paste into Preferences -> Appearance |
+
+### Obsidian
+
+A switch writes `<vault>/.obsidian/snippets/palette.css`, and Obsidian hot-reloads
+it. Enabling a snippet is recorded in `.obsidian/appearance.json`, which Obsidian
+rewrites itself, so that file stays unmanaged and the toggle is one-time.
+
+The snippet is written as a real file rather than a store symlink, unlike
+everything else here: the vault is a git repository that tracks `.obsidian` and
+syncs to iOS, where a `/nix/store` path would dangle. It will show up in the
+vault's `git status` after each palette switch -- gitignore it there if that is
+noise.
+
+It sets Obsidian's neutral ramp, accent and eight extended colours, *and* every
+documented semantic variable. The primitives alone would be tidier, but the
+base-NN to semantic mapping is not part of the documented API. Setting both means
+community themes that only read the primitives keep their design and pick up the
+palette -- the Things theme sets `--color-base-*` and never
+`--background-primary`, so it restyles cleanly.
+
+Accent is handed over as `--accent-h/s/l` rather than a hex, so Obsidian derives
+`--color-accent-1` and `-2` by its own rules instead of this config inventing
+hover shades. That conversion happens in `lib.nix` at read time, not in the
+generated palettes: an override that changes `primary` would otherwise leave a
+precomputed HSL describing the colour it replaced.
+
+### Slack
+
+Slack's theme lives in account-synced preferences, not a file, so there is
+nothing a switch can write. `nix run .#slack-theme [name]` prints the
+eight-colour string it accepts and copies it to the clipboard.
+
+Only the sidebar is themeable this way -- eight colours, no message pane. The
+message pane follows the OS light/dark setting, which `nix/darwin/defaults.nix`
+already drives from `variant`, so it tracks the palette's polarity if not its
+hues.
 
 Any name in `generated/_index.nix` works. There are 335.
 
