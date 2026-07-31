@@ -5,6 +5,7 @@ exclude: |
     mpv/\.config/mpv/scripts/mpv-cut/.*|
     vim/\.config/nvim/autoload/plug\.vim|
     hypr/\.config/hypr/palettes/.*|
+    nix/palettes/generated/.*|
     tests/_output/.*
   )$
 

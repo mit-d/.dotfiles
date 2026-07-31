@@ -1,14 +1,17 @@
 # The palette every themed surface reads from.
 #
-# THIS IS THE SWITCH. Point it at a different file and the whole system
-# rethemes on the next `sudo darwin-rebuild switch --flake ~/.dotfiles`:
-# terminal, browser chrome, desktop background, k9s, tmux status, fish and zsh
-# colours, bat, fzf, btop.
+# THIS IS THE SWITCH. Change the name below and the whole system rethemes on the
+# next `sudo darwin-rebuild switch --flake ~/.dotfiles`: terminal, browser
+# chrome, desktop background, k9s, tmux status, fish and zsh colours, bat, fzf,
+# btop.
 #
-# Available palettes live alongside this file; see ./README.md for the schema
-# a new one has to satisfy. Uncomment exactly one:
+# Any name in ./generated/_index.nix works -- 335 of them, generated from
+# tinted-theming/schemes. A few to try:
 #
-#   import ./gruvbox-dark-hard.nix
-#   import ./solarized-light.nix
+#   nord             solarized-light      catppuccin-mocha
+#   tokyo-night-dark rose-pine            everforest
+#   dracula          atelier-sulphurpool  black-metal
 #
-import ./gruvbox-dark-hard.nix
+# To tweak one without editing generated files, add ./overrides/<name>.nix.
+# See ./README.md.
+import ./load.nix "gruvbox-dark-hard"

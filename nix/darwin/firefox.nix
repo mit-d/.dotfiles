@@ -29,13 +29,12 @@ let
   idFor = paletteName: "${paletteName}@dotfiles.derek";
   themeId = idFor palette.name;
 
-  # Every palette in nix/palettes/, discovered rather than listed, so adding a
-  # palette does not also require remembering to register its id here.
-  allPaletteNames = map (f: (import (../palettes + "/${f}")).name) (
-    builtins.filter (f: f != "active.nix" && f != "README.md" && builtins.match ".*\\.nix" f != null) (
-      builtins.attrNames (builtins.readDir ../palettes)
-    )
-  );
+  # Every palette in the library, from the generated index rather than listed
+  # here, so adding one does not also require remembering to register its id.
+  #
+  # The index maps name to file path, so this reads 335 names without evaluating
+  # a single palette body.
+  allPaletteNames = builtins.attrNames (import ../palettes/generated/_index.nix);
 
   # Ids to force off: every palette that is not active, plus the short-lived
   # shared id this replaced. Safe to drop "theme@dotfiles.derek" once every
