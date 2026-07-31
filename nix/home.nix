@@ -24,6 +24,7 @@ in
       imports = [
         ./home/bash.nix
         ./home/tmux.nix
+        ./home/git.nix
       ];
     };
   };
