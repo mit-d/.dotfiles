@@ -701,16 +701,21 @@ let
     else
       "com.intellij.ide.ui.laf.IntelliJLaf";
 
-  # IDE configs to install the UI theme plugin into, by directory name.
+  # Install the UI theme plugin into every discovered IDE config.
   #
-  # Deliberately one to start with: the chrome needs looking at, and a wrong
-  # colour found after installing everywhere costs a restart of every IDE. Widen
-  # this list once it looks right.
+  # This was one IDE at a time while the chrome was being looked at. It is on
+  # everywhere now that it has been.
   #
-  # An IDE listed here gets the editor scheme from inside the plugin, via the
-  # theme's editorScheme, and must therefore NOT also get the standalone .icls --
-  # two schemes both named "dotfiles" is ambiguous.
-  themePluginIdes = [ "PyCharm2026.1" ];
+  # An IDE with the plugin takes its editor scheme from inside it, through the
+  # theme's editorScheme, and must therefore NOT also get the standalone .icls:
+  # two schemes both named "dotfiles" is ambiguous. Turning this off, or naming an
+  # IDE below, puts that IDE back on the standalone scheme and removes the plugin.
+  uiTheme = true;
+
+  # IDE configs to leave on the editor scheme alone, by directory name. For
+  # pairing a different UI theme with these colours in one IDE without giving up
+  # the plugin everywhere else.
+  uiThemeExclude = [ ];
 in
 {
   # Every JetBrains IDE reads schemes from <config>/colors, so one generated file
@@ -720,6 +725,7 @@ in
   home.activation.jetbrainsPalette = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     jetbrains="$HOME/Library/Application Support/JetBrains"
     if [ -d "$jetbrains" ]; then
+      installed=0
       for dir in "$jetbrains"/*; do
         [ -d "$dir" ] || continue
 
@@ -737,32 +743,35 @@ in
 
         run mkdir -p "$dir/colors" "$dir/options"
 
-        case " ${lib.concatStringsSep " " themePluginIdes} " in
-          *" $(basename "$dir") "*)
-            # UI theme plugin, which carries the editor scheme with it.
-            run mkdir -p "$dir/plugins"
-            run install -m 644 ${themePlugin} \
-              "$dir/plugins/${schemeName}-palette-theme.jar"
-            run ${pkgs.python3}/bin/python3 ${selectLaf} \
-              "$dir/options/laf.xml" "${themeId}" "${lafClass}"
-            # Would otherwise collide with the copy inside the plugin.
-            run rm -f "$dir/colors/${schemeName}.icls"
-            ;;
-          *)
-            # Editor scheme only. Also clears the plugin, so narrowing the list
-            # above actually removes it rather than leaving it installed.
-            run install -m 644 ${scheme} "$dir/colors/${schemeName}.icls"
-            run rm -f "$dir/plugins/${schemeName}-palette-theme.jar"
-            ;;
+        excluded=""
+        case " ${lib.concatStringsSep " " uiThemeExclude} " in
+          *" $(basename "$dir") "*) excluded=yes ;;
         esac
+
+        if ${lib.boolToString uiTheme} && [ -z "$excluded" ]; then
+          # UI theme plugin, which carries the editor scheme with it.
+          run mkdir -p "$dir/plugins"
+          run install -m 644 ${themePlugin} \
+            "$dir/plugins/${schemeName}-palette-theme.jar"
+          run ${pkgs.python3}/bin/python3 ${selectLaf} \
+            "$dir/options/laf.xml" "${themeId}" "${lafClass}"
+          # Would otherwise collide with the copy inside the plugin.
+          run rm -f "$dir/colors/${schemeName}.icls"
+        else
+          # Editor scheme only. Also clears the plugin, so excluding an IDE
+          # actually removes it rather than leaving it installed.
+          run install -m 644 ${scheme} "$dir/colors/${schemeName}.icls"
+          run rm -f "$dir/plugins/${schemeName}-palette-theme.jar"
+        fi
 
         run ${pkgs.python3}/bin/python3 ${selectScheme} \
           "$dir/options/colors.scheme.xml" "${schemeName}"
+        installed=$((installed + 1))
       done
-      echo "jetbrains: '${schemeName}' installed; restart any running IDE," \
-           "which rewrites these files on exit"
-      echo "jetbrains: UI theme in ${lib.concatStringsSep ", " themePluginIdes};" \
-           "editor scheme only elsewhere"
+      echo "jetbrains: '${schemeName}' applied to $installed IDE configs" \
+           "(${if uiTheme then "UI theme + editor" else "editor only"})"
+      echo "jetbrains: an IDE that was running rewrites these on exit;" \
+           "quit and reopen it"
     fi
   '';
 }

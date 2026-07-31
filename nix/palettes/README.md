@@ -84,15 +84,16 @@ so one is generated: a jar holding `plugin.xml`, the theme json, and the editor
 scheme it references. Theme plugins carry no code, so a malformed one is disabled
 with a notification rather than breaking the IDE.
 
-`themePluginIdes` in `../home/jetbrains.nix` lists which configs get it. It is
-deliberately short to begin with, because UI keys need looking at and a wrong
-colour found after installing everywhere costs a restart of every IDE. Configs
-not listed get the editor scheme only.
+`uiTheme` in `../home/jetbrains.nix` turns it on for every discovered config, and
+`uiThemeExclude` names any to leave on the editor scheme alone -- for pairing a
+different UI theme with these colours in one IDE without giving up the plugin
+everywhere else.
 
 An IDE with the plugin takes its editor scheme from *inside* it, through the
 theme's `editorScheme` field, and the standalone `.icls` is removed there -- two
-schemes both named `dotfiles` would be ambiguous. Narrowing the list removes the
-plugin again rather than leaving it behind.
+schemes both named `dotfiles` would be ambiguous. Excluding an IDE, or setting
+`uiTheme = false`, removes the plugin and puts that IDE back on the standalone
+scheme rather than leaving the plugin behind.
 
 Most of the chrome comes from the theme's `"*"` block: the platform matches those
 keys against any component key ending in the same name, so 22 entries cover the

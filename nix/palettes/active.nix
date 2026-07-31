@@ -17,5 +17,5 @@
 #
 #import ./load.nix "outrun-dark"
 #import ./load.nix "gruvbox-dark-hard"
-#import ./load.nix "oxocarbon-dark"
-import ./load.nix "monokai"
+import ./load.nix "oxocarbon-dark"
+#import ./load.nix "monokai"
