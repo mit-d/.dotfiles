@@ -27,6 +27,7 @@ in
         ./home/git.nix
         ./home/mpv.nix
         ./home/ghostty.nix
+        ./home/nvim.nix
       ];
     };
   };
