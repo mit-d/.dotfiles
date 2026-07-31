@@ -67,6 +67,8 @@ in
 
       # Shell integration
       shell-integration = "zsh";
+      # `cursor` is what gives the per-vi-mode cursor shape -- see the
+      # cursor-style note below before changing this.
       shell-integration-features = "cursor,sudo,title";
 
       # Keybindings
@@ -79,9 +81,19 @@ in
         "super+zero=reset_font_size"
       ];
 
-      # Cursor. Deliberately overrides the theme's cursor colour with gruvbox
-      # bright orange, which reads far better against bg0_hard than the theme's
-      # default of plain foreground.
+      # Cursor.
+      #
+      # cursor-style is only the *static fallback*. In an interactive zsh the
+      # shape is driven live by the `cursor` entry in shell-integration-features
+      # below: Ghostty's zsh integration hooks zle's keymap-select and emits
+      # DECSCUSR, so the cursor is a bar in insert mode and a block in
+      # normal/visual. That is intended -- do not "fix" the apparent
+      # contradiction by dropping `cursor` from the feature list, which would
+      # lose the per-mode shape entirely.
+      #
+      # `cursor:steady` in that list would make the block non-blinking. Note
+      # upstream's own caveat that this implementation can leak a blinking block
+      # into external commands such as fzf.
       cursor-style = "block";
       cursor-opacity = 1.0;
       cursor-color = palette.brightOrange;
