@@ -7,5 +7,5 @@
 #
 # Available palettes live alongside this file; see ./README.md for the schema
 # a new one has to satisfy.
-## import ./gruvbox-dark-hard.nix
 import ./solarized-light.nix
+## import ./solarized-light.nix

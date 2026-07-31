@@ -49,10 +49,32 @@ let
           echo "k9s skin: expected 11 colour anchors, found $anchors; upstream changed the skin" >&2
           exit 1
         fi
-        if grep -qE '"#(1d2021|ebdbb2|3c3735|bdad93|689d69|989719|d79920|b16185|448488|cc231c)"' "$out"; then
-          echo "k9s skin: an anchor still holds an upstream gruvbox value; a substitution did not match" >&2
-          exit 1
-        fi
+
+        # Assert each anchor holds the value this module intended.
+        #
+        # A previous version instead scanned for upstream's hexes and failed if
+        # any survived. That false-positived on gruvbox itself: upstream's
+        # background is #1d2021 and its foreground #ebdbb2, which are exactly
+        # what the gruvbox palette substitutes, so a correct build looked like a
+        # failed one. Asserting the intended value is correct for every palette,
+        # including one that coincides with upstream.
+        expect() {
+          grep -qF "$1: &$1 \"$2\"" "$out" || {
+            echo "k9s skin: anchor '$1' is not $2 -- substitution did not match" >&2
+            exit 1
+          }
+        }
+        expect foreground   '${palette.onSurface}'
+        expect background   '${palette.surface}'
+        expect current_line '${palette.onSurface}'
+        expect selection    '${palette.surfaceContainer}'
+        expect comment      '${palette.onSurfaceVariant}'
+        expect cyan         '${palette.ansi.cyan}'
+        expect green        '${palette.ansi.green}'
+        expect orange       '${palette.orange}'
+        expect magenta      '${palette.ansi.magenta}'
+        expect blue         '${palette.ansi.blue}'
+        expect red          '${palette.ansi.red}'
       '';
 in
 {

@@ -11,7 +11,7 @@
 {
   name = "solarized-light";
   variant = "light";
-  version = "1.1.0";
+  version = "1.2.0";
 
   # Bump on ANY change that reaches Firefox's theme manifest, not just colours.
   # Firefox compares this version to decide whether to reinstall a
@@ -21,19 +21,28 @@
   # kept the previously-installed 1.0.0, and the new tab page stayed dark on a
   # light frame.
 
-  # Surfaces. base3 (#fdf6e3) is the paper; the ramp darkens from there.
+  # Surfaces.
+  #
+  # Solarized publishes only TWO genuinely light backgrounds -- base3 (#fdf6e3)
+  # and base2 (#eee8d5) -- but the schema needs five container steps. An earlier
+  # version padded the ramp with base1/base0, which are *foreground* tones, so
+  # surfaceContainerHigh became #93a1a1: that is the slate-grey urlbar dropdown,
+  # and it made the text on it barely legible.
+  #
+  # The three steps above base2 are therefore interpolated rather than canonical.
+  # They are marked as such because hand-interpolating ramps is exactly where
+  # these mistakes come from; see ./README.md on generating palettes instead.
   surface = "#fdf6e3"; # base3
   surfaceDim = "#eee8d5"; # base2
   surfaceBright = "#fdf6e3"; # base3
   surfaceContainerLowest = "#fdf6e3"; # base3
-  surfaceContainerLow = "#eee8d5"; # base2
-  surfaceContainer = "#e3dbc3"; # between base2 and base1
-  surfaceContainerHigh = "#93a1a1"; # base1
-  surfaceContainerHighest = "#839496"; # base0
+  surfaceContainerLow = "#f7f0dd"; # interpolated
+  surfaceContainer = "#eee8d5"; # base2
+  surfaceContainerHigh = "#e4ddc8"; # interpolated
+  surfaceContainerHighest = "#d9d2bc"; # interpolated
   surfaceVariant = "#eee8d5"; # base2
 
-  # Text. Solarized's light variant uses base00 as body text, base01 as
-  # emphasised, base1 as comments/secondary.
+  # Text. base00 is solarized light's body text, base01 its emphasised text.
   onSurfaceStrong = "#586e75"; # base01
   onSurface = "#657b83"; # base00
   onSurfaceMuted = "#839496"; # base0
@@ -41,7 +50,7 @@
   onSurfaceFaint = "#a8b3b3"; # lighter than base1
 
   outline = "#93a1a1"; # base1
-  outlineVariant = "#eee8d5"; # base2
+  outlineVariant = "#d9d2bc"; # interpolated: a divider must read against base3
 
   # Solarized's signature accent is its blue.
   primary = "#268bd2"; # blue
