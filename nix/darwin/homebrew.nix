@@ -33,7 +33,6 @@
       "1password-cli"
       "bruno"
       "firefox@nightly"
-      "ghostty"
       "google-chrome"
       "grandperspective"
       "jetbrains-toolbox"

@@ -1,13 +1,32 @@
 { lib, pkgs, ... }:
 {
+  # Nothing needed to surface the .app: at home.stateVersion >= 25.11
+  # targets.darwin.copyApps is enabled by default and copies bundles from the
+  # user profile into ~/Applications/Home Manager Apps. (linkApps is the older
+  # mechanism, off by default at this stateVersion, and the two are mutually
+  # exclusive -- enabling it here fails the build on conflicting assertions.)
+  #
+  # Note the app's path changes versus the Homebrew cask
+  # (/Applications/Ghostty.app), so macOS treats it as a different app: any TCC
+  # grants (Accessibility, Full Disk Access) need re-approving, and a pinned Dock
+  # icon needs re-pinning.
+
   programs.ghostty = {
     enable = true;
 
-    # Ghostty is installed as a Homebrew cask on darwin, and nixpkgs has no
-    # usable darwin build. package = null makes this module manage config
-    # only -- the same arrangement firefox.nix uses. On NixOS this should
-    # become the real pkgs.ghostty.
-    package = null;
+    # nixpkgs splits ghostty by platform: `ghostty` is a source build limited
+    # to Linux, while `ghostty-bin` repackages upstream's prebuilt macOS app
+    # (building it from source needs Xcode and Swift). Both were 1.3.1 when
+    # this replaced the Homebrew cask, so the swap was version-neutral.
+    #
+    # A real derivation here rather than null also buys config validation:
+    # home-manager attaches `ghostty +validate-config` as an onChange hook on
+    # the generated config, so an unknown field or malformed value surfaces at
+    # `darwin-rebuild switch` (it exits 1) rather than being silently ignored,
+    # which is what happened under the cask with package = null. Note this is
+    # activation-time and only fires when the config actually changes -- it is
+    # not a build-time gate.
+    package = if pkgs.stdenv.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
 
     settings = {
       # Window
@@ -66,31 +85,30 @@
       # Terminal features
       link-url = true;
       osc-color-report-format = "8-bit";
-    }
-    # Replaces the old `config-file = ?config-osx` overlay. Same values as
-    # ghostty-osx/.config/ghostty/config-osx.
-    // lib.optionalAttrs pkgs.stdenv.isDarwin {
-      # Bypass /usr/bin/login for faster startup. An exact store path, not
-      # `tmux` (needs launchd PATH) and not /run/current-system/sw/bin/tmux
-      # (a generation symlink that is not reliably resolvable at login,
-      # which is what the standing TODO documented).
-      command = "${pkgs.tmux}/bin/tmux";
 
-      macos-option-as-alt = true;
-      macos-titlebar-style = "hidden";
-
-      # Overrides the cross-platform values above.
+      # Appearance. These were previously duplicated across a darwin /
+      # non-darwin split, because the two sets of values came from two stow
+      # packages -- `ghostty/config` (shared with Arch) and
+      # `ghostty-osx/config-osx`. There is one host now, so one set of values.
       window-decoration = true;
       font-size = 16;
       background-opacity = 0.80;
       unfocused-split-opacity = 0.61;
       background-blur = true;
+
+      # Bypass /usr/bin/login for faster startup. An exact store path, not
+      # `tmux` (needs launchd PATH) and not /run/current-system/sw/bin/tmux
+      # (a generation symlink that is not reliably resolvable at login,
+      # which is what the standing TODO documented).
+      command = "${pkgs.tmux}/bin/tmux";
     }
-    // lib.optionalAttrs (!pkgs.stdenv.isDarwin) {
-      window-decoration = false;
-      font-size = 14;
-      background-opacity = 0.70;
-      unfocused-split-opacity = 0.55;
+    # The only genuinely platform-exclusive keys left. ghostty exits non-zero on
+    # unknown fields, and the +validate-config onChange hook runs on activation,
+    # so one of these leaking onto a non-darwin host would be caught at switch
+    # rather than silently ignored.
+    // lib.optionalAttrs pkgs.stdenv.isDarwin {
+      macos-option-as-alt = true;
+      macos-titlebar-style = "hidden";
     };
 
     # From ghostty/.config/ghostty/themes/DerekMinimal.
