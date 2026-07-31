@@ -18,6 +18,25 @@
     # Nix escaping so the literal string ${SHELL} reaches tmux, which expands
     # it itself. Without the escape, Nix fails to evaluate.
     extraConfig = ''
+      # Ghostty implements its zsh shell-integration by hijacking ZDOTDIR,
+      # pointing it at a shim inside the app bundle. Because ghostty.nix sets
+      # `command = tmux`, Ghostty launches tmux directly and that hijacked value
+      # is captured into the tmux *server* environment -- so every pane spawned
+      # afterwards inherits it, reads Ghostty's shim instead of ~/.zsh/.zshrc,
+      # and silently gets none of this configuration: default %m%# prompt, no
+      # abbreviations, and a PATH missing everything posix/00-path.sh adds.
+      #
+      # It is specifically a long-lived-server problem: the value is captured
+      # once at server start and outlives the window that set it, so it also
+      # survives switches and confuses the symptom into looking like a nix
+      # regression.
+      #
+      # Dropping it from the server environment means panes start clean and
+      # ~/.zshenv sets ZDOTDIR correctly. The cost is that Ghostty's integration
+      # features (cursor, sudo, title) do not apply inside tmux -- an acceptable
+      # trade for the shell config actually loading.
+      set-environment -gu ZDOTDIR
+
       set -g extended-keys on
       set -g extended-keys-format csi-u
 
