@@ -40,12 +40,6 @@ bindkey "^X^E" edit-command-line
 ## zmv for glob file manip
 autoload -Uz zmv
 
-# History settings
-# sharehistory implies incremental append; histignorealldups supersedes the
-# narrower dup options, so those flags are intentionally omitted here.
-export HISTSIZE=100000 SAVEHIST=100000 HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"
-setopt histignorealldups sharehistory EXTENDED_HISTORY HIST_IGNORE_SPACE
-
 # Disable beeping
 setopt NO_BEEP
 
@@ -121,16 +115,10 @@ fi
 
 ## Plugins
 ###############################################################################
-# Sourced last: zsh-syntax-highlighting must load after all custom ZLE widgets
-# are defined, and after zsh-autosuggestions. Prefer the vendored submodule;
-# fall back to the Homebrew copy so we never source the same plugin twice.
-for plugin in zsh-autosuggestions zsh-syntax-highlighting; do
-    if [[ -f "$ZSH_DIR/$plugin/$plugin.zsh" ]]; then
-        source "$ZSH_DIR/$plugin/$plugin.zsh"
-    elif [[ -f "/opt/homebrew/share/$plugin/$plugin.zsh" ]]; then
-        source "/opt/homebrew/share/$plugin/$plugin.zsh"
-    fi
-done
+# zsh-autosuggestions and zsh-syntax-highlighting are now provided by
+# programs.zsh in nix/home/zsh.nix, sourced at mkOrder 1200 -- after this
+# file (1000), which preserves the requirement that syntax highlighting
+# load after all custom ZLE widgets are defined.
 
 
 ## Named Dirs

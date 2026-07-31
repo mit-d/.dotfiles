@@ -29,6 +29,7 @@ in
         ./home/ghostty.nix
         ./home/nvim.nix
         ./home/fish.nix
+        ./home/zsh.nix
       ];
     };
   };
