@@ -130,7 +130,7 @@ in
       # `ghostty-osx/config-osx`. There is one host now, so one set of values.
       window-decoration = true;
       font-size = 16;
-      background-opacity = 0.80;
+      background-opacity = 0.99;
       unfocused-split-opacity = 0.61;
       background-blur = true;
 
