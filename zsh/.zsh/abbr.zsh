@@ -19,9 +19,17 @@ typeset -gA abbrevs
 # Function abbreviations (value is function name to call)
 typeset -gA abbrevs_func
 
-# Persistence file for runtime additions
-# Uses the same directory as this script (supports dotfiles structure)
-ABBR_USER_FILE="${0:A:h}/.zsh_abbr_user"
+# Declarative defaults, shipped with the dotfiles. Read-only when managed by
+# nix, so nothing may ever write here. Derived from $ZDOTDIR rather than this
+# script's own location: zsh's :A modifier resolves symlinks, which under
+# home-manager lands in the read-only nix store. A test guards against that
+# modifier reappearing here, so describe it in prose rather than quoting it.
+ABBR_USER_FILE="${ZDOTDIR:-$HOME/.zsh}/.zsh_abbr_user"
+
+# Runtime additions from `abbr -a`. Always writable, never version-controlled.
+ABBR_STATE_FILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/abbr_user"
+mkdir -p "${ABBR_STATE_FILE:h}"
+[[ -f "$ABBR_STATE_FILE" ]] || : > "$ABBR_STATE_FILE"
 
 ###############################################################################
 # Built-in abbreviation functions
@@ -86,7 +94,9 @@ abbrevs_func=(
 )
 
 # Load abbreviations from user file
+# Defaults first, then runtime state so user additions win on conflict.
 [[ -f "$ABBR_USER_FILE" ]] && source "$ABBR_USER_FILE"
+[[ -f "$ABBR_STATE_FILE" ]] && source "$ABBR_STATE_FILE"
 
 # Create aliases for simple (non-context, non-command) abbreviations
 for key in ${(k)abbrevs}; do
@@ -316,13 +326,13 @@ abbr() {
                         echo "Warning: function '$expansion' not found (abbreviation added anyway)" >&2
                     fi
                     abbrevs_func[$name]="$expansion"
-                    echo "abbrevs_func[$name]=\"$expansion\"" >> "$ABBR_USER_FILE"
+                    echo "abbrevs_func[$name]=\"$expansion\"" >> "$ABBR_STATE_FILE"
                     echo "Added function abbreviation: $name → $expansion()"
                     ;;
                 command)
                     # Store with @ prefix for command-position
                     abbrevs[@${name}]="$expansion"
-                    echo "abbrevs[@${name}]=\"$expansion\"" >> "$ABBR_USER_FILE"
+                    echo "abbrevs[@${name}]=\"$expansion\"" >> "$ABBR_STATE_FILE"
                     echo "Added command abbreviation: $name → $expansion"
                     ;;
                 context)
@@ -332,13 +342,13 @@ abbr() {
                     fi
                     # Store with prefix:name format
                     abbrevs["${ctx_prefix}:${name}"]="$expansion"
-                    echo "abbrevs[${ctx_prefix}:${name}]=\"$expansion\"" >> "$ABBR_USER_FILE"
+                    echo "abbrevs[${ctx_prefix}:${name}]=\"$expansion\"" >> "$ABBR_STATE_FILE"
                     echo "Added context abbreviation: $ctx_prefix $name → $ctx_prefix $expansion"
                     ;;
                 *)
                     abbrevs[$name]="$expansion"
                     alias $name="$expansion" 2>/dev/null
-                    echo "abbrevs[$name]=\"$expansion\"" >> "$ABBR_USER_FILE"
+                    echo "abbrevs[$name]=\"$expansion\"" >> "$ABBR_STATE_FILE"
                     echo "Added abbreviation: $name → $expansion"
                     ;;
             esac
@@ -375,9 +385,9 @@ abbr() {
             done
             if [[ $found -eq 1 ]]; then
                 # Remove from persistence file
-                if [[ -f "$ABBR_USER_FILE" ]]; then
-                    sed -i.bak "/\[$name\]=/d; /\[@$name\]=/d; /\[.*:$name\]=/d" "$ABBR_USER_FILE"
-                    rm -f "${ABBR_USER_FILE}.bak"
+                if [[ -f "$ABBR_STATE_FILE" ]]; then
+                    sed -i.bak "/\[$name\]=/d; /\[@$name\]=/d; /\[.*:$name\]=/d" "$ABBR_STATE_FILE"
+                    rm -f "${ABBR_STATE_FILE}.bak"
                 fi
                 echo "Erased abbreviation: $name"
             else
@@ -417,9 +427,9 @@ abbr() {
                         val="${abbrevs[$key]}"
                         unset "abbrevs[$key]"
                         abbrevs[${ctx}:${newname}]="$val"
-                        if [[ -f "$ABBR_USER_FILE" ]]; then
-                            sed -i.bak "s/abbrevs\[${ctx}:${oldname}\]/abbrevs[${ctx}:${newname}]/" "$ABBR_USER_FILE"
-                            rm -f "${ABBR_USER_FILE}.bak"
+                        if [[ -f "$ABBR_STATE_FILE" ]]; then
+                            sed -i.bak "s/abbrevs\[${ctx}:${oldname}\]/abbrevs[${ctx}:${newname}]/" "$ABBR_STATE_FILE"
+                            rm -f "${ABBR_STATE_FILE}.bak"
                         fi
                         echo "Renamed: $ctx $oldname → $ctx $newname"
                         return 0
@@ -429,9 +439,9 @@ abbr() {
                 return 1
             fi
 
-            if [[ -f "$ABBR_USER_FILE" ]]; then
-                sed -i.bak "s/abbrevs\[$oldname\]/abbrevs[$newname]/" "$ABBR_USER_FILE"
-                rm -f "${ABBR_USER_FILE}.bak"
+            if [[ -f "$ABBR_STATE_FILE" ]]; then
+                sed -i.bak "s/abbrevs\[$oldname\]/abbrevs[$newname]/" "$ABBR_STATE_FILE"
+                rm -f "${ABBR_STATE_FILE}.bak"
             fi
             echo "Renamed: $oldname → $newname"
             return 0
@@ -570,7 +580,7 @@ abbr() {
                     abbrevs[$abbr_name]="$abbr_expansion"
                     alias "$abbr_name"="$abbr_expansion" 2>/dev/null
                     if [[ $save_imports -eq 1 ]]; then
-                        echo "abbrevs[$abbr_name]=\"$abbr_expansion\"" >> "$ABBR_USER_FILE"
+                        echo "abbrevs[$abbr_name]=\"$abbr_expansion\"" >> "$ABBR_STATE_FILE"
                         ((saved++))
                     fi
                 fi
@@ -604,7 +614,7 @@ abbr() {
                 echo "Would import $count abbreviations"
             else
                 echo "Imported $count abbreviations"
-                [[ $save_imports -eq 1 ]] && echo "Saved $saved to $ABBR_USER_FILE"
+                [[ $save_imports -eq 1 ]] && echo "Saved $saved to $ABBR_STATE_FILE"
             fi
             [[ $skipped -gt 0 ]] && echo "Skipped $skipped unrecognized lines"
             ;;

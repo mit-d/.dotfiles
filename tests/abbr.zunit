@@ -1147,9 +1147,9 @@
   local tmpfile=$(mktemp)
   echo "abbr -a savetestabbr echo saved" > "$tmpfile"
 
-  # Use a temp file for ABBR_USER_FILE to avoid polluting real config
+  # Use a temp file for ABBR_STATE_FILE to avoid polluting real runtime state
   local save_file=$(mktemp)
-  ABBR_USER_FILE="$save_file" run abbr import-fish "$tmpfile" --save
+  ABBR_STATE_FILE="$save_file" run abbr import-fish "$tmpfile" --save
 
   assert "$output" contains "Saved"
   rm -f "$tmpfile" "$save_file"
@@ -1168,4 +1168,17 @@
   else
     assert 1 equals 1
   fi
+}
+
+@test 'abbr writes runtime additions outside the config directory' {
+  # The config file ships with the repo and is read-only under nix.
+  # Runtime additions must go to a separate, writable state file.
+  assert "$ABBR_STATE_FILE" is_not_empty
+  assert "$ABBR_STATE_FILE" different_to "$ABBR_USER_FILE"
+}
+
+@test 'abbr state file path does not resolve through symlinks' {
+  # ${0:A:h} resolves symlinks into /nix/store, which is read-only.
+  run grep -c '${0:A:h}' "$REPO_ROOT/zsh/.zsh/abbr.zsh"
+  assert "$output" same_as '0'
 }
