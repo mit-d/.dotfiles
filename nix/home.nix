@@ -28,6 +28,7 @@ in
         ./home/mpv.nix
         ./home/ghostty.nix
         ./home/nvim.nix
+        ./home/fish.nix
       ];
     };
   };
