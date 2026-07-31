@@ -16,7 +16,7 @@
   displayName = "Hardcore";
   author = "Chris Caller";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#212121";
@@ -33,12 +33,12 @@
   onSurfaceStrong = "#ffffff";
   onSurface = "#cdcdcd";
   onSurfaceMuted = "#9d9d9d";
-  onSurfaceVariant = "#757575";
-  onSurfaceFaint = "#565656";
+  onSurfaceVariant = "#767575";
+  onSurfaceFaint = "#575656";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#5e5e5e";
-  outlineVariant = "#393939";
+  outline = "#5f5f5e";
+  outlineVariant = "#3a3a3a";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#66d9ef";
@@ -46,11 +46,11 @@
   primaryContainer = "#3e6168";
   onPrimaryContainer = "#ffffff";
   secondary = "#708387";
-  onSecondary = "#ffffff";
+  onSecondary = "#181717";
   tertiary = "#9e6ffe";
   onTertiary = "#212121";
   error = "#f92672";
-  onError = "#ffffff";
+  onError = "#1c1c1c";
   inverseSurface = "#cdcdcd";
   inverseOnSurface = "#212121";
 

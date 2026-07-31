@@ -16,7 +16,7 @@
   displayName = "Woodland";
   author = "Jay Cornwall (https://jcornwall.com)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#231e18";
@@ -50,7 +50,7 @@
   tertiary = "#bb90e2";
   onTertiary = "#231e18";
   error = "#d35c5c";
-  onError = "#ffffff";
+  onError = "#1e1914";
   inverseSurface = "#cabcb1";
   inverseOnSurface = "#231e18";
 

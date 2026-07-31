@@ -16,7 +16,7 @@
   displayName = "DanQing Light";
   author = "Wenhan Zhu (Cosmos) (zhuwenhan950913@gmail.com)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fcfefd";
@@ -32,13 +32,13 @@
   # --- Text, strongest to faintest ----------------------------------------
   onSurfaceStrong = "#2d302f";
   onSurface = "#5a605d";
-  onSurfaceMuted = "#78807c";
-  onSurfaceVariant = "#818a86";
+  onSurfaceMuted = "#78807d";
+  onSurfaceVariant = "#818a87";
   onSurfaceFaint = "#a5b0ac";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#9ba5a1";
-  outlineVariant = "#cddcdb";
+  outlineVariant = "#cddbda";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#b0a4e3";
@@ -76,7 +76,7 @@
 
   orange = "#b38a61";
   brightOrange = "#a0784f";
-  cursor = "#968ec0";
+  cursor = "#968dbf";
 
   tools = {
     bat = "ansi";

@@ -16,7 +16,7 @@
   displayName = "Tokyo City Terminal Dark";
   author = "Michael Ball";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#171d23";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#526270";
-  outlineVariant = "#2d373f";
+  outlineVariant = "#2e373f";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#539afc";
@@ -50,7 +50,7 @@
   tertiary = "#b62d65";
   onTertiary = "#fbfbfd";
   error = "#d95468";
-  onError = "#ffffff";
+  onError = "#151a20";
   inverseSurface = "#d8e2ec";
   inverseOnSurface = "#171d23";
 

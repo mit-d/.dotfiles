@@ -16,7 +16,7 @@
   displayName = "Everforest Dark Soft";
   author = "Sainnhe Park (https://github.com/sainnhe)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#333c43";
@@ -50,7 +50,7 @@
   tertiary = "#d699b6";
   onTertiary = "#333c43";
   error = "#e67e80";
-  onError = "#ffffff";
+  onError = "#2d353c";
   inverseSurface = "#d3c6aa";
   inverseOnSurface = "#333c43";
 

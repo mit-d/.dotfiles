@@ -16,7 +16,7 @@
   displayName = "Penumbra Light";
   author = "Zachary Weiss (https://github.com/zacharyweiss)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fffdfb";
@@ -33,11 +33,11 @@
   onSurfaceStrong = "#24272b";
   onSurface = "#636363";
   onSurfaceMuted = "#797979";
-  onSurfaceVariant = "#888888";
-  onSurfaceFaint = "#adaeae";
+  onSurfaceVariant = "#878888";
+  onSurfaceFaint = "#adadae";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#a2a3a3";
+  outline = "#a2a2a3";
   outlineVariant = "#e2d7c7";
 
   # --- Accent roles -------------------------------------------------------
@@ -48,9 +48,9 @@
   secondary = "#00a2af";
   onSecondary = "#24272b";
   tertiary = "#9481cc";
-  onTertiary = "#ffffff";
+  onTertiary = "#24262a";
   error = "#ca736c";
-  onError = "#ffffff";
+  onError = "#232529";
   inverseSurface = "#636363";
   inverseOnSurface = "#fffdfb";
 

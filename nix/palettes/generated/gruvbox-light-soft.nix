@@ -16,7 +16,7 @@
   displayName = "Gruvbox light, soft";
   author = "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f2e5bc";
@@ -37,8 +37,8 @@
   onSurfaceFaint = "#a79a83";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#9c907b";
-  outlineVariant = "#d2c29f";
+  outline = "#9b907b";
+  outlineVariant = "#d2c19f";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#076678";
@@ -46,7 +46,7 @@
   primaryContainer = "#a1b4a3";
   onPrimaryContainer = "#282828";
   secondary = "#427b58";
-  onSecondary = "#f9f3e0";
+  onSecondary = "#f9f3e1";
   tertiary = "#8f3f71";
   onTertiary = "#f2e5bc";
   error = "#9d0006";

@@ -16,7 +16,7 @@
   displayName = "Yesterday Night";
   author = "FroZnShiva (https://github.com/FroZnShiva)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#343d46";
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#81a2be";
-  onPrimary = "#ffffff";
+  onPrimary = "#2f3740";
   primaryContainer = "#506171";
   onPrimaryContainer = "#ffffff";
   secondary = "#8abeb7";
   onSecondary = "#343d46";
   tertiary = "#b294bb";
-  onTertiary = "#ffffff";
+  onTertiary = "#2f3740";
   error = "#cc6666";
-  onError = "#ffffff";
+  onError = "#1d1d1d";
   inverseSurface = "#dfe1e8";
   inverseOnSurface = "#343d46";
 

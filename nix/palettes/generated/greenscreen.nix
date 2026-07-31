@@ -16,7 +16,7 @@
   displayName = "Green Screen";
   author = "Chris Kempson (http://chriskempson.com)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#001100";
@@ -50,7 +50,7 @@
   tertiary = "#00bb00";
   onTertiary = "#001100";
   error = "#007700";
-  onError = "#6cff64";
+  onError = "#7aff72";
   inverseSurface = "#00bb00";
   inverseOnSurface = "#001100";
 

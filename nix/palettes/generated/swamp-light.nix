@@ -16,7 +16,7 @@
   displayName = "Swamp Light";
   author = "Masroof Maindak (https://github.com/masroof-maindak)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f1e3d1";
@@ -32,25 +32,25 @@
   # --- Text, strongest to faintest ----------------------------------------
   onSurfaceStrong = "#55483a";
   onSurface = "#64513e";
-  onSurfaceMuted = "#7e6c59";
-  onSurfaceVariant = "#877562";
-  onSurfaceFaint = "#aa9886";
+  onSurfaceMuted = "#7d6c59";
+  onSurfaceVariant = "#847664";
+  onSurfaceFaint = "#a99887";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#a08e7c";
+  outline = "#9f8e7d";
   outlineVariant = "#c9b9a7";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#bf7979";
-  onPrimary = "#ffffff";
+  onPrimary = "#282522";
   primaryContainer = "#dfbaaf";
-  onPrimaryContainer = "#5c4e3f";
+  onPrimaryContainer = "#55483a";
   secondary = "#d09700";
-  onSecondary = "#ffffff";
+  onSecondary = "#41362b";
   tertiary = "#9e5581";
-  onTertiary = "#f7eee3";
+  onTertiary = "#f7efe4";
   error = "#d09700";
-  onError = "#ffffff";
+  onError = "#41362b";
   inverseSurface = "#64513e";
   inverseOnSurface = "#f1e3d1";
 
@@ -71,12 +71,12 @@
     brightBlue = "#ab6768";
     brightMagenta = "#8b446f";
     brightCyan = "#b98600";
-    brightWhite = "#786653";
+    brightWhite = "#55483a";
   };
 
   orange = "#64513e";
   brightOrange = "#53412e";
-  cursor = "#ae7570";
+  cursor = "#b07370";
 
   tools = {
     bat = "ansi";

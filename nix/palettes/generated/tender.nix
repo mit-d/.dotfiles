@@ -16,7 +16,7 @@
   displayName = "tender";
   author = "Jacobo Tabernero (https://github/com/jacoborus/tender.vim)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#282828";
@@ -37,7 +37,7 @@
   onSurfaceFaint = "#5c5c5c";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#646464";
+  outline = "#646564";
   outlineVariant = "#484848";
 
   # --- Accent roles -------------------------------------------------------
@@ -50,7 +50,7 @@
   tertiary = "#d3b987";
   onTertiary = "#282828";
   error = "#f43753";
-  onError = "#ffffff";
+  onError = "#1b1b1b";
   inverseSurface = "#eeeeee";
   inverseOnSurface = "#282828";
 

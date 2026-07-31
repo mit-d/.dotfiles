@@ -16,7 +16,7 @@
   displayName = "Everforest Light (Hard)";
   author = "Marcio Sobel (https://github.com/marciosobel)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fffbef";
@@ -38,11 +38,11 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#939f91";
-  outlineVariant = "#d9d7c9";
+  outlineVariant = "#d8d7c9";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#3a94c5";
-  onPrimary = "#ffffff";
+  onPrimary = "#20262b";
   primaryContainer = "#b8d4e1";
   onPrimaryContainer = "#272e33";
   secondary = "#35a77c";
@@ -50,7 +50,7 @@
   tertiary = "#df69ba";
   onTertiary = "#272e33";
   error = "#f85552";
-  onError = "#ffffff";
+  onError = "#22292d";
   inverseSurface = "#5c6a72";
   inverseOnSurface = "#fffbef";
 

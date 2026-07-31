@@ -16,7 +16,7 @@
   displayName = "Material";
   author = "Nate Peterson";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#263238";
@@ -37,7 +37,7 @@
   onSurfaceFaint = "#546e7a";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#56707c";
+  outline = "#56707b";
   outlineVariant = "#364a4d";
 
   # --- Accent roles -------------------------------------------------------

@@ -16,7 +16,7 @@
   displayName = "Nebula";
   author = "Gabriel Fontes (https://github.com/Misterio77)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#22273b";
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#4d6bb6";
-  onPrimary = "#eff0f1";
+  onPrimary = "#f0f0f1";
   primaryContainer = "#324067";
   onPrimaryContainer = "#c7c9cd";
   secondary = "#226f68";
-  onSecondary = "#dfe0e3";
+  onSecondary = "#dfe1e3";
   tertiary = "#716cae";
   onTertiary = "#f9fafa";
   error = "#777abc";
-  onError = "#ffffff";
+  onError = "#131724";
   inverseSurface = "#a4a6a9";
   inverseOnSurface = "#22273b";
 
@@ -76,7 +76,7 @@
 
   orange = "#94929e";
   brightOrange = "#a6a4b1";
-  cursor = "#516eb7";
+  cursor = "#516fb7";
 
   tools = {
     bat = "ansi";

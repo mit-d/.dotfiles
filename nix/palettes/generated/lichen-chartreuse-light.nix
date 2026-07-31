@@ -16,7 +16,7 @@
   displayName = "Lichen Chartreuse Light";
   author = "Aaron Colichia (https://aaron.colichia.org/)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f5f7f2";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#687161";
-  outlineVariant = "#c5d9a6";
+  outlineVariant = "#c6d9a6";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#356e8a";

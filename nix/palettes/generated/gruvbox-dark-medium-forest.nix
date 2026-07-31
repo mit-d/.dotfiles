@@ -16,7 +16,7 @@
   displayName = "Gruvbox Dark Medium (Forest)";
   author = "Muhammad Talha (muhammadtalha.quant@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#282828";
@@ -37,7 +37,7 @@
   onSurfaceFaint = "#665c50";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#6d6356";
+  outline = "#6d6355";
   outlineVariant = "#504945";
 
   # --- Accent roles -------------------------------------------------------
@@ -50,7 +50,7 @@
   tertiary = "#96bda2";
   onTertiary = "#282828";
   error = "#fb4934";
-  onError = "#ffffff";
+  onError = "#252424";
   inverseSurface = "#d5c4a1";
   inverseOnSurface = "#282828";
 

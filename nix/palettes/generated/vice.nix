@@ -16,7 +16,7 @@
   displayName = "vice";
   author = "Thomas Leon Highbaugh thighbaugh@zoho.com";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#17191e";
@@ -33,11 +33,11 @@
   onSurfaceStrong = "#f4f4f7";
   onSurface = "#8b9cbe";
   onSurfaceMuted = "#6f7c96";
-  onSurfaceVariant = "#676f80";
-  onSurfaceFaint = "#4e505c";
+  onSurfaceVariant = "#677080";
+  onSurfaceFaint = "#4e505d";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#565864";
+  outline = "#575964";
   outlineVariant = "#3c3f4c";
 
   # --- Accent roles -------------------------------------------------------
@@ -46,7 +46,7 @@
   primaryContainer = "#2a606a";
   onPrimaryContainer = "#f4f4f7";
   secondary = "#8265ff";
-  onSecondary = "#ffffff";
+  onSecondary = "#15161b";
   tertiary = "#00f6d9";
   onTertiary = "#17191e";
   error = "#ff29a8";

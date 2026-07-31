@@ -16,7 +16,7 @@
   displayName = "Atelier Plateau";
   author = "Bram de Haan (http://atelierbramdehaan.nl)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1b1818";
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#7272ca";
-  onPrimary = "#ffffff";
+  onPrimary = "#120f0f";
   primaryContainer = "#393956";
   onPrimaryContainer = "#f4ecec";
   secondary = "#5485b6";
   onSecondary = "#1b1818";
   tertiary = "#8464c4";
-  onTertiary = "#fefdfd";
+  onTertiary = "#040303";
   error = "#ca4949";
-  onError = "#fdfcfc";
+  onError = "#fefcfc";
   inverseSurface = "#8a8585";
   inverseOnSurface = "#1b1818";
 

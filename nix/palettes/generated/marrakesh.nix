@@ -16,7 +16,7 @@
   displayName = "Marrakesh";
   author = "Alexandre Gavioli (http://github.com/Alexx2/)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#201602";
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#477ca1";
-  onPrimary = "#ffffff";
+  onPrimary = "#0a0500";
   primaryContainer = "#313b3b";
   onPrimaryContainer = "#faf0a5";
   secondary = "#75a738";
   onSecondary = "#201602";
   tertiary = "#8868b3";
-  onTertiary = "#ffffff";
+  onTertiary = "#0a0600";
   error = "#c35359";
-  onError = "#ffffff";
+  onError = "#0c0600";
   inverseSurface = "#948e48";
   inverseOnSurface = "#201602";
 

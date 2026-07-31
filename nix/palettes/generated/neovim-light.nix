@@ -16,7 +16,7 @@
   displayName = "Neovim Light";
   author = "https://github.com/neovim/neovim/blob/master/src/nvim/highlight_group.c";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#e0e2ea";

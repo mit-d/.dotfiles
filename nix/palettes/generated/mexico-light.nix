@@ -16,7 +16,7 @@
   displayName = "Mexico Light";
   author = "Sheldon Johnson";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f8f8f8";
@@ -34,11 +34,11 @@
   onSurface = "#383838";
   onSurfaceMuted = "#484848";
   onSurfaceVariant = "#585858";
-  onSurfaceFaint = "#aaaaaa";
+  onSurfaceFaint = "#aaa9a9";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#9f9f9f";
-  outlineVariant = "#d4d4d4";
+  outline = "#9f9e9e";
+  outlineVariant = "#d4d3d3";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#7cafc2";
@@ -46,9 +46,9 @@
   primaryContainer = "#c9dce3";
   onPrimaryContainer = "#181818";
   secondary = "#4b8093";
-  onSecondary = "#ffffff";
+  onSecondary = "#0b0b0b";
   tertiary = "#96609e";
-  onTertiary = "#fafafa";
+  onTertiary = "#fafaf9";
   error = "#ab4642";
   onError = "#f8f8f8";
   inverseSurface = "#383838";
@@ -76,7 +76,7 @@
 
   orange = "#dc9656";
   brightOrange = "#c88343";
-  cursor = "#6c97a6";
+  cursor = "#6c96a6";
 
   tools = {
     bat = "ansi";

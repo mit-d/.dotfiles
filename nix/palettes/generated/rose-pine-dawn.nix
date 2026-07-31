@@ -16,7 +16,7 @@
   displayName = "Rose Pine Dawn";
   author = "Emilia Dunfelt <edun@dunfelt.se>";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#faf4ed";
@@ -30,7 +30,7 @@
   surfaceVariant = "#fffaf3";
 
   # --- Text, strongest to faintest ----------------------------------------
-  onSurfaceStrong = "#544f75";
+  onSurfaceStrong = "#534f74";
   onSurface = "#575279";
   onSurfaceMuted = "#686386";
   onSurfaceVariant = "#797593";
@@ -38,19 +38,19 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#9893a5";
-  outlineVariant = "#d7cfce";
+  outlineVariant = "#d7cfcd";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#907aa9";
-  onPrimary = "#ffffff";
+  onPrimary = "#1c1c1a";
   primaryContainer = "#d0c4d4";
-  onPrimaryContainer = "#555076";
+  onPrimaryContainer = "#534f74";
   secondary = "#56949f";
-  onSecondary = "#ffffff";
+  onSecondary = "#262423";
   tertiary = "#ea9d34";
-  onTertiary = "#ffffff";
+  onTertiary = "#423e5d";
   error = "#b4637a";
-  onError = "#ffffff";
+  onError = "#111110";
   inverseSurface = "#575279";
   inverseOnSurface = "#faf4ed";
 
@@ -71,7 +71,7 @@
     brightBlue = "#7e6896";
     brightMagenta = "#d68a16";
     brightCyan = "#44828d";
-    brightWhite = "#575279";
+    brightWhite = "#534f74";
   };
 
   orange = "#ea9d34";

@@ -16,7 +16,7 @@
   displayName = "Eva Dim";
   author = "kjakapat (https://github.com/kjakapat)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#2a3b4d";
@@ -31,9 +31,9 @@
 
   # --- Text, strongest to faintest ----------------------------------------
   onSurfaceStrong = "#ffffff";
-  onSurface = "#9fa2a6";
+  onSurface = "#a0a3a6";
   onSurfaceMuted = "#8f9aa5";
-  onSurfaceVariant = "#7e90a3";
+  onSurfaceVariant = "#7f90a3";
   onSurfaceFaint = "#55799c";
 
   # --- Borders and dividers -----------------------------------------------
@@ -46,12 +46,12 @@
   primaryContainer = "#347680";
   onPrimaryContainer = "#ffffff";
   secondary = "#4b8f77";
-  onSecondary = "#ffffff";
+  onSecondary = "#1b1b1b";
   tertiary = "#9c6cd3";
-  onTertiary = "#ffffff";
+  onTertiary = "#1b1b1b";
   error = "#c4676c";
-  onError = "#ffffff";
-  inverseSurface = "#9fa2a6";
+  onError = "#1b1b1b";
+  inverseSurface = "#a0a3a6";
   inverseOnSurface = "#2a3b4d";
 
   # --- ANSI 16 ------------------------------------------------------------

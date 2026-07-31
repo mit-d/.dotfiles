@@ -16,7 +16,7 @@
   displayName = "Darktooth";
   author = "Jason Milkins (https://github.com/jasonm23)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1d2021";
@@ -76,7 +76,7 @@
 
   orange = "#fe8625";
   brightOrange = "#ffa56b";
-  cursor = "#2e727f";
+  cursor = "#2e737f";
 
   tools = {
     bat = "ansi";

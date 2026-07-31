@@ -16,7 +16,7 @@
   displayName = "ShadeSmear Dark";
   author = "Kyle Giammarco (http://kyle.giammar.co)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#232323";
@@ -50,7 +50,7 @@
   tertiary = "#d7ab54";
   onTertiary = "#232323";
   error = "#cc5450";
-  onError = "#ffffff";
+  onError = "#100f0f";
   inverseSurface = "#dbdbdb";
   inverseOnSurface = "#232323";
 
@@ -76,7 +76,7 @@
 
   orange = "#a64270";
   brightOrange = "#ba5482";
-  cursor = "#497092";
+  cursor = "#497091";
 
   tools = {
     bat = "ansi";

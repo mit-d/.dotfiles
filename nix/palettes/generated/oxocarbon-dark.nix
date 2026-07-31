@@ -16,7 +16,7 @@
   displayName = "Oxocarbon Dark";
   author = "shaunsingh/IBM, Tinted Theming (https://github.com/tinted-theming)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#161616";
@@ -37,7 +37,7 @@
   onSurfaceFaint = "#525252";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#575757";
+  outline = "#575756";
   outlineVariant = "#393939";
 
   # --- Accent roles -------------------------------------------------------

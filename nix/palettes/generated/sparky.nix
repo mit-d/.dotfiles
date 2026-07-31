@@ -16,7 +16,7 @@
   displayName = "Sparky";
   author = "Leila Sother (https://github.com/mixcoac)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#072b31";
@@ -33,11 +33,11 @@
   onSurfaceStrong = "#ffffff";
   onSurface = "#f4f5f0";
   onSurfaceMuted = "#8cb5bd";
-  onSurfaceVariant = "#318496";
-  onSurfaceFaint = "#3a606c";
+  onSurfaceVariant = "#328597";
+  onSurfaceFaint = "#3b616c";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#456874";
+  outline = "#456974";
   outlineVariant = "#11444e";
 
   # --- Accent roles -------------------------------------------------------

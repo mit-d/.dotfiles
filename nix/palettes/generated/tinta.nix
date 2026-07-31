@@ -16,7 +16,7 @@
   displayName = "Tinta";
   author = "Teshre";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#101012";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#62626a";
-  outlineVariant = "#2e2e32";
+  outlineVariant = "#2e2e31";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#8a9ab0";

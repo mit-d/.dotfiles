@@ -16,7 +16,7 @@
   displayName = "Flat";
   author = "Chris Kempson (http://chriskempson.com)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#2c3e50";
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#3498db";
-  onPrimary = "#ffffff";
+  onPrimary = "#1f2c3a";
   primaryContainer = "#335f82";
   onPrimaryContainer = "#f5f5f5";
   secondary = "#1abc9c";
   onSecondary = "#2c3e50";
   tertiary = "#9b59b6";
-  onTertiary = "#fbfbfb";
+  onTertiary = "#fbfbfa";
   error = "#e74c3c";
-  onError = "#ffffff";
+  onError = "#1b1b1b";
   inverseSurface = "#e0e0e0";
   inverseOnSurface = "#2c3e50";
 

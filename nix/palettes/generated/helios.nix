@@ -16,7 +16,7 @@
   displayName = "Helios";
   author = "Alex Meyer (https://github.com/reyemxela)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1d2021";
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#1e8bac";
-  onPrimary = "#ffffff";
+  onPrimary = "#161919";
   primaryContainer = "#264652";
   onPrimaryContainer = "#e5e5e5";
   secondary = "#1ba595";
   onSecondary = "#1d2021";
   tertiary = "#be4264";
-  onTertiary = "#f2f2f2";
+  onTertiary = "#f2f2f1";
   error = "#d72638";
-  onError = "#f3f3f3";
+  onError = "#f4f4f3";
   inverseSurface = "#d5d5d5";
   inverseOnSurface = "#1d2021";
 

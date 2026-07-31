@@ -16,7 +16,7 @@
   displayName = "Chinoiserie Night";
   author = "Di Wang (https://cs.cmu.edu/~diw3)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1d1d1d";

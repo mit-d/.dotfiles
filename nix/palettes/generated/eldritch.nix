@@ -16,7 +16,7 @@
   displayName = "Eldritch";
   author = "https://github.com/eldritch-theme";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#212337";

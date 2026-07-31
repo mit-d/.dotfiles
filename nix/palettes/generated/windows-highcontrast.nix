@@ -16,7 +16,7 @@
   displayName = "Windows High Contrast";
   author = "Fergus Collins (https://github.com/ferguscollins)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#000000";

@@ -16,7 +16,7 @@
   displayName = "Jabuti";
   author = "https://github.com/notusknot";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#292a37";
@@ -34,11 +34,11 @@
   onSurface = "#c0cbe3";
   onSurfaceMuted = "#868ca5";
   onSurfaceVariant = "#7b7d91";
-  onSurfaceFaint = "#5b5d71";
+  onSurfaceFaint = "#5b5e71";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#646679";
-  outlineVariant = "#3e4053";
+  outline = "#636679";
+  outlineVariant = "#3e4153";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#3fc6de";

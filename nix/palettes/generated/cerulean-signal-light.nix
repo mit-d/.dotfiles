@@ -16,7 +16,7 @@
   displayName = "Cerulean Signal Light";
   author = "Aaron Colichia (https://aaron.colichia.org/)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f7f9fc";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#637287";
-  outlineVariant = "#ccd6e0";
+  outlineVariant = "#cbd5e0";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#006fa8";

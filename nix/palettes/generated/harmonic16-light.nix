@@ -16,7 +16,7 @@
   displayName = "Harmonic16 Light";
   author = "Jannik Siebert (https://github.com/janniks)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f7f9fb";
@@ -34,11 +34,11 @@
   onSurface = "#405c79";
   onSurfaceMuted = "#516d89";
   onSurfaceVariant = "#627e99";
-  onSurfaceFaint = "#9aacbe";
+  onSurfaceFaint = "#9aacbf";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#8fa1b3";
-  outlineVariant = "#cbd6e2";
+  outline = "#8fa1b4";
+  outlineVariant = "#cad5e2";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#8b56bf";
@@ -48,7 +48,7 @@
   secondary = "#568bbf";
   onSecondary = "#0b1c2c";
   tertiary = "#bf568b";
-  onTertiary = "#ffffff";
+  onTertiary = "#0e0e0f";
   error = "#bf8b56";
   onError = "#0b1c2c";
   inverseSurface = "#405c79";

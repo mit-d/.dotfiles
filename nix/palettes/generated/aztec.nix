@@ -16,7 +16,7 @@
   displayName = "Aztec";
   author = "TheNeverMan (github.com/TheNeverMan)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#101600";
@@ -34,10 +34,10 @@
   onSurface = "#ffda51";
   onSurfaceMuted = "#ffd640";
   onSurfaceVariant = "#ffd129";
-  onSurfaceFaint = "#524f21";
+  onSurfaceFaint = "#534f22";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#5b5728";
+  outline = "#5b5828";
   outlineVariant = "#31320d";
 
   # --- Accent roles -------------------------------------------------------
@@ -50,7 +50,7 @@
   tertiary = "#883e9f";
   onTertiary = "#ffeba0";
   error = "#ee2e00";
-  onError = "#ffffff";
+  onError = "#0e1300";
   inverseSurface = "#ffda51";
   inverseOnSurface = "#101600";
 
@@ -76,7 +76,7 @@
 
   orange = "#ee8800";
   brightOrange = "#ff9d3c";
-  cursor = "#6556a1";
+  cursor = "#6557a1";
 
   tools = {
     bat = "ansi";

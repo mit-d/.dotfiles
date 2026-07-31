@@ -16,7 +16,7 @@
   displayName = "Grayscale Dark";
   author = "Alexandre Gavioli (https://github.com/Alexx2/)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#101010";
@@ -37,7 +37,7 @@
   onSurfaceFaint = "#525252";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#545454";
+  outline = "#545453";
   outlineVariant = "#464646";
 
   # --- Accent roles -------------------------------------------------------
@@ -48,7 +48,7 @@
   secondary = "#868686";
   onSecondary = "#101010";
   tertiary = "#747474";
-  onTertiary = "#fbfbfb";
+  onTertiary = "#fbfbfa";
   error = "#7c7c7c";
   onError = "#101010";
   inverseSurface = "#b9b9b9";

@@ -16,7 +16,7 @@
   displayName = "Ascendancy";
   author = "EmergentMind (https://github.com/emergentmind/ascendancy-scheme)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#282828";
@@ -42,7 +42,7 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#458588";
-  onPrimary = "#ffffff";
+  onPrimary = "#11100b";
   primaryContainer = "#35494a";
   onPrimaryContainer = "#fbf1c7";
   secondary = "#8f3f71";
@@ -50,7 +50,7 @@
   tertiary = "#fabd2f";
   onTertiary = "#282828";
   error = "#d05000";
-  onError = "#ffffff";
+  onError = "#0d0c08";
   inverseSurface = "#d5c7a1";
   inverseOnSurface = "#282828";
 

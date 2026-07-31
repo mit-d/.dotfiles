@@ -16,7 +16,7 @@
   displayName = "Equilibrium Gray Dark";
   author = "Carlo Abelli";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#111111";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#777777";
-  outlineVariant = "#2e2e2e";
+  outlineVariant = "#2f2f2e";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#008dd1";

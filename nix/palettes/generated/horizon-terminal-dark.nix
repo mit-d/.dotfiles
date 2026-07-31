@@ -16,7 +16,7 @@
   displayName = "Horizon Terminal Dark";
   author = "Michael Ball (http://github.com/michael-ball/)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1c1e26";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#6f6f70";
-  outlineVariant = "#343644";
+  outlineVariant = "#343744";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#26bbd9";

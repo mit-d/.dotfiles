@@ -16,7 +16,7 @@
   displayName = "Neovim Dark";
   author = "https://github.com/neovim/neovim/blob/master/src/nvim/highlight_group.c";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#14161b";

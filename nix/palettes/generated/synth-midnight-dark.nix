@@ -16,7 +16,7 @@
   displayName = "Synth Midnight Terminal Dark";
   author = "Michael Ball (http://github.com/michael-ball/)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#050608";
@@ -37,8 +37,8 @@
   onSurfaceFaint = "#474849";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#4f5051";
-  outlineVariant = "#28292a";
+  outline = "#4e5051";
+  outlineVariant = "#282a2b";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#03aeff";
@@ -50,7 +50,7 @@
   tertiary = "#ea5ce2";
   onTertiary = "#050608";
   error = "#b53b50";
-  onError = "#e4e5e6";
+  onError = "#e4e6e6";
   inverseSurface = "#c1c3c4";
   inverseOnSurface = "#050608";
 

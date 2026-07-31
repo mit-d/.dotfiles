@@ -16,7 +16,7 @@
   displayName = "Unikitty Light";
   author = "Josh W Lewis (@joshwlewis)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#ffffff";
@@ -37,16 +37,16 @@
   onSurfaceFaint = "#a7a5a8";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#a5a3a6";
+  outline = "#a5a3a7";
   outlineVariant = "#c4c3c5";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#775dff";
-  onPrimary = "#ffffff";
+  onPrimary = "#0a0a0a";
   primaryContainer = "#c5c5ff";
   onPrimaryContainer = "#322d34";
   secondary = "#149bda";
-  onSecondary = "#ffffff";
+  onSecondary = "#2f2a30";
   tertiary = "#aa17e6";
   onTertiary = "#ffffff";
   error = "#d8137f";

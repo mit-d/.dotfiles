@@ -16,7 +16,7 @@
   displayName = "Material Vivid";
   author = "joshyrobot";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#202124";
@@ -31,14 +31,14 @@
 
   # --- Text, strongest to faintest ----------------------------------------
   onSurfaceStrong = "#ffffff";
-  onSurface = "#82888d";
-  onSurfaceMuted = "#7a7f84";
+  onSurface = "#83888d";
+  onSurfaceMuted = "#7a8084";
   onSurfaceVariant = "#71767a";
-  onSurfaceFaint = "#54565d";
+  onSurfaceFaint = "#55565d";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#5d5e65";
-  outlineVariant = "#363a3d";
+  outline = "#5d5f65";
+  outlineVariant = "#363a3c";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#2196f3";
@@ -50,8 +50,8 @@
   tertiary = "#673ab7";
   onTertiary = "#ffffff";
   error = "#f44336";
-  onError = "#ffffff";
-  inverseSurface = "#82888d";
+  onError = "#1e1e21";
+  inverseSurface = "#83888d";
   inverseOnSurface = "#202124";
 
   # --- ANSI 16 ------------------------------------------------------------

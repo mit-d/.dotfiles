@@ -16,7 +16,7 @@
   displayName = "Ayu Dark";
   author = "Tinted Theming (https://github.com/tinted-theming), Ayu Theme (https://github.com/ayu-theme)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#0b0e14";
@@ -37,7 +37,7 @@
   onSurfaceFaint = "#3f4c5a";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#485461";
+  outline = "#485561";
   outlineVariant = "#2b2d33";
 
   # --- Accent roles -------------------------------------------------------

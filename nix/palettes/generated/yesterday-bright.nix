@@ -16,7 +16,7 @@
   displayName = "Yesterday Bright";
   author = "FroZnShiva (https://github.com/FroZnShiva)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#343d46";
@@ -42,7 +42,7 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#7aa6da";
-  onPrimary = "#ffffff";
+  onPrimary = "#323b43";
   primaryContainer = "#4e637b";
   onPrimaryContainer = "#ffffff";
   secondary = "#70c0b1";
@@ -50,7 +50,7 @@
   tertiary = "#c397d8";
   onTertiary = "#343d46";
   error = "#d54e53";
-  onError = "#ffffff";
+  onError = "#121211";
   inverseSurface = "#dfe1e8";
   inverseOnSurface = "#343d46";
 

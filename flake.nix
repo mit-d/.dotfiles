@@ -55,6 +55,16 @@
 
       formatter.aarch64-darwin = pkgs.nixfmt;
 
+      # Every palette in the library, resolved through load.nix so overrides are
+      # included, as one JSON file. Built and cached by nix, which is what lets
+      # the picker below redraw a preview per keystroke instead of evaluating.
+      packages.aarch64-darwin.palette-data =
+        let
+          index = import ./nix/palettes/generated/_index.nix;
+          load = import ./nix/palettes/load.nix;
+        in
+        pkgs.writeText "palettes.json" (builtins.toJSON (builtins.mapAttrs (name: _: load name) index));
+
       # Regenerate nix/palettes/generated from the pinned schemes checkout.
       #
       # The generator writes into the working tree, not the store, so it needs
@@ -98,6 +108,79 @@
           )
           + "/bin/gen-palettes";
       };
+
+      # Browse the library with a live colour preview:
+      #
+      #   nix run .#palettes
+      #
+      # enter prints the name and the line to paste; ctrl-a rewrites active.nix
+      # in place. Needs a truecolour terminal, which Ghostty is.
+      apps.aarch64-darwin.palettes = {
+        type = "app";
+        program =
+          builtins.toString (
+            pkgs.writeShellApplication {
+              name = "palettes";
+              runtimeInputs = [
+                pkgs.fzf
+                pkgs.python3
+                pkgs.jq
+              ];
+              text = ''
+                data=${self.packages.aarch64-darwin.palette-data}
+                preview=${./nix/palettes/preview.py}
+
+                active=""
+                if [ -f "$PWD/nix/palettes/active.nix" ]; then
+                  active=$(sed -n 's/^import \.\/load\.nix "\(.*\)"$/\1/p' \
+                    "$PWD/nix/palettes/active.nix")
+                fi
+
+                selection=$(
+                  jq -r 'keys[]' "$data" | fzf \
+                    --ansi \
+                    --expect=ctrl-a \
+                    --preview "python3 $preview $data {}" \
+                    --preview-window 'right,64%,border-left' \
+                    --query "" \
+                    --header "enter: print   ctrl-a: set active.nix''${active:+   (now: $active)}" \
+                    --prompt 'palette> '
+                ) || exit 0
+
+                key=$(printf '%s\n' "$selection" | sed -n 1p)
+                name=$(printf '%s\n' "$selection" | sed -n 2p)
+                [ -n "$name" ] || exit 0
+
+                if [ "$key" = "ctrl-a" ]; then
+                  file="$PWD/nix/palettes/active.nix"
+                  if [ ! -f "$file" ]; then
+                    echo "palettes: no $file -- run from the repo root" >&2
+                    exit 1
+                  fi
+                  # Only the import line changes; the comment above it stays.
+                  tmp=$(mktemp)
+                  sed "s|^import \./load\.nix \".*\"$|import ./load.nix \"$name\"|" \
+                    "$file" >"$tmp"
+                  mv "$tmp" "$file"
+                  echo "active.nix -> $name"
+                  echo "now: sudo darwin-rebuild switch --flake ~/.dotfiles"
+                else
+                  echo "import ./load.nix \"$name\""
+                fi
+              '';
+            }
+          )
+          + "/bin/palettes";
+      };
+
+      # Enforce the guarantees nix/palettes/README.md documents -- contrast
+      # floors, text-ramp ordering, legible accent pairs -- across all 335.
+      checks.aarch64-darwin.palettes =
+        pkgs.runCommand "palette-validation" { nativeBuildInputs = [ pkgs.python3 ]; }
+          ''
+            python3 ${./nix/palettes/validate.py} \
+              ${self.packages.aarch64-darwin.palette-data} | tee $out
+          '';
 
       checks.aarch64-darwin.lint =
         pkgs.runCommand "nix-lint"

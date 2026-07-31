@@ -16,7 +16,7 @@
   displayName = "selenized-white";
   author = "Jan Warchol (https://github.com/jan-warchol/selenized) / adapted to base16 by ali";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#ffffff";
@@ -46,7 +46,7 @@
   primaryContainer = "#a3c1f2";
   onPrimaryContainer = "#282828";
   secondary = "#009a8a";
-  onSecondary = "#ffffff";
+  onSecondary = "#232222";
   tertiary = "#6b40c3";
   onTertiary = "#ffffff";
   error = "#bf0000";

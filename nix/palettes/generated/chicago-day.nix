@@ -16,7 +16,7 @@
   displayName = "Chicago Day";
   author = "Wendell, Ryan <ryanjwendell@gmail.com>";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#e8f0ea";

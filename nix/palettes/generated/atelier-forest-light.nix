@@ -16,7 +16,7 @@
   displayName = "Atelier Forest Light";
   author = "Bram de Haan (http://atelierbramdehaan.nl)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f1efee";
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#407ee7";
-  onPrimary = "#ffffff";
+  onPrimary = "#1a1818";
   primaryContainer = "#aec6ef";
   onPrimaryContainer = "#1b1918";
   secondary = "#3d97b8";
   onSecondary = "#1b1918";
   tertiary = "#6666ea";
-  onTertiary = "#ffffff";
+  onTertiary = "#060505";
   error = "#f22c40";
-  onError = "#ffffff";
+  onError = "#171515";
   inverseSurface = "#68615e";
   inverseOnSurface = "#f1efee";
 

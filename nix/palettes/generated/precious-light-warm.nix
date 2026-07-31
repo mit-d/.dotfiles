@@ -16,7 +16,7 @@
   displayName = "Precious Light Warm";
   author = "4lex4 <4lex49@zoho.com>";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fff5e5";
@@ -71,7 +71,7 @@
     brightBlue = "#0a5b92";
     brightMagenta = "#693db2";
     brightCyan = "#006456";
-    brightWhite = "#4e5359";
+    brightWhite = "#3e4349";
   };
 
   orange = "#a25600";

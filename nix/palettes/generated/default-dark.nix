@@ -16,7 +16,7 @@
   displayName = "Default Dark";
   author = "Chris Kempson (http://chriskempson.com)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#181818";
@@ -37,7 +37,7 @@
   onSurfaceFaint = "#585858";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#585858";
+  outline = "#595958";
   outlineVariant = "#383838";
 
   # --- Accent roles -------------------------------------------------------

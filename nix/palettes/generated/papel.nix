@@ -16,7 +16,7 @@
   displayName = "Papel";
   author = "Teshre";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f5efe2";
@@ -30,9 +30,9 @@
   surfaceVariant = "#8e8576";
 
   # --- Text, strongest to faintest ----------------------------------------
-  onSurfaceStrong = "#565046";
-  onSurface = "#5a4f40";
-  onSurfaceMuted = "#5b4f3f";
+  onSurfaceStrong = "#342f29";
+  onSurface = "#3a2e20";
+  onSurfaceMuted = "#514535";
   onSurfaceVariant = "#6a5d4b";
   onSurfaceFaint = "#9a8c76";
 
@@ -44,14 +44,14 @@
   primary = "#2c6ca0";
   onPrimary = "#f5efe2";
   primaryContainer = "#a9bdcb";
-  onPrimaryContainer = "#ffffff";
+  onPrimaryContainer = "#342f29";
   secondary = "#2a8a7a";
-  onSecondary = "#ffffff";
+  onSecondary = "#121110";
   tertiary = "#9b4d8e";
   onTertiary = "#f5efe2";
   error = "#c0392b";
   onError = "#f5efe2";
-  inverseSurface = "#5a4f40";
+  inverseSurface = "#3a2e20";
   inverseOnSurface = "#f5efe2";
 
   # --- ANSI 16 ------------------------------------------------------------
@@ -71,7 +71,7 @@
     brightBlue = "#175a8d";
     brightMagenta = "#883b7c";
     brightCyan = "#0b7869";
-    brightWhite = "#958b7c";
+    brightWhite = "#342f29";
   };
 
   orange = "#c25c1f";

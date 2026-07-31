@@ -16,7 +16,7 @@
   displayName = "darkmoss";
   author = "Gabriel Avanzi (https://github.com/avanzzzi)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#171e1f";
@@ -42,7 +42,7 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#498091";
-  onPrimary = "#ffffff";
+  onPrimary = "#070b0b";
   primaryContainer = "#2a4147";
   onPrimaryContainer = "#e1eaef";
   secondary = "#66d9ef";

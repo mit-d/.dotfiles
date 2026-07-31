@@ -16,7 +16,7 @@
   displayName = "XCode Dusk";
   author = "Elsa Gonsiorowski (https://github.com/gonsie)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#282b35";
@@ -48,9 +48,9 @@
   secondary = "#00a0be";
   onSecondary = "#282b35";
   tertiary = "#b21889";
-  onTertiary = "#dbdbdd";
+  onTertiary = "#dbdcdd";
   error = "#b21889";
-  onError = "#dbdbdd";
+  onError = "#dbdcdd";
   inverseSurface = "#939599";
   inverseOnSurface = "#282b35";
 

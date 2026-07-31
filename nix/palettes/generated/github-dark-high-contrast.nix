@@ -16,7 +16,7 @@
   displayName = "Github Dark High Contrast";
   author = "Tinted Theming (https://github.com/tinted-theming)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#0a0c10";

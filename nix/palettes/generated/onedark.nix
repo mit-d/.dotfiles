@@ -16,7 +16,7 @@
   displayName = "OneDark";
   author = "Lalit Magant (http://github.com/tilal6991)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#282c34";
@@ -34,10 +34,10 @@
   onSurface = "#abb2bf";
   onSurfaceMuted = "#838a94";
   onSurfaceVariant = "#7a8088";
-  onSurfaceFaint = "#5b5f69";
+  onSurfaceFaint = "#5b6069";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#646872";
+  outline = "#646871";
   outlineVariant = "#3e4451";
 
   # --- Accent roles -------------------------------------------------------
@@ -50,7 +50,7 @@
   tertiary = "#c678dd";
   onTertiary = "#282c34";
   error = "#e06c75";
-  onError = "#ffffff";
+  onError = "#262a32";
   inverseSurface = "#abb2bf";
   inverseOnSurface = "#282c34";
 

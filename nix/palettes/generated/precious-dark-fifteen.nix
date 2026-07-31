@@ -16,7 +16,7 @@
   displayName = "Precious Dark Fifteen";
   author = "4lex4 <4lex49@zoho.com>";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#23262b";
@@ -44,7 +44,7 @@
   primary = "#66b0ef";
   onPrimary = "#23262b";
   primaryContainer = "#3d576f";
-  onPrimaryContainer = "#c8c8c5";
+  onPrimaryContainer = "#c9c8c6";
   secondary = "#42bda7";
   onSecondary = "#23262b";
   tertiary = "#b799ff";
@@ -71,7 +71,7 @@
     brightBlue = "#7ec3ff";
     brightMagenta = "#c7b3ff";
     brightCyan = "#59d0ba";
-    brightWhite = "#bab9b6";
+    brightWhite = "#cdccc9";
   };
 
   orange = "#e99857";

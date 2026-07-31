@@ -16,7 +16,7 @@
   displayName = "One Light";
   author = "Daniel Pfeifer (http://github.com/purpleKarrot)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fafafa";
@@ -37,8 +37,8 @@
   onSurfaceFaint = "#a0a1a7";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#9fa0a6";
-  outlineVariant = "#d5d5d6";
+  outline = "#9fa0a5";
+  outlineVariant = "#d5d5d7";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#4078f2";

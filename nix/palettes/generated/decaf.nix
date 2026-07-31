@@ -16,7 +16,7 @@
   displayName = "Decaf";
   author = "Alex Mirrington (https://github.com/alexmirrington)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#2d2d2d";

@@ -16,7 +16,7 @@
   displayName = "Icy Dark";
   author = "icyphox (https://icyphox.ga)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#021012";
@@ -30,28 +30,28 @@
   surfaceVariant = "#031619";
 
   # --- Text, strongest to faintest ----------------------------------------
-  onSurfaceStrong = "#45a8ba";
-  onSurface = "#0e8697";
-  onSurfaceMuted = "#0d7d8d";
-  onSurfaceVariant = "#0c7382";
-  onSurfaceFaint = "#09525d";
+  onSurfaceStrong = "#45a9ba";
+  onSurface = "#2c8594";
+  onSurfaceMuted = "#297c8a";
+  onSurfaceVariant = "#25737f";
+  onSurfaceFaint = "#17525b";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#0a5b67";
-  outlineVariant = "#063238";
+  outline = "#1c5b64";
+  outlineVariant = "#0b3237";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#00bcd4";
   onPrimary = "#021012";
   primaryContainer = "#074a53";
-  onPrimaryContainer = "#71bac8";
+  onPrimaryContainer = "#6fbac7";
   secondary = "#26c6da";
   onSecondary = "#021012";
   tertiary = "#00acc1";
   onTertiary = "#021012";
   error = "#16c1d9";
   onError = "#021012";
-  inverseSurface = "#0e8697";
+  inverseSurface = "#2c8594";
   inverseOnSurface = "#021012";
 
   # --- ANSI 16 ------------------------------------------------------------
@@ -71,7 +71,7 @@
     brightBlue = "#34d0e8";
     brightMagenta = "#31bfd4";
     brightCyan = "#45daee";
-    brightWhite = "#109cb0";
+    brightWhite = "#45a9ba";
   };
 
   orange = "#b3ebf2";

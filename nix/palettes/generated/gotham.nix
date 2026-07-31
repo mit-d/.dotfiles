@@ -16,7 +16,7 @@
   displayName = "Gotham";
   author = "Andrea Leopardi (arranged by Brett Jones)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#0c1014";
@@ -32,13 +32,13 @@
   # --- Text, strongest to faintest ----------------------------------------
   onSurfaceStrong = "#d3ebe9";
   onSurface = "#599cab";
-  onSurfaceMuted = "#437a88";
-  onSurfaceVariant = "#47707b";
-  onSurfaceFaint = "#2a5060";
+  onSurfaceMuted = "#437b89";
+  onSurfaceVariant = "#46707b";
+  onSurfaceFaint = "#2b5160";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#335867";
-  outlineVariant = "#1a303e";
+  outline = "#345968";
+  outlineVariant = "#1b303f";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#195466";

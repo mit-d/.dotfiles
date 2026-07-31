@@ -16,7 +16,7 @@
   displayName = "Still Alive";
   author = "Derrick McKee (derrick.mckee@gmail.com), Tinted Theming (https://github.com/tinted-theming)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f0f0f0";
@@ -37,18 +37,18 @@
   onSurfaceFaint = "#a3a3a3";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#9a9999";
+  outline = "#999999";
   outlineVariant = "#bdbdbd";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#365eff";
-  onPrimary = "#f3f3f3";
+  onPrimary = "#f3f3f2";
   primaryContainer = "#a5befb";
   onPrimaryContainer = "#140c0d";
   secondary = "#36d3ff";
   onSecondary = "#140c0d";
   tertiary = "#9036ff";
-  onTertiary = "#f2f2f2";
+  onTertiary = "#f2f2f1";
   error = "#d80000";
   onError = "#f0f0f0";
   inverseSurface = "#4c383b";

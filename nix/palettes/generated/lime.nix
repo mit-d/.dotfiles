@@ -16,7 +16,7 @@
   displayName = "lime";
   author = "limelier";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1a1a2f";
@@ -31,10 +31,10 @@
 
   # --- Text, strongest to faintest ----------------------------------------
   onSurfaceStrong = "#fff8e1";
-  onSurface = "#848478";
-  onSurfaceMuted = "#7c7b75";
-  onSurfaceVariant = "#727170";
-  onSurfaceFaint = "#52525c";
+  onSurface = "#848477";
+  onSurfaceMuted = "#7b7b75";
+  onSurfaceVariant = "#727171";
+  onSurfaceFaint = "#52525b";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#5b5a62";
@@ -42,16 +42,16 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#2b926f";
-  onPrimary = "#ffffff";
+  onPrimary = "#18182d";
   primaryContainer = "#264548";
   onPrimaryContainer = "#fff8e1";
   secondary = "#4cad83";
   onSecondary = "#1a1a2f";
   tertiary = "#1b825f";
-  onTertiary = "#fff8e2";
+  onTertiary = "#fff9e3";
   error = "#ff662a";
   onError = "#1a1a2f";
-  inverseSurface = "#848478";
+  inverseSurface = "#848477";
   inverseOnSurface = "#1a1a2f";
 
   # --- ANSI 16 ------------------------------------------------------------

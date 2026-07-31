@@ -16,7 +16,7 @@
   displayName = "Material Palenight";
   author = "Nate Peterson";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#292d3e";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#676e95";
-  outlineVariant = "#3e4358";
+  outlineVariant = "#3f4359";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#82aaff";

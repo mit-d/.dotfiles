@@ -16,7 +16,7 @@
   displayName = "Terracotta";
   author = "Alexander Rossell Hayes (https://github.com/rossellhayes)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#efeae8";
@@ -34,10 +34,10 @@
   onSurface = "#473731";
   onSurfaceMuted = "#503e37";
   onSurfaceVariant = "#59453d";
-  onSurfaceFaint = "#af9c95";
+  onSurfaceFaint = "#ae9c94";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#a4928b";
+  outline = "#a3928a";
   outlineVariant = "#d0c1bb";
 
   # --- Accent roles -------------------------------------------------------
@@ -46,7 +46,7 @@
   primaryContainer = "#b7afbb";
   onPrimaryContainer = "#241c19";
   secondary = "#847f9e";
-  onSecondary = "#ffffff";
+  onSecondary = "#211917";
   tertiary = "#8d5968";
   onTertiary = "#efeae8";
   error = "#a75045";

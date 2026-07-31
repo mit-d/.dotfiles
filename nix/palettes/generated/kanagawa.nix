@@ -16,7 +16,7 @@
   displayName = "Kanagawa";
   author = "Tommaso Laurenzi (https://github.com/rebelot)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1f1f28";
@@ -30,28 +30,28 @@
   surfaceVariant = "#16161d";
 
   # --- Text, strongest to faintest ----------------------------------------
-  onSurfaceStrong = "#c8c093";
-  onSurface = "#c4c0a8";
+  onSurfaceStrong = "#dcd7ba";
+  onSurface = "#dcd7ba";
   onSurfaceMuted = "#a5a391";
-  onSurfaceVariant = "#76746b";
+  onSurfaceVariant = "#76756c";
   onSurfaceFaint = "#54546d";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#5c5c70";
-  outlineVariant = "#2a394d";
+  outline = "#5c5c72";
+  outlineVariant = "#2a3a4f";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#7e9cd8";
   onPrimary = "#1f1f28";
   primaryContainer = "#414b65";
-  onPrimaryContainer = "#c8c093";
+  onPrimaryContainer = "#dcd7ba";
   secondary = "#6a9589";
   onSecondary = "#1f1f28";
   tertiary = "#957fb8";
   onTertiary = "#1f1f28";
   error = "#c34043";
-  onError = "#f1f1f2";
-  inverseSurface = "#c4c0a8";
+  onError = "#f3f2e8";
+  inverseSurface = "#dcd7ba";
   inverseOnSurface = "#1f1f28";
 
   # --- ANSI 16 ------------------------------------------------------------
@@ -71,7 +71,7 @@
     brightBlue = "#90afec";
     brightMagenta = "#a791cb";
     brightCyan = "#7ca89b";
-    brightWhite = "#c8c093";
+    brightWhite = "#f0ebcd";
   };
 
   orange = "#ffa066";

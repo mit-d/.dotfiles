@@ -16,7 +16,7 @@
   displayName = "Kissa Latte";
   author = "rwendell (https://github.com/rwendell/kissa)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f5f4f0";
@@ -30,28 +30,28 @@
   surfaceVariant = "#e8e7e3";
 
   # --- Text, strongest to faintest ----------------------------------------
-  onSurfaceStrong = "#5a5248";
-  onSurface = "#55534d";
-  onSurfaceMuted = "#57524b";
+  onSurfaceStrong = "#1f1b17";
+  onSurface = "#1f1c16";
+  onSurfaceMuted = "#47423a";
   onSurfaceVariant = "#746c62";
   onSurfaceFaint = "#91887d";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#91887d";
-  outlineVariant = "#d3d0c9";
+  outlineVariant = "#d3cfc9";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#3468a8";
   onPrimary = "#f5f4f0";
   primaryContainer = "#aabed6";
-  onPrimaryContainer = "#534b43";
+  onPrimaryContainer = "#1f1b17";
   secondary = "#287070";
   onSecondary = "#f5f4f0";
   tertiary = "#6438a0";
   onTertiary = "#f5f4f0";
   error = "#9e3e3e";
   onError = "#f5f4f0";
-  inverseSurface = "#55534d";
+  inverseSurface = "#1f1c16";
   inverseOnSurface = "#f5f4f0";
 
   # --- ANSI 16 ------------------------------------------------------------
@@ -71,7 +71,7 @@
     brightBlue = "#225695";
     brightMagenta = "#54258d";
     brightCyan = "#105f5f";
-    brightWhite = "#6e6459";
+    brightWhite = "#1f1b17";
   };
 
   orange = "#8f5d22";

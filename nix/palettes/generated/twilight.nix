@@ -16,7 +16,7 @@
   displayName = "Twilight";
   author = "David Hart (https://github.com/hartbit)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1e1e1e";
@@ -37,7 +37,7 @@
   onSurfaceFaint = "#5f5a60";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#605b61";
+  outline = "#5f5b60";
   outlineVariant = "#464b50";
 
   # --- Accent roles -------------------------------------------------------

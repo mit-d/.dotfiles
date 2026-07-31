@@ -16,7 +16,7 @@
   displayName = "Pico";
   author = "PICO-8 (http://www.lexaloffle.com/pico-8.php)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#000000";
@@ -32,7 +32,7 @@
   # --- Text, strongest to faintest ----------------------------------------
   onSurfaceStrong = "#fff1e8";
   onSurface = "#7c736a";
-  onSurfaceMuted = "#8f6150";
+  onSurfaceMuted = "#8f6250";
   onSurfaceVariant = "#ab5236";
   onSurfaceFaint = "#007c4a";
 

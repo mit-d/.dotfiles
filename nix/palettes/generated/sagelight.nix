@@ -16,7 +16,7 @@
   displayName = "Sagelight";
   author = "Carter Veldhuizen";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f8f8f8";
@@ -34,11 +34,11 @@
   onSurface = "#383838";
   onSurfaceMuted = "#484848";
   onSurfaceVariant = "#585858";
-  onSurfaceFaint = "#aaaaaa";
+  onSurfaceFaint = "#aaa9a9";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#9f9f9f";
-  outlineVariant = "#d4d4d4";
+  outline = "#9f9e9e";
+  outlineVariant = "#d4d3d3";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#a0a7d2";

@@ -16,7 +16,7 @@
   displayName = "IR Black";
   author = "Timothee Poisot (http://timotheepoisot.fr)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#000000";

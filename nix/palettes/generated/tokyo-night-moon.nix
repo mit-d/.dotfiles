@@ -16,7 +16,7 @@
   displayName = "Tokyo Night Moon";
   author = "Olafur Bjarki Bogason";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#222436";
@@ -34,10 +34,10 @@
   onSurface = "#828bb8";
   onSurfaceMuted = "#7680b2";
   onSurfaceVariant = "#6b76ad";
-  onSurfaceFaint = "#505878";
+  onSurfaceFaint = "#515978";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#596181";
+  outline = "#586181";
   outlineVariant = "#2d3f76";
 
   # --- Accent roles -------------------------------------------------------

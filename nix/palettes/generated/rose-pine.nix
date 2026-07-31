@@ -16,7 +16,7 @@
   displayName = "Rose Pine";
   author = "Emilia Dunfelt <edun@dunfelt.se>";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#191724";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#6e6a86";
-  outlineVariant = "#333048";
+  outlineVariant = "#333148";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#c4a7e7";
@@ -71,7 +71,7 @@
     brightBlue = "#d7bafb";
     brightMagenta = "#ffd8a4";
     brightCyan = "#afe3ec";
-    brightWhite = "#e0def4";
+    brightWhite = "#f4f3ff";
   };
 
   orange = "#f6c177";

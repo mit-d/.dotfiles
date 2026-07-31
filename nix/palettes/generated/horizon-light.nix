@@ -16,7 +16,7 @@
   displayName = "Horizon Light";
   author = "Michael Ball (http://github.com/michael-ball/)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fdf0ed";
@@ -34,10 +34,10 @@
   onSurface = "#403c3d";
   onSurfaceMuted = "#686362";
   onSurfaceVariant = "#877f7e";
-  onSurfaceFaint = "#ada4a2";
+  onSurfaceFaint = "#ada3a2";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#a29998";
+  outline = "#a29997";
   outlineVariant = "#f2c5b9";
 
   # --- Accent roles -------------------------------------------------------
@@ -48,7 +48,7 @@
   secondary = "#dc3318";
   onSecondary = "#fefbfa";
   tertiary = "#1d8991";
-  onTertiary = "#ffffff";
+  onTertiary = "#141112";
   error = "#f7939b";
   onError = "#201c1d";
   inverseSurface = "#403c3d";

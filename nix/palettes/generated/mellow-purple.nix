@@ -16,7 +16,7 @@
   displayName = "Mellow Purple";
   author = "gidsi";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1e0528";
@@ -33,12 +33,12 @@
   onSurfaceStrong = "#ffeeff";
   onSurface = "#ffeeff";
   onSurfaceMuted = "#c491c0";
-  onSurfaceVariant = "#984f93";
-  onSurfaceFaint = "#5a407a";
+  onSurfaceVariant = "#985093";
+  onSurfaceFaint = "#59407a";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#624881";
-  outlineVariant = "#3c1f5d";
+  outline = "#624981";
+  outlineVariant = "#3d1f5d";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#550068";
@@ -71,7 +71,7 @@
     brightBlue = "#671b7a";
     brightMagenta = "#9ba3ce";
     brightCyan = "#ce2bc5";
-    brightWhite = "#ffeeff";
+    brightWhite = "#ffffff";
   };
 
   orange = "#aa00a3";

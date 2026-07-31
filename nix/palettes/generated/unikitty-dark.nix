@@ -16,7 +16,7 @@
   displayName = "Unikitty Dark";
   author = "Josh W Lewis (@joshwlewis)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#2e2a31";
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#796af5";
-  onPrimary = "#ffffff";
+  onPrimary = "#161516";
   primaryContainer = "#484376";
   onPrimaryContainer = "#f5f4f7";
   secondary = "#149bda";
   onSecondary = "#2e2a31";
   tertiary = "#bb60ea";
-  onTertiary = "#ffffff";
+  onTertiary = "#252127";
   error = "#d8137f";
-  onError = "#f7f6f8";
+  onError = "#f6f6f8";
   inverseSurface = "#bcbabe";
   inverseOnSurface = "#2e2a31";
 

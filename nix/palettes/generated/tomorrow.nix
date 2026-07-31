@@ -16,7 +16,7 @@
   displayName = "Tomorrow";
   author = "Chris Kempson (http://chriskempson.com)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#ffffff";
@@ -34,10 +34,10 @@
   onSurface = "#373b41";
   onSurfaceMuted = "#65686a";
   onSurfaceVariant = "#878988";
-  onSurfaceFaint = "#adb0ad";
+  onSurfaceFaint = "#adafad";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#a2a5a2";
+  outline = "#a2a4a2";
   outlineVariant = "#c5c8c6";
 
   # --- Accent roles -------------------------------------------------------

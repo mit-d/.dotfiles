@@ -16,7 +16,7 @@
   displayName = "Chicago Night";
   author = "Wendell, Ryan <ryanjwendell@gmail.com>";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1e2a24";
@@ -76,7 +76,7 @@
 
   orange = "#f9461c";
   brightOrange = "#ff6e4f";
-  cursor = "#7863b1";
+  cursor = "#7864b1";
 
   tools = {
     bat = "ansi";

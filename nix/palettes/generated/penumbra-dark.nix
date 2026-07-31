@@ -16,7 +16,7 @@
   displayName = "Penumbra Dark";
   author = "Zachary Weiss (https://github.com/zacharyweiss)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#24272b";
@@ -37,7 +37,7 @@
   onSurfaceFaint = "#636363";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#636363";
+  outline = "#646363";
   outlineVariant = "#3e4044";
 
   # --- Accent roles -------------------------------------------------------
@@ -48,9 +48,9 @@
   secondary = "#00a2af";
   onSecondary = "#24272b";
   tertiary = "#9481cc";
-  onTertiary = "#ffffff";
+  onTertiary = "#24262a";
   error = "#ca736c";
-  onError = "#ffffff";
+  onError = "#232529";
   inverseSurface = "#bebebe";
   inverseOnSurface = "#24272b";
 

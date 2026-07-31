@@ -16,7 +16,7 @@
   displayName = "Atelier Plateau Light";
   author = "Bram de Haan (http://atelierbramdehaan.nl)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f4ecec";
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#7272ca";
-  onPrimary = "#ffffff";
+  onPrimary = "#120f0f";
   primaryContainer = "#c0bee1";
   onPrimaryContainer = "#1b1818";
   secondary = "#5485b6";
   onSecondary = "#1b1818";
   tertiary = "#8464c4";
-  onTertiary = "#fefdfd";
+  onTertiary = "#040303";
   error = "#ca4949";
-  onError = "#fdfcfc";
+  onError = "#fefcfc";
   inverseSurface = "#585050";
   inverseOnSurface = "#f4ecec";
 

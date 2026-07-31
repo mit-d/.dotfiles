@@ -16,7 +16,7 @@
   displayName = "0x96f";
   author = "Filip Janevski (https://0x96f.dev/theme)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#262427";
@@ -71,7 +71,7 @@
     brightBlue = "#60def8";
     brightMagenta = "#b3a6f6";
     brightCyan = "#d5f8ff";
-    brightWhite = "#fcfcfc";
+    brightWhite = "#e8e8e8";
   };
 
   orange = "#fc9d6f";

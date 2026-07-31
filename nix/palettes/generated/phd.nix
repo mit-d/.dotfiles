@@ -16,7 +16,7 @@
   displayName = "PhD";
   author = "Hennig Hasemann (http://leetless.de/vim.html)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#061229";

@@ -16,7 +16,7 @@
   displayName = "Darcula";
   author = "jetbrains";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#2b2b2b";
@@ -37,18 +37,18 @@
   onSurfaceFaint = "#606366";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#64676a";
+  outline = "#65686a";
   outlineVariant = "#424242";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#9876aa";
-  onPrimary = "#ffffff";
+  onPrimary = "#1b1b1b";
   primaryContainer = "#524658";
   onPrimaryContainer = "#ffffff";
   secondary = "#629755";
-  onSecondary = "#ffffff";
+  onSecondary = "#232323";
   tertiary = "#cc7832";
-  onTertiary = "#ffffff";
+  onTertiary = "#272626";
   error = "#4eade5";
   onError = "#2b2b2b";
   inverseSurface = "#a9b7c6";

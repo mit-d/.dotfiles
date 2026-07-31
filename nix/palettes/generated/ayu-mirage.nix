@@ -16,7 +16,7 @@
   displayName = "Ayu Mirage";
   author = "Tinted Theming (https://github.com/tinted-theming), Ayu Theme (https://github.com/ayu-theme)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1f2430";
@@ -34,10 +34,10 @@
   onSurface = "#cccac2";
   onSurfaceMuted = "#9da1a7";
   onSurfaceVariant = "#707a8c";
-  onSurfaceFaint = "#535962";
+  onSurfaceFaint = "#545962";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#5c616a";
+  outline = "#5c626a";
   outlineVariant = "#363c48";
 
   # --- Accent roles -------------------------------------------------------

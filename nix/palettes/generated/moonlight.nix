@@ -16,7 +16,7 @@
   displayName = "Moonlight";
   author = "Jeremy Swinarton (https://github.com/jswinarton)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#212337";
@@ -44,7 +44,7 @@
   primary = "#40ffff";
   onPrimary = "#212337";
   primaryContainer = "#396f7d";
-  onPrimaryContainer = "#e5e6e9";
+  onPrimaryContainer = "#e6e6e9";
   secondary = "#04d1f9";
   onSecondary = "#212337";
   tertiary = "#b994f1";

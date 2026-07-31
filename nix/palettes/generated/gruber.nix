@@ -16,7 +16,7 @@
   displayName = "Gruber";
   author = "Patel, Nimai <nimai.m.patel@gmail.com>, colors from www.github.com/rexim/gruber-darker-theme";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#181818";
@@ -34,7 +34,7 @@
   onSurface = "#f4f4ff";
   onSurfaceMuted = "#ececf7";
   onSurfaceVariant = "#e4e4ef";
-  onSurfaceFaint = "#564e53";
+  onSurfaceFaint = "#564e52";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#5e565b";

@@ -16,7 +16,7 @@
   displayName = "Dark Violet";
   author = "ruler501 (https://github.com/ruler501/base16-darkviolet)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#000000";
@@ -30,28 +30,28 @@
   surfaceVariant = "#231a40";
 
   # --- Text, strongest to faintest ----------------------------------------
-  onSurfaceStrong = "#ac7aff";
-  onSurface = "#a884dc";
-  onSurfaceMuted = "#6ba082";
-  onSurfaceVariant = "#00ad00";
+  onSurfaceStrong = "#b284ff";
+  onSurface = "#b08ae6";
+  onSurfaceMuted = "#70a787";
+  onSurfaceVariant = "#00b400";
   onSurfaceFaint = "#593380";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#62398f";
+  outline = "#613b8c";
   outlineVariant = "#432d59";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#4136d9";
-  onPrimary = "#c7c7c7";
+  onPrimary = "#d3bcff";
   primaryContainer = "#0a0737";
-  onPrimaryContainer = "#a366ff";
+  onPrimaryContainer = "#b284ff";
   secondary = "#40dfff";
   onSecondary = "#000000";
   tertiary = "#7e5ce6";
   onTertiary = "#000000";
   error = "#a82ee6";
-  onError = "#f3f3f3";
-  inverseSurface = "#a884dc";
+  onError = "#f3f3f2";
+  inverseSurface = "#b08ae6";
   inverseOnSurface = "#000000";
 
   # --- ANSI 16 ------------------------------------------------------------
@@ -71,12 +71,12 @@
     brightBlue = "#4e4cee";
     brightMagenta = "#8f6ffb";
     brightCyan = "#9becff";
-    brightWhite = "#a366ff";
+    brightWhite = "#b284ff";
   };
 
   orange = "#bb66cc";
   brightOrange = "#cf79e0";
-  cursor = "#4b3cdd";
+  cursor = "#493edc";
 
   tools = {
     bat = "ansi";

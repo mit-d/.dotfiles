@@ -16,7 +16,7 @@
   displayName = "pandora";
   author = "Cassandra Fox";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#131213";
@@ -30,27 +30,27 @@
   surfaceVariant = "#2f1823";
 
   # --- Text, strongest to faintest ----------------------------------------
-  onSurfaceStrong = "#b696a5";
+  onSurfaceStrong = "#b596a5";
   onSurface = "#f15c99";
-  onSurfaceMuted = "#c64570";
-  onSurfaceVariant = "#ac4b5e";
-  onSurfaceFaint = "#806274";
+  onSurfaceMuted = "#c54770";
+  onSurfaceVariant = "#a65062";
+  onSurfaceFaint = "#816274";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#ffbee3";
-  outlineVariant = "#482335";
+  outlineVariant = "#482435";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#008080";
-  onPrimary = "#f8f8f8";
+  onPrimary = "#f9f8f8";
   primaryContainer = "#1c3839";
-  onPrimaryContainer = "#b392a2";
+  onPrimaryContainer = "#b596a5";
   secondary = "#714ca6";
-  onSecondary = "#d9d8d9";
+  onSecondary = "#d9d9d9";
   tertiary = "#a24030";
-  onTertiary = "#d9d9d9";
+  onTertiary = "#dad9d9";
   error = "#b00b69";
-  onError = "#d3d2d3";
+  onError = "#d3d3d3";
   inverseSurface = "#f15c99";
   inverseOnSurface = "#131213";
 
@@ -71,7 +71,7 @@
     brightBlue = "#279292";
     brightMagenta = "#b65241";
     brightCyan = "#825eb9";
-    brightWhite = "#81506a";
+    brightWhite = "#b596a5";
   };
 
   orange = "#ff9153";

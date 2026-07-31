@@ -16,7 +16,7 @@
   displayName = "Atelier Dune Light";
   author = "Bram de Haan (http://atelierbramdehaan.nl)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fefbec";
@@ -48,7 +48,7 @@
   secondary = "#1fad83";
   onSecondary = "#20201d";
   tertiary = "#b854d4";
-  onTertiary = "#ffffff";
+  onTertiary = "#171614";
   error = "#d73737";
   onError = "#fefbec";
   inverseSurface = "#6e6b5e";

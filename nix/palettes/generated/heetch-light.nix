@@ -16,7 +16,7 @@
   displayName = "Heetch Light";
   author = "Geoffrey Teale (tealeg@gmail.com), Tinted Theming (https://github.com/tinted-theming)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#feffff";
@@ -48,7 +48,7 @@
   secondary = "#47f9f5";
   onSecondary = "#190134";
   tertiary = "#8f6c97";
-  onTertiary = "#ffffff";
+  onTertiary = "#090909";
   error = "#f80059";
   onError = "#190134";
   inverseSurface = "#5a496e";

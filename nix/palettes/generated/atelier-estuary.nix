@@ -16,7 +16,7 @@
   displayName = "Atelier Estuary";
   author = "Bram de Haan (http://atelierbramdehaan.nl)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#22221b";
@@ -48,9 +48,9 @@
   secondary = "#5b9d48";
   onSecondary = "#22221b";
   tertiary = "#5f9182";
-  onTertiary = "#ffffff";
+  onTertiary = "#21211b";
   error = "#ba6236";
-  onError = "#ffffff";
+  onError = "#0e0d0d";
   inverseSurface = "#929181";
   inverseOnSurface = "#22221b";
 

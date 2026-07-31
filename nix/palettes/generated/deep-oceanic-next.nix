@@ -16,7 +16,7 @@
   displayName = "Deep Oceanic Next";
   author = "spearkkk (https://github.com/spearkkk)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#001c1f";
@@ -34,11 +34,11 @@
   onSurface = "#d4e1e8";
   onSurfaceMuted = "#82bac5";
   onSurfaceVariant = "#0093a3";
-  onSurfaceFaint = "#215761";
+  onSurfaceFaint = "#215861";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#2e5f68";
-  outlineVariant = "#043842";
+  outline = "#2e6068";
+  outlineVariant = "#043942";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#568ccf";
@@ -48,9 +48,9 @@
   secondary = "#4fb7ae";
   onSecondary = "#001c1f";
   tertiary = "#8b66d6";
-  onTertiary = "#ffffff";
+  onTertiary = "#001315";
   error = "#d3464d";
-  onError = "#ffffff";
+  onError = "#09090a";
   inverseSurface = "#d4e1e8";
   inverseOnSurface = "#001c1f";
 

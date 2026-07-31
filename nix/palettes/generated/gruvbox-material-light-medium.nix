@@ -16,7 +16,7 @@
   displayName = "Gruvbox Material Light, Medium";
   author = "Mayush Kumar (https://github.com/MayushKumar), sainnhe (https://github.com/sainnhe/gruvbox-material-vscode)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fbf1c7";
@@ -50,7 +50,7 @@
   tertiary = "#945e80";
   onTertiary = "#fbf3cd";
   error = "#c14a4a";
-  onError = "#fdf7df";
+  onError = "#fdf7e0";
   inverseSurface = "#654735";
   inverseOnSurface = "#fbf1c7";
 

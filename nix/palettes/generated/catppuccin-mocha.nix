@@ -16,7 +16,7 @@
   displayName = "Catppuccin Mocha";
   author = "https://github.com/catppuccin/catppuccin";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1e1e2e";
@@ -33,11 +33,11 @@
   onSurfaceStrong = "#f5e0dc";
   onSurface = "#cdd6f4";
   onSurfaceMuted = "#9096b0";
-  onSurfaceVariant = "#737283";
+  onSurfaceVariant = "#737384";
   onSurfaceFaint = "#535465";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#5d5c6c";
+  outline = "#5c5c6c";
   outlineVariant = "#363748";
 
   # --- Accent roles -------------------------------------------------------

@@ -16,7 +16,7 @@
   displayName = "Brush Trees";
   author = "Abraham White <abelincoln.white@gmail.com>";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#e3efef";
@@ -31,10 +31,10 @@
 
   # --- Text, strongest to faintest ----------------------------------------
   onSurfaceStrong = "#42505e";
-  onSurface = "#5b6e7c";
-  onSurfaceMuted = "#637683";
+  onSurface = "#5b6e7b";
+  onSurfaceMuted = "#637682";
   onSurfaceVariant = "#6c808b";
-  onSurfaceFaint = "#8fa5ac";
+  onSurfaceFaint = "#8ea4ab";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#859aa2";
@@ -42,16 +42,16 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#868cb3";
-  onPrimary = "#ffffff";
+  onPrimary = "#262828";
   primaryContainer = "#bec9d8";
-  onPrimaryContainer = "#465665";
+  onPrimaryContainer = "#42505e";
   secondary = "#86b3b3";
-  onSecondary = "#ffffff";
+  onSecondary = "#36414d";
   tertiary = "#b386b2";
-  onTertiary = "#ffffff";
+  onTertiary = "#262f39";
   error = "#b38686";
-  onError = "#ffffff";
-  inverseSurface = "#5b6e7c";
+  onError = "#292b2b";
+  inverseSurface = "#5b6e7b";
   inverseOnSurface = "#e3efef";
 
   # --- ANSI 16 ------------------------------------------------------------
@@ -71,12 +71,12 @@
     brightBlue = "#747aa0";
     brightMagenta = "#a0749f";
     brightCyan = "#74a0a0";
-    brightWhite = "#485867";
+    brightWhite = "#42505e";
   };
 
   orange = "#d8bba2";
   brightOrange = "#c5a890";
-  cursor = "#8087ab";
+  cursor = "#8086ab";
 
   tools = {
     bat = "ansi";

@@ -16,7 +16,7 @@
   displayName = "Everforest Light (Soft)";
   author = "Marcio Sobel (https://github.com/marciosobel)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f3ead3";
@@ -33,24 +33,24 @@
   onSurfaceStrong = "#333c43";
   onSurface = "#5c6a72";
   onSurfaceMuted = "#677573";
-  onSurfaceVariant = "#717f74";
+  onSurfaceVariant = "#727f74";
   onSurfaceFaint = "#939f91";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#8c988c";
+  outline = "#8d988c";
   outlineVariant = "#ccc8b2";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#3a94c5";
-  onPrimary = "#ffffff";
+  onPrimary = "#20262b";
   primaryContainer = "#b1cad0";
   onPrimaryContainer = "#333c43";
   secondary = "#35a77c";
-  onSecondary = "#ffffff";
+  onSecondary = "#282f35";
   tertiary = "#df69ba";
-  onTertiary = "#ffffff";
+  onTertiary = "#272e33";
   error = "#f85552";
-  onError = "#ffffff";
+  onError = "#22292e";
   inverseSurface = "#5c6a72";
   inverseOnSurface = "#f3ead3";
 
@@ -76,7 +76,7 @@
 
   orange = "#f57d26";
   brightOrange = "#df6a00";
-  cursor = "#3b8fbd";
+  cursor = "#3b8ebd";
 
   tools = {
     bat = "ansi";

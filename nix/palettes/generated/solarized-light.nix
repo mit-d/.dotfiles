@@ -16,7 +16,7 @@
   displayName = "Solarized Light";
   author = "Ethan Schoonover (modified by aramisgithub)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fdf6e3";
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#268bd2";
-  onPrimary = "#ffffff";
+  onPrimary = "#00222c";
   primaryContainer = "#b2cee0";
   onPrimaryContainer = "#002b36";
   secondary = "#2aa198";
   onSecondary = "#002b36";
   tertiary = "#6c71c4";
-  onTertiary = "#ffffff";
+  onTertiary = "#0b0a09";
   error = "#dc322f";
-  onError = "#fefcf5";
+  onError = "#fefcf4";
   inverseSurface = "#586e75";
   inverseOnSurface = "#fdf6e3";
 

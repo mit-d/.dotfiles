@@ -16,7 +16,7 @@
   displayName = "Sakura";
   author = "Misterio77 (http://github.com/Misterio77)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#feedf3";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#755f64";
-  outlineVariant = "#ddc9ce";
+  outlineVariant = "#dcc9ce";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#006e93";
@@ -46,11 +46,11 @@
   primaryContainer = "#aabccf";
   onPrimaryContainer = "#33292b";
   secondary = "#1d8991";
-  onSecondary = "#ffffff";
+  onSecondary = "#141112";
   tertiary = "#5e2180";
   onTertiary = "#feedf3";
   error = "#df2d52";
-  onError = "#fffefe";
+  onError = "#050405";
   inverseSurface = "#564448";
   inverseOnSurface = "#feedf3";
 

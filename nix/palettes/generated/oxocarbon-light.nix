@@ -16,7 +16,7 @@
   displayName = "Oxocarbon Light";
   author = "shaunsingh/IBM, Tinted Theming (https://github.com/tinted-theming)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f2f4f8";
@@ -34,7 +34,7 @@
   onSurface = "#525f70";
   onSurfaceMuted = "#5d6b7e";
   onSurfaceVariant = "#68788d";
-  onSurfaceFaint = "#9da8b5";
+  onSurfaceFaint = "#9da7b5";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#929daa";

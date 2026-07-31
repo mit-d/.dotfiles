@@ -16,7 +16,7 @@
   displayName = "Catppuccin Macchiato";
   author = "https://github.com/catppuccin/catppuccin";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#24273a";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#636376";
-  outlineVariant = "#3b3e53";
+  outlineVariant = "#3b3e52";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#8aadf4";

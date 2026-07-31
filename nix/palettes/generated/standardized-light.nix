@@ -16,7 +16,7 @@
   displayName = "standardized-light";
   author = "ali (https://github.com/ali-githb/base16-standardized-scheme)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#ffffff";

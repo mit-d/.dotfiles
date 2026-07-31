@@ -16,7 +16,7 @@
   displayName = "Arroz con Dulce";
   author = "Richard Martinez";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fff8e7";
@@ -34,10 +34,10 @@
   onSurface = "#4a2c20";
   onSurfaceMuted = "#604332";
   onSurfaceVariant = "#765b45";
-  onSurfaceFaint = "#c5a578";
+  onSurfaceFaint = "#c5a478";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#ba9a70";
+  outline = "#b99a70";
   outlineVariant = "#e5d1b4";
 
   # --- Accent roles -------------------------------------------------------

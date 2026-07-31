@@ -16,7 +16,7 @@
   displayName = "Silk Dark";
   author = "Gabriel Fontes (https://github.com/Misterio77)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#0e3c46";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#5e777a";
-  outlineVariant = "#2c5256";
+  outlineVariant = "#2d5257";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#46bddd";
@@ -48,9 +48,9 @@
   secondary = "#3fb2b9";
   onSecondary = "#0e3c46";
   tertiary = "#756b8a";
-  onTertiary = "#d6faff";
+  onTertiary = "#d6fbff";
   error = "#fb6953";
-  onError = "#ffffff";
+  onError = "#0c353f";
   inverseSurface = "#c7dbdd";
   inverseOnSurface = "#0e3c46";
 

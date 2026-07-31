@@ -16,7 +16,7 @@
   displayName = "Materia";
   author = "Defman21";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#263238";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#707880";
-  outlineVariant = "#394951";
+  outlineVariant = "#394950";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#89ddff";
@@ -50,7 +50,7 @@
   tertiary = "#82aaff";
   onTertiary = "#263238";
   error = "#ec5f67";
-  onError = "#ffffff";
+  onError = "#1f292f";
   inverseSurface = "#cdd3de";
   inverseOnSurface = "#263238";
 

@@ -16,7 +16,7 @@
   displayName = "Blue Forest";
   author = "alonsodomin (https://github.com/alonsodomin)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#141f2e";
@@ -30,11 +30,11 @@
   surfaceVariant = "#1e5c1e";
 
   # --- Text, strongest to faintest ----------------------------------------
-  onSurfaceStrong = "#91ccff";
-  onSurface = "#efc039";
+  onSurfaceStrong = "#aad8ff";
+  onSurface = "#ffcc33";
   onSurfaceMuted = "#91932b";
-  onSurfaceVariant = "#407f65";
-  onSurfaceFaint = "#4e7d62";
+  onSurfaceVariant = "#457f5e";
+  onSurfaceFaint = "#4e7d63";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#a0ffa0";
@@ -44,14 +44,14 @@
   primary = "#a2cff5";
   onPrimary = "#141f2e";
   primaryContainer = "#455c73";
-  onPrimaryContainer = "#a5d5ff";
+  onPrimaryContainer = "#aad8ff";
   secondary = "#80ff80";
   onSecondary = "#141f2e";
   tertiary = "#0099ff";
   onTertiary = "#141f2e";
   error = "#fffab1";
   onError = "#141f2e";
-  inverseSurface = "#efc039";
+  inverseSurface = "#ffcc33";
   inverseOnSurface = "#141f2e";
 
   # --- ANSI 16 ------------------------------------------------------------
@@ -71,7 +71,7 @@
     brightBlue = "#bfe1ff";
     brightMagenta = "#54adff";
     brightCyan = "#d5ffd3";
-    brightWhite = "#91ccff";
+    brightWhite = "#aad8ff";
   };
 
   orange = "#ff8080";

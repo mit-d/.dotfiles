@@ -16,7 +16,7 @@
   displayName = "Solar Flare Light";
   author = "Chuck Harmston (https://chuck.harmston.ch)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f5f7fa";
@@ -48,9 +48,9 @@
   secondary = "#52cbb0";
   onSecondary = "#18262f";
   tertiary = "#a363d5";
-  onTertiary = "#ffffff";
+  onTertiary = "#0e191f";
   error = "#ef5253";
-  onError = "#ffffff";
+  onError = "#17242d";
   inverseSurface = "#586875";
   inverseOnSurface = "#f5f7fa";
 
@@ -76,7 +76,7 @@
 
   orange = "#e66b2b";
   brightOrange = "#d1580d";
-  cursor = "#319abf";
+  cursor = "#319ac0";
 
   tools = {
     bat = "ansi";

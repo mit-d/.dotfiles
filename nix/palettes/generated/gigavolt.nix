@@ -16,7 +16,7 @@
   displayName = "Gigavolt";
   author = "Aidan Swope (http://github.com/Whillikers)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#202126";

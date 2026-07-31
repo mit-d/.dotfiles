@@ -16,7 +16,7 @@
   displayName = "Spacemacs";
   author = "Nasser Alshammari (https://github.com/nashamri/spacemacs-theme)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1f2022";
@@ -37,7 +37,7 @@
   onSurfaceFaint = "#585858";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#5e5e5e";
+  outline = "#5e5e5d";
   outlineVariant = "#444155";
 
   # --- Accent roles -------------------------------------------------------
@@ -46,11 +46,11 @@
   primaryContainer = "#334a61";
   onPrimaryContainer = "#f8f8f8";
   secondary = "#2d9574";
-  onSecondary = "#ffffff";
+  onSecondary = "#1d1e1f";
   tertiary = "#a31db1";
   onTertiary = "#f8f8f8";
   error = "#f2241f";
-  onError = "#ffffff";
+  onError = "#111214";
   inverseSurface = "#a3a3a3";
   inverseOnSurface = "#1f2022";
 

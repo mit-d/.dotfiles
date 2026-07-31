@@ -16,7 +16,7 @@
   displayName = "Tomorrow Night Eighties";
   author = "Chris Kempson (http://chriskempson.com)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#2d2d2d";

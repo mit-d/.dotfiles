@@ -16,7 +16,7 @@
   displayName = "Gruvbox Material Light, Soft";
   author = "Mayush Kumar (https://github.com/MayushKumar), sainnhe (https://github.com/sainnhe/gruvbox-material-vscode)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f2e5bc";
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#45707a";
-  onPrimary = "#f4e9c7";
+  onPrimary = "#f4e9c8";
   primaryContainer = "#afb7a4";
   onPrimaryContainer = "#282828";
   secondary = "#4c7a5d";
-  onSecondary = "#faf4e3";
+  onSecondary = "#faf4e4";
   tertiary = "#945e80";
-  onTertiary = "#f8f2de";
+  onTertiary = "#f9f2de";
   error = "#c14a4a";
-  onError = "#fbf7ea";
+  onError = "#fbf7e9";
   inverseSurface = "#654735";
   inverseOnSurface = "#f2e5bc";
 

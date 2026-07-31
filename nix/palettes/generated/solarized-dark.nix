@@ -16,7 +16,7 @@
   displayName = "Solarized Dark";
   author = "Ethan Schoonover (modified by aramisgithub)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#002b36";
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#268bd2";
-  onPrimary = "#ffffff";
+  onPrimary = "#00222c";
   primaryContainer = "#0a4d6d";
   onPrimaryContainer = "#fdf6e3";
   secondary = "#2aa198";
   onSecondary = "#002b36";
   tertiary = "#6c71c4";
-  onTertiary = "#ffffff";
+  onTertiary = "#0b0a09";
   error = "#dc322f";
-  onError = "#fefcf5";
+  onError = "#fefcf4";
   inverseSurface = "#93a1a1";
   inverseOnSurface = "#002b36";
 

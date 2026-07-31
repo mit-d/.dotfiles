@@ -16,7 +16,7 @@
   displayName = "Windows High Contrast Light";
   author = "Fergus Collins (https://github.com/ferguscollins)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fcfcfc";
@@ -37,7 +37,7 @@
   onSurfaceFaint = "#acacac";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#a2a2a2";
+  outline = "#a2a1a1";
   outlineVariant = "#d4d4d4";
 
   # --- Accent roles -------------------------------------------------------

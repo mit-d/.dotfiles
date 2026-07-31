@@ -16,7 +16,7 @@
   displayName = "Terracotta Dark";
   author = "Alexander Rossell Hayes (https://github.com/rossellhayes)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#241d1a";
@@ -37,7 +37,7 @@
   onSurfaceFaint = "#62514a";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#6a5952";
+  outline = "#6b5952";
   outlineVariant = "#473933";
 
   # --- Accent roles -------------------------------------------------------

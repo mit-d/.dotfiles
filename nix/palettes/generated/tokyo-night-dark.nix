@@ -16,7 +16,7 @@
   displayName = "Tokyo Night Dark";
   author = "Michael Ball";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1a1b26";
@@ -34,10 +34,10 @@
   onSurface = "#a9b1d6";
   onSurfaceMuted = "#9096b7";
   onSurfaceVariant = "#787c99";
-  onSurfaceFaint = "#4a516f";
+  onSurfaceFaint = "#4b516f";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#535976";
+  outline = "#535a76";
   outlineVariant = "#2f3549";
 
   # --- Accent roles -------------------------------------------------------

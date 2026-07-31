@@ -16,7 +16,7 @@
   displayName = "Windows 10 Light";
   author = "Fergus Collins (https://github.com/ferguscollins)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f2f2f2";
@@ -31,14 +31,14 @@
 
   # --- Text, strongest to faintest ----------------------------------------
   onSurfaceStrong = "#0c0c0c";
-  onSurface = "#6f6f6f";
+  onSurface = "#6f6e6e";
   onSurfaceMuted = "#777777";
-  onSurfaceVariant = "#818181";
+  onSurfaceVariant = "#808080";
   onSurfaceFaint = "#a5a5a5";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#9a9a9a";
-  outlineVariant = "#cecece";
+  outlineVariant = "#cfcece";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#0037da";
@@ -51,7 +51,7 @@
   onTertiary = "#f2f2f2";
   error = "#c50f1f";
   onError = "#f2f2f2";
-  inverseSurface = "#6f6f6f";
+  inverseSurface = "#6f6e6e";
   inverseOnSurface = "#f2f2f2";
 
   # --- ANSI 16 ------------------------------------------------------------

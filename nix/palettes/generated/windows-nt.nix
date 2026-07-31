@@ -16,7 +16,7 @@
   displayName = "Windows NT";
   author = "Fergus Collins (https://github.com/ferguscollins)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#000000";
@@ -76,7 +76,7 @@
 
   orange = "#808000";
   brightOrange = "#929225";
-  cursor = "#0036ff";
+  cursor = "#0038ff";
 
   tools = {
     bat = "ansi";

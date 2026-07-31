@@ -16,7 +16,7 @@
   displayName = "caroline";
   author = "ed (https://codeberg.org/ed)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1c1213";
@@ -32,25 +32,25 @@
   # --- Text, strongest to faintest ----------------------------------------
   onSurfaceStrong = "#e3a68c";
   onSurface = "#a87569";
-  onSurfaceMuted = "#9a6960";
-  onSurfaceVariant = "#8f605a";
+  onSurfaceMuted = "#9a6a60";
+  onSurfaceVariant = "#8f615a";
   onSurfaceFaint = "#6d4745";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#734c49";
+  outline = "#744c49";
   outlineVariant = "#563837";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#684c59";
-  onPrimary = "#ecbdaa";
+  onPrimary = "#ecbeaa";
   primaryContainer = "#37272c";
   onPrimaryContainer = "#e3a68c";
   secondary = "#6b6566";
-  onSecondary = "#e5e4e4";
+  onSecondary = "#e6e4e4";
   tertiary = "#a63650";
-  onTertiary = "#f2d1c3";
+  onTertiary = "#f2d1c4";
   error = "#c24f57";
-  onError = "#fcfcfc";
+  onError = "#fdfcfc";
   inverseSurface = "#a87569";
   inverseOnSurface = "#1c1213";
 
@@ -76,7 +76,7 @@
 
   orange = "#a63650";
   brightOrange = "#ba4961";
-  cursor = "#7a5961";
+  cursor = "#7a5a61";
 
   tools = {
     bat = "ansi";

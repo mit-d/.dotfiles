@@ -16,7 +16,7 @@
   displayName = "Gruvbox light, hard";
   author = "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f9f5d7";
@@ -34,7 +34,7 @@
   onSurface = "#504945";
   onSurfaceMuted = "#5b524c";
   onSurfaceVariant = "#665c54";
-  onSurfaceFaint = "#b3a58c";
+  onSurfaceFaint = "#b2a58c";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#a79a84";

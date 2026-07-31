@@ -16,7 +16,7 @@
   displayName = "iA Light";
   author = "iA Inc. (modified by aramisgithub)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f6f6f6";
@@ -30,28 +30,28 @@
   surfaceVariant = "#dedede";
 
   # --- Text, strongest to faintest ----------------------------------------
-  onSurfaceStrong = "#545454";
-  onSurface = "#545454";
-  onSurfaceMuted = "#545454";
+  onSurfaceStrong = "#181818";
+  onSurface = "#181818";
+  onSurfaceMuted = "#444444";
   onSurfaceVariant = "#767676";
   onSurfaceFaint = "#898989";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#898989";
-  outlineVariant = "#b2d8e5";
+  outlineVariant = "#b3d8e5";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#48bac2";
-  onPrimary = "#ffffff";
+  onPrimary = "#181818";
   primaryContainer = "#bbe0e2";
-  onPrimaryContainer = "#5f5f5f";
+  onPrimaryContainer = "#181818";
   secondary = "#2d6bb1";
   onSecondary = "#f6f6f6";
   tertiary = "#a94598";
   onTertiary = "#f6f6f6";
   error = "#9c5a02";
   onError = "#f6f6f6";
-  inverseSurface = "#545454";
+  inverseSurface = "#181818";
   inverseOnSurface = "#f6f6f6";
 
   # --- ANSI 16 ------------------------------------------------------------
@@ -71,12 +71,12 @@
     brightBlue = "#30a7af";
     brightMagenta = "#953286";
     brightCyan = "#19599e";
-    brightWhite = "#e8e8e8";
+    brightWhite = "#0b0b0b";
   };
 
   orange = "#c43e18";
   brightOrange = "#ad2c00";
-  cursor = "#3b9ca3";
+  cursor = "#439ba2";
 
   tools = {
     bat = "ansi";

@@ -16,7 +16,7 @@
   displayName = "Edge Light";
   author = "cjayross (https://github.com/cjayross), Tinted Theming (https://github.com/tinted-theming)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fafafa";
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#6587bf";
-  onPrimary = "#ffffff";
+  onPrimary = "#1f1f26";
   primaryContainer = "#bfcee5";
   onPrimaryContainer = "#2e2e38";
   secondary = "#509c93";
-  onSecondary = "#ffffff";
+  onSecondary = "#282832";
   tertiary = "#b870ce";
-  onTertiary = "#ffffff";
+  onTertiary = "#25252e";
   error = "#db7070";
-  onError = "#ffffff";
+  onError = "#292932";
   inverseSurface = "#474752";
   inverseOnSurface = "#fafafa";
 

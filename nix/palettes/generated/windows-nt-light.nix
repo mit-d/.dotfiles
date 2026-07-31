@@ -16,7 +16,7 @@
   displayName = "Windows NT Light";
   author = "Fergus Collins (https://github.com/ferguscollins)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#ffffff";
@@ -31,13 +31,13 @@
 
   # --- Text, strongest to faintest ----------------------------------------
   onSurfaceStrong = "#000000";
-  onSurface = "#777777";
+  onSurface = "#767676";
   onSurfaceMuted = "#7f7f7f";
-  onSurfaceVariant = "#898989";
-  onSurfaceFaint = "#afafaf";
+  onSurfaceVariant = "#898988";
+  onSurfaceFaint = "#afaeae";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#a4a4a4";
+  outline = "#a3a3a3";
   outlineVariant = "#d5d5d5";
 
   # --- Accent roles -------------------------------------------------------
@@ -51,7 +51,7 @@
   onTertiary = "#ffffff";
   error = "#800000";
   onError = "#ffffff";
-  inverseSurface = "#777777";
+  inverseSurface = "#767676";
   inverseOnSurface = "#ffffff";
 
   # --- ANSI 16 ------------------------------------------------------------

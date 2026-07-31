@@ -16,7 +16,7 @@
   displayName = "Hopscotch";
   author = "Jan T. Sott";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#322931";
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#1290bf";
-  onPrimary = "#ffffff";
+  onPrimary = "#251d24";
   primaryContainer = "#374e63";
   onPrimaryContainer = "#ffffff";
   secondary = "#149b93";
-  onSecondary = "#ffffff";
+  onSecondary = "#2a222a";
   tertiary = "#c85e7c";
-  onTertiary = "#ffffff";
+  onTertiary = "#181818";
   error = "#dd464c";
-  onError = "#ffffff";
+  onError = "#121212";
   inverseSurface = "#b9b5b8";
   inverseOnSurface = "#322931";
 

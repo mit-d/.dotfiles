@@ -16,7 +16,7 @@
   displayName = "Gruvbox Material Dark, Soft";
   author = "Mayush Kumar (https://github.com/MayushKumar), sainnhe (https://github.com/sainnhe/gruvbox-material-vscode)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#32302f";
@@ -50,7 +50,7 @@
   tertiary = "#d3869b";
   onTertiary = "#32302f";
   error = "#ea6962";
-  onError = "#ffffff";
+  onError = "#2c2b2a";
   inverseSurface = "#ddc7a1";
   inverseOnSurface = "#32302f";
 

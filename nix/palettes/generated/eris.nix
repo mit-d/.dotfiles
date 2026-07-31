@@ -16,7 +16,7 @@
   displayName = "eris";
   author = "ed (https://codeberg.org/ed), Tinted Theming (https://github.com/tinted-theming)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#0a0920";
@@ -31,10 +31,10 @@
 
   # --- Text, strongest to faintest ----------------------------------------
   onSurfaceStrong = "#9aaae5";
-  onSurface = "#6975b5";
-  onSurfaceMuted = "#626dad";
-  onSurfaceVariant = "#5963a3";
-  onSurfaceFaint = "#3e4481";
+  onSurface = "#6976b6";
+  onSurfaceMuted = "#616dad";
+  onSurfaceVariant = "#5964a4";
+  onSurfaceFaint = "#3e4581";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#464d89";
@@ -51,7 +51,7 @@
   onTertiary = "#0a0920";
   error = "#f768a3";
   onError = "#0a0920";
-  inverseSurface = "#6975b5";
+  inverseSurface = "#6976b6";
   inverseOnSurface = "#0a0920";
 
   # --- ANSI 16 ------------------------------------------------------------

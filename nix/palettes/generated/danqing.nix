@@ -16,7 +16,7 @@
   displayName = "DanQing";
   author = "Wenhan Zhu (Cosmos) (zhuwenhan950913@gmail.com)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#2d302f";

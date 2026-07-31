@@ -16,7 +16,7 @@
   displayName = "Chinoiserie Morandi";
   author = "Di Wang (https://cs.cmu.edu/~diw3)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1d1d1d";
@@ -50,7 +50,7 @@
   tertiary = "#98a1d8";
   onTertiary = "#1d1d1d";
   error = "#c06061";
-  onError = "#ffffff";
+  onError = "#131313";
   inverseSurface = "#c4cbcf";
   inverseOnSurface = "#1d1d1d";
 

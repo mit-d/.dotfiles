@@ -16,7 +16,7 @@
   displayName = "Everforest Dark Hard";
   author = "Sainnhe Park (https://github.com/sainnhe)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#272e33";

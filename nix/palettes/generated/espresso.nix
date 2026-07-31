@@ -16,7 +16,7 @@
   displayName = "Espresso";
   author = "Unknown. Maintained by Alex Mirrington (https://github.com/alexmirrington)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#2d2d2d";
@@ -50,7 +50,7 @@
   tertiary = "#d197d9";
   onTertiary = "#2d2d2d";
   error = "#d25252";
-  onError = "#ffffff";
+  onError = "#121212";
   inverseSurface = "#cccccc";
   inverseOnSurface = "#2d2d2d";
 

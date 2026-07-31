@@ -16,7 +16,7 @@
   displayName = "Humanoid light";
   author = "Thomas (tasmo) Friese";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f8f8f2";
@@ -37,8 +37,8 @@
   onSurfaceFaint = "#a9a9a7";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#9f9f9c";
-  outlineVariant = "#d4d4ce";
+  outline = "#9e9e9c";
+  outlineVariant = "#d3d3ce";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#0082c9";

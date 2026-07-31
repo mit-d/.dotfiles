@@ -16,7 +16,7 @@
   displayName = "vulcan";
   author = "Andrey Varfolomeev";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#041523";
@@ -30,10 +30,10 @@
   surfaceVariant = "#122339";
 
   # --- Text, strongest to faintest ----------------------------------------
-  onSurfaceStrong = "#8da2b2";
+  onSurfaceStrong = "#8da3b2";
   onSurface = "#668194";
-  onSurfaceMuted = "#6a7687";
-  onSurfaceVariant = "#6c6a78";
+  onSurfaceMuted = "#697688";
+  onSurfaceVariant = "#6c6b79";
   onSurfaceFaint = "#7a5759";
 
   # --- Borders and dividers -----------------------------------------------
@@ -44,7 +44,7 @@
   primary = "#977d7c";
   onPrimary = "#041523";
   primaryContainer = "#383a44";
-  onPrimaryContainer = "#9da4ab";
+  onPrimaryContainer = "#91a7b5";
   secondary = "#977d7c";
   onSecondary = "#041523";
   tertiary = "#9198a3";
@@ -71,7 +71,7 @@
     brightBlue = "#aa8f8e";
     brightMagenta = "#a3abb6";
     brightCyan = "#aa8f8e";
-    brightWhite = "#214d68";
+    brightWhite = "#8da3b2";
   };
 
   orange = "#9198a3";

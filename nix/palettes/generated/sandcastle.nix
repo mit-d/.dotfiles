@@ -16,7 +16,7 @@
   displayName = "Sandcastle";
   author = "George Essig (https://github.com/gessig)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#282c34";
@@ -34,10 +34,10 @@
   onSurface = "#a89984";
   onSurfaceMuted = "#9d8e7c";
   onSurfaceVariant = "#928374";
-  onSurfaceFaint = "#685e55";
+  onSurfaceFaint = "#675e55";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#70665b";
+  outline = "#70675c";
   outlineVariant = "#3e4451";
 
   # --- Accent roles -------------------------------------------------------
@@ -48,7 +48,7 @@
   secondary = "#83a598";
   onSecondary = "#282c34";
   tertiary = "#d75f5f";
-  onTertiary = "#ffffff";
+  onTertiary = "#1b1e25";
   error = "#83a598";
   onError = "#282c34";
   inverseSurface = "#a89984";

@@ -16,7 +16,7 @@
   displayName = "Kanagawa Dragon";
   author = "Stefan Weigl-Bosker (https://github.com/sweiglbosker), Tommaso Laurenzi (https://github.com/rebelot/kanagawa.nvim)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#181616";
@@ -71,7 +71,7 @@
     brightBlue = "#9db7c3";
     brightMagenta = "#b5a4b6";
     brightCyan = "#a0b7b5";
-    brightWhite = "#c5c9c5";
+    brightWhite = "#d8dcd8";
   };
 
   orange = "#b6927b";

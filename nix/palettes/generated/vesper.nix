@@ -16,7 +16,7 @@
   displayName = "Vesper";
   author = "FormalSnake (https://github.com/formalsnake)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#101010";
@@ -34,10 +34,10 @@
   onSurface = "#b7b7b7";
   onSurfaceMuted = "#a8a8a8";
   onSurfaceVariant = "#999999";
-  onSurfaceFaint = "#4c4c4c";
+  onSurfaceFaint = "#4c4c4b";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#545454";
+  outline = "#545453";
   outlineVariant = "#2e2e2e";
 
   # --- Accent roles -------------------------------------------------------

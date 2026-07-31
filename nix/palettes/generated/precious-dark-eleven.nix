@@ -16,7 +16,7 @@
   displayName = "Precious Dark Eleven";
   author = "4lex4 <4lex49@zoho.com>";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1c1e20";
@@ -44,7 +44,7 @@
   primary = "#68b0ee";
   onPrimary = "#1c1e20";
   primaryContainer = "#395167";
-  onPrimaryContainer = "#c0bfbe";
+  onPrimaryContainer = "#c0c0bf";
   secondary = "#42bda7";
   onSecondary = "#1c1e20";
   tertiary = "#b799fe";
@@ -71,7 +71,7 @@
     brightBlue = "#7fc3ff";
     brightMagenta = "#c7b2ff";
     brightCyan = "#59d0ba";
-    brightWhite = "#b8b7b6";
+    brightWhite = "#cbcac9";
   };
 
   orange = "#ea9755";

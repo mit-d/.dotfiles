@@ -16,7 +16,7 @@
   displayName = "Cacao";
   author = "Teshre";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#160f0c";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#766052";
-  outlineVariant = "#3c2a20";
+  outlineVariant = "#3d2b20";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#a89ad0";

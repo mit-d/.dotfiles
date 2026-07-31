@@ -16,7 +16,7 @@
   displayName = "Monokai";
   author = "Wimer Hazenberg (http://www.monokai.nl)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#272822";
@@ -50,7 +50,7 @@
   tertiary = "#ae81ff";
   onTertiary = "#272822";
   error = "#f92672";
-  onError = "#ffffff";
+  onError = "#1c1c18";
   inverseSurface = "#f8f8f2";
   inverseOnSurface = "#272822";
 

@@ -16,7 +16,7 @@
   displayName = "selenized-light";
   author = "Jan Warchol (https://github.com/jan-warchol/selenized) / adapted to base16 by ali";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fbf3db";
@@ -32,8 +32,8 @@
   # --- Text, strongest to faintest ----------------------------------------
   onSurfaceStrong = "#3a4d53";
   onSurface = "#53676d";
-  onSurfaceMuted = "#6c7b7c";
-  onSurfaceVariant = "#788483";
+  onSurfaceMuted = "#6b7a7c";
+  onSurfaceVariant = "#788382";
   onSurfaceFaint = "#909995";
 
   # --- Borders and dividers -----------------------------------------------
@@ -46,7 +46,7 @@
   primaryContainer = "#a7c2db";
   onPrimaryContainer = "#3a4d53";
   secondary = "#00978a";
-  onSecondary = "#ffffff";
+  onSecondary = "#21201b";
   tertiary = "#825dc0";
   onTertiary = "#fcf5e0";
   error = "#cc1729";

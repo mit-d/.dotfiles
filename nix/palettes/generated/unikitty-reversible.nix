@@ -16,7 +16,7 @@
   displayName = "Unikitty Reversible";
   author = "Josh W Lewis (@joshwlewis)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#2e2a31";
@@ -42,13 +42,13 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#7864fa";
-  onPrimary = "#ffffff";
+  onPrimary = "#111110";
   primaryContainer = "#474278";
   onPrimaryContainer = "#ffffff";
   secondary = "#149bda";
   onSecondary = "#2e2a31";
   tertiary = "#b33ce8";
-  onTertiary = "#ffffff";
+  onTertiary = "#090808";
   error = "#d8137f";
   onError = "#ffffff";
   inverseSurface = "#c3c2c4";

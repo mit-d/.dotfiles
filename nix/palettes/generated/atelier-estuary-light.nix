@@ -16,7 +16,7 @@
   displayName = "Atelier Estuary Light";
   author = "Bram de Haan (http://atelierbramdehaan.nl)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f4f3ec";
@@ -48,9 +48,9 @@
   secondary = "#5b9d48";
   onSecondary = "#22221b";
   tertiary = "#5f9182";
-  onTertiary = "#ffffff";
+  onTertiary = "#21211b";
   error = "#ba6236";
-  onError = "#ffffff";
+  onError = "#0e0d0d";
   inverseSurface = "#5f5e4e";
   inverseOnSurface = "#f4f3ec";
 
@@ -76,7 +76,7 @@
 
   orange = "#ae7313";
   brightOrange = "#996200";
-  cursor = "#369f65";
+  cursor = "#369e65";
 
   tools = {
     bat = "ansi";

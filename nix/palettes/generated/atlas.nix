@@ -16,7 +16,7 @@
   displayName = "Atlas";
   author = "Alex Lende (https://ajlende.com)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#002635";
@@ -48,7 +48,7 @@
   secondary = "#5dd7b9";
   onSecondary = "#002635";
   tertiary = "#9a70a4";
-  onTertiary = "#ffffff";
+  onTertiary = "#001824";
   error = "#ff5a67";
   onError = "#002635";
   inverseSurface = "#a1a19a";

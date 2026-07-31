@@ -16,7 +16,7 @@
   displayName = "Atelier Savanna Light";
   author = "Bram de Haan (http://atelierbramdehaan.nl)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#ecf4ee";
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#478c90";
-  onPrimary = "#ffffff";
+  onPrimary = "#161b18";
   primaryContainer = "#aeccc9";
   onPrimaryContainer = "#171c19";
   secondary = "#1c9aa0";
   onSecondary = "#171c19";
   tertiary = "#55859b";
-  onTertiary = "#ffffff";
+  onTertiary = "#121714";
   error = "#b16139";
-  onError = "#fefefe";
+  onError = "#050505";
   inverseSurface = "#526057";
   inverseOnSurface = "#ecf4ee";
 

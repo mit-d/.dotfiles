@@ -16,7 +16,7 @@
   displayName = "Da One Sea";
   author = "NNB (https://github.com/NNBnh)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#22273d";
@@ -71,7 +71,7 @@
     brightBlue = "#94cbff";
     brightMagenta = "#eeb9ff";
     brightCyan = "#dcfcff";
-    brightWhite = "#ffffff";
+    brightWhite = "#ebebeb";
   };
 
   orange = "#ffc387";

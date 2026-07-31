@@ -16,7 +16,7 @@
   displayName = "Primer Dark Dimmed";
   author = "Jimmy Lin";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1c2128";
@@ -37,7 +37,7 @@
   onSurfaceFaint = "#545d68";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#565f6a";
+  outline = "#565f6b";
   outlineVariant = "#444c56";
 
   # --- Accent roles -------------------------------------------------------

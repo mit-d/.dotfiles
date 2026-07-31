@@ -16,7 +16,7 @@
   displayName = "Noche";
   author = "Teshre";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#0c0e16";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#5a6178";
-  outlineVariant = "#252c42";
+  outlineVariant = "#252d42";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#7aa0e8";

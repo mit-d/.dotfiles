@@ -16,7 +16,7 @@
   displayName = "Penumbra Dark Contrast Plus";
   author = "Zachary Weiss (https://github.com/zacharyweiss)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#181b1f";

@@ -16,7 +16,7 @@
   displayName = "Bosque";
   author = "Teshre";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#0e1410";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#5c6e5e";
-  outlineVariant = "#223326";
+  outlineVariant = "#223426";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#6dae9e";

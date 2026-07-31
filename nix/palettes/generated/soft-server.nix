@@ -16,7 +16,7 @@
   displayName = "Soft Server";
   author = "FredHappyface (https://github.com/fredHappyface)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#211e2a";

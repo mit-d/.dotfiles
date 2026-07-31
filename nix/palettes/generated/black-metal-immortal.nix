@@ -16,7 +16,7 @@
   displayName = "Black Metal (Immortal)";
   author = "metalelf0 (https://github.com/metalelf0)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#000000";
@@ -34,11 +34,11 @@
   onSurface = "#c1c1c1";
   onSurfaceMuted = "#adadad";
   onSurfaceVariant = "#999999";
-  onSurfaceFaint = "#454545";
+  onSurfaceFaint = "#464645";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#4d4d4d";
-  outlineVariant = "#272727";
+  outline = "#4e4e4d";
+  outlineVariant = "#272726";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#888888";
@@ -71,7 +71,7 @@
     brightBlue = "#9a9a9a";
     brightMagenta = "#acacac";
     brightCyan = "#bdbdbd";
-    brightWhite = "#c1c1c1";
+    brightWhite = "#d4d4d4";
   };
 
   orange = "#aaaaaa";

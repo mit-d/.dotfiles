@@ -16,7 +16,7 @@
   displayName = "Atelier Sulphurpool";
   author = "Bram de Haan (http://atelierbramdehaan.nl)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#202746";
@@ -42,13 +42,13 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#3d8fd1";
-  onPrimary = "#ffffff";
+  onPrimary = "#1b223d";
   primaryContainer = "#2d4c78";
   onPrimaryContainer = "#f5f7ff";
   secondary = "#22a2c9";
   onSecondary = "#202746";
   tertiary = "#6679cc";
-  onTertiary = "#ffffff";
+  onTertiary = "#141516";
   error = "#c94922";
   onError = "#f8faff";
   inverseSurface = "#979db4";

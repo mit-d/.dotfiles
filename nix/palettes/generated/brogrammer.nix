@@ -16,7 +16,7 @@
   displayName = "Brogrammer";
   author = "Vik Ramanujam (http://github.com/piggyslasher)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1f1f1f";
@@ -32,8 +32,8 @@
   # --- Text, strongest to faintest ----------------------------------------
   onSurfaceStrong = "#d6dbe5";
   onSurface = "#7382c7";
-  onSurfaceMuted = "#537cc9";
-  onSurfaceVariant = "#2b81cc";
+  onSurfaceMuted = "#537dc9";
+  onSurfaceVariant = "#2a81cd";
   onSurfaceFaint = "#967a2d";
 
   # --- Borders and dividers -----------------------------------------------
@@ -46,9 +46,9 @@
   primaryContainer = "#313356";
   onPrimaryContainer = "#d6dbe5";
   secondary = "#1081d6";
-  onSecondary = "#ffffff";
+  onSecondary = "#141414";
   tertiary = "#0f7ddb";
-  onTertiary = "#ffffff";
+  onTertiary = "#101010";
   error = "#d6dbe5";
   onError = "#1f1f1f";
   inverseSurface = "#7382c7";
@@ -76,7 +76,7 @@
 
   orange = "#de352e";
   brightOrange = "#f44c41";
-  cursor = "#5d5ebe";
+  cursor = "#5e5fbe";
 
   tools = {
     bat = "ansi";

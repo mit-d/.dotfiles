@@ -16,7 +16,7 @@
   displayName = "Everforest Light (Medium)";
   author = "Marcio Sobel (https://github.com/marciosobel)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fdf6e3";
@@ -32,25 +32,25 @@
   # --- Text, strongest to faintest ----------------------------------------
   onSurfaceStrong = "#2d353b";
   onSurface = "#5c6a72";
-  onSurfaceMuted = "#6e7d79";
+  onSurfaceMuted = "#6e7c79";
   onSurfaceVariant = "#79877a";
   onSurfaceFaint = "#939f91";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#939f91";
-  outlineVariant = "#d6d3bf";
+  outlineVariant = "#d5d3bf";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#3a94c5";
-  onPrimary = "#ffffff";
+  onPrimary = "#20262b";
   primaryContainer = "#b7d1da";
   onPrimaryContainer = "#2d353b";
   secondary = "#35a77c";
-  onSecondary = "#ffffff";
+  onSecondary = "#282f35";
   tertiary = "#df69ba";
-  onTertiary = "#ffffff";
+  onTertiary = "#272e33";
   error = "#f85552";
-  onError = "#ffffff";
+  onError = "#22292e";
   inverseSurface = "#5c6a72";
   inverseOnSurface = "#fdf6e3";
 

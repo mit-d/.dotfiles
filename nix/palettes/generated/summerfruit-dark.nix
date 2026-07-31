@@ -16,7 +16,7 @@
   displayName = "Summerfruit Dark";
   author = "Christopher Corley (http://christop.club/)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#151515";
@@ -37,12 +37,12 @@
   onSurfaceFaint = "#505050";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#565656";
+  outline = "#575756";
   outlineVariant = "#313131";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#3777e6";
-  onPrimary = "#ffffff";
+  onPrimary = "#0f0f0f";
   primaryContainer = "#24395d";
   onPrimaryContainer = "#ffffff";
   secondary = "#1faaaa";

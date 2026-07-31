@@ -16,7 +16,7 @@
   displayName = "Nord";
   author = "arcticicestudio";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#2e3440";
@@ -34,10 +34,10 @@
   onSurface = "#e5e9f0";
   onSurfaceMuted = "#dee3ed";
   onSurfaceVariant = "#d8dee9";
-  onSurfaceFaint = "#5e677a";
+  onSurfaceFaint = "#5e687a";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#677082";
+  outline = "#667082";
   outlineVariant = "#434c5e";
 
   # --- Accent roles -------------------------------------------------------
@@ -48,9 +48,9 @@
   secondary = "#88c0d0";
   onSecondary = "#2e3440";
   tertiary = "#b48ead";
-  onTertiary = "#ffffff";
+  onTertiary = "#2d323e";
   error = "#bf616a";
-  onError = "#ffffff";
+  onError = "#141415";
   inverseSurface = "#e5e9f0";
   inverseOnSurface = "#2e3440";
 

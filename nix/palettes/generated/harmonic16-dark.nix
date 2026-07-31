@@ -16,7 +16,7 @@
   displayName = "Harmonic16 Dark";
   author = "Jannik Siebert (https://github.com/janniks)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#0b1c2c";
@@ -48,7 +48,7 @@
   secondary = "#568bbf";
   onSecondary = "#0b1c2c";
   tertiary = "#bf568b";
-  onTertiary = "#ffffff";
+  onTertiary = "#0e0e0f";
   error = "#bf8b56";
   onError = "#0b1c2c";
   inverseSurface = "#cbd6e2";

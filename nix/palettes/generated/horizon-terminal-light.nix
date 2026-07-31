@@ -16,7 +16,7 @@
   displayName = "Horizon Terminal Light";
   author = "Michael Ball (http://github.com/michael-ball/)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fdf0ed";
@@ -34,10 +34,10 @@
   onSurface = "#403c3d";
   onSurfaceMuted = "#686362";
   onSurfaceVariant = "#877f7e";
-  onSurfaceFaint = "#ada4a2";
+  onSurfaceFaint = "#ada3a2";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#a29998";
+  outline = "#a29997";
   outlineVariant = "#f2c5b9";
 
   # --- Accent roles -------------------------------------------------------
@@ -76,7 +76,7 @@
 
   orange = "#f9cec3";
   brightOrange = "#e5bbb0";
-  cursor = "#3299b0";
+  cursor = "#3298b0";
 
   tools = {
     bat = "ansi";

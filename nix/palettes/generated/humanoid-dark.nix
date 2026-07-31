@@ -16,7 +16,7 @@
   displayName = "Humanoid dark";
   author = "Thomas (tasmo) Friese";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#232629";
@@ -50,7 +50,7 @@
   tertiary = "#f15ee3";
   onTertiary = "#232629";
   error = "#f11235";
-  onError = "#ffffff";
+  onError = "#0d0d0d";
   inverseSurface = "#f8f8f2";
   inverseOnSurface = "#232629";
 

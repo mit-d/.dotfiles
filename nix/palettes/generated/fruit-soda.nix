@@ -16,7 +16,7 @@
   displayName = "Fruit Soda";
   author = "jozip";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f1ecf1";
@@ -34,11 +34,11 @@
   onSurface = "#515151";
   onSurfaceMuted = "#737274";
   onSurfaceVariant = "#7f7d7f";
-  onSurfaceFaint = "#a2a1a3";
+  onSurfaceFaint = "#a3a1a3";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#989798";
-  outlineVariant = "#cdcaca";
+  outline = "#989698";
+  outlineVariant = "#cccac9";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#2931df";
@@ -50,7 +50,7 @@
   tertiary = "#611fce";
   onTertiary = "#f1ecf1";
   error = "#fe3e31";
-  onError = "#ffffff";
+  onError = "#222222";
   inverseSurface = "#515151";
   inverseOnSurface = "#f1ecf1";
 

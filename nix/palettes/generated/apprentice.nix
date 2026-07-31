@@ -16,7 +16,7 @@
   displayName = "Apprentice";
   author = "romainl";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#262626";
@@ -30,11 +30,11 @@
   surfaceVariant = "#af5f5f";
 
   # --- Text, strongest to faintest ----------------------------------------
-  onSurfaceStrong = "#9db5b5";
-  onSurface = "#898aa8";
-  onSurfaceMuted = "#7283a7";
-  onSurfaceVariant = "#5f87af";
-  onSurfaceFaint = "#86865e";
+  onSurfaceStrong = "#9db6b5";
+  onSurface = "#808ea0";
+  onSurfaceMuted = "#7085a2";
+  onSurfaceVariant = "#5f87ae";
+  onSurfaceFaint = "#85855e";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#87875f";
@@ -42,7 +42,7 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#8787af";
-  onPrimary = "#ffffff";
+  onPrimary = "#242424";
   primaryContainer = "#484956";
   onPrimaryContainer = "#a7bdbc";
   secondary = "#87afd7";
@@ -50,8 +50,8 @@
   tertiary = "#5fafaf";
   onTertiary = "#262626";
   error = "#444444";
-  onError = "#9db5b5";
-  inverseSurface = "#898aa8";
+  onError = "#9db6b5";
+  inverseSurface = "#808ea0";
   inverseOnSurface = "#262626";
 
   # --- ANSI 16 ------------------------------------------------------------
@@ -71,7 +71,7 @@
     brightBlue = "#9999c2";
     brightMagenta = "#72c2c2";
     brightCyan = "#99c2eb";
-    brightWhite = "#5f8787";
+    brightWhite = "#9db6b5";
   };
 
   orange = "#ff8700";

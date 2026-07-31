@@ -16,7 +16,7 @@
   displayName = "Chalk";
   author = "Chris Kempson (http://chriskempson.com)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#151515";
@@ -37,8 +37,8 @@
   onSurfaceFaint = "#505050";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#565656";
-  outlineVariant = "#313131";
+  outline = "#575756";
+  outlineVariant = "#313130";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#6fc2ef";

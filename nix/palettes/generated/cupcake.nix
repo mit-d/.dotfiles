@@ -16,7 +16,7 @@
   displayName = "Cupcake";
   author = "Chris Kempson (http://chriskempson.com)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fbf1f2";
@@ -31,27 +31,27 @@
 
   # --- Text, strongest to faintest ----------------------------------------
   onSurfaceStrong = "#574f61";
-  onSurface = "#756c81";
+  onSurface = "#756c80";
   onSurfaceMuted = "#7d7488";
-  onSurfaceVariant = "#867e90";
+  onSurfaceVariant = "#867e91";
   onSurfaceFaint = "#aaa3b2";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#9f99a8";
+  outline = "#9f98a7";
   outlineVariant = "#d1ced7";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#7297b9";
-  onPrimary = "#ffffff";
+  onPrimary = "#2f2c2d";
   primaryContainer = "#c6cedd";
-  onPrimaryContainer = "#585062";
+  onPrimaryContainer = "#574f61";
   secondary = "#69a9a7";
-  onSecondary = "#ffffff";
+  onSecondary = "#393440";
   tertiary = "#bb99b4";
-  onTertiary = "#ffffff";
+  onTertiary = "#3d3845";
   error = "#d57e85";
-  onError = "#ffffff";
-  inverseSurface = "#756c81";
+  onError = "#332d39";
+  inverseSurface = "#756c80";
   inverseOnSurface = "#fbf1f2";
 
   # --- ANSI 16 ------------------------------------------------------------
@@ -71,7 +71,7 @@
     brightBlue = "#6085a6";
     brightMagenta = "#a887a1";
     brightCyan = "#579695";
-    brightWhite = "#585062";
+    brightWhite = "#574f61";
   };
 
   orange = "#ebb790";

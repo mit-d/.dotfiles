@@ -16,7 +16,7 @@
   displayName = "OceanicNext";
   author = "https://github.com/voronianski/oceanic-next-color-scheme";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1b2b34";
@@ -50,7 +50,7 @@
   tertiary = "#c594c5";
   onTertiary = "#1b2b34";
   error = "#ec5f67";
-  onError = "#ffffff";
+  onError = "#1a2a32";
   inverseSurface = "#c0c5ce";
   inverseOnSurface = "#1b2b34";
 

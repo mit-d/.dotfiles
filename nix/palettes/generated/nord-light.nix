@@ -16,7 +16,7 @@
   displayName = "Nord Light";
   author = "threddast, based on fuxialexander's doom-nord-light-theme (Doom Emacs)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#e5e9f0";
@@ -30,11 +30,11 @@
   surfaceVariant = "#c2d0e7";
 
   # --- Text, strongest to faintest ----------------------------------------
-  onSurfaceStrong = "#3b4252";
-  onSurface = "#3c424e";
+  onSurfaceStrong = "#2e3341";
+  onSurface = "#2e3440";
   onSurfaceMuted = "#465265";
   onSurfaceVariant = "#60728c";
-  onSurfaceFaint = "#949fb3";
+  onSurfaceFaint = "#949eb2";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#8a94a8";
@@ -42,16 +42,16 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#3b6ea8";
-  onPrimary = "#eaedf3";
+  onPrimary = "#eaeef3";
   primaryContainer = "#a3bad6";
-  onPrimaryContainer = "#3b4252";
+  onPrimaryContainer = "#2e3341";
   secondary = "#398eac";
-  onSecondary = "#ffffff";
+  onSecondary = "#1a1d27";
   tertiary = "#97365b";
   onTertiary = "#e5e9f0";
   error = "#99324b";
   onError = "#e5e9f0";
-  inverseSurface = "#3c424e";
+  inverseSurface = "#2e3440";
   inverseOnSurface = "#e5e9f0";
 
   # --- ANSI 16 ------------------------------------------------------------
@@ -71,7 +71,7 @@
     brightBlue = "#295c95";
     brightMagenta = "#83234b";
     brightCyan = "#237c99";
-    brightWhite = "#3b4252";
+    brightWhite = "#2e3341";
   };
 
   orange = "#ac4426";

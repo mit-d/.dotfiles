@@ -16,7 +16,7 @@
   displayName = "Tokyo Night Light";
   author = "Michael Ball";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#d5d6db";
@@ -34,11 +34,11 @@
   onSurface = "#343b59";
   onSurfaceMuted = "#40465c";
   onSurfaceVariant = "#4c505e";
-  onSurfaceFaint = "#8d909a";
+  onSurfaceFaint = "#8d8f9a";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#838690";
-  outlineVariant = "#b4b6bc";
+  outline = "#838691";
+  outlineVariant = "#b4b5bc";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#34548a";

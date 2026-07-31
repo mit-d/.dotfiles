@@ -16,7 +16,7 @@
   displayName = "Zenbones";
   author = "mcchrish";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#191919";
@@ -32,9 +32,9 @@
   # --- Text, strongest to faintest ----------------------------------------
   onSurfaceStrong = "#bbbbbb";
   onSurface = "#b279a7";
-  onSurfaceMuted = "#8c87af";
-  onSurfaceVariant = "#5c91b6";
-  onSurfaceFaint = "#b77e64";
+  onSurfaceMuted = "#8b87ae";
+  onSurfaceVariant = "#5c91b5";
+  onSurfaceFaint = "#b67e64";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#b77e64";

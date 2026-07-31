@@ -16,7 +16,7 @@
   displayName = "Pop";
   author = "Chris Kempson (http://chriskempson.com)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#000000";
@@ -76,7 +76,7 @@
 
   orange = "#f29333";
   brightOrange = "#ffaa5e";
-  cursor = "#145c95";
+  cursor = "#145c96";
 
   tools = {
     bat = "ansi";

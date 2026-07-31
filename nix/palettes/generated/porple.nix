@@ -16,7 +16,7 @@
   displayName = "Porple";
   author = "Niek den Breeje (https://github.com/AuditeMarlow)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#292c36";
@@ -34,23 +34,23 @@
   onSurface = "#d8d8d8";
   onSurfaceMuted = "#c8c8c8";
   onSurfaceVariant = "#b8b8b8";
-  onSurfaceFaint = "#66578b";
+  onSurfaceFaint = "#66588b";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#6e6092";
+  outline = "#6e6192";
   outlineVariant = "#474160";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#8485ce";
-  onPrimary = "#ffffff";
+  onPrimary = "#23252e";
   primaryContainer = "#494c6c";
   onPrimaryContainer = "#f8f8f8";
   secondary = "#64878f";
-  onSecondary = "#ffffff";
+  onSecondary = "#1a1919";
   tertiary = "#b74989";
   onTertiary = "#f8f8f8";
   error = "#f84547";
-  onError = "#ffffff";
+  onError = "#1f212a";
   inverseSurface = "#d8d8d8";
   inverseOnSurface = "#292c36";
 

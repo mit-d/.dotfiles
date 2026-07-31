@@ -16,7 +16,7 @@
   displayName = "Silk Light";
   author = "Gabriel Fontes (https://github.com/Misterio77)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#e9f1ef";
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#39aac9";
-  onPrimary = "#ffffff";
+  onPrimary = "#0d3a44";
   primaryContainer = "#add6e1";
   onPrimaryContainer = "#0e3c46";
   secondary = "#329ca2";
-  onSecondary = "#ffffff";
+  onSecondary = "#082c34";
   tertiary = "#6e6582";
   onTertiary = "#e9f1ef";
   error = "#cf432e";
-  onError = "#f9fbfb";
+  onError = "#f9fcfb";
   inverseSurface = "#385156";
   inverseOnSurface = "#e9f1ef";
 
@@ -76,7 +76,7 @@
 
   orange = "#d27f46";
   brightOrange = "#be6d33";
-  cursor = "#3196b1";
+  cursor = "#3195b1";
 
   tools = {
     bat = "ansi";

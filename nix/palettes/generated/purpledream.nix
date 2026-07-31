@@ -16,7 +16,7 @@
   displayName = "Purpledream";
   author = "malet";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#100510";

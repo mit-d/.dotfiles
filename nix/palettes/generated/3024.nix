@@ -16,7 +16,7 @@
   displayName = "3024";
   author = "Jan T. Sott (http://github.com/idleberg)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#090300";
@@ -50,7 +50,7 @@
   tertiary = "#a16a94";
   onTertiary = "#090300";
   error = "#db2d20";
-  onError = "#f8f8f8";
+  onError = "#f9f9f8";
   inverseSurface = "#a5a2a2";
   inverseOnSurface = "#090300";
 

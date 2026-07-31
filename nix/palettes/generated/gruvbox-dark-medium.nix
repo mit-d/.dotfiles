@@ -16,7 +16,7 @@
   displayName = "Gruvbox dark, medium";
   author = "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#282828";
@@ -50,7 +50,7 @@
   tertiary = "#d3869b";
   onTertiary = "#282828";
   error = "#fb4934";
-  onError = "#ffffff";
+  onError = "#252424";
   inverseSurface = "#d5c4a1";
   inverseOnSurface = "#282828";
 

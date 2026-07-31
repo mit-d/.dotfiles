@@ -16,7 +16,7 @@
   displayName = "Tango";
   author = "@Schnouki, based on the Tango Desktop Project";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#2e3436";
@@ -37,7 +37,7 @@
   onSurfaceFaint = "#656763";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#6d6f6b";
+  outline = "#6e6f6c";
   outlineVariant = "#fce94f";
 
   # --- Accent roles -------------------------------------------------------
@@ -46,7 +46,7 @@
   primaryContainer = "#32475e";
   onPrimaryContainer = "#eeeeec";
   secondary = "#06989a";
-  onSecondary = "#ffffff";
+  onSecondary = "#1f2325";
   tertiary = "#75507b";
   onTertiary = "#eeeeec";
   error = "#cc0000";
@@ -76,7 +76,7 @@
 
   orange = "#ef2929";
   brightOrange = "#ff4e45";
-  cursor = "#557db2";
+  cursor = "#557eb2";
 
   tools = {
     bat = "ansi";

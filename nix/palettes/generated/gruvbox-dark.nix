@@ -16,7 +16,7 @@
   displayName = "Gruvbox dark";
   author = "Tinted Theming (https://github.com/tinted-theming), morhetz (https://github.com/morhetz/gruvbox)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#282828";
@@ -42,13 +42,13 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#458588";
-  onPrimary = "#ffffff";
+  onPrimary = "#10100d";
   primaryContainer = "#35494a";
   onPrimaryContainer = "#f9f5d7";
   secondary = "#689d6a";
   onSecondary = "#282828";
   tertiary = "#b16286";
-  onTertiary = "#ffffff";
+  onTertiary = "#10100d";
   error = "#cc241d";
   onError = "#f9f5d7";
   inverseSurface = "#ebdbb2";

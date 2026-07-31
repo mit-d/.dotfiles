@@ -16,7 +16,7 @@
   displayName = "Nova";
   author = "George Essig (https://github.com/gessig), Trevor D. Miller (https://trevordmiller.com)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#3c4c55";
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#83afe5";
-  onPrimary = "#ffffff";
+  onPrimary = "#34434b";
   primaryContainer = "#567089";
   onPrimaryContainer = "#edf0f2";
   secondary = "#f2c38f";
   onSecondary = "#3c4c55";
   tertiary = "#9a93e1";
-  onTertiary = "#ffffff";
+  onTertiary = "#2a363d";
   error = "#83afe5";
-  onError = "#ffffff";
+  onError = "#34434b";
   inverseSurface = "#c5d4dd";
   inverseOnSurface = "#3c4c55";
 
@@ -71,7 +71,7 @@
     brightBlue = "#95c2f9";
     brightMagenta = "#aca6f5";
     brightCyan = "#ffd9af";
-    brightWhite = "#899ba6";
+    brightWhite = "#e0e5e8";
   };
 
   orange = "#7fc1ca";

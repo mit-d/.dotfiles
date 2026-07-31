@@ -16,7 +16,7 @@
   displayName = "Measured Light";
   author = "Measured (https://measured.co)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fdf9f5";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#5a5a5a";
-  outlineVariant = "#e5d2c3";
+  outlineVariant = "#e4d2c3";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#0158ad";

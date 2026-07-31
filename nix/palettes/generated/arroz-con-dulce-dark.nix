@@ -16,7 +16,7 @@
   displayName = "Arroz con Dulce Dark";
   author = "Richard Martinez";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#21140f";

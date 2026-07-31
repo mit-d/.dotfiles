@@ -16,7 +16,7 @@
   displayName = "Cupertino";
   author = "Defman21";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#ffffff";
@@ -46,7 +46,7 @@
   primaryContainer = "#94baff";
   onPrimaryContainer = "#404040";
   secondary = "#318495";
-  onSecondary = "#ffffff";
+  onSecondary = "#0d0d0d";
   tertiary = "#a90d91";
   onTertiary = "#ffffff";
   error = "#c41a15";
@@ -71,7 +71,7 @@
     brightBlue = "#0026be";
     brightMagenta = "#90007b";
     brightCyan = "#197283";
-    brightWhite = "#404040";
+    brightWhite = "#313131";
   };
 
   orange = "#eb8500";

@@ -16,7 +16,7 @@
   displayName = "Ayu Light";
   author = "Tinted Theming (https://github.com/tinted-theming), Ayu Theme (https://github.com/ayu-theme)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f8f9fa";
@@ -33,7 +33,7 @@
   onSurfaceStrong = "#404447";
   onSurface = "#5c6166";
   onSurfaceMuted = "#73797f";
-  onSurfaceVariant = "#7f868d";
+  onSurfaceVariant = "#7f858d";
   onSurfaceFaint = "#a0a6ac";
 
   # --- Borders and dividers -----------------------------------------------
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#399ee6";
-  onPrimary = "#ffffff";
+  onPrimary = "#2d3133";
   primaryContainer = "#b5d7f4";
   onPrimaryContainer = "#404447";
   secondary = "#4cbf99";
-  onSecondary = "#ffffff";
+  onSecondary = "#3e4144";
   tertiary = "#a37acc";
-  onTertiary = "#ffffff";
+  onTertiary = "#252526";
   error = "#f07171";
-  onError = "#ffffff";
+  onError = "#2e3234";
   inverseSurface = "#5c6166";
   inverseOnSurface = "#f8f9fa";
 

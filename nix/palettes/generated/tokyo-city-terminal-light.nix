@@ -16,7 +16,7 @@
   displayName = "Tokyo City Terminal Light";
   author = "Michael Ball";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fbfbfd";
@@ -34,11 +34,11 @@
   onSurface = "#28323a";
   onSurfaceMuted = "#3c4954";
   onSurfaceVariant = "#526270";
-  onSurfaceFaint = "#a1aeba";
+  onSurfaceFaint = "#a1adba";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#96a3af";
-  outlineVariant = "#ced8e2";
+  outline = "#96a2af";
+  outlineVariant = "#ced7e1";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#34548a";

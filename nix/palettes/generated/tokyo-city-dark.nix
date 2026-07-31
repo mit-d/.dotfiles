@@ -16,7 +16,7 @@
   displayName = "Tokyo City Dark";
   author = "Michael Ball";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#171d23";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#526270";
-  outlineVariant = "#2d373f";
+  outlineVariant = "#2e373f";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#7aa2f7";

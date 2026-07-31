@@ -16,7 +16,7 @@
   displayName = "Ashes";
   author = "Jannik Siebert (https://github.com/janniks)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1c2023";

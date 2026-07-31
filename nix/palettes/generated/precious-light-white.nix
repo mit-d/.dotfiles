@@ -16,7 +16,7 @@
   displayName = "Precious Light White";
   author = "4lex4 <4lex49@zoho.com>";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#ffffff";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#848484";
-  outlineVariant = "#dadada";
+  outlineVariant = "#dad9d9";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#186daa";
@@ -71,7 +71,7 @@
     brightBlue = "#005b94";
     brightMagenta = "#6a3bb7";
     brightCyan = "#006456";
-    brightWhite = "#555555";
+    brightWhite = "#454545";
   };
 
   orange = "#a0570d";

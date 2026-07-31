@@ -16,7 +16,7 @@
   displayName = "Mountain";
   author = "gnsfujiwara (https://github.com/gnsfujiwara)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#0f0f0f";
@@ -33,12 +33,12 @@
   onSurfaceStrong = "#f0f0f0";
   onSurface = "#cacaca";
   onSurfaceMuted = "#888888";
-  onSurfaceVariant = "#696969";
-  onSurfaceFaint = "#4b4b4b";
+  onSurfaceVariant = "#6a6a69";
+  onSurfaceFaint = "#4c4b4b";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#535353";
-  outlineVariant = "#2d2d2d";
+  outline = "#545453";
+  outlineVariant = "#2e2e2d";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#8f8aac";

@@ -16,7 +16,7 @@
   displayName = "selenized-dark";
   author = "Jan Warchol (https://github.com/jan-warchol/selenized) / adapted to base16 by ali";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#103c48";
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#4695f7";
-  onPrimary = "#ffffff";
+  onPrimary = "#0c313c";
   primaryContainer = "#235d86";
   onPrimaryContainer = "#cad8d9";
   secondary = "#41c7b9";
   onSecondary = "#103c48";
   tertiary = "#af88eb";
-  onTertiary = "#ffffff";
+  onTertiary = "#0f3844";
   error = "#fa5750";
-  onError = "#ffffff";
+  onError = "#0a2d37";
   inverseSurface = "#adbcbc";
   inverseOnSurface = "#103c48";
 

@@ -16,7 +16,7 @@
   displayName = "Grayscale Light";
   author = "Alexandre Gavioli (https://github.com/Alexx2/)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f7f7f7";
@@ -34,7 +34,7 @@
   onSurface = "#464646";
   onSurfaceMuted = "#4c4c4c";
   onSurfaceVariant = "#525252";
-  onSurfaceFaint = "#a9a9a9";
+  onSurfaceFaint = "#a8a8a8";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#9e9e9e";
@@ -48,7 +48,7 @@
   secondary = "#868686";
   onSecondary = "#101010";
   tertiary = "#747474";
-  onTertiary = "#fbfbfb";
+  onTertiary = "#fbfbfa";
   error = "#7c7c7c";
   onError = "#101010";
   inverseSurface = "#464646";

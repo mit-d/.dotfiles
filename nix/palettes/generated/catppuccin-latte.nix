@@ -16,7 +16,7 @@
   displayName = "Catppuccin Latte";
   author = "https://github.com/catppuccin/catppuccin";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#eff1f5";
@@ -30,28 +30,28 @@
   surfaceVariant = "#e6e9ef";
 
   # --- Text, strongest to faintest ----------------------------------------
-  onSurfaceStrong = "#3f4c93";
-  onSurface = "#4d506a";
-  onSurfaceMuted = "#727589";
-  onSurfaceVariant = "#7d808a";
-  onSurfaceFaint = "#8fa1eb";
+  onSurfaceStrong = "#3e4b92";
+  onSurface = "#4c4f69";
+  onSurfaceMuted = "#6f7593";
+  onSurfaceVariant = "#737eaa";
+  onSurfaceFaint = "#9ba3bf";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#7f94f5";
-  outlineVariant = "#c8cddc";
+  outline = "#8f98ba";
+  outlineVariant = "#c9cdd9";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#1e66f5";
-  onPrimary = "#f3f5f8";
+  onPrimary = "#f4f5f8";
   primaryContainer = "#a1c0fa";
-  onPrimaryContainer = "#3d498e";
+  onPrimaryContainer = "#3c498e";
   secondary = "#179299";
-  onSecondary = "#ffffff";
+  onSecondary = "#1c1d1e";
   tertiary = "#8839ef";
   onTertiary = "#eff1f5";
   error = "#d20f39";
   onError = "#eff1f5";
-  inverseSurface = "#4d506a";
+  inverseSurface = "#4c4f69";
   inverseOnSurface = "#eff1f5";
 
   # --- ANSI 16 ------------------------------------------------------------
@@ -71,7 +71,7 @@
     brightBlue = "#0652e0";
     brightMagenta = "#771dda";
     brightCyan = "#007f85";
-    brightWhite = "#7287fd";
+    brightWhite = "#3e4b92";
   };
 
   orange = "#fe640b";

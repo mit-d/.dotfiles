@@ -16,7 +16,7 @@
   displayName = "Atelier Forest";
   author = "Bram de Haan (http://atelierbramdehaan.nl)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1b1918";
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#407ee7";
-  onPrimary = "#ffffff";
+  onPrimary = "#1a1818";
   primaryContainer = "#2b3e5f";
   onPrimaryContainer = "#f1efee";
   secondary = "#3d97b8";
   onSecondary = "#1b1918";
   tertiary = "#6666ea";
-  onTertiary = "#ffffff";
+  onTertiary = "#060505";
   error = "#f22c40";
-  onError = "#ffffff";
+  onError = "#171515";
   inverseSurface = "#a8a19f";
   inverseOnSurface = "#1b1918";
 

@@ -16,7 +16,7 @@
   displayName = "Circus";
   author = "Stephan Boyer (https://github.com/stepchowfun) and Esther Wang (https://github.com/ewang12)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#191919";
@@ -33,12 +33,12 @@
   onSurfaceStrong = "#ffffff";
   onSurface = "#a7a7a7";
   onSurfaceMuted = "#7a7a7a";
-  onSurfaceVariant = "#6f6f6f";
+  onSurfaceVariant = "#70706f";
   onSurfaceFaint = "#5f5a60";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#5f5a60";
-  outlineVariant = "#333333";
+  outlineVariant = "#343434";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#639ee4";

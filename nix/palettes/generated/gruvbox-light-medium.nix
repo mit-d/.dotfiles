@@ -16,7 +16,7 @@
   displayName = "Gruvbox light, medium";
   author = "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fbf1c7";
@@ -46,7 +46,7 @@
   primaryContainer = "#a6bbaa";
   onPrimaryContainer = "#282828";
   secondary = "#427b58";
-  onSecondary = "#fcf3d1";
+  onSecondary = "#fcf4d1";
   tertiary = "#8f3f71";
   onTertiary = "#fbf1c7";
   error = "#9d0006";

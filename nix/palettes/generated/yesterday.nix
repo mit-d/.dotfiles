@@ -16,7 +16,7 @@
   displayName = "Yesterday";
   author = "FroZnShiva (https://github.com/FroZnShiva)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1d1f21";
@@ -34,7 +34,7 @@
   onSurface = "#d6d6d6";
   onSurfaceMuted = "#b1b2b0";
   onSurfaceVariant = "#8e908c";
-  onSurfaceFaint = "#8e908e";
+  onSurfaceFaint = "#8d908e";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#969896";

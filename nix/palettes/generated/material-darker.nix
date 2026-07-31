@@ -16,7 +16,7 @@
   displayName = "Material Darker";
   author = "Nate Peterson";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#212121";
@@ -34,11 +34,11 @@
   onSurface = "#eeffff";
   onSurfaceMuted = "#d0e5ea";
   onSurfaceVariant = "#b2ccd6";
-  onSurfaceFaint = "#565656";
+  onSurfaceFaint = "#575656";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#5e5e5e";
-  outlineVariant = "#393939";
+  outline = "#5f5f5e";
+  outlineVariant = "#3a3a3a";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#82aaff";

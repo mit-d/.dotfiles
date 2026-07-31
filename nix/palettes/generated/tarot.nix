@@ -16,7 +16,7 @@
   displayName = "tarot";
   author = "ed (https://codeberg.org/ed)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#0e091d";
@@ -31,9 +31,9 @@
 
   # --- Text, strongest to faintest ----------------------------------------
   onSurfaceStrong = "#dc8f7c";
-  onSurface = "#b36072";
-  onSurfaceMuted = "#a75873";
-  onSurfaceVariant = "#9b4f73";
+  onSurface = "#b46072";
+  onSurfaceMuted = "#a85873";
+  onSurfaceVariant = "#9b5073";
   onSurfaceFaint = "#74316b";
 
   # --- Borders and dividers -----------------------------------------------
@@ -42,16 +42,16 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#6e6080";
-  onPrimary = "#e3e3e6";
+  onPrimary = "#e4e3e6";
   primaryContainer = "#2f2740";
   onPrimaryContainer = "#dc8f7c";
   secondary = "#8c9785";
   onSecondary = "#0e091d";
   tertiary = "#a45782";
-  onTertiary = "#f5f4f6";
+  onTertiary = "#f5f5f6";
   error = "#c53253";
   onError = "#ececee";
-  inverseSurface = "#b36072";
+  inverseSurface = "#b46072";
   inverseOnSurface = "#0e091d";
 
   # --- ANSI 16 ------------------------------------------------------------

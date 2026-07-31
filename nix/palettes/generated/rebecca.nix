@@ -16,7 +16,7 @@
   displayName = "Rebecca";
   author = "Victor Borja (http://github.com/vic) based on Rebecca Theme (http://github.com/vic/rebecca-theme)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#292a44";
@@ -30,28 +30,28 @@
   surfaceVariant = "#663399";
 
   # --- Text, strongest to faintest ----------------------------------------
-  onSurfaceStrong = "#ccccff";
-  onSurface = "#d0cfdc";
+  onSurfaceStrong = "#efefff";
+  onSurface = "#f1eff8";
   onSurfaceMuted = "#c8c7df";
   onSurfaceVariant = "#a0a0c5";
   onSurfaceFaint = "#666699";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#666699";
-  outlineVariant = "#3d3f68";
+  outlineVariant = "#3d4067";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#2de0a7";
   onPrimary = "#292a44";
   primaryContainer = "#386b6a";
-  onPrimaryContainer = "#dbdbff";
+  onPrimaryContainer = "#efefff";
   secondary = "#8eaee0";
   onSecondary = "#292a44";
   tertiary = "#7aa5ff";
   onTertiary = "#292a44";
   error = "#a0a0c5";
   onError = "#292a44";
-  inverseSurface = "#d0cfdc";
+  inverseSurface = "#f1eff8";
   inverseOnSurface = "#292a44";
 
   # --- ANSI 16 ------------------------------------------------------------
@@ -71,7 +71,7 @@
     brightBlue = "#4df4ba";
     brightMagenta = "#98baff";
     brightCyan = "#a0c1f4";
-    brightWhite = "#ccccff";
+    brightWhite = "#efefff";
   };
 
   orange = "#efe4a1";

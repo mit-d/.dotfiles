@@ -16,7 +16,7 @@
   displayName = "Primer Dark";
   author = "Jimmy Lin";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#010409";
@@ -37,7 +37,7 @@
   onSurfaceFaint = "#484f58";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#495059";
+  outline = "#485058";
   outlineVariant = "#30363d";
 
   # --- Accent roles -------------------------------------------------------

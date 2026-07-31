@@ -16,7 +16,7 @@
   displayName = "PaperColor Light";
   author = "Jon Leopard (http://github.com/jonleopard), Tinted Theming (https://github.com/tinted-theming), based on PaperColor Theme (https://github.com/NLKNguyen/papercolor-theme)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#eeeeee";
@@ -46,7 +46,7 @@
   primaryContainer = "#9cb6c7";
   onPrimaryContainer = "#444444";
   secondary = "#0087af";
-  onSecondary = "#ffffff";
+  onSecondary = "#121212";
   tertiary = "#8700af";
   onTertiary = "#eeeeee";
   error = "#d70000";

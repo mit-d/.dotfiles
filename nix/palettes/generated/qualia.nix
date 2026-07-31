@@ -16,7 +16,7 @@
   displayName = "Qualia";
   author = "isaacwhanson";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#101010";
@@ -34,10 +34,10 @@
   onSurface = "#c0c0c0";
   onSurfaceMuted = "#9f9f9f";
   onSurfaceVariant = "#808080";
-  onSurfaceFaint = "#4c4c4c";
+  onSurfaceFaint = "#4c4c4b";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#545454";
+  outline = "#545453";
   outlineVariant = "#454545";
 
   # --- Accent roles -------------------------------------------------------
@@ -64,14 +64,14 @@
     magenta = "#e0af85";
     cyan = "#c8c874";
     white = "#c0c0c0";
-    brightBlack = "#454545";
+    brightBlack = "#555555";
     brightRed = "#ffbbb7";
     brightGreen = "#93dda3";
     brightYellow = "#fab6f0";
     brightBlue = "#66dee1";
     brightMagenta = "#f4c298";
     brightCyan = "#dbdc87";
-    brightWhite = "#c0c0c0";
+    brightWhite = "#d3d3d3";
   };
 
   orange = "#a3b8ef";

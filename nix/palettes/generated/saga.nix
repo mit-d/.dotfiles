@@ -16,7 +16,7 @@
   displayName = "SAGA";
   author = "https://github.com/SAGAtheme/SAGA";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#05080a";
@@ -34,10 +34,10 @@
   onSurface = "#dce2f7";
   onSurfaceMuted = "#737d8d";
   onSurfaceVariant = "#62676d";
-  onSurfaceFaint = "#42494f";
+  onSurfaceFaint = "#43494f";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#4b5157";
+  outline = "#4c5157";
   outlineVariant = "#242b31";
 
   # --- Accent roles -------------------------------------------------------

@@ -16,7 +16,7 @@
   displayName = "Blueish";
   author = "Ben Mayoras";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#182430";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#616d78";
-  outlineVariant = "#50351b";
+  outlineVariant = "#50361c";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#82aaff";

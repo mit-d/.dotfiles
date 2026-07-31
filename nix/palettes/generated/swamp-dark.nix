@@ -16,7 +16,7 @@
   displayName = "Swamp Dark";
   author = "Masroof Maindak (https://github.com/masroof-maindak)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#242015";
@@ -37,12 +37,12 @@
   onSurfaceFaint = "#635345";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#6b5b4d";
+  outline = "#6c5b4d";
   outlineVariant = "#4d3f32";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#c1666b";
-  onPrimary = "#ffffff";
+  onPrimary = "#1c190f";
   primaryContainer = "#5c3a33";
   onPrimaryContainer = "#f1e9d0";
   secondary = "#db930d";

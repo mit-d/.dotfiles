@@ -16,7 +16,7 @@
   displayName = "Classic Light";
   author = "Jason Heeris (http://heeris.id.au)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f5f5f5";
@@ -34,10 +34,10 @@
   onSurface = "#303030";
   onSurfaceMuted = "#404040";
   onSurfaceVariant = "#505050";
-  onSurfaceFaint = "#a7a7a7";
+  onSurfaceFaint = "#a8a7a7";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#9d9d9d";
+  outline = "#9d9c9c";
   outlineVariant = "#d0d0d0";
 
   # --- Accent roles -------------------------------------------------------

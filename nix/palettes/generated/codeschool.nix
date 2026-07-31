@@ -16,7 +16,7 @@
   displayName = "Codeschool";
   author = "blockloop";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#232c31";
@@ -37,7 +37,7 @@
   onSurfaceFaint = "#536161";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#5a696c";
+  outline = "#5a6a6c";
   outlineVariant = "#37434b";
 
   # --- Accent roles -------------------------------------------------------

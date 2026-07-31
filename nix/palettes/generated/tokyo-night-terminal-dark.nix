@@ -16,7 +16,7 @@
   displayName = "Tokyo Night Terminal Dark";
   author = "Michael Ball";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#16161e";
@@ -33,11 +33,11 @@
   onSurfaceStrong = "#d5d6db";
   onSurface = "#7a7e9a";
   onSurfaceMuted = "#787c99";
-  onSurfaceVariant = "#787c99";
+  onSurfaceVariant = "#787c98";
   onSurfaceFaint = "#474e6c";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#4f5673";
+  outline = "#505674";
   outlineVariant = "#2f3549";
 
   # --- Accent roles -------------------------------------------------------

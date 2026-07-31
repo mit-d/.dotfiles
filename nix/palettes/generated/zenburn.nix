@@ -16,7 +16,7 @@
   displayName = "Zenburn";
   author = "elnawe";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#383838";
@@ -33,11 +33,11 @@
   onSurfaceStrong = "#ffffff";
   onSurface = "#dcdccc";
   onSurfaceMuted = "#adada5";
-  onSurfaceVariant = "#8c8c8c";
+  onSurfaceVariant = "#8d8d8c";
   onSurfaceFaint = "#6f6f6f";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#747474";
+  outline = "#747473";
   outlineVariant = "#606060";
 
   # --- Accent roles -------------------------------------------------------

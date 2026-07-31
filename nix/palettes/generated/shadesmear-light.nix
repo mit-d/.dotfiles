@@ -16,7 +16,7 @@
   displayName = "ShadeSmear Light";
   author = "Kyle Giammarco (http://kyle.giammar.co)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#dbdbdb";
@@ -50,7 +50,7 @@
   tertiary = "#d7ab54";
   onTertiary = "#1c1c1c";
   error = "#cc5450";
-  onError = "#ffffff";
+  onError = "#100f0f";
   inverseSurface = "#232323";
   inverseOnSurface = "#dbdbdb";
 

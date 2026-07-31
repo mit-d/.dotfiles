@@ -16,7 +16,7 @@
   displayName = "Katy";
   author = "George Essig (https://github.com/gessig)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#292d3e";

@@ -16,7 +16,7 @@
   displayName = "Brasa";
   author = "Teshre";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1a0f0a";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#7a6150";
-  outlineVariant = "#46271b";
+  outlineVariant = "#46271a";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#9aa6e0";

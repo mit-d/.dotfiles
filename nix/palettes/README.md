@@ -14,6 +14,21 @@ fish and zsh colours, bat, fzf, btop.
 
 Any name in `generated/_index.nix` works. There are 335.
 
+## Browsing
+
+```bash
+nix run .#palettes
+```
+
+An fzf picker with a live truecolour preview of each palette: the surface ramp,
+the five text tones with their measured contrast, accent chips filled with their
+own on-colour, a mock tab strip and status line, and the ANSI 16. `enter` prints
+the line to paste into `active.nix`; `ctrl-a` rewrites it in place.
+
+The preview reads a prebuilt JSON of the whole library
+(`nix run .#palette-data`), resolved through `load.nix`, so it redraws instantly
+and shows what the system would actually use -- overrides included.
+
 ## Layout
 
 | Path | What it is |
@@ -25,6 +40,8 @@ Any name in `generated/_index.nix` works. There are 335.
 | `generated/_report.md` | What the last run had to derive, nudge or skip |
 | `overrides/<name>.nix` | Local edits to one palette, applied on top of the generated values |
 | `generate.py` | The generator |
+| `preview.py` | Renders one palette for the `nix run .#palettes` picker |
+| `validate.py` | Enforces the guarantees below, as `nix flake check` |
 
 ## Regenerating
 
@@ -130,6 +147,17 @@ A tone below its floor is lifted toward `onSurfaceStrong`. The five are then
 kept monotonic in contrast, which matters in both directions: a "muted" tone
 that outshouts the default foreground reads as emphasis where none was meant.
 These floors are why text is legible on schemes whose own choices are not.
+
+Where `base05` out-contrasts both light foregrounds -- charcoal-light reads 7.07
+against 7.05 -- `onSurfaceStrong` is lifted rather than `onSurface` dimmed.
+`onSurface` is the most-used colour in the palette; pulling it back to satisfy an
+ordering would be the wrong way round.
+
+All of this is measured on the **quantized** eight-bit value, not the float one.
+Searching in float space and rounding afterwards lands colours just under their
+floor -- it silently put 71 of 2010 accent pairs below 4.5:1 by less than 0.07.
+`validate.py` re-checks every floor and ordering from the written files, so the
+table above is enforced rather than asserted.
 
 `onSurfaceStrong`, `onSurfaceMuted` and `onSurfaceFaint` are extensions --
 Material 3 proper stops at `onSurface` and `onSurfaceVariant`, but terminal

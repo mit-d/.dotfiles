@@ -16,7 +16,7 @@
   displayName = "PaperColor Dark";
   author = "Jon Leopard (http://github.com/jonleopard), Tinted Theming (https://github.com/tinted-theming), based on PaperColor Theme (https://github.com/NLKNguyen/papercolor-theme)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1c1c1c";
@@ -37,7 +37,7 @@
   onSurfaceFaint = "#585858";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#5b5b5b";
+  outline = "#5b5b5a";
   outlineVariant = "#424242";
 
   # --- Accent roles -------------------------------------------------------

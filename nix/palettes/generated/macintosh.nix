@@ -16,7 +16,7 @@
   displayName = "Macintosh";
   author = "Rebecca Bettencourt (http://www.kreativekorp.com)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#000000";
@@ -76,7 +76,7 @@
 
   orange = "#ff6403";
   brightOrange = "#ff8a59";
-  cursor = "#1348dd";
+  cursor = "#1448dd";
 
   tools = {
     bat = "ansi";

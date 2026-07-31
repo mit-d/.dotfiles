@@ -16,7 +16,7 @@
   displayName = "Tomorrow Night";
   author = "Chris Kempson (http://chriskempson.com)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1d1f21";
@@ -50,7 +50,7 @@
   tertiary = "#b294bb";
   onTertiary = "#1d1f21";
   error = "#cc6666";
-  onError = "#ffffff";
+  onError = "#1c1e20";
   inverseSurface = "#c5c8c6";
   inverseOnSurface = "#1d1f21";
 

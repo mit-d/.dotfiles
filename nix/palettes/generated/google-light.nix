@@ -16,7 +16,7 @@
   displayName = "Google Light";
   author = "Seth Wright (http://sethawright.com)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#ffffff";
@@ -34,21 +34,21 @@
   onSurface = "#373b41";
   onSurfaceMuted = "#65686a";
   onSurfaceVariant = "#878988";
-  onSurfaceFaint = "#adb0ad";
+  onSurfaceFaint = "#adafad";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#a2a5a2";
+  outline = "#a2a4a2";
   outlineVariant = "#c5c8c6";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#3971ed";
-  onPrimary = "#ffffff";
+  onPrimary = "#0a0909";
   primaryContainer = "#b2cbfd";
   onPrimaryContainer = "#1d1f21";
   secondary = "#3971ed";
-  onSecondary = "#ffffff";
+  onSecondary = "#0a0909";
   tertiary = "#a36ac7";
-  onTertiary = "#ffffff";
+  onTertiary = "#191a1c";
   error = "#cc342b";
   onError = "#ffffff";
   inverseSurface = "#373b41";

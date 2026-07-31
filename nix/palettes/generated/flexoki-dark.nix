@@ -16,7 +16,7 @@
   displayName = "Flexoki Dark";
   author = "Steph Ango (https://github.com/kepano/flexoki)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#100f0f";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#575653";
-  outlineVariant = "#2e2d2c";
+  outlineVariant = "#2f2e2c";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#4385be";
@@ -50,7 +50,7 @@
   tertiary = "#8b7ec8";
   onTertiary = "#100f0f";
   error = "#d14d41";
-  onError = "#ffffff";
+  onError = "#0d0c0c";
   inverseSurface = "#cecdc3";
   inverseOnSurface = "#100f0f";
 

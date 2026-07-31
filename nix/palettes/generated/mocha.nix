@@ -16,7 +16,7 @@
   displayName = "Mocha";
   author = "Chris Kempson (http://chriskempson.com)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#3b3228";
@@ -50,7 +50,7 @@
   tertiary = "#a89bb9";
   onTertiary = "#3b3228";
   error = "#cb6077";
-  onError = "#ffffff";
+  onError = "#1c1a1a";
   inverseSurface = "#d0c8c6";
   inverseOnSurface = "#3b3228";
 

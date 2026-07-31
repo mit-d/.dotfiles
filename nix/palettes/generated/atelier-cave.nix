@@ -16,7 +16,7 @@
   displayName = "Atelier Cave";
   author = "Bram de Haan (http://atelierbramdehaan.nl)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#19171c";
@@ -42,13 +42,13 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#576ddb";
-  onPrimary = "#fefefe";
+  onPrimary = "#040405";
   primaryContainer = "#2f365e";
   onPrimaryContainer = "#efecf4";
   secondary = "#398bc6";
   onSecondary = "#19171c";
   tertiary = "#955ae7";
-  onTertiary = "#ffffff";
+  onTertiary = "#0f0d11";
   error = "#be4678";
   onError = "#f7f6fa";
   inverseSurface = "#8b8792";

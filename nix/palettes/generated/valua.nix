@@ -16,7 +16,7 @@
   displayName = "Valua";
   author = "Nonetrix (https://github.com/nonetrix)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#131f1f";
@@ -37,20 +37,20 @@
   onSurfaceFaint = "#3e5c53";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#436159";
+  outline = "#436259";
   outlineVariant = "#273d3c";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#4ed2d2";
   onPrimary = "#131f1f";
   primaryContainer = "#2b5d5d";
-  onPrimaryContainer = "#b0cfcf";
+  onPrimaryContainer = "#b1d0cf";
   secondary = "#76dbd2";
   onSecondary = "#131f1f";
   tertiary = "#a874e0";
   onTertiary = "#131f1f";
   error = "#d7586e";
-  onError = "#ffffff";
+  onError = "#121d1d";
   inverseSurface = "#98c1a3";
   inverseOnSurface = "#131f1f";
 

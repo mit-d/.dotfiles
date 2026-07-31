@@ -34,7 +34,7 @@ from pathlib import Path
 # does not notice that install_url points at a new store path, so regenerating
 # with changed rules but an unbumped GENERATOR_VERSION leaves already-installed
 # profiles on the old colours -- silently.
-GENERATOR_VERSION = 1
+GENERATOR_VERSION = 2
 
 # Generated palettes version as 3.<GENERATOR_VERSION>.0. Major 3 clears the
 # hand-authored palettes this library replaced, which reached 2.1.0; Firefox
@@ -160,6 +160,17 @@ def mix(a: Color, b: Color, t: float) -> Color:
     return from_oklab(tuple(x + (y - x) * t for x, y in zip(la, lb)))
 
 
+def quantize(c: Color) -> Color:
+    """Round to the 8-bit value that will actually be written.
+
+    Contrast has to be measured on this, not on the float colour. Searching in
+    float space and quantizing afterwards lands a colour just under its floor --
+    it made 71 of 2010 accent pairs miss 4.5:1 by less than 0.07, which turns a
+    stated guarantee into an almost.
+    """
+    return Color.from_hex(c.to_hex())
+
+
 def relative_luminance(c: Color) -> float:
     r, g, b = (_srgb_to_linear(x) for x in c)
     return 0.2126 * r + 0.7152 * g + 0.0722 * b
@@ -179,21 +190,30 @@ def ensure_contrast(fg: Color, bg: Color, ratio: float, anchor: Color) -> Color:
     contrast they consider acceptable, and several put "comments" well below
     anything readable.
     """
-    if contrast(fg, bg) >= ratio:
+    if contrast(quantize(fg), bg) >= ratio:
         return fg
     lo, hi = 0.0, 1.0
-    if contrast(anchor, bg) < ratio:
-        # Even the anchor is too weak; go all the way to black or white.
-        anchor = Color(1, 1, 1) if relative_luminance(bg) < 0.5 else Color(0, 0, 0)
+    if contrast(quantize(anchor), bg) < ratio:
+        # Even the anchor is too weak, so fall back to black or white --
+        # whichever measures better against this particular background.
+        #
+        # Choosing by the background's luminance instead ("dark background means
+        # white text") is wrong for mid-tone fills and fails silently: on nord's
+        # tertiary #b48ead, luminance 0.31 says white, but white reads at 2.9:1
+        # there while black reads at 7.3:1.
+        anchor = max(
+            (Color(1, 1, 1), Color(0, 0, 0)), key=lambda c: contrast(c, bg)
+        )
         if contrast(anchor, bg) < ratio:
             return anchor
     for _ in range(24):
         mid = (lo + hi) / 2
-        if contrast(mix(fg, anchor, mid), bg) >= ratio:
+        if contrast(quantize(mix(fg, anchor, mid)), bg) >= ratio:
             hi = mid
         else:
             lo = mid
-    return mix(fg, anchor, hi)
+    # The search brackets the boundary; `hi` is the side known to satisfy it.
+    return quantize(mix(fg, anchor, hi))
 
 
 def cap_contrast(fg: Color, bg: Color, ratio: float, toward: Color) -> Color:
@@ -203,16 +223,16 @@ def cap_contrast(fg: Color, bg: Color, ratio: float, toward: Color) -> Color:
     more contrasty than its base05 produces a "muted" tone that shouts louder
     than the default foreground.
     """
-    if contrast(fg, bg) <= ratio:
+    if contrast(quantize(fg), bg) <= ratio:
         return fg
     lo, hi = 0.0, 1.0
     for _ in range(24):
         mid = (lo + hi) / 2
-        if contrast(mix(fg, toward, mid), bg) <= ratio:
+        if contrast(quantize(mix(fg, toward, mid)), bg) <= ratio:
             hi = mid
         else:
             lo = mid
-    return mix(fg, toward, hi)
+    return quantize(mix(fg, toward, hi))
 
 
 # --- The smaller palette -----------------------------------------------------
@@ -393,6 +413,17 @@ SURFACE_STEP_MAX = 0.055
 # matters more than optimal.
 ANSI_BRIGHT_STEP = 0.06
 
+ANSI_NORMAL_SLOTS = [
+    "black",
+    "red",
+    "green",
+    "yellow",
+    "blue",
+    "magenta",
+    "cyan",
+    "white",
+]
+
 
 @dataclass
 class Notes:
@@ -453,6 +484,19 @@ def derive(src: Source, notes: Notes) -> dict:
     # honours that: base16's nord puts Frost cyan #8FBCBB there. Pick whichever
     # of the two light foregrounds actually reads best.
     strong = max((src.fg_lightest, src.fg_light), key=lambda c: contrast(c, surface))
+
+    # `onSurfaceStrong` has to outrank `onSurface`, and in a few schemes base05
+    # is more contrasty than either light foreground -- charcoal-light reads 7.07
+    # at base05 against 7.05 at base06. Lift strong rather than dim onSurface:
+    # onSurface is the most-used colour in the palette, and pulling it back to
+    # satisfy an ordering is the wrong way round.
+    strong = ensure_contrast(
+        strong,
+        surface,
+        max(MIN_CONTRAST["onSurfaceStrong"], contrast(quantize(src.fg), surface)),
+        max((Color(1, 1, 1), Color(0, 0, 0)), key=lambda c: contrast(c, surface)),
+    )
+
     if strong is not src.fg_lightest:
         notes.add(
             f"onSurfaceStrong: base07 {src.fg_lightest.to_hex()} reads at "
@@ -506,12 +550,18 @@ def derive(src: Source, notes: Notes) -> dict:
     # rather than a defect, so it belongs in ./overrides, not here.
     def on_color(fill: Color) -> Color:
         """Material's rule: whichever of the surface or the strongest text
-        colour reads better on this fill."""
+        colour reads better on this fill.
+
+        The fill is quantized first, because that is the value the file will
+        hold. Measuring against the float colour picks an on-colour that misses
+        the floor by a hair once both are written out.
+        """
+        fill = quantize(fill)
         best = max((surface, strong), key=lambda c: contrast(c, fill))
         return ensure_contrast(best, fill, MIN_CONTRAST["on_accent"], best)
 
     primary = src.blue
-    primary_container = mix(primary, surface, 0.62)
+    primary_container = quantize(mix(primary, surface, 0.62))
 
     accents = {
         "primary": primary,
@@ -573,6 +623,20 @@ def derive(src: Source, notes: Notes) -> dict:
         "brightCyan": bright(src.cyan),
         "brightWhite": strong,
     }
+
+    # The neutral slots are the ones most likely to collide, because they come
+    # from the ramp rather than from the accents: rose-pine sets
+    # base05 == base06 == base07, so white and brightWhite both land on #e0def4,
+    # and qualia sets base01 == base03. A bright slot equal to its normal one
+    # makes the bright half of the palette do nothing, so separate them.
+    for slot in ANSI_NORMAL_SLOTS:
+        bright_key = "bright" + slot[0].upper() + slot[1:]
+        if ansi[slot].to_hex() == ansi[bright_key].to_hex():
+            ansi[bright_key] = bright(ansi[slot])
+            notes.add(
+                f"ansi.{bright_key}: equalled ansi.{slot} ({ansi[slot].to_hex()}) "
+                f"in the source; derived {ansi[bright_key].to_hex()} a step apart"
+            )
 
     cursor = ensure_contrast(primary, surface, MIN_CONTRAST["cursor"], strong)
 

@@ -16,7 +16,7 @@
   displayName = "Gruvbox Material Dark, Hard";
   author = "Mayush Kumar (https://github.com/MayushKumar), sainnhe (https://github.com/sainnhe/gruvbox-material-vscode)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#202020";
@@ -34,10 +34,10 @@
   onSurface = "#ddc7a1";
   onSurfaceMuted = "#cdba9a";
   onSurfaceVariant = "#bdae93";
-  onSurfaceFaint = "#5c544e";
+  onSurfaceFaint = "#5d544e";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#655c54";
+  outline = "#655d54";
   outlineVariant = "#504945";
 
   # --- Accent roles -------------------------------------------------------

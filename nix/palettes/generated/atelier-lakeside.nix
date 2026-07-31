@@ -16,7 +16,7 @@
   displayName = "Atelier Lakeside";
   author = "Bram de Haan (http://atelierbramdehaan.nl)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#161b1d";
@@ -42,13 +42,13 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#257fad";
-  onPrimary = "#ffffff";
+  onPrimary = "#070809";
   primaryContainer = "#213e4f";
   onPrimaryContainer = "#ebf8ff";
   secondary = "#2d8f6f";
-  onSecondary = "#ffffff";
+  onSecondary = "#131719";
   tertiary = "#6b6bb8";
-  onTertiary = "#f1faff";
+  onTertiary = "#f2faff";
   error = "#d22d72";
   onError = "#eef9ff";
   inverseSurface = "#7ea2b4";

@@ -16,7 +16,7 @@
   displayName = "standardized-dark";
   author = "ali (https://github.com/ali-githb/base16-standardized-scheme)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#222222";

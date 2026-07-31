@@ -16,7 +16,7 @@
   displayName = "Penumbra Light Contrast Plus Plus";
   author = "Zachary Weiss (https://github.com/zacharyweiss)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fffdfb";
@@ -33,11 +33,11 @@
   onSurfaceStrong = "#0d0f13";
   onSurface = "#636363";
   onSurfaceMuted = "#7e7e7e";
-  onSurfaceVariant = "#878889";
+  onSurfaceVariant = "#878789";
   onSurfaceFaint = "#adadaf";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#a2a3a4";
+  outline = "#a2a2a4";
   outlineVariant = "#e2d7c7";
 
   # --- Accent roles -------------------------------------------------------
@@ -76,7 +76,7 @@
 
   orange = "#e09f47";
   brightOrange = "#cc8c31";
-  cursor = "#5f97d6";
+  cursor = "#5f97d7";
 
   tools = {
     bat = "ansi";

@@ -16,7 +16,7 @@
   displayName = "Material Lighter";
   author = "Nate Peterson";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fafafa";
@@ -31,14 +31,14 @@
 
   # --- Text, strongest to faintest ----------------------------------------
   onSurfaceStrong = "#000000";
-  onSurface = "#4c7c78";
+  onSurface = "#4d7c78";
   onSurfaceMuted = "#618189";
-  onSurfaceVariant = "#79879e";
-  onSurfaceFaint = "#a4adaf";
+  onSurfaceVariant = "#79869e";
+  onSurfaceFaint = "#a4acaf";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#99a2a4";
-  outlineVariant = "#bfdbd8";
+  outline = "#99a1a4";
+  outlineVariant = "#bfdbd9";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#6182b8";
@@ -51,7 +51,7 @@
   onTertiary = "#fafafa";
   error = "#ff5370";
   onError = "#000000";
-  inverseSurface = "#4c7c78";
+  inverseSurface = "#4d7c78";
   inverseOnSurface = "#fafafa";
 
   # --- ANSI 16 ------------------------------------------------------------

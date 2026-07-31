@@ -16,7 +16,7 @@
   displayName = "Tokyodark";
   author = "Jamy Golden (https://github.com/JamyGolden), Based on Tokyodark.nvim (https://github.com/tiagovla/tokyodark.nvim)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#11121d";
@@ -33,12 +33,12 @@
   onSurfaceStrong = "#bcc2dc";
   onSurface = "#a0a8cd";
   onSurfaceMuted = "#747b90";
-  onSurfaceVariant = "#656b77";
+  onSurfaceVariant = "#656c77";
   onSurfaceFaint = "#484d5b";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#505564";
-  outlineVariant = "#2d2e41";
+  outline = "#505563";
+  outlineVariant = "#2d2f41";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#7199ee";

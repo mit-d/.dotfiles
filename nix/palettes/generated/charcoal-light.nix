@@ -16,7 +16,7 @@
   displayName = "Charcoal Light";
   author = "Mubin Muhammad (https://github.com/mubin6th)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#cabda0";
@@ -30,28 +30,28 @@
   surfaceVariant = "#bcad8c";
 
   # --- Text, strongest to faintest ----------------------------------------
-  onSurfaceStrong = "#3a301c";
-  onSurface = "#3a301d";
-  onSurfaceMuted = "#383021";
-  onSurfaceVariant = "#363124";
+  onSurfaceStrong = "#382e1b";
+  onSurface = "#382e1b";
+  onSurfaceMuted = "#362f1f";
+  onSurfaceVariant = "#343023";
   onSurfaceFaint = "#645538";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#645538";
-  outlineVariant = "#af9f7d";
+  outlineVariant = "#ae9f7d";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#251e0f";
   onPrimary = "#cabda0";
   primaryContainer = "#867b64";
-  onPrimaryContainer = "#ffffff";
+  onPrimaryContainer = "#161108";
   secondary = "#110e06";
   onSecondary = "#cabda0";
   tertiary = "#382e1b";
   onTertiary = "#cabda0";
   error = "#382e1b";
   onError = "#cabda0";
-  inverseSurface = "#3a301d";
+  inverseSurface = "#382e1b";
   inverseOnSurface = "#cabda0";
 
   # --- ANSI 16 ------------------------------------------------------------
@@ -71,7 +71,7 @@
     brightBlue = "#171003";
     brightMagenta = "#291f0d";
     brightCyan = "#050401";
-    brightWhite = "#4b3e26";
+    brightWhite = "#291f0d";
   };
 
   orange = "#110e06";

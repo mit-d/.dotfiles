@@ -16,7 +16,7 @@
   displayName = "Flexoki Light";
   author = "Steph Ango (https://github.com/kepano/flexoki)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fffcf0";
@@ -33,11 +33,11 @@
   onSurfaceStrong = "#100f0f";
   onSurface = "#403e3c";
   onSurfaceMuted = "#6e6c67";
-  onSurfaceVariant = "#898781";
-  onSurfaceFaint = "#aeada4";
+  onSurfaceVariant = "#888781";
+  onSurfaceFaint = "#aeaca4";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#a3a29a";
+  outline = "#a3a19a";
   outlineVariant = "#d9d7cd";
 
   # --- Accent roles -------------------------------------------------------
@@ -46,7 +46,7 @@
   primaryContainer = "#aabfd7";
   onPrimaryContainer = "#100f0f";
   secondary = "#24837b";
-  onSecondary = "#fffef8";
+  onSecondary = "#040403";
   tertiary = "#5e409d";
   onTertiary = "#fffcf0";
   error = "#af3029";

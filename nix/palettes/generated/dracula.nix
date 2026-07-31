@@ -16,7 +16,7 @@
   displayName = "Dracula";
   author = "clach04 (https://github.com/clach04)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#282a36";

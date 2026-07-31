@@ -16,7 +16,7 @@
   displayName = "OneDark Dark";
   author = "olimorris (https://github.com/olimorris)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#000000";
@@ -37,7 +37,7 @@
   onSurfaceFaint = "#434852";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#494e58";
+  outline = "#494e57";
   outlineVariant = "#2c313a";
 
   # --- Accent roles -------------------------------------------------------

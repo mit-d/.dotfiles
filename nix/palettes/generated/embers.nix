@@ -16,7 +16,7 @@
   displayName = "Embers";
   author = "Jannik Siebert (https://github.com/janniks)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#16130f";
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#6d5782";
-  onPrimary = "#ded9d5";
+  onPrimary = "#dedad5";
   primaryContainer = "#342b37";
   onPrimaryContainer = "#dbd6d1";
   secondary = "#576d82";
   onSecondary = "#edebe8";
   tertiary = "#82576d";
-  onTertiary = "#e3dfdc";
+  onTertiary = "#e3e0dc";
   error = "#826d57";
-  onError = "#f5f5f5";
+  onError = "#f5f5f4";
   inverseSurface = "#a39a90";
   inverseOnSurface = "#16130f";
 
@@ -76,7 +76,7 @@
 
   orange = "#828257";
   brightOrange = "#949468";
-  cursor = "#6e5883";
+  cursor = "#6e5983";
 
   tools = {
     bat = "ansi";

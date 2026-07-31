@@ -16,7 +16,7 @@
   displayName = "Kimber";
   author = "Mishka Nguyen (https://github.com/akhsiM)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#222222";
@@ -33,8 +33,8 @@
   onSurfaceStrong = "#ffffe6";
   onSurface = "#dedee7";
   onSurfaceMuted = "#99999e";
-  onSurfaceVariant = "#767672";
-  onSurfaceFaint = "#6d504f";
+  onSurfaceVariant = "#767772";
+  onSurfaceFaint = "#6d504e";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#745956";
@@ -42,7 +42,7 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#537c9c";
-  onPrimary = "#ffffff";
+  onPrimary = "#090807";
   primaryContainer = "#35424d";
   onPrimaryContainer = "#ffffe6";
   secondary = "#78b4b4";

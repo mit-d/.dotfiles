@@ -16,7 +16,7 @@
   displayName = "summercamp";
   author = "zoe firi (zoefiri.github.io)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1c1810";
@@ -32,9 +32,9 @@
   # --- Text, strongest to faintest ----------------------------------------
   onSurfaceStrong = "#f8f5de";
   onSurface = "#868168";
-  onSurfaceMuted = "#7d7861";
-  onSurfaceVariant = "#736f59";
-  onSurfaceFaint = "#55503d";
+  onSurfaceMuted = "#7d7961";
+  onSurfaceVariant = "#737059";
+  onSurfaceFaint = "#55513d";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#5d5945";

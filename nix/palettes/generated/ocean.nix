@@ -16,7 +16,7 @@
   displayName = "Ocean";
   author = "Chris Kempson (http://chriskempson.com)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#2b303b";
@@ -50,7 +50,7 @@
   tertiary = "#b48ead";
   onTertiary = "#2b303b";
   error = "#bf616a";
-  onError = "#ffffff";
+  onError = "#141415";
   inverseSurface = "#c0c5ce";
   inverseOnSurface = "#2b303b";
 

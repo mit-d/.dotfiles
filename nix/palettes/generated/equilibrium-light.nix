@@ -16,7 +16,7 @@
   displayName = "Equilibrium Light";
   author = "Carlo Abelli";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f5f0e7";
@@ -42,7 +42,7 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#0073b5";
-  onPrimary = "#f5f0e7";
+  onPrimary = "#f5f1e8";
   primaryContainer = "#a5c1d6";
   onPrimaryContainer = "#181c22";
   secondary = "#007a72";

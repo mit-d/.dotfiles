@@ -16,7 +16,7 @@
   displayName = "Chinoiserie";
   author = "Di Wang (https://cs.cmu.edu/~diw3)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#ffffff";
@@ -34,7 +34,7 @@
   onSurface = "#4a4035";
   onSurfaceMuted = "#6c5f53";
   onSurfaceVariant = "#918072";
-  onSurfaceFaint = "#8b817a";
+  onSurfaceFaint = "#8b827a";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#80766e";

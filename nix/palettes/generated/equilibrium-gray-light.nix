@@ -16,7 +16,7 @@
   displayName = "Equilibrium Gray Light";
   author = "Carlo Abelli";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f1f1f1";
@@ -38,7 +38,7 @@
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#777777";
-  outlineVariant = "#cecece";
+  outlineVariant = "#cecdcd";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#0073b5";

@@ -16,7 +16,7 @@
   displayName = "Atelier Seaside Light";
   author = "Bram de Haan (http://atelierbramdehaan.nl)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f4fbf4";
@@ -50,7 +50,7 @@
   tertiary = "#ad2bee";
   onTertiary = "#f4fbf4";
   error = "#e6193c";
-  onError = "#fafdfa";
+  onError = "#fbfefb";
   inverseSurface = "#5e6e5e";
   inverseOnSurface = "#f4fbf4";
 

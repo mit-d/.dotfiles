@@ -16,7 +16,7 @@
   displayName = "Pasque";
   author = "Gabriel Fontes (https://github.com/Misterio77)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#271c3a";
@@ -37,16 +37,16 @@
   onSurfaceFaint = "#5d5766";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#625c6b";
-  outlineVariant = "#42315f";
+  outline = "#625d6b";
+  outlineVariant = "#423160";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#8e7dc6";
-  onPrimary = "#ffffff";
+  onPrimary = "#261c39";
   primaryContainer = "#4c3e6c";
   onPrimaryContainer = "#edeaef";
   secondary = "#7263aa";
-  onSecondary = "#f1eff3";
+  onSecondary = "#f1eff2";
   tertiary = "#953b9d";
   onTertiary = "#edeaef";
   error = "#a92258";

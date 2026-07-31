@@ -16,7 +16,7 @@
   displayName = "Synth Midnight Terminal Light";
   author = "Michael Ball (http://github.com/michael-ball/)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#dddfe0";
@@ -34,11 +34,11 @@
   onSurface = "#28292a";
   onSurfaceMuted = "#373839";
   onSurfaceVariant = "#474849";
-  onSurfaceFaint = "#959798";
+  onSurfaceFaint = "#959698";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#8b8d8e";
-  outlineVariant = "#bcbebf";
+  outline = "#8b8c8e";
+  outlineVariant = "#bcbdbf";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#03aeff";
@@ -50,7 +50,7 @@
   tertiary = "#ea5ce2";
   onTertiary = "#050608";
   error = "#b53b50";
-  onError = "#e4e5e6";
+  onError = "#e4e6e6";
   inverseSurface = "#28292a";
   inverseOnSurface = "#dddfe0";
 
@@ -76,7 +76,7 @@
 
   orange = "#ea770d";
   brightOrange = "#d06800";
-  cursor = "#1486c4";
+  cursor = "#1486c3";
 
   tools = {
     bat = "ansi";

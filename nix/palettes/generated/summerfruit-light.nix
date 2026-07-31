@@ -16,7 +16,7 @@
   displayName = "Summerfruit Light";
   author = "Christopher Corley (http://christop.club/)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#ffffff";
@@ -30,28 +30,28 @@
   surfaceVariant = "#e0e0e0";
 
   # --- Text, strongest to faintest ----------------------------------------
-  onSurfaceStrong = "#151515";
-  onSurface = "#151515";
-  onSurfaceMuted = "#151515";
-  onSurfaceVariant = "#151515";
-  onSurfaceFaint = "#afafaf";
+  onSurfaceStrong = "#101010";
+  onSurface = "#101010";
+  onSurfaceMuted = "#101010";
+  onSurfaceVariant = "#101010";
+  onSurfaceFaint = "#afaeae";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#a4a4a4";
+  outline = "#a4a3a3";
   outlineVariant = "#d0d0d0";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#3777e6";
-  onPrimary = "#ffffff";
+  onPrimary = "#100f0f";
   primaryContainer = "#b2cdf9";
-  onPrimaryContainer = "#151515";
+  onPrimaryContainer = "#101010";
   secondary = "#1faaaa";
-  onSecondary = "#151515";
+  onSecondary = "#101010";
   tertiary = "#ad00a1";
   onTertiary = "#ffffff";
   error = "#ff0086";
-  onError = "#151515";
-  inverseSurface = "#151515";
+  onError = "#101010";
+  inverseSurface = "#101010";
   inverseOnSurface = "#ffffff";
 
   # --- ANSI 16 ------------------------------------------------------------
@@ -71,7 +71,7 @@
     brightBlue = "#2564d1";
     brightMagenta = "#920088";
     brightCyan = "#009697";
-    brightWhite = "#151515";
+    brightWhite = "#050505";
   };
 
   orange = "#fd8900";

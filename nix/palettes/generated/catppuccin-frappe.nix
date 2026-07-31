@@ -16,7 +16,7 @@
   displayName = "Catppuccin Frappe";
   author = "https://github.com/catppuccin/catppuccin";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#303446";
@@ -34,10 +34,10 @@
   onSurface = "#c6d0f5";
   onSurfaceMuted = "#929ab9";
   onSurfaceVariant = "#8a8797";
-  onSurfaceFaint = "#65677a";
+  onSurfaceFaint = "#64677a";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#6f6f80";
+  outline = "#6f6f81";
   outlineVariant = "#464a5d";
 
   # --- Accent roles -------------------------------------------------------

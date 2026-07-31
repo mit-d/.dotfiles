@@ -16,7 +16,7 @@
   displayName = "Tokyodark Terminal";
   author = "Tiagovla (https://github.com/tiagovla/)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#11121d";
@@ -33,12 +33,12 @@
   onSurfaceStrong = "#a0a8cd";
   onSurface = "#a0a8cd";
   onSurfaceMuted = "#747b90";
-  onSurfaceVariant = "#656b7b";
-  onSurfaceFaint = "#484d5c";
+  onSurfaceVariant = "#656c7c";
+  onSurfaceFaint = "#474d5c";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#4f5566";
-  outlineVariant = "#2c2e42";
+  outlineVariant = "#2d2e42";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#7199ee";
@@ -71,7 +71,7 @@
     brightBlue = "#85acff";
     brightMagenta = "#b798f1";
     brightCyan = "#4fbbb0";
-    brightWhite = "#a0a8cd";
+    brightWhite = "#b3bbe1";
   };
 
   orange = "#f6955b";

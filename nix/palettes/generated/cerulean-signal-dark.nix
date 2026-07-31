@@ -16,7 +16,7 @@
   displayName = "Cerulean Signal Dark";
   author = "Aaron Colichia (https://aaron.colichia.org/)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#101722";

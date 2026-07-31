@@ -16,7 +16,7 @@
   displayName = "Shades of Purple";
   author = "Iolar Demartini Junior (http://github.com/demartini), based on Shades of Purple Theme (https://github.com/ahmadawais/shades-of-purple-vscode)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1e1e3f";
@@ -48,7 +48,7 @@
   secondary = "#00c5c7";
   onSecondary = "#1e1e3f";
   tertiary = "#ff2c70";
-  onTertiary = "#ffffff";
+  onTertiary = "#1d1d3e";
   error = "#d90429";
   onError = "#ffffff";
   inverseSurface = "#c7c7c7";
@@ -76,7 +76,7 @@
 
   orange = "#f92a1c";
   brightOrange = "#ff5e4c";
-  cursor = "#6a46ff";
+  cursor = "#6a47ff";
 
   tools = {
     bat = "ansi";

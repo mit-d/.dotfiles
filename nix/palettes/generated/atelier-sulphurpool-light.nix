@@ -16,7 +16,7 @@
   displayName = "Atelier Sulphurpool Light";
   author = "Bram de Haan (http://atelierbramdehaan.nl)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f5f7ff";
@@ -42,13 +42,13 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#3d8fd1";
-  onPrimary = "#ffffff";
+  onPrimary = "#1b223d";
   primaryContainer = "#b2d0ef";
   onPrimaryContainer = "#202746";
   secondary = "#22a2c9";
   onSecondary = "#202746";
   tertiary = "#6679cc";
-  onTertiary = "#ffffff";
+  onTertiary = "#141516";
   error = "#c94922";
   onError = "#f8faff";
   inverseSurface = "#5e6687";

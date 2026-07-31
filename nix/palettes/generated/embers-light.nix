@@ -16,7 +16,7 @@
   displayName = "Embers Light";
   author = "Jannik Siebert (https://github.com/janniks)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#dbd6d1";
@@ -42,15 +42,15 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#6d5782";
-  onPrimary = "#ded9d5";
+  onPrimary = "#dedad5";
   primaryContainer = "#b0a4b3";
   onPrimaryContainer = "#16130f";
   secondary = "#576d82";
   onSecondary = "#edebe8";
   tertiary = "#82576d";
-  onTertiary = "#e3dfdc";
+  onTertiary = "#e3e0dc";
   error = "#826d57";
-  onError = "#f5f5f5";
+  onError = "#f5f5f4";
   inverseSurface = "#433b32";
   inverseOnSurface = "#dbd6d1";
 

@@ -16,7 +16,7 @@
   displayName = "Edge Dark";
   author = "cjayross (https://github.com/cjayross), Tinted Theming (https://github.com/tinted-theming)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#262729";
@@ -34,10 +34,10 @@
   onSurface = "#afb2b5";
   onSurfaceMuted = "#a2a5a9";
   onSurfaceVariant = "#95989d";
-  onSurfaceFaint = "#595b5e";
+  onSurfaceFaint = "#5a5b5e";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#626366";
+  outline = "#626466";
   outlineVariant = "#3d3f42";
 
   # --- Accent roles -------------------------------------------------------

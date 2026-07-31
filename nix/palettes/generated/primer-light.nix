@@ -16,7 +16,7 @@
   displayName = "Primer Light";
   author = "Jimmy Lin";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fafbfc";
@@ -50,7 +50,7 @@
   tertiary = "#ea4aaa";
   onTertiary = "#1b1f23";
   error = "#d73a49";
-  onError = "#fdfdfe";
+  onError = "#030304";
   inverseSurface = "#2f363d";
   inverseOnSurface = "#fafbfc";
 

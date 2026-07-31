@@ -16,7 +16,7 @@
   displayName = "Windows 95 Light";
   author = "Fergus Collins (https://github.com/ferguscollins)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#fcfcfc";
@@ -37,7 +37,7 @@
   onSurfaceFaint = "#a8a8a8";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#a2a2a2";
+  outline = "#a1a1a1";
   outlineVariant = "#c4c4c4";
 
   # --- Accent roles -------------------------------------------------------

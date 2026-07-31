@@ -16,7 +16,7 @@
   displayName = "Heetch Dark";
   author = "Geoffrey Teale (tealeg@gmail.com)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#190134";

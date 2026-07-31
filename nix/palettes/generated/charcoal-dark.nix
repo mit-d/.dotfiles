@@ -16,7 +16,7 @@
   displayName = "Charcoal Dark";
   author = "Mubin Muhammad (https://github.com/mubin6th)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#0f0b05";
@@ -34,11 +34,11 @@
   onSurface = "#c3a983";
   onSurfaceMuted = "#b59a72";
   onSurfaceVariant = "#a88c62";
-  onSurfaceFaint = "#58472d";
+  onSurfaceFaint = "#59472d";
 
   # --- Borders and dividers -----------------------------------------------
   outline = "#614f35";
-  outlineVariant = "#352a1b";
+  outlineVariant = "#352b1b";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#c3a983";

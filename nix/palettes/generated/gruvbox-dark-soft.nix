@@ -16,7 +16,7 @@
   displayName = "Gruvbox dark, soft";
   author = "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#32302f";
@@ -34,10 +34,10 @@
   onSurface = "#d5c4a1";
   onSurfaceMuted = "#c9b99a";
   onSurfaceVariant = "#bdae93";
-  onSurfaceFaint = "#6c6259";
+  onSurfaceFaint = "#6c6258";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#756a5f";
+  outline = "#756b5f";
   outlineVariant = "#504945";
 
   # --- Accent roles -------------------------------------------------------
@@ -50,7 +50,7 @@
   tertiary = "#d3869b";
   onTertiary = "#32302f";
   error = "#fb4934";
-  onError = "#ffffff";
+  onError = "#252423";
   inverseSurface = "#d5c4a1";
   inverseOnSurface = "#32302f";
 

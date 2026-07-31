@@ -16,7 +16,7 @@
   displayName = "Bespin";
   author = "Jan T. Sott";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#28211c";
@@ -44,13 +44,13 @@
   primary = "#5ea6ea";
   onPrimary = "#28211c";
   primaryContainer = "#3f5063";
-  onPrimaryContainer = "#c8beb2";
+  onPrimaryContainer = "#c7beb1";
   secondary = "#afc4db";
   onSecondary = "#28211c";
   tertiary = "#9b859d";
   onTertiary = "#28211c";
   error = "#cf6a4c";
-  onError = "#ffffff";
+  onError = "#251f1a";
   inverseSurface = "#8a8986";
   inverseOnSurface = "#28211c";
 

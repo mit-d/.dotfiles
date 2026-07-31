@@ -16,7 +16,7 @@
   displayName = "pinky";
   author = "Benjamin (https://github.com/b3nj5m1n)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#171517";
@@ -34,11 +34,11 @@
   onSurface = "#f5f5f5";
   onSurfaceMuted = "#eee8e8";
   onSurfaceVariant = "#e7dbdb";
-  onSurfaceFaint = "#524d52";
+  onSurfaceFaint = "#524e52";
 
   # --- Borders and dividers -----------------------------------------------
-  outline = "#5a555a";
-  outlineVariant = "#333133";
+  outline = "#5a565a";
+  outlineVariant = "#323132";
 
   # --- Accent roles -------------------------------------------------------
   primary = "#00ffff";

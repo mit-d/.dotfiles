@@ -16,7 +16,7 @@
   displayName = "London Tube";
   author = "Jan T. Sott";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#231f20";
@@ -50,7 +50,7 @@
   tertiary = "#98005d";
   onTertiary = "#ffffff";
   error = "#ee2e24";
-  onError = "#ffffff";
+  onError = "#121212";
   inverseSurface = "#d9d8d8";
   inverseOnSurface = "#231f20";
 

@@ -16,7 +16,7 @@
   displayName = "Atelier Heath Light";
   author = "Bram de Haan (http://atelierbramdehaan.nl)";
   variant = "light";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#f7f3f7";
@@ -42,7 +42,7 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#516aec";
-  onPrimary = "#fefefe";
+  onPrimary = "#050405";
   primaryContainer = "#b3c1f7";
   onPrimaryContainer = "#1b181b";
   secondary = "#159393";
@@ -50,7 +50,7 @@
   tertiary = "#7b59c0";
   onTertiary = "#f7f3f7";
   error = "#ca402b";
-  onError = "#f8f4f8";
+  onError = "#f8f4f7";
   inverseSurface = "#695d69";
   inverseOnSurface = "#f7f3f7";
 

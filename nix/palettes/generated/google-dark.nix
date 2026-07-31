@@ -16,7 +16,7 @@
   displayName = "Google Dark";
   author = "Seth Wright (http://sethawright.com)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#1d1f21";
@@ -42,13 +42,13 @@
 
   # --- Accent roles -------------------------------------------------------
   primary = "#3971ed";
-  onPrimary = "#ffffff";
+  onPrimary = "#0a0909";
   primaryContainer = "#293e68";
   onPrimaryContainer = "#ffffff";
   secondary = "#3971ed";
-  onSecondary = "#ffffff";
+  onSecondary = "#0a0909";
   tertiary = "#a36ac7";
-  onTertiary = "#ffffff";
+  onTertiary = "#191a1c";
   error = "#cc342b";
   onError = "#ffffff";
   inverseSurface = "#c5c8c6";

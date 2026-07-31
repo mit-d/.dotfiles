@@ -16,7 +16,7 @@
   displayName = "Railscasts";
   author = "Ryan Bates (http://railscasts.com)";
   variant = "dark";
-  version = "3.1.0";
+  version = "3.2.0";
 
   # --- Surfaces -----------------------------------------------------------
   surface = "#2b2b2b";
@@ -46,11 +46,11 @@
   primaryContainer = "#44535f";
   onPrimaryContainer = "#f9f7f3";
   secondary = "#519f50";
-  onSecondary = "#ffffff";
+  onSecondary = "#282828";
   tertiary = "#b6b3eb";
   onTertiary = "#2b2b2b";
   error = "#da4939";
-  onError = "#ffffff";
+  onError = "#111010";
   inverseSurface = "#e6e1dc";
   inverseOnSurface = "#2b2b2b";
 
