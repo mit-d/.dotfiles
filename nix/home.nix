@@ -31,6 +31,7 @@ in
         ./home/fish.nix
         ./home/zsh.nix
         ./home/zoxide.nix
+        ./home/k9s.nix
       ];
     };
   };

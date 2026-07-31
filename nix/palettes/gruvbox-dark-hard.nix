@@ -1,59 +1,103 @@
-# Canonical Gruvbox Dark Hard palette.
+# Gruvbox Dark Hard, expressed in the shared palette schema.
 #
-# Single source of truth for every gruvbox surface in this config, which is why
-# it lives under nix/palettes/ rather than beside any one consumer:
+# Semantic roles use Material 3 names (`surface`, `onSurfaceVariant`,
+# `surfaceContainerHigh`, `outline`, `primary`) rather than gruvbox's own
+# (`bg0_hard`, `fg3`, `bg2`, `gray`), so a completely different theme can be
+# dropped in by editing ./active.nix alone. See ./README.md for the full schema.
 #
-#   - nix/darwin/firefox.nix feeds it into both the generated static-theme
-#     manifest and the CSS custom properties prepended to userChrome.css
-#   - nix/home/ghostty.nix generates the terminal theme from it
-#
-# so no hex value is written twice and retheming happens in one place.
-#
-# Note this is the *canonical* gruvbox mapping, which differs slightly from
-# hypr/.config/hypr/palettes/gruvbox-dark-hard.conf -- that file is a partial
-# 10-colour palette generated from a Ghostty theme, and it maps `$orange` to
-# #d79921, which is canonically gruvbox *yellow*.
+# Values are canonical gruvbox. Note this differs slightly from
+# hypr/.config/hypr/palettes/gruvbox-dark-hard.conf, which is a partial
+# 10-colour palette generated from a Ghostty theme and maps its `$orange` to
+# #d79921 -- canonically gruvbox *yellow*.
 {
-  # Firefox decides whether to reinstall a policy-installed theme by comparing
-  # `version`, NOT by noticing that install_url points at a new store path.
-  # Bump this whenever a colour below changes, or the edit will not take
-  # effect in an already-installed profile.
-  version = "1.0.0";
+  name = "gruvbox-dark-hard";
+  variant = "dark";
 
-  # Backgrounds, darkest first. "hard" refers to bg0_hard being darker than
-  # the medium variant's #282828.
-  bg0_hard = "#1d2021";
-  bg0 = "#282828";
-  bg1 = "#3c3836";
-  bg2 = "#504945";
-  bg3 = "#665c54";
-  bg4 = "#7c6f64";
+  # Firefox compares this to decide whether to reinstall a policy-installed
+  # theme; it does not notice that install_url points at a new store path. Bump
+  # it whenever a colour below changes, or the edit will not take effect in an
+  # already-installed profile.
+  version = "2.0.0";
 
-  # Foregrounds, lightest first.
-  fg0 = "#fbf1c7";
-  fg1 = "#ebdbb2";
-  fg2 = "#d5c4a1";
-  fg3 = "#bdae93";
-  fg4 = "#a89984";
+  # --- Material 3 semantic roles ---------------------------------------------
+  #
+  # Surfaces. "hard" refers to `surface` being darker than gruvbox's medium
+  # variant (#282828, which is surfaceContainerLow here). The container ramp
+  # runs away from `surface`: lighter for a dark theme, darker for a light one,
+  # so consumers must not assume a direction.
+  surface = "#1d2021";
+  surfaceDim = "#1d2021";
+  surfaceBright = "#504945";
+  surfaceContainerLowest = "#1d2021";
+  surfaceContainerLow = "#282828";
+  surfaceContainer = "#3c3836";
+  surfaceContainerHigh = "#504945";
+  surfaceContainerHighest = "#665c54";
+  surfaceVariant = "#3c3836";
 
-  gray = "#928374";
+  # Text on those surfaces, strongest to faintest.
+  onSurfaceStrong = "#fbf1c7";
+  onSurface = "#ebdbb2";
+  onSurfaceMuted = "#d5c4a1";
+  onSurfaceVariant = "#bdae93";
+  onSurfaceFaint = "#a89984";
 
-  # Neutral accents.
-  red = "#cc241d";
-  green = "#98971a";
-  yellow = "#d79921";
-  blue = "#458588";
-  purple = "#b16286";
-  aqua = "#689d6a";
+  # Borders and dividers.
+  outline = "#928374";
+  outlineVariant = "#504945";
+
+  # Accent roles. gruvbox's signature is its warm yellow, so that is `primary`;
+  # blue and aqua fall out as secondary/tertiary.
+  primary = "#fabd2f";
+  onPrimary = "#1d2021";
+  primaryContainer = "#d79921";
+  onPrimaryContainer = "#1d2021";
+
+  secondary = "#83a598";
+  onSecondary = "#1d2021";
+
+  tertiary = "#8ec07c";
+  onTertiary = "#1d2021";
+
+  error = "#fb4934";
+  onError = "#1d2021";
+
+  # Inverted pair, for selections and "current line" style highlights.
+  inverseSurface = "#ebdbb2";
+  inverseOnSurface = "#1d2021";
+
+  # --- ANSI 16 ---------------------------------------------------------------
+  #
+  # Kept separate and explicit because Material 3 has no notion of 16 indexed
+  # colours, and terminals address them by number: Ghostty's `palette = N=...`,
+  # fish's `fish_color_*`, k9s skins, tmux's colour names. Deriving these from
+  # the M3 roles would be lossy in both directions, so a palette states both.
+  #
+  # gruvbox's `purple` and `aqua` occupy the magenta and cyan slots.
+  ansi = {
+    black = "#1d2021";
+    red = "#cc241d";
+    green = "#98971a";
+    yellow = "#d79921";
+    blue = "#458588";
+    magenta = "#b16286";
+    cyan = "#689d6a";
+    white = "#a89984";
+
+    brightBlack = "#928374";
+    brightRed = "#fb4934";
+    brightGreen = "#b8bb26";
+    brightYellow = "#fabd2f";
+    brightBlue = "#83a598";
+    brightMagenta = "#d3869b";
+    brightCyan = "#8ec07c";
+    brightWhite = "#ebdbb2";
+  };
+
+  # Not an ANSI slot, but both gruvbox and solarized define one and it is the
+  # most legible cursor against `surface`.
   orange = "#d65d0e";
-
-  # Bright accents, used for anything that needs to read as active or
-  # attention-worthy against the hard background.
-  brightRed = "#fb4934";
-  brightGreen = "#b8bb26";
-  brightYellow = "#fabd2f";
-  brightBlue = "#83a598";
-  brightPurple = "#d3869b";
-  brightAqua = "#8ec07c";
   brightOrange = "#fe8019";
+
+  cursor = "#fe8019";
 }

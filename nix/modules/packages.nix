@@ -79,7 +79,8 @@ in
     pkgs.htop
     pkgs.imagemagick
     pkgs.jq
-    pkgs.k9s
+    # k9s comes from nix/home/k9s.nix (programs.k9s), which also generates its
+    # gruvbox skin. Listing it here too would shadow that with an unconfigured copy.
     pkgs.lftp
     pkgs.most
     pkgs.ncdu

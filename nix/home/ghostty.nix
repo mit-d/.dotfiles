@@ -5,7 +5,7 @@ let
   # values happen to match this file exactly today -- generating the theme
   # instead means a future edit to the palette reaches every surface at once,
   # rather than silently leaving the terminal behind.
-  palette = import ../palettes/gruvbox-dark-hard.nix;
+  palette = import ../palettes/active.nix;
 in
 {
   # Nothing needed to surface the .app: at home.stateVersion >= 25.11
@@ -44,13 +44,12 @@ in
       window-padding-x = 12;
       window-padding-y = 8;
       window-inherit-working-directory = true;
-      window-theme = "dark";
+      window-theme = palette.variant;
       window-save-state = "always";
 
-      # Theme and Appearance. Generated below from the shared palette rather
-      # than naming Ghostty's builtin, and dark-only: the palette file has no
-      # light variant, and window-theme plus AppleInterfaceStyle are both dark.
-      theme = "gruvbox-dark-hard";
+      # Theme and Appearance, both driven by the palette so a swap reaches them.
+      # The theme itself is generated at the bottom of this file.
+      theme = palette.name;
 
       # Font. Repeated keys become a list -- programs.ghostty sets
       # listsAsDuplicateKeys, so each element emits its own font-family line.
@@ -110,7 +109,7 @@ in
       # into external commands such as fzf.
       cursor-style = "block";
       cursor-opacity = 1.0;
-      cursor-color = palette.brightOrange;
+      cursor-color = palette.cursor;
 
       # Copy/paste
       copy-on-select = false;
@@ -149,39 +148,42 @@ in
       macos-titlebar-style = "hidden";
     };
 
-    # Generated from nix/palettes/gruvbox-dark-hard.nix. The ANSI slots follow
-    # the canonical gruvbox mapping: 0-7 are the normal colours (with 7 as fg4,
-    # the dimmest foreground) and 8-15 the bright ones (with 15 as fg1).
+    # Generated from whichever palette nix/palettes/active.nix points at, and
+    # named after it, so swapping palettes swaps this theme wholesale rather than
+    # leaving a file called "gruvbox" full of some other theme's colours.
+    #
+    # Slots come straight from the palette's `ansi` attrset rather than being
+    # improvised from surface/text roles: terminals address these by index, and
+    # every palette states all 16 explicitly for exactly this reason.
     #
     # The previous DerekMinimal theme was removed rather than kept: it was a
     # Dracula-derived palette that nothing referenced -- `theme` pointed at
-    # Monokai -- so it was dead config, and it contradicts standardising on
-    # gruvbox. It is in git history if it is ever wanted back.
-    themes.gruvbox-dark-hard = {
+    # Monokai -- so it was dead config, and it contradicts having one palette.
+    themes.${palette.name} = {
       palette = [
-        "0=${palette.bg0_hard}"
-        "1=${palette.red}"
-        "2=${palette.green}"
-        "3=${palette.yellow}"
-        "4=${palette.blue}"
-        "5=${palette.purple}"
-        "6=${palette.aqua}"
-        "7=${palette.fg4}"
-        "8=${palette.gray}"
-        "9=${palette.brightRed}"
-        "10=${palette.brightGreen}"
-        "11=${palette.brightYellow}"
-        "12=${palette.brightBlue}"
-        "13=${palette.brightPurple}"
-        "14=${palette.brightAqua}"
-        "15=${palette.fg1}"
+        "0=${palette.ansi.black}"
+        "1=${palette.ansi.red}"
+        "2=${palette.ansi.green}"
+        "3=${palette.ansi.yellow}"
+        "4=${palette.ansi.blue}"
+        "5=${palette.ansi.magenta}"
+        "6=${palette.ansi.cyan}"
+        "7=${palette.ansi.white}"
+        "8=${palette.ansi.brightBlack}"
+        "9=${palette.ansi.brightRed}"
+        "10=${palette.ansi.brightGreen}"
+        "11=${palette.ansi.brightYellow}"
+        "12=${palette.ansi.brightBlue}"
+        "13=${palette.ansi.brightMagenta}"
+        "14=${palette.ansi.brightCyan}"
+        "15=${palette.ansi.brightWhite}"
       ];
-      background = palette.bg0_hard;
-      foreground = palette.fg1;
-      cursor-color = palette.fg1;
-      cursor-text = palette.bg0_hard;
-      selection-background = palette.bg3;
-      selection-foreground = palette.fg1;
+      background = palette.surface;
+      foreground = palette.onSurface;
+      cursor-color = palette.cursor;
+      cursor-text = palette.surface;
+      selection-background = palette.surfaceContainerHighest;
+      selection-foreground = palette.onSurface;
     };
   };
 }

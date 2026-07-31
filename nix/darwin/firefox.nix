@@ -13,7 +13,7 @@ let
   # Gruvbox Dark Hard, rolled here rather than taken from AMO: the add-on
   # previously in use was a third-party upload with ~18 daily users and no
   # updates since 2021, and its colours were not ours to change.
-  palette = import ../palettes/gruvbox-dark-hard.nix;
+  palette = import ../palettes/active.nix;
 
   themeId = "gruvbox-dark-hard@dotfiles.derek";
 
@@ -28,47 +28,47 @@ let
 
     theme = {
       colors = {
-        frame = palette.bg0_hard;
-        frame_inactive = palette.bg0_hard;
+        frame = palette.surface;
+        frame_inactive = palette.surface;
 
-        tab_selected = palette.bg1;
-        tab_text = palette.fg1;
-        tab_background_text = palette.fg4;
-        tab_line = palette.brightYellow;
-        tab_loading = palette.brightBlue;
+        tab_selected = palette.surfaceContainer;
+        tab_text = palette.onSurface;
+        tab_background_text = palette.onSurfaceFaint;
+        tab_line = palette.ansi.brightYellow;
+        tab_loading = palette.ansi.brightBlue;
 
-        toolbar = palette.bg0;
-        toolbar_text = palette.fg1;
-        toolbar_top_separator = palette.bg0_hard;
-        toolbar_bottom_separator = palette.bg2;
-        toolbar_vertical_separator = palette.bg2;
+        toolbar = palette.surfaceContainerLow;
+        toolbar_text = palette.onSurface;
+        toolbar_top_separator = palette.surface;
+        toolbar_bottom_separator = palette.surfaceContainerHigh;
+        toolbar_vertical_separator = palette.surfaceContainerHigh;
 
-        toolbar_field = palette.bg1;
-        toolbar_field_text = palette.fg1;
-        toolbar_field_border = palette.bg3;
-        toolbar_field_focus = palette.bg2;
-        toolbar_field_text_focus = palette.fg0;
-        toolbar_field_border_focus = palette.brightYellow;
+        toolbar_field = palette.surfaceContainer;
+        toolbar_field_text = palette.onSurface;
+        toolbar_field_border = palette.surfaceContainerHighest;
+        toolbar_field_focus = palette.surfaceContainerHigh;
+        toolbar_field_text_focus = palette.onSurfaceStrong;
+        toolbar_field_border_focus = palette.ansi.brightYellow;
 
-        popup = palette.bg0;
-        popup_text = palette.fg1;
-        popup_border = palette.bg3;
-        popup_highlight = palette.bg2;
-        popup_highlight_text = palette.fg0;
+        popup = palette.surfaceContainerLow;
+        popup_text = palette.onSurface;
+        popup_border = palette.surfaceContainerHighest;
+        popup_highlight = palette.surfaceContainerHigh;
+        popup_highlight_text = palette.onSurfaceStrong;
 
-        sidebar = palette.bg0;
-        sidebar_text = palette.fg1;
-        sidebar_border = palette.bg3;
-        sidebar_highlight = palette.bg2;
-        sidebar_highlight_text = palette.fg0;
+        sidebar = palette.surfaceContainerLow;
+        sidebar_text = palette.onSurface;
+        sidebar_border = palette.surfaceContainerHighest;
+        sidebar_highlight = palette.surfaceContainerHigh;
+        sidebar_highlight_text = palette.onSurfaceStrong;
 
-        ntp_background = palette.bg0_hard;
-        ntp_text = palette.fg1;
+        ntp_background = palette.surface;
+        ntp_text = palette.onSurface;
 
-        button_background_hover = palette.bg2;
-        button_background_active = palette.bg3;
-        icons = palette.fg2;
-        icons_attention = palette.brightYellow;
+        button_background_hover = palette.surfaceContainerHigh;
+        button_background_active = palette.surfaceContainerHighest;
+        icons = palette.onSurfaceMuted;
+        icons_attention = palette.ansi.brightYellow;
       };
 
       properties = {
@@ -96,18 +96,18 @@ let
     /* Generated from nix/palettes/gruvbox-dark-hard.nix -- edit the palette
        there, never here. */
     :root {
-      --gruv-bg0-hard: ${palette.bg0_hard};
-      --gruv-bg0: ${palette.bg0};
-      --gruv-bg1: ${palette.bg1};
-      --gruv-bg2: ${palette.bg2};
-      --gruv-bg3: ${palette.bg3};
-      --gruv-fg0: ${palette.fg0};
-      --gruv-fg1: ${palette.fg1};
-      --gruv-fg2: ${palette.fg2};
-      --gruv-gray: ${palette.gray};
-      --gruv-bright-yellow: ${palette.brightYellow};
-      --gruv-bright-blue: ${palette.brightBlue};
-      --gruv-bright-red: ${palette.brightRed};
+      --gruv-bg0-hard: ${palette.surface};
+      --gruv-bg0: ${palette.surfaceContainerLow};
+      --gruv-bg1: ${palette.surfaceContainer};
+      --gruv-bg2: ${palette.surfaceContainerHigh};
+      --gruv-bg3: ${palette.surfaceContainerHighest};
+      --gruv-fg0: ${palette.onSurfaceStrong};
+      --gruv-fg1: ${palette.onSurface};
+      --gruv-fg2: ${palette.onSurfaceMuted};
+      --gruv-gray: ${palette.outline};
+      --gruv-bright-yellow: ${palette.ansi.brightYellow};
+      --gruv-bright-blue: ${palette.ansi.brightBlue};
+      --gruv-bright-red: ${palette.ansi.brightRed};
     }
   '';
 in

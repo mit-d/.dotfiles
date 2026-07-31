@@ -1,17 +1,17 @@
 { pkgs, ... }:
 let
-  palette = import ../palettes/gruvbox-dark-hard.nix;
+  palette = import ../palettes/active.nix;
 
-  # bg0_hard is gruvbox's darkest background and its ANSI slot 0 -- the same
-  # colour Ghostty's background and the Firefox theme frame use, so the desktop
-  # matches the terminal exactly.
-  colour = palette.bg0_hard;
+  # The palette's primary surface -- the same colour Ghostty's background and the
+  # Firefox theme frame use, so the desktop matches the terminal exactly and a
+  # palette swap repaints all three.
+  colour = palette.surface;
 
   # Dimensions are arbitrary for a flat fill: a solid-colour PNG compresses to a
   # couple of KB whatever its size, and desktoppr's default `fill` scaling covers
   # any display. Generated at 5K so macOS never upscales it on a Retina panel.
   solid =
-    pkgs.runCommand "gruvbox-dark-hard-${builtins.replaceStrings [ "#" ] [ "" ] colour}.png"
+    pkgs.runCommand "${palette.name}-${builtins.replaceStrings [ "#" ] [ "" ] colour}.png"
       { nativeBuildInputs = [ pkgs.imagemagick ]; }
       ''
         magick -size 5120x2880 xc:'${colour}' "$out"
