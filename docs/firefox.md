@@ -1,10 +1,10 @@
 # Firefox
 
 Firefox Nightly is installed as the `firefox@nightly` Homebrew cask (see
-`nix/modules/homebrew.nix`). The binary is not from nix: nixpkgs' `firefox`
+`nix/darwin/homebrew.nix`). The binary is not from nix: nixpkgs' `firefox`
 does not build usefully on darwin, and Nightly is not in nixpkgs at all.
 
-The *configuration* is declarative, in `nix/modules/firefox.nix`, split
+The *configuration* is declarative, in `nix/darwin/firefox.nix`, split
 across two delivery channels.
 
 ## Channel 1 -- profile files, via home-manager
@@ -87,7 +87,7 @@ Gruvbox Dark Hard is rolled here, not taken from AMO. The previous add-on was
 a third-party upload with ~18 daily users and no updates since 2021.
 
 `nix/firefox/gruvbox-dark-hard.nix` is the single source of truth for colours.
-`nix/modules/firefox.nix` feeds it into two places:
+`nix/darwin/firefox.nix` feeds it into two places:
 
 1. A **static-theme manifest**, zipped into an `.xpi` by a `runCommand`
    derivation and force-installed by policy from a `file://` store path.
@@ -157,7 +157,7 @@ Expect `200 application/x-xpinstall`.
 - **Container and search edits made in the UI are reverted** on the next
   `darwin-rebuild switch`, since home-manager re-links both files with
   `force`. That is the declarative intent; make such changes in
-  `nix/modules/firefox.nix`.
+  `nix/darwin/firefox.nix`.
 - **`nix fmt` with no arguments fails** in this repo (nixfmt 1.4 does not
   recurse directories, so it reads empty stdin). Pass paths explicitly, or
   rely on `nix flake check`, which runs `nixfmt --check` across the tree.

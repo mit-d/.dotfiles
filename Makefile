@@ -31,6 +31,16 @@ endif
 # Read package list from flavor file (strip comments and blank lines)
 STOW_DIRS := $(shell awk '!/^[[:space:]]*\x23/ && NF' $(FLAVOR_FILE) | tr '\n' ' ')
 
+# A flavor can legitimately have no packages -- macOS is managed by
+# home-manager, so flavors/osx.conf is empty. A bare `stow` with no arguments
+# fails obscurely, so fail with something useful instead. The MAKECMDGOALS
+# filter matters: without it, `make list` and `make help` would also error.
+ifeq ($(strip $(STOW_DIRS)),)
+  ifneq ($(filter stow restow delete dry-run adopt,$(MAKECMDGOALS)),)
+    $(error No stow packages for flavor '$(_FLAVOR)'. On macOS these are managed by home-manager: run `sudo darwin-rebuild switch --flake ~/.dotfiles`)
+  endif
+endif
+
 # Main targets
 .PHONY: all stow restow delete dry-run list clean help adopt
 

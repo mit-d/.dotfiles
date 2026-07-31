@@ -1,5 +1,5 @@
 /*
- * Loaded by nix/modules/firefox.nix via programs.firefox userChrome.
+ * Loaded by nix/darwin/firefox.nix via programs.firefox userChrome.
  * Requires toolkit.legacyUserProfileCustomizations.stylesheets = true,
  * which that module sets.
  *

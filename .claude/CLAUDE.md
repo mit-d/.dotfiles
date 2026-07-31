@@ -33,19 +33,35 @@ Options:
 
 The repo root is a nix flake (`flake.nix`) providing the nix-darwin system
 config for this Mac (`darwinConfigurations.warrantyhub`, with a hostname
-alias so `--flake ~/.dotfiles` needs no attr). Modules live in
-`nix/modules/`:
+alias so `--flake ~/.dotfiles` needs no attr). Three module directories:
+
+`nix/modules/` - shared system modules, usable by a future NixOS host:
 
 - `core.nix` - nix settings, shell enablement, primaryUser, stateVersion
 - `packages.nix` - CLI packages (`environment.systemPackages`)
+- `podman.nix` - podman machine setup
+
+`nix/darwin/` - macOS-only system modules:
+
 - `homebrew.nix` - declarative Homebrew (taps/brews/casks). Enforcing:
   `cleanup = "uninstall"` removes anything not declared on next switch
 - `defaults.nix` - curated macOS `system.defaults`
 - `fonts.nix` - fonts via `fonts.packages` (installed to
   `/Library/Fonts/Nix Fonts`)
+- `obsidian-sync.nix` - vault sync agents
 - `firefox.nix` - Firefox Nightly config: home-manager `programs.firefox`
   for profile files, plus enterprise policies via `CustomUserPreferences`.
   The browser itself is a cask; see `docs/firefox.md`
+
+`nix/home/` - per-tool home-manager modules, wired up by `nix/home.nix`:
+`bash.nix`, `fish.nix`, `ghostty.nix`, `git.nix`, `mpv.nix`, `nvim.nix`,
+`zsh.nix`. Written platform-agnostic (darwin-only bits behind
+`lib.mkIf pkgs.stdenv.isDarwin`) so a NixOS host can import the same list.
+`nix/pkgs/` holds derivations for things absent from nixpkgs.
+
+**Dotfiles on macOS are managed by home-manager, not stow.**
+`flavors/osx.conf` is intentionally empty and `make stow` refuses to run.
+To change config, edit the relevant `nix/home/<tool>.nix` and switch.
 
 Rebuild: `sudo darwin-rebuild switch --flake ~/.dotfiles`.
 Build-only check: `darwin-rebuild build --flake ~/.dotfiles`.
@@ -54,6 +70,21 @@ New software goes in `packages.nix` (nix, preferred) or `homebrew.nix`
 switch. `nix/` is NOT a stow package (not listed in any flavor file).
 The flake only sees git-tracked files: `git add` new .nix files before
 building.
+
+Two gotchas that have already bitten:
+
+- Config linked from the store is **read-only**. Anything a tool rewrites
+  itself (`fish_variables`, `lazy-lock.json`, Firefox's `profiles.ini`)
+  must stay unmanaged, and config must never derive a *write* path through
+  a resolved symlink (`${0:A:h}` lands in `/nix/store`).
+- Never link `~/.zsh`, `~/.zsh/completions` or `~/.local/bin` as whole
+  directories. `~/.dotfiles_wh` stows files into all three, and a
+  directory-level store symlink leaves them nowhere to go. That repo also
+  passes `stow --no-folding` for the same reason.
+
+The stow package directories (`bash/`, `fish/`, `zsh/`, ...) still exist
+and are still used by the Arch machine via `flavors/arch.conf`. They stay
+until that machine is replaced by NixOS.
 
 ## Architecture
 

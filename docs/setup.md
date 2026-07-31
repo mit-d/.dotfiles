@@ -2,6 +2,27 @@
 
 ## Quick Start
 
+**macOS** -- dotfiles are managed by home-manager, not stow:
+
+```sh
+git clone <repo> ~/.dotfiles && cd ~/.dotfiles
+darwin-rebuild build --flake ~/.dotfiles        # check it evaluates
+sudo darwin-rebuild switch --flake ~/.dotfiles  # apply
+```
+
+`flavors/osx.conf` is intentionally empty and `make stow` will refuse to
+run. Config lives in `nix/home/<tool>.nix`; edit there and switch again.
+Note that store-linked config is read-only, so a change needs a rebuild
+to take effect.
+
+Work-only extras still use stow, from their own private repo:
+
+```sh
+cd ~/.dotfiles_wh && make stow
+```
+
+**Arch (and other stow platforms)**:
+
 ```sh
 git clone <repo> ~/.dotfiles && cd ~/.dotfiles
 check-deps          # see what's missing
@@ -10,6 +31,8 @@ make stow           # create symlinks to ~/
 ```
 
 ## Stow Basics
+
+Applies to stow platforms only -- see above for macOS.
 
 Each top-level directory is a **package** -- its contents mirror `~/`.
 [GNU Stow](https://www.gnu.org/software/stow/) creates symlinks from the repo

@@ -1,6 +1,6 @@
 # Canonical Gruvbox Dark Hard palette.
 #
-# Single source of truth for the Firefox theme: nix/modules/firefox.nix feeds
+# Single source of truth for the Firefox theme: nix/darwin/firefox.nix feeds
 # it into both the generated static-theme manifest and the CSS custom
 # properties prepended to userChrome.css, so no hex value is written twice.
 #
