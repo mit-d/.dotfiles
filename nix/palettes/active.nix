@@ -11,4 +11,4 @@
 #   import ./gruvbox-dark-hard.nix
 #   import ./solarized-light.nix
 #
-import ./nord.nix
+import ./gruvbox-dark-hard.nix
